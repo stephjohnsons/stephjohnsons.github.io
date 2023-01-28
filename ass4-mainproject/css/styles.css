@@ -16,9 +16,11 @@ body {
 /* Background and font colour 
 for header and section 1 */
 .header,
-.section-one {
+.section-one, 
+a {
     background-color: #1F2937;
     color: #F9FAF8;
+    text-decoration: none;
 }
 
 /* Header */
