@@ -1,0 +1,25 @@
+* {
+    background-color: #002718;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.div-h1 {
+    color: 	rgb(146, 102, 54);
+}
+
+.div-h2 {
+    color: hsl(60, 2%, 74%);
+}
+
+.div-h3 {
+    color: #8b8257;
+}
+
+.div-h4 {
+    color: rgb(93, 102, 83);
+}
+
+#paragraph {
+    color: gainsboro;
+    font-size: 14px;
+}
