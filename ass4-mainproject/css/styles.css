@@ -23,6 +23,10 @@ a {
     text-decoration: none;
 }
 
+a:visited {
+    color: #F9FAF8;
+}
+
 /* Header */
 .header {
     display: flex;
