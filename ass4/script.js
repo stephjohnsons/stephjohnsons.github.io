@@ -60,10 +60,12 @@ function playRound(playerSelection, computerSelection) {
 
 // Record results of five rounds with just one call of the function. 
 function game() {
+    // i = 1 instead i = 0. 
+    // This will generate Round 1-5 rather than 0-4 on console. 
     for (let i = 1; i < 6; i++) {
         console.log(i);
         // Prompts user to enter five answers each time. 
-        var playerSelection = prompt("Rock, paper, or scissors?\nType your answer and click OK!");
+        var playerSelection = prompt("Rock, paper, or scissors?\nType your answer and click OK!").toLowerCase();
         // Generates a random computer selection. 
         const computerSelection = computerPlay();
         // Logs results on the console. 
@@ -71,5 +73,6 @@ function game() {
     };
 };
 
+// Call out the function game().
 game();
 
