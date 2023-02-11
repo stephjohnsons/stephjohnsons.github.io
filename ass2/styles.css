@@ -83,6 +83,18 @@ button {
     border: 1px solid #514D4D;
 }
 
+.dark-grey:hover,
+.orange:hover,
+.number:hover {
+    box-shadow: 1px 1px 5px white inset;
+}
+
+.dark-grey:active,
+.orange:active,
+.number:active {
+    box-shadow: 1px 1px 5px black inset;
+}
+
 .dark-grey {
     background-color: #625E5E;
 }
