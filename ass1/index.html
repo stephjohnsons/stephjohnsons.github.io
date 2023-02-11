@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <title> Rock, Paper, Scissors </title>
+</head>
+<body>
+    <div class="content">
+        <h1> Rock, Paper, Scissors </h1>
+        <div class="copyright">
+            © Created by Stephen.
+        </div>
+        <div class="selection">
+            <h2 class="selection-text"> Computer Selection </h2>
+            <h4 class="marks"> Marks: <span id="com-res-marks">0</span></h4>
+            <img src="icons/rock.svg" class="selection-icon rock com"></img>
+            <img src="icons/paper.svg" class="selection-icon paper com"></img>
+            <img src="icons/scissors.svg" class="selection-icon scissors com"></img>
+        </div>
+        
+        <div class="result">
+            <h4 class="result-header"> 
+                Result: 
+                <span id="result-text"></span> 
+            </h4>
+        </div>
+
+        <div class="selection">
+            <h2 class="selection-text"> Your Selection </h2>
+            <h4 class="marks"> Marks: <span id="user-res-marks">0</span></h4>
+            <img src="icons/rock.svg" 
+                 class="selection-icon rock user" 
+                 onclick="playRound('rock')"
+                 onmousedown="return false"></img>
+            <img src="icons/paper.svg" 
+                 class="selection-icon paper user" 
+                 onclick="playRound('paper')" 
+                 onmousedown="return false"></img>
+            <img src="icons/scissors.svg" 
+                 class="selection-icon scissors user" 
+                 onclick="playRound('scissors')" 
+                 onmousedown="return false"></img>
+        </div>
+        
+        <div class="choices">
+            <table class="choice-log">
+                <tr>
+                    <th colspan="4"> Log </th>
+                </tr>
+                <tr>
+                    <td class="log-count"> No. </td>
+                    <td class="log-com"> Computer </td>
+                    <td class="log-user"> User </td>
+                    <td class="log-res"> Result </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

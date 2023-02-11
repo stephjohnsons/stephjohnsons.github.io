@@ -1,0 +1,149 @@
+body {
+    background-color: black;
+    color: white;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+}
+
+/* Calculator Window 
+==================== */
+.calculator {
+    background-color: #514D4D;
+    border: 2px solid gray;
+    width: 465px; 
+    height: 715px; 
+    flex-wrap: wrap;
+    border-radius: 3%;
+    z-index: 0;
+}
+
+.output {
+    display: inline-flex;
+    height: 120px;
+    width: 425px;
+    margin: 20px;
+    font-size: 52px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    justify-content: right;
+}
+
+/* Mac-like Buttons */
+.window-btn {
+    height: 12px;
+    width: 80px;
+    display: flex;
+    padding: 12px;
+    justify-content: space-between;
+}
+
+.btn {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.exit,
+.min,
+.max {
+    padding: 10px;
+}
+
+.exit {
+    background-color: #FB5F57;
+}
+
+.min {
+    background-color: #FDBC2E;
+}
+
+.max {
+    background-color: #28C840;
+}
+
+/* Buttons */
+button {
+    font-size: 36px;
+    color: white;
+}
+
+.number-btn {
+    display: inline-grid;
+    grid-template-columns: 115.5px 115.5px 115.5px 115.5px;
+    border: 1px solid #514D4D;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-left: 0.5px;
+}
+
+.dark-grey,
+.orange,
+.number {
+    padding: 29.7px;
+    border: 1px solid #514D4D;
+}
+
+.dark-grey {
+    background-color: #625E5E;
+}
+
+.orange {
+    background-color: #FC9F0B;
+}
+
+.number {
+    background-color: #7E7876;
+}
+
+#zero {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;
+    border-bottom-left-radius: 14px;
+}
+
+#del {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    text-align: center;
+}
+
+#equal {
+    border-bottom-right-radius: 14px;
+}
+
+/* Paper Tape 
+==================== */
+.paper-tape {
+    background-color: rgb(42, 42, 42);
+    border: 2px solid gray;
+    width: 25vw;
+    height: 90%; 
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+h4 {
+    padding-left: 20px;
+}
+
+hr {
+    border-color: gray;
+}
+
+#tape-display {
+    margin: 20px;
+    font-size: 16px;
+}
+
+.clear-btn {
+    border: 1px solid black;
+    background-color:#625E5E;
+    color: white;
+    font-size: 14px;
+    padding: 3px 10px;
+    border-radius: 5px;
+    margin: 5px 20px;
+    z-index: 1;
+}
