@@ -20,7 +20,6 @@ html {
 }
 
 .content-wrap .item {
-    scroll-snap-align: start;
     scroll-snap-type: x mandatory;
     height: 100vh;
     scroll-snap-align: start;
@@ -53,7 +52,7 @@ html {
 .cta {
     position: relative;
     left: 120px;
-    margin: 1em 0 -4vh 0;
+    margin: 1em 0 -3vh 0;
     font-size: 16px;
 }
 
@@ -86,7 +85,7 @@ a:hover {
 
 .play-caption {
     margin-left: 1vw;
-    font-size: 2vw;
+    font-size: 14px;
 }
 
 /* NOTE: Switch-div is on button.css. */ 
@@ -103,7 +102,7 @@ a:hover {
 
 h3 {
     font-size: 25px;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .portrait {
@@ -203,9 +202,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 #tiles {
-    margin: -34.4px;
-    height: calc(99.84vh);
-    width: calc(97.51vw);
+    margin: -36px;
+    height: calc(101vh);
+    width: calc(99vw);
     position: relative;
     z-index: 2;
     display: grid;
