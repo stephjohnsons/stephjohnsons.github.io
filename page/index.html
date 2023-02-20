@@ -54,13 +54,28 @@
                     A good website should not only be aesthetic and pretty,
                     but also accessible to different types of users.
                     <br><br>
-                    Oh, and that's my desk, by the way.<br>
+                    Oh, and those are stuffs currently on my desk, by the way.<br>
                 </p>
             </section>
             <div id="container">
-                <model-viewer src="../model/Desk/Desk.gltf" 
-                                alt="VR Headset" 
-                                camera-controls ar ios-src="../model/Desk/Desk.gltf">
+                <model-viewer src="../model/Desk/Desk.gltf"
+                              ios-src="../model/Desk/Desk.gltf" 
+                              ar camera-controls shadow-intensity="1" exposure="1" shadow-softness="0.72">
+                    <button class="Hotspot" slot="hotspot-2" data-surface="4 0 54502 54503 54458 0.187 0.583 0.230" data-visibility-attribute="visible">
+                        <div class="HotspotAnnotation">
+                            Cup of Tea
+                        </div>
+                    </button>
+                    <button class="Hotspot" slot="hotspot-3" data-surface="1 0 622 600 599 0.266 0.687 0.046" data-visibility-attribute="visible">
+                        <div class="HotspotAnnotation">
+                            Table Lamp
+                        </div>
+                    </button>
+                    <button class="Hotspot" slot="hotspot-4" data-surface="17 0 0 1 2 0.571 0.408 0.021" data-visibility-attribute="visible">
+                        <div class="HotspotAnnotation">
+                            Laptop
+                        </div>
+                    </button>
                 </model-viewer>
             </div>
         </div>
