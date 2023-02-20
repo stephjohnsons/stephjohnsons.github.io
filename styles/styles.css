@@ -100,18 +100,35 @@ a:hover {
     width: 50vw;
 }
 
+.image-and-desk {
+    display: flex;
+    width: 85vw;
+    justify-content: space-between;
+}
+
+#container {
+    position: relative;
+    margin: -60px 55px;
+}
+
+#container model-viewer {
+    height: 300px;
+    width: 400px;
+}
+
 h3 {
     font-size: 25px;
     font-weight: 600;
 }
 
 .portrait {
-    height: 200px;
+    height: 120px;
     border-radius: 40px;
 }
 
 .about-bio p {
-    font-size: 1.2em;
+    display: grid;
+    font-size: 1em;
     width: 60vw;
     min-width: 400px;
     max-width: 50vw;
@@ -173,8 +190,8 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 :root {
-    --g1: rgb(248, 176, 49);
-    --g2: rgb(228,99,93,0.9923662173202614);
+    --g1: #f8b031;
+    --g2: rgba(227, 97, 90, 0.992);
 }
   
 @keyframes background-pan {
