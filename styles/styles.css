@@ -116,6 +116,63 @@ a:hover {
     width: 400px;
 }
 
+.Hotspot {
+    background: rgb(255, 255, 255);
+    border-radius: 32px;
+    border: 0px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 24px;
+    padding: 4px;
+    position: relative;
+    transition: opacity 0.3s ease 0s;
+    width: 24px;
+}
+
+.HotspotAnnotation {
+    background: rgb(255, 255, 255);
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
+    color: rgba(0, 0, 0, 0.8);
+    display: block;
+    font-family: Futura, "Helvetica Neue", sans-serif;
+    font-size: 0.8em;
+    font-weight: 700;
+    left: calc(100% + 1em);
+    max-width: 128px;
+    overflow-wrap: break-word;
+    padding: 0.5em 1em;
+    position: absolute;
+    top: 50%;
+    width: max-content;
+}
+
+modal-viewer button {
+    appearance: auto;
+    writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: #0d1015;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: white;
+    margin: 0em;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial;
+}
+
 h3 {
     font-size: 25px;
     font-weight: 600;
