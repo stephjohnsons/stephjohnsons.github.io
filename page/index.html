@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/styles.css"> 
     <link rel="stylesheet" href="../styles/button.css"> 
+    <link rel="stylesheet" href="../styles/loader.css">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
     <title> Stephen Tseu </title>
 </head>
 
@@ -13,15 +16,15 @@
     <!-- Content Wrapper -->
     <!--- A total of 5 pages are wrapped in here. --->
     <div class="content-wrap">
-       <!-- ======= Header Page ======= -->
-       <div class="item header">
-        <p id="greeting"></p>
-        <p id="name"> I'm Stephen. </p>    
-        <p class="cta"> 👇🏼 click me! </p>
-        <p class="wrap-child" id="job-title">
-            I am a <span class="job"></span>
-        </p>
-        
+        <!-- ======= Header Page ======= -->
+        <div class="item header"> 
+            <p id="greeting"></p>
+            <p id="name"> I'm Stephen. </p>    
+            <p class="cta"> 👇🏼 click me! </p>
+            <p class="wrap-child" id="job-title">
+                I am a <span class="job"></span>
+            </p>
+
         <div class="switch-div">
             <label class="switch">
                 <input type="checkbox">
@@ -49,9 +52,17 @@
                 <p>
                     In my work, I focus on interactibility and usability of websites. 
                     A good website should not only be aesthetic and pretty,
-                    but also accessible to different types of users. 
+                    but also accessible to different types of users.
+                    <br><br>
+                    Oh, and that's my desk, by the way.<br>
                 </p>
             </section>
+            <div id="container">
+                <model-viewer src="../model/Desk/Desk.gltf" 
+                                alt="VR Headset" 
+                                camera-controls ar ios-src="../model/Desk/Desk.gltf">
+                </model-viewer>
+            </div>
         </div>
         <!-- End of About -->
 
@@ -198,6 +209,10 @@
             </p>
         </div>
         <!-- End of Contact -->
+
+        <div class="item">
+                   
+        </div>
     </div>
     <!-- End of Wrapper -->
 
