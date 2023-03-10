@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Days+One&family=Mulish:wght@300;400;600;700&display=swap');
+
+/* Colours */
+/* To be removed later */
+#colours {
+    color: #163211;
+    color: #fcfafd;
+    color: #eb5123;
+}
+
+body {
+    background-color: #163211;
+    background-repeat: no-repeat;
+    background-position-x: bottom;
+    height: 100vh;
+    z-index: -999;
+    font-family: 'Mulish';
+}
+
+/* Global Styles */
+* {
+    transition: 100ms ease-in-out;
+    z-index: 1;
+    color: #fcfafd;
+}
+
+::selection {
+    background-color:#fcfafd;
+    color:#eb5123;
+}
+
+#red-header {
+    color:#eb5123;
+    font-size: 3.5em;
+    font-family: 'Days One'
+}
+
+.featured-icons {
+    filter: invert(100%) sepia(27%) saturate(2426%) hue-rotate(201deg) brightness(109%) contrast(98%);
+    height: 50px;
+}
+
+/* Navigation Menu */
+#navbarText {
+    font-size: 1.2em;
+    font-family: 'Mulish';
+    font-weight: 300;
+}
+
+.nav-link:hover {
+    font-weight: 700;
+    transition: 200ms ease-in-out;
+}
+
+a#active {
+    color:#eb5123;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+/* Hero Section */
+.hero-section {
+    margin: 5% 10%;
+    color: #fcfafd;
+}
+
+.hero-header {
+    font-size: 4rem;
+    color:#eb5123;
+    line-height: 1.2;
+    font-family: 'Days One';
+}
+
+#hero-img {
+    border-radius: 15px;
+    box-shadow: 6px 6px #fcfafdb1;
+}
+
+#hero-img:hover {
+    border-radius: 15px;
+    transform: translateX(-2px) translateY(-2px);
+    box-shadow: 10px 10px #fcfafdb1;
+}
+
+#hero-changing-text {
+    animation: 2s fadeIn;
+}
+
+.btn {
+    border-width: 2px;
+    border-radius: 30px;
+    width: 150px;
+}
+
+.btn-outline-light:hover {
+    box-shadow: 4px 4px rgba(252, 250, 253, .5);
+}
+
+.btn-danger {
+    border: 1px solid #eb5123;
+    background-color: #eb5123;
+}
+
+.btn-danger:hover {
+    border-color: #f9815c;
+    background-color: #f9815c;
+    color:#163211;
+    box-shadow: 4px 4px #f9805cb9;
+}
+
+/* Menu */
+.search-logo {
+    filter: invert(100%) sepia(80%) saturate(90%) hue-rotate(190deg) brightness(120%) contrast(98%);
+}
+
+/* Cards */
+.card-cover {
+    background-size: calc(180% + 20px);
+    background-position: center;
+}
+
+.card-cover:after {
+    position: absolute;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0, #000 100%);
+    content: '';
+    top:0; 
+    bottom:0;
+    right:0;
+    left:0;
+    opacity: 0.8;
+}
+
+.card-cover h3 {
+    font-family: 'Cormorant Garamond';
+}
+
+/* Background Circles */
+.pattern-1 {
+    position: absolute;
+    right: 10%;
+}
+
+/* Table */
+.table-header {
+    margin: 5px 10%;
+    color: #eb5123;
+}
+
+.table {
+    max-width: 80%;
+    margin: 0 10%;
+}
+
+.hide {
+    display: none;
+    font-size: 0.8rem;
+    margin: 0 10%;
+}
+
+.table-header:hover + .hide {
+    display: inline;
+    color: #eb5123;
+}
+
+/* Footer */
+span.brand a {
+    color: #eb5123; 
+    font-weight: bold;
+    text-decoration-line: none;
+}
+
+.form-control {
+    background-color:#16321164;
+    border: 2px solid #eb5123;
+    color:#eb5123;
+}
+
+.form-control:hover {
+    background-color:#bcd0b864;
+    box-shadow: 5px 5px #bcd0b864;
+}
+
+.form-control:focus {
+    background-color:#bcd0b864;
+    box-shadow: 2px 2px #bcd0b864;
+}
+
+/* Transition */
+/* Code from @pamelaszymaniec 
+https://codepen.io/pamelaszymaniec/pen/NWKxRjN */
+.text {
+    position: absolute;
+    width: 600px;
+    height: 40px;
+}
+
+.word {
+    position: absolute;
+    opacity: 0;
+    margin-left: 10px;
+}
+
+.letter {
+  display: inline-block;
+  position: relative;
+  transform: translateZ(25px);
+  transform-origin: 50% 50% 25px;
+}
+
+.letter.out {
+  transform: rotateX(90deg);
+  transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.letter.behind {
+  transform: rotateX(-90deg);
+  transition: transform 0.01s; /* Added this to avoid the words from appearing when being transformed above the previous word. */
+}
+
+.letter.in {
+  transform: rotateX(0deg);
+  transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
