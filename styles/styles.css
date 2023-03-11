@@ -323,7 +323,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     z-index: 0;
     opacity: 0;
     transition: 600ms ease-in;
-    width: 50vw;
+    width: 70vw;
     max-width: 400px;
 }
 
