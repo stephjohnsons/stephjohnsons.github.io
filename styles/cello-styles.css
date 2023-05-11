@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Mono&family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,700;0,800;1,300;1,400;1,500;1,700;1,800&display=swap');
+
+body {
+  font-family: 'PT Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #01077a;
+  color:#ececec;
+}
+
+a {
+   color:#ececec;
+   text-decoration: none;
+}
+
+h1 {
+   color: #ffe45e;
+}
+
+.menu {
+   list-style: none;
+   display: flex;
+   justify-content: flex-end;
+   align-items: baseline;
+   position: absolute;
+   top: 10px;
+   right: 10px;
+}
+
+.menu li {
+   margin-left: 10px;
+   margin-right: 10px;
+   border-bottom: 1.5px solid #ffe45e;
+   transition: 200ms cubic-bezier(.29,.57,.94,.61);
+   text-decoration-line: none;
+}
+
+.menu li:is(:hover, :focus) {
+   color: #ffe45e;
+   transition: 0.5s ease-in-out;
+   cursor: grab;
+   border-bottom:none;
+   padding-bottom: 2px;
+   background-position:0 100%;
+   background-repeat: repeat;
+   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 10 18'%3E%3Cstyle type='text/css'%3E.squiggle%7Banimation:shift .5s linear infinite;%7D@keyframes shift %7Bfrom %7Btransform:translateX(-10px);%7Dto %7Btransform:translateX(0);%7D%7D%3C/style%3E%3Cpath fill='none' stroke='white' stroke-width='1' class='squiggle' d='M0,17.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5' /%3E%3C/svg%3E");
+   transition: 200ms cubic-bezier(.29,.57,.94,.61);
+}
+
+.menu li:is(:active) {
+   color: #584d19;
+   transition: 0.3s ease-in-out;
+   cursor: grabbing;
+}
+
+.zh, .de {
+   display: none;
+}
+
+footer {
+   position: fixed;
+   border: 5;
+   background-color: #ffe45e;
+   color:#01077a;
+   bottom: 2%;
+}
