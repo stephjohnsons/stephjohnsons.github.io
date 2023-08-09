@@ -111,9 +111,9 @@ a:hover {
     margin: -60px 55px;
 }
 
-#container model-viewer {
-    height: 300px;
-    width: 400px;
+#container spline-viewer {
+    min-width: 50vw;
+    max-width: 700px;
 }
 
 .Hotspot {
