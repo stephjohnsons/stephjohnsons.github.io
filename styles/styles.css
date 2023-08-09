@@ -97,13 +97,8 @@ a:hover {
     position: relative;
     margin: 20px;
     padding: 35px;
+    min-width: 400px;
     width: 50vw;
-}
-
-.image-and-desk {
-    display: flex;
-    width: 85vw;
-    justify-content: space-between;
 }
 
 #container {
@@ -111,9 +106,10 @@ a:hover {
     margin: -60px 55px;
 }
 
-#container spline-viewer {
-    min-width: 50vw;
-    max-width: 700px;
+#spline-viewer {
+    width: 80vw;
+    min-width: 200px;
+    height: 70vh;
 }
 
 .Hotspot {
@@ -148,34 +144,13 @@ a:hover {
     width: max-content;
 }
 
-modal-viewer button {
-    appearance: auto;
-    writing-mode: horizontal-tb !important;
-    text-rendering: auto;
-    color: #0d1015;
-    letter-spacing: normal;
-    word-spacing: normal;
-    line-height: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: center;
-    align-items: flex-start;
-    cursor: default;
-    box-sizing: border-box;
-    background-color: white;
-    margin: 0em;
-    padding: 1px 6px;
-    border-width: 2px;
-    border-style: outset;
-    border-color: buttonborder;
-    border-image: initial;
-}
-
 h3 {
     font-size: 25px;
     font-weight: 600;
+}
+
+h4 {
+    font-weight: 300;
 }
 
 .portrait {
@@ -186,10 +161,13 @@ h3 {
 .about-bio p {
     display: grid;
     font-size: 1em;
-    width: 60vw;
     min-width: 400px;
-    max-width: 50vw;
+    max-width: 60vw;
     margin-top: -20px;
+}
+
+#3d-caption {
+    margin-top: 20px!important;
 }
 
 .skills, 

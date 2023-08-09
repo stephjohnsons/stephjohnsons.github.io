@@ -30,7 +30,7 @@ function greetUser() {
 // Changes the job titles dynamically onClick. 
 function jobTitle() {
     const job1 = "web developer.";
-    const job2 = "UI designer.";
+    const job2 = "UI/UX designer.";
     const job3 = "digital content creator.";
     const job4 = "dreamer.";
 
