@@ -1,0 +1,37 @@
+[
+  {
+    "name": "SGD", 
+    "lastPrice": "3.10",
+    "change": "-0.5%",
+    "marketCap": "174B",
+    "flag": "🇸🇬"
+  },
+  {
+    "name": "IDR",
+    "lastPrice": "3304", 
+    "change": "+1.2%",
+    "marketCap": "123B",
+    "flag": "🇮🇩"
+  },
+  {
+    "name": "USD",
+    "lastPrice": "4.18",
+    "change": "+0.1%",
+    "marketCap": "901B",
+    "flag": "🇺🇸"
+  },
+  {
+    "name": "EUR",
+    "lastPrice": "4.55",
+    "change": "-0.7%", 
+    "marketCap": "884B",
+    "flag": "🇪🇺"
+  },
+  {
+    "name": "AUD",
+    "lastPrice": "2.94",
+    "change": "-0.4%",
+    "marketCap": "123B",
+    "flag": "🇦🇺"
+  }
+]
