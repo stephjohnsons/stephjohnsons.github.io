@@ -1,3 +1,4 @@
+// Exchanges the currency value.
 document.addEventListener('DOMContentLoaded', function () {
   const exchangeButton = document.getElementById('exchangeButton');
   const fromCurrencySelect = document.getElementById('fromCurrencySelect');
