@@ -12,7 +12,7 @@
 
 /* Navbar */
 .btn-globe {
-  border-radius: 24% 26% 68% 32% / 49% 43% 57% 51% ;
+  border-radius: 20%;
 }
 
 /* Overlapping Avatar */
@@ -49,14 +49,14 @@
   width: var(--feature-circle-size-1);
   height: var(--feature-circle-size-1);
   background-color: #91a2a4;
-  border-radius: 38% 62% 36% 64% / 54% 55% 45% 46%;
+  border-radius: 50%;
 }
 
 .feature-circle-2 {
   width: var(--feature-circle-size-2);
   height: var(--feature-circle-size-2);
   background-color: #a5b6b8;
-  border-radius: 46% 54% 39% 61% / 69% 43% 57% 31% ;
+  border-radius: 50%;
 }
 
 .feature-icon {
@@ -82,7 +82,7 @@ table .table {
 .exchange-circle {
   width: 50px;
   height: 50px;
-  border-radius: 38% 62% 36% 64% / 54% 55% 45% 46%;
+  border-radius: 50%;
   position: relative;
   left: 14em;
   z-index: 99;

@@ -3,7 +3,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
    <link href="./scss/custom.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
    <link rel="stylesheet" href="./styles/styles.css">
@@ -29,7 +29,14 @@
 
   <!-- Toggle dark mode -->
   <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (dark)">
+    <button 
+      class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" 
+      id="bd-theme" 
+      type="button" 
+      aria-expanded="false" 
+      data-bs-toggle="dropdown" 
+      aria-label="Toggle theme (dark)"
+    >
       <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
       <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
     </button>
@@ -92,14 +99,15 @@
                 | 
               </span>
               
-              <div class="dropdown ms-3">
+              <div class="dropdown ms-3 mt-1">
                 <button class="btn-secondary btn-outline-secondary dropdown-toggle btn-globe" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="bi-globe"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" href="#">Malay</a></li>
+                  <li><a class="dropdown-item" href="#">English</a></li>
+                  <li><a class="dropdown-item" href="#">Simplified Chinese</a></li>
+                  <li><a class="dropdown-item" href="#">Traditional Chinese</a></li>
                 </ul>
               </div>
           </div>
@@ -191,31 +199,31 @@
               <tbody>
                   <tr class="table-light">
                     <td scope="row">AUD</td>
-                    <td>3.04</td>
+                    <td id="aud-last-price"></td>
                     <td>up</td>
                     <td>3.15</td>
                   </tr>
                   <tr class="table-light">
                     <td scope="row">EUR</td>
-                    <td>2.95</td>
+                    <td id="eur-last-price"></td>
                     <td>down</td>
                     <td>3.03</td>
                   </tr>
                   <tr class="table-light">
                     <td scope="row">IDR</td>
-                    <td>2.95</td>
+                    <td id="idr-last-price"></td>
                     <td>down</td>
                     <td>3.03</td>
                   </tr>
                   <tr class="table-light">
                     <td scope="row">SGD</td>
-                    <td>2.95</td>
+                    <td id="sgd-last-price"></td>
                     <td>down</td>
                     <td>3.03</td>
                   </tr>
                   <tr class="table-light">
                     <td scope="row">USD</td>
-                    <td>2.95</td>
+                    <td id="usd-last-price"></td>
                     <td>down</td>
                     <td>3.03</td>
                   </tr>
@@ -242,7 +250,7 @@
               <div class="input-group">
                 <span class="input-group-text text-tertiary fs-7" id="inputGroup-sizing-sm">Send</span>
                 <input class="form-control" id="currency-exchange" placeholder="1,00" />
-                <select class="input-group-text form-select fs-5" type="button" data-bs-toggle="dropdown" aria-expanded>
+                <select class="input-group-text form-select fs-5" type="button" data-bs-toggle="dropdown" aria-expanded id="fromCurrencySelect">
                   <option value="MYR">MYR</option>
                   <option>------------</option>
                   <option value="AUD">AUD</option>
@@ -254,18 +262,16 @@
               </div>
     
               <div class="exchange-btn">
-                <button class="btn btn-primary exchange-circle m-auto" type="button">
-                  <img 
-                    class="d-flex m-auto exchange-icon"
-                    src="./img/exchange.png" 
-                    alt="exchange-icon">
+                <button class="btn btn-primary exchange-circle m-auto" type="button" id="exchangeButton">
+                  <img class="d-flex m-auto exchange-icon" src="./img/exchange.png" alt="exchange-icon">
                 </button>
+                
               </div>
     
               <div class="input-group mt-1">
                 <span class="input-group-text pe-4 text-tertiary fs-7" id="inputGroup-sizing-sm">Get</span>
                 <input class="form-control" id="currency-exchange" placeholder="3,23" />
-                <select class="input-group-text form-select fs-5" type="button" data-bs-toggle="dropdown" aria-expanded>
+                <select class="input-group-text form-select fs-5" type="button" data-bs-toggle="dropdown" aria-expanded  id="toCurrencySelect">
                   <option value="MYR">MYR</option>
                   <option>------------</option>
                   <option value="AUD" selected>AUD</option>
@@ -278,11 +284,8 @@
             </form>
     
             <p class="text-secondary text-center display-small justify-content-center align-content-center mx-4 mt-3 mb-5 lh-base">
-                Read
-                <a href="/#">
-                  Terms & Conditions.
-                </a>
-                A standard 1.5% transaction fee/transaction applies.
+                Read<a href="/#">Terms & Conditions</a>.
+                <span>A standard 1.5% transaction fee/transaction applies.</span>
             </p>
             <div class="d-grid">
               <button class="btn btn-primary change-button" type="button">Change</button>
@@ -324,5 +327,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
   <script src="./scripts/alert.js"></script>
+  <script src="./scripts/exchange.js"></script>
 </body>
 </html>

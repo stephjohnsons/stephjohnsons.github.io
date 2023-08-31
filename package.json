@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "animejs": "^3.2.1",
     "fullcalendar": "^6.1.8",
     "letterizejs": "^2.0.1"
