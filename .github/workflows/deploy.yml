@@ -41,7 +41,7 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Upload production-ready build files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact
         with:
           name: github-pages
           path: ./dist
