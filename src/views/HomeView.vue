@@ -26,9 +26,9 @@
       He also has a keen interest in software development and enjoys reading.
     </p>
     <p>
-      <a href="/about" class="text-muted">
+      <RouterLink :to="{ path: pageLinks[1].link }" class="text-muted">
         read more here
-      </a>
+      </RouterLink>
     </p>
   </main>
 </template>
@@ -36,6 +36,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { homeDescription } from '@/images/description.js';
+import { pageLinks } from '@/components/data/pages.js'
+import { RouterLink } from 'vue-router'
 
 const greeting = ref("");
 
