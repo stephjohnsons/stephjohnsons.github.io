@@ -41,23 +41,26 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Upload production-ready build files
-        uses: actions/upload-artifact@v4
+        uses: actions/actions/upload-pages-artifact@v1
         with:
-          name: github-pages
-          path: ./dist
+          # name: github-pages
+          path: build/
 
   deploy:
     name: Deploy
     needs: build
-    runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    permissions:
+      pages: write
+      id-token: write
 
+    runs-on: ubuntu-latest
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: ./dist
+        # with:
+        #   name: github-pages
+        #   path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
