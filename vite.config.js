@@ -8,11 +8,8 @@ import svgLoader from 'vite-svg-loader'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    VueDevTools(),
-    svgLoader(),
-  ],
+  plugins: [vue(), VueDevTools(), svgLoader()],
+  base: '/',
   optimizeDeps: {
     exclude: ['js-big-decimal']
   },
@@ -20,5 +17,5 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  },
+  }
 })
