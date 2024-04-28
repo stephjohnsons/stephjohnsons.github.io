@@ -4,7 +4,7 @@
       <Transition name="slide-fade" appear>
         <RouterLink :to="{ path: item.link }" :style="{ transitionDelay: `${index * 0.05}s` }" @mouseover="rotateArrow"
           @mouseleave="resetArrow">
-          <span>{{ item.name }}</span>
+          <span id="item">{{ item.name }}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor"
             class="bi bi-arrow-right-short" viewBox="0 0 16 16"
             style=" transform: rotate(-45deg); transition: 0.2s ease;">
@@ -77,6 +77,15 @@ a>span:hover {
   cursor: pointer;
 }
 
+.router-link-active span {
+  transition: 100ms cubic-bezier(.29, .57, .94, .61);
+}
+
+.router-link-active span:hover {
+  background-image: none !important;
+  cursor: default;
+}
+
 .slide-fade-enter-active,
 .slide-fade-leave-active {
   transition: all 0.3s ease-out;
@@ -86,5 +95,36 @@ a>span:hover {
 .slide-fade-leave-to {
   transform: translateX(20px);
   opacity: 0;
+}
+
+.router-link-active {
+  text-decoration: none;
+
+  #item {
+    position: relative;
+    display: inline-block;
+  }
+
+  #item::after {
+    content: ''; 
+    position: absolute;
+    bottom: 0; 
+    left: 10%;
+    right: -5%;
+    height: 40%; 
+    background-color: rgb(252, 192, 14); 
+    z-index: -1; 
+    transition: 100ms cubic-bezier(.29, .57, .94, .61);
+  }
+
+  #item:hover::after {
+    position: absolute;
+    left: -5%;
+    background-color: rgb(252, 192, 14); 
+  }
+
+  svg {
+    opacity: 0;
+  }
 }
 </style>
