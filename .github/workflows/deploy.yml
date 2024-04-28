@@ -30,7 +30,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        uses: npm ci
 
       - name: Build project
         run: npm run build
@@ -41,10 +41,9 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Upload production-ready build files
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          # name: github-pages
-          path: dist/
+          path: './dist'
 
   deploy:
     name: Deploy
@@ -53,6 +52,10 @@ jobs:
     permissions:
       pages: write
       id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
     steps:
