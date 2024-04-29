@@ -1,30 +1,34 @@
 export const pageLinks = [
   {
-    name: "Home",
-    link: "/"
+    name: 'Home',
+    link: '/'
   },
   {
-    name: "About",
-    link: "/about"
+    name: 'About',
+    link: '/about'
   },
   {
-    name: "Projects",
-    link: "/projects"
+    name: 'Projects',
+    link: '/projects'
   },
   {
-    name: "Gallery",
-    link: "/gallery"
+    name: 'Blog',
+    link: '/blog'
   },
   {
-    name: "Dates",
-    link: "/dates"
+    name: 'Gallery',
+    link: '/gallery'
   },
   {
-    name: "Teaching",
-    link: "/teaching"
+    name: 'Dates',
+    link: '/dates'
   },
   {
-    name: "Contact",
-    link: "/contact"
+    name: 'Teaching',
+    link: '/teaching'
+  },
+  {
+    name: 'Contact',
+    link: '/contact'
   }
-];
+]

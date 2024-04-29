@@ -36,7 +36,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { months } from '@/components/data/month.js';
+import { monthLookup } from '@/components/data/datetime.js';
 import EventButton from '@/components/EventCTAButton.vue';
 import Loading from '@/components/LoadingSpinner.vue';
 
@@ -61,12 +61,6 @@ onMounted(async () => {
     }
   }
 });
-
-const monthLookup = months.reduce((acc, obj) => {
-  const key = Object.keys(obj)[0];
-  acc[key] = obj[key];
-  return acc;
-}, {});
 
 const upcomingEvents = computed(() => {
   return rawEvents.value.map(event => {
