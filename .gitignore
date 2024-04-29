@@ -5,3 +5,5 @@ page/ionic/node_modules/.DS_Store
 .DS_Store
 .env
 node_modules
+.DS_Store
+node_modules/.DS_Store
