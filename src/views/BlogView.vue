@@ -4,22 +4,22 @@
     <p class="text-muted small fst-italic">
       Powered by <a href="https://wordpress.com/">WordPress</a>
     </p>
-
     <div v-if="loading" class="d-flex justify-content-start">
       <Loading />
     </div>
     <div v-else v-for="post in posts.posts" :key="post.id">
-      <h4 class="mb-0" id="post-title">{{ post.title }}</h4>
+      <h4 class="mb-0 fw-normal" id="post-title">{{ post.title }}</h4>
       <div class="d-flex mb-0 text-muted small ">
         <p class="me-1">
           Published on
-          {{ shortenDate(post.date) }}
+          {{ shortenDate(post.date) }}.
           {{ shortenMonth(post.date) }},
           {{ readableTime(post.date) }}
         </p>
       </div>
 
       <p v-html="post.content"></p>
+      <hr />
     </div>
   </div>
 </template>
