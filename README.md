@@ -1,57 +1,21 @@
-# website
+# Stephen's Portfolio
 
-This template should help get you started developing with Vue 3 in Vite.
+Welcome to the official repository for my personal portfolio website. This project showcases my professional skills, projects, and experiences as a cellist and a developer. It's built with Vue.js and hosted on GitHub Pages.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Responsive Design**: Ensures a seamless experience on both mobile and desktop devices.
+- **Interactive Projects Section**: Detailed list of my past projects.
+- **Gallery**: Grid of photos from past performances or photo shoot.
+- **Contact Form**: Integrated form for easy communication.
 
-## Customize configuration
+## Technologies Used
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- **Vue.js**: Frontend framework for building user interfaces.
+- **GitHub Pages**: For hosting the static site.
 
-## Project Setup
+## Integrations
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- **WordPress**: For blog posts.
+- **Bandsintown**: For concert date listings and ticketing links.
+- **Calendly**: For calendar scheduling, which is integrated to my personal and GCal to avoid any scheduling conflicts.
