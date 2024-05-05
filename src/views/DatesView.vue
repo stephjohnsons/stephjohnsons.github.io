@@ -11,19 +11,28 @@
     </div>
     <div v-else v-for="event in upcomingEvents" class="d-flex flex-row align-items-start py-4 border-bottom"
       :key="event.id">
-      <div class="px-1 d-flex flex-column">
-        <div class="border border-2 border-black px-3 pt-1 rounded-3 text-center w-fixed">
+      <div class="px-0 px-sm-1 d-flex flex-column d-none d-sm-block">
+        <div class="border border-2 border-black pt-1 rounded-3 text-center w-fixed">
           <h6 class="mt-1 mb-0 fw-normal">{{ event.shortenMonth }}</h6>
           <h4 class="mb-2">{{ event.shortenDate }}</h4>
         </div>
       </div>
-      <div class="ms-2 justify-content-start">
-        <h6 class="mb-0">{{ event.time }}</h6>
+      <div class="ms-0 ms-sm-2 justify-content-start">
+        <h5 class="mb-1 d-sm-none" id="item">
+          <span class="fw-normal">
+            {{ event.shortenDate }} {{ event.shortenMonth }} •
+          </span>
+          {{ event.time }}
+        </h5>
+        <h6 class="mb-0 d-none d-sm-block">
+          {{ event.time }}
+        </h6>
         <div>
-          <h3 class="mb-0">{{ event.title }}</h3>
+          <h4 class="mb-0 d-sm-none">{{ event.title }}</h4>
+          <h3 class="mb-0 d-none d-sm-block">{{ event.title }}</h3>
           <h6 class="fw-normal mb-0">{{ event.venue.location }}</h6>
         </div>
-        <p class="fst-italic mt-1 mb-2">{{ truncateDescription(event.description, 12) }}</p>
+        <p class="fst-italic mt-1 mb-2 text-muted">{{ truncateDescription(event.description, 12) }}</p>
         <div class="d-flex gap-2">
           <EventButton v-if="event.offers.length > 0" type="ticket" :link="event.offers[0].url" />
           <EventButton v-else type="ticket-disabled" />
@@ -95,6 +104,24 @@ body {
 }
 
 .w-fixed {
-  width: 65px;
+  min-width: 60px;
+  max-width: 60px;
+}
+
+#item {
+  position: relative;
+  display: inline-block;
+}
+
+#item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: -5%;
+  height: 40%;
+  background-color: rgba(251, 188, 0, 0.7);
+  z-index: -1;
+  transition: 100ms cubic-bezier(.29, .57, .94, .61);
 }
 </style>
