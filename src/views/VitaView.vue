@@ -14,14 +14,8 @@
     </div>
 
     <div class="d-flex flex-row gap-1 mt-1 mb-3">
-      <button :class="buttonClass('Skills')" @click="switchPage('Skills')">
-        Skills
-      </button>
-      <button :class="buttonClass('Certificates')" @click="switchPage('Certificates')">
-        Certificates
-      </button>
-      <button :class="buttonClass('Languages')" @click="switchPage('Languages')">
-        Languages
+      <button v-for='item in pages' :key="item" :class="buttonClass(item)" @click="switchPage(item)">
+        {{ item }}
       </button>
     </div>
 
@@ -29,6 +23,8 @@
       <Skills v-if="currentPage === 'Skills'" />
       <Certificates v-if="currentPage === 'Certificates'" />
       <Languages v-if="currentPage === 'Languages'" />
+      <Education v-if="currentPage === 'Education'" />
+      <Development v-if="currentPage === 'Development'" />
     </div>
   </div>
 </template>
@@ -38,9 +34,18 @@ import { ref } from 'vue';
 import Skills from './VitaPages/Skills.vue';
 import Certificates from './VitaPages/Certificates.vue';
 import Languages from './VitaPages/Languages.vue';
+import Education from './VitaPages/Education.vue';
+import Development from './VitaPages/Development.vue';
 import { devBio } from "@/components/data/biographies.js";
-
 const currentPage = ref('Skills');
+
+const pages = ref([
+  'Skills',
+  'Certificates',
+  'Languages',
+  'Education',
+  'Development'
+])
 
 function switchPage(page) {
   currentPage.value = page;

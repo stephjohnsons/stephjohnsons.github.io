@@ -172,6 +172,27 @@ export const certificates = [
   }
 ]
 
+export const education = [
+  {
+    degree: 'Postgraduate Diploma in Tertiary Education',
+    provider: 'UCSI University, Kuala Lumpur',
+    graduated: 'Apr 2022',
+    major: 'Educational psychology, sociology, and philosophy; microteaching'
+  },
+  {
+    degree: 'Master of Music',
+    provider: 'UCSI University, Kuala Lumpur',
+    graduated: 'Apr 2018',
+    major: 'Performance studies; chamber music'
+  },
+  {
+    degree: 'Bachelor of Classical Music (with honours)',
+    provider: 'UCSI University, Kuala Lumpur',
+    graduated: 'Aug 2016',
+    major: 'Classical music performance'
+  }
+]
+
 export const languages = [
   {
     name: 'English',
