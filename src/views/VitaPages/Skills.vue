@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <h3>Skills</h3>
   <div class="accordion" v-for="(items, category, idx) in devProfile" :key="category">

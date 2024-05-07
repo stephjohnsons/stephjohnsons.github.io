@@ -171,3 +171,54 @@ export const certificates = [
     credentials: 'Z7G47PQRCSF4'
   }
 ]
+
+export const languages = [
+  {
+    name: 'English',
+    level: 'Trilingual native speaker',
+    spoken: 'Fluent',
+    written: 'Fluent'
+  },
+  {
+    name: 'Malay',
+    level: 'Trilingual native speaker',
+    spoken: 'Fluent',
+    written: 'Conversational'
+  },
+  {
+    name: 'Hakka Chinese',
+    level: 'Trilingual native speaker',
+    spoken: 'Fluent',
+    written: '-'
+  },
+  {
+    name: 'Mandarin Chinese',
+    level: '12 years of school; UEC (SM3) B4',
+    spoken: 'Conversational',
+    written: 'Proficient'
+  },
+  {
+    name: 'German',
+    level: 'CEFR A2',
+    spoken: 'Conversational',
+    written: 'Conversational'
+  },
+  {
+    name: 'Spanish',
+    level: 'CEFR A1',
+    spoken: 'Basic',
+    written: 'Basic'
+  },
+  {
+    name: 'French',
+    level: 'CEFR A1',
+    spoken: 'Basic',
+    written: '-'
+  },
+  {
+    name: 'Japanese',
+    level: 'JLPT N5',
+    spoken: 'Basic',
+    written: 'Basic'
+  }
+]

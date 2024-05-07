@@ -20,46 +20,25 @@
       <button :class="buttonClass('Certificates')" @click="switchPage('Certificates')">
         Certificates
       </button>
+      <button :class="buttonClass('Languages')" @click="switchPage('Languages')">
+        Languages
+      </button>
     </div>
 
-    <div v-if="currentPage === 'Skills'">
-      <Skills />
-    </div>
-
-    <div v-else>
-      <h3>Certificates</h3>
-      <div v-for="cert in    certificates   " :key="cert.index">
-        <h6 class="mb-0 fw-semibold">{{ cert.name }}</h6>
-        <p class="mb-0">
-          {{ cert.provider }}
-        </p>
-        <p class="text-muted mb-0 fs-7 fst-normal">
-          Issued {{ cert.issuanceDate }} <br />
-        </p>
-        <p class="text-muted fs-7 fst-normal">
-          Credential ID
-          <a :href="certificateLink + cert.credentials" class="link" target="_blank">
-            {{ cert.credentials }}
-          </a>
-        </p>
-        <hr>
-      </div>
+    <div>
+      <Skills v-if="currentPage === 'Skills'" />
+      <Certificates v-if="currentPage === 'Certificates'" />
+      <Languages v-if="currentPage === 'Languages'" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref } from 'vue';
 import Skills from './VitaPages/Skills.vue';
-import { devBio, devProfile, certificates } from "@/components/data/biographies.js";
-
-const isActive = reactive({});
-
-const certificateLink = 'https://www.coursera.org/account/accomplishments/certificate/';
-
-const toggle = (index) => {
-  isActive[index] = !isActive[index];
-};
+import Certificates from './VitaPages/Certificates.vue';
+import Languages from './VitaPages/Languages.vue';
+import { devBio } from "@/components/data/biographies.js";
 
 const currentPage = ref('Skills');
 
@@ -75,12 +54,6 @@ function buttonClass(page) {
     currentPage.value === page ? 'btn-warning' : 'btn-outline-dark'
   ];
 }
-
-onMounted(() => {
-  Object.keys(devProfile).forEach((key, index) => {
-    isActive[index] = index === 0;
-  });
-});
 </script>
 
 <style scoped>
