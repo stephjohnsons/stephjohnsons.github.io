@@ -86,7 +86,8 @@ p>a:hover {
 }
 
 .fs-7 {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  font-style: italic;
 }
 
 .fs-8 {

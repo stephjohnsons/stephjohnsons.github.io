@@ -95,8 +95,4 @@ a:hover {
 .photo-container:hover .caption {
   opacity: 1;
 }
-
-.fs-7 {
-  font-size: 0.7rem;
-}
 </style>
