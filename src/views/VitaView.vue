@@ -24,7 +24,7 @@
       <Certificates v-if="currentPage === 'Certificates'" />
       <Languages v-if="currentPage === 'Languages'" />
       <Education v-if="currentPage === 'Education'" />
-      <Development v-if="currentPage === 'Development'" />
+      <!-- <Development v-if="currentPage === 'Development'" /> -->
     </div>
   </div>
 </template>
@@ -35,7 +35,7 @@ import Skills from './VitaPages/Skills.vue';
 import Certificates from './VitaPages/Certificates.vue';
 import Languages from './VitaPages/Languages.vue';
 import Education from './VitaPages/Education.vue';
-import Development from './VitaPages/Development.vue';
+// import Development from './VitaPages/Development.vue';
 import { devBio } from "@/components/data/biographies.js";
 const currentPage = ref('Skills');
 
@@ -44,7 +44,8 @@ const pages = ref([
   'Certificates',
   'Languages',
   'Education',
-  'Development'
+  // 'Development',
+  // 'Design'
 ])
 
 function switchPage(page) {

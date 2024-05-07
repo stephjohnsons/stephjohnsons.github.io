@@ -89,8 +89,16 @@ export const devBio = [
 ]
 
 export const devProfile = reactive({
-  'Front-End Development': ['HTML', 'CSS / Bootstrap, Tailwind', 'Javascript', 'Vue.js', 'React'],
-  'Back-End Development': ['Ruby on Rails', 'Node.js', 'Python', 'PHP'],
+  'Front-End Development': [
+    'HTML, CSS',
+    'Bootstrap CSS and Tailwind CSS',
+    'Javascript',
+    'Vue.js',
+    'Angular',
+    'GraphQL',
+    'REST APIs'
+  ],
+  'Back-End Development': ['Ruby on Rails', 'Node.js', 'Python'],
   Wireframing: ['Figma'],
   'Design and Art': ['Adobe Photoshop', 'Adobe Illustrator'],
   Marketing: ['Mailchimp'],
