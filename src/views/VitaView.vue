@@ -3,8 +3,8 @@
     <h2>Vita</h2>
 
     <p class="text-muted fst-italic">
-      This page is a comprehensive showcase of things that I've done in design, web
-      development, and anything out of music.
+      This page is a comprehensive showcase of things that I've done outside of music, particularly in design and web
+      development.
       I have included a selection of works done that highlights the diversity and depth of my skills across domains.
     </p>
     <div v-for="(paragraph, index) in devBio" :key="index">
