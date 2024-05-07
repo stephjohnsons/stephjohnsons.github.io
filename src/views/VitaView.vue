@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column">
-    <h2>Curriculum Vitae</h2>
+    <h2>Vita</h2>
 
     <p class="text-muted fst-italic">
       This page is a comprehensive showcase of things that I've done in design, web
@@ -50,7 +50,7 @@
 
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
-import Skills from './DesignPages/Skills.vue';
+import Skills from './VitaPages/Skills.vue';
 import { devBio, devProfile, certificates } from "@/components/data/biographies.js";
 
 const isActive = reactive({});

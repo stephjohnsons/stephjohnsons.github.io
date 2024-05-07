@@ -30,9 +30,9 @@ const router = createRouter({
       component: () => import('../views/GalleryView.vue')
     },
     {
-      path: '/design',
-      name: 'design',
-      component: () => import('../views/DesignView.vue')
+      path: '/vita',
+      name: 'vita',
+      component: () => import('../views/VitaView.vue')
     },
     {
       path: '/dates',

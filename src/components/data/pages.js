@@ -12,8 +12,8 @@ export const pageLinks = [
     link: '/projects'
   },
   {
-    name: 'Design',
-    link: '/design'
+    name: 'Vita',
+    link: '/vita'
   },
   {
     name: 'Blog',
