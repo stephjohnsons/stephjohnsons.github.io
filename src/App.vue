@@ -32,7 +32,7 @@ const route = useRoute();
 
 const title = ref(document.title);
 window.addEventListener("blur", () => {
-  document.title = "Come back :(";
+  document.title = "Come back 😭";
 });
 
 window.addEventListener("focus", () => {
