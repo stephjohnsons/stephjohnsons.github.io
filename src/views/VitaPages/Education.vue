@@ -6,7 +6,7 @@
     <p class="mb-0">
       {{ edu.provider }}
     </p>
-    <p class="text-muted mb-0 fs-7 fst-normal">
+    <p class="text-muted mb-0 fs-7">
       Graduated in {{ edu.graduated }} <br />
     </p>
     <p class="text-muted fs-7 fst-normal">
