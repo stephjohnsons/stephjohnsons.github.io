@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import('../views/GalleryView.vue')
     },
     {
+      path: '/design',
+      name: 'design',
+      component: () => import('../views/DesignView.vue')
+    },
+    {
       path: '/dates',
       name: 'dates',
       component: () => import('../views/DatesView.vue')

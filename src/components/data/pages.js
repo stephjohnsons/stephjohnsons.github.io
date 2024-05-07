@@ -12,6 +12,10 @@ export const pageLinks = [
     link: '/projects'
   },
   {
+    name: 'Design',
+    link: '/design'
+  },
+  {
     name: 'Blog',
     link: '/blog'
   },

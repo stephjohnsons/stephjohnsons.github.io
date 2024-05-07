@@ -80,3 +80,94 @@ export const teachingProfile = reactive({
     'Tseu. 2022. Physical Considerations in Teaching the Cello. (Presentation)'
   ]
 })
+
+export const devBio = [
+  "Outside of music, I develop websites and I love all things tech and artsy. When I'm not practicing on my cello, I'm usually knee-deep in looking out for latest design trends and web development technologies. I started out in mid-2021 as a self-taught developer, and since learning the bits and pieces of the tech industry, I decided that I would dive into the industry in early 2023, and got a position as a software developer later.",
+  'In web development, I currently specialise in front-end development, but I have a little bit of experience with everything from UI/UX writing and design to coding to QA, and also project management.',
+  'I also get the occasional design gigs and am always looking for new ways to improve my skills.',
+  'Updated Apr 2024. Do not use or amend without permission.'
+]
+
+export const devProfile = reactive({
+  'Front-End Development': ['HTML', 'CSS / Bootstrap, Tailwind', 'Javascript', 'Vue.js', 'React'],
+  'Back-End Development': ['Ruby on Rails', 'Node.js', 'Python', 'PHP'],
+  Wireframing: ['Figma'],
+  'Design and Art': ['Adobe Photoshop', 'Adobe Illustrator'],
+  Marketing: ['Mailchimp'],
+  Other: ['Version Control', 'Postman', 'Microsoft 365', 'Google Workspace']
+})
+
+export const certificates = [
+  {
+    name: 'Technical Support Fundamentals',
+    provider: 'Google',
+    issuanceDate: 'Apr 2020',
+    credentials: 'N7MCXSEG6MEU'
+  },
+  {
+    name: 'Operating Systems and You: Becoming a Power User',
+    provider: 'Google',
+    issuanceDate: 'Apr 2020',
+    credentials: 'ZWKKXVDMMF8F'
+  },
+  {
+    name: 'The Bits and Bytes of Computer Networking',
+    provider: 'Google',
+    issuanceDate: 'Apr 2020',
+    credentials: 'JFN9XPSVYPDE'
+  },
+  {
+    name: 'Foundations of UX Design',
+    provider: 'Google',
+    issuanceDate: 'Sep 2022',
+    credentials: 'S7QXXMK93KPU'
+  },
+  {
+    name: 'Introduction to Back-End Development',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2022',
+    credentials: '4EV9QWAVSJ97'
+  },
+  {
+    name: 'Introduction to Databases for Back-End Development',
+    provider: 'Meta',
+    issuanceDate: 'Nov 2022',
+    credentials: '6D7JSCNGXA9N'
+  },
+  {
+    name: 'Introduction to Front-End Development',
+    provider: 'Meta',
+    issuanceDate: 'Jan 2023',
+    credentials: 'AK5S39VSNNCB'
+  },
+  {
+    name: 'AWS Cloud Technical Essentials',
+    provider: 'Amazon Web Services (AWS)',
+    issuanceDate: 'Aug 2023',
+    credentials: 'TLM7YTCXS3EQ'
+  },
+  {
+    name: 'Version Control',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2023',
+    credentials: '8HPG64UXWADB'
+  },
+  {
+    name: 'Python Basics',
+    provider: 'University of Michigan',
+    issuanceDate: 'Oct 2023',
+    credentials: '5F4BCTM5JS7G'
+  },
+  {
+    name: 'Programming with JavaScript',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2023',
+    credentials: '6FPGQU7BUXZ5'
+  },
+  {
+    name: 'Principles of UX/UI Design',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2023',
+    credentials: 'Z7G47PQRCSF4'
+  }
+]
