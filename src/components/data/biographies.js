@@ -284,7 +284,7 @@ export const works = [
   {
     name: 'Weather App',
     desc: "Self-initiated project. An app that generates weather information of a local city based on user's search.",
-    link: '-'
+    link: 'https://stephjohnsons.com/weather-app/'
   }
 ]
 
