@@ -22,7 +22,7 @@
     <div class="sticky-top z-2">
       <Skills v-if="currentPage === 'Skills'" />
       <Development v-if="currentPage === 'Development'" />
-      <Design v-if="currentPage === 'Design'" />
+      <!-- <Design v-if="currentPage === 'Design'" /> -->
       <Certificates v-if="currentPage === 'Certificates'" />
       <Languages v-if="currentPage === 'Languages'" />
       <Education v-if="currentPage === 'Education'" />
@@ -34,7 +34,7 @@
 import { ref } from 'vue';
 import Skills from './VitaPages/Skills.vue';
 import Development from './VitaPages/Development.vue';
-import Design from './VitaPages/Design.vue';
+// import Design from './VitaPages/Design.vue';
 import Certificates from './VitaPages/Certificates.vue';
 import Languages from './VitaPages/Languages.vue';
 import Education from './VitaPages/Education.vue';
@@ -44,7 +44,7 @@ const currentPage = ref('Skills');
 const pages = ref([
   'Skills',
   'Development',
-  'Design',
+  // 'Design',
   'Certificates',
   'Languages',
   'Education',
