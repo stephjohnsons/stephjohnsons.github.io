@@ -90,19 +90,22 @@ export const devBio = [
 
 export const devProfile = reactive({
   'Front-End Development': [
-    'HTML, CSS',
+    'Vanilla HTML, CSS, Javascript',
     'Bootstrap CSS and Tailwind CSS',
-    'Javascript',
+    'Typescript',
     'Vue.js',
     'Angular',
+    'React',
     'GraphQL',
     'REST APIs'
   ],
   'Back-End Development': ['Ruby on Rails', 'Node.js', 'Python'],
+  CMS: ['Wordpress', 'Wix'],
   Wireframing: ['Figma'],
   'Design and Art': ['Adobe Photoshop', 'Adobe Illustrator'],
+  Music: ['Logic Pro', 'Sibelius'],
   Marketing: ['Mailchimp'],
-  Other: ['Version Control', 'Postman', 'Microsoft 365', 'Google Workspace']
+  Other: ['Git', 'Postman', 'QA Testing', 'Microsoft 365', 'Google Workspace']
 })
 
 export const certificates = [
@@ -177,6 +180,12 @@ export const certificates = [
     provider: 'Meta',
     issuanceDate: 'Oct 2023',
     credentials: 'Z7G47PQRCSF4'
+  },
+  {
+    name: 'Introduction to Google SEO',
+    provider: 'University of California, Davis',
+    issuanceDate: 'May 2024',
+    credentials: '-'
   }
 ]
 
@@ -189,15 +198,19 @@ export const education = [
   },
   {
     degree: 'Master of Music',
-    provider: 'UCSI University, Kuala Lumpur',
+    provider: 'UCSI Institute of Music, Kuala Lumpur',
     graduated: 'Apr 2018',
-    major: 'Performance studies; chamber music'
+    major: 'Performance studies; chamber music',
+    teachers:
+      '• Julie Dessureault (cello)<br> • Orfeo Trio, Raphaël Chrétien, Ruth Rosique, Guillaume Chilemme (ensemble)<br> • Asier Polo, Thomas Duran (masterclass)'
   },
   {
     degree: 'Bachelor of Classical Music (with honours)',
-    provider: 'UCSI University, Kuala Lumpur',
+    provider: 'UCSI Institute of Music, Kuala Lumpur',
     graduated: 'Aug 2016',
-    major: 'Classical music performance'
+    major: 'Classical music performance',
+    teachers:
+      '• Julie Dessureault, Leonid Shukaev (cello)<br> • Gleb Stepanov, Alexander Buzlov (masterclasses)'
   }
 ]
 
@@ -215,39 +228,70 @@ export const languages = [
     written: 'Conversational'
   },
   {
-    name: 'Hakka Chinese',
+    name: 'Hakka Chinese (客家話)',
     level: 'Trilingual native speaker',
     spoken: 'Fluent',
     written: '-'
   },
   {
-    name: 'Mandarin Chinese',
+    name: 'Mandarin Chinese (简体/繁体)',
     level: '12 years of school; UEC (SM3) B4',
     spoken: 'Conversational',
     written: 'Proficient'
   },
   {
-    name: 'German',
+    name: 'German (Deutsch)',
     level: 'CEFR A2',
     spoken: 'Conversational',
     written: 'Conversational'
   },
   {
-    name: 'Spanish',
+    name: 'Spanish (Español)',
     level: 'CEFR A1',
     spoken: 'Basic',
     written: 'Basic'
   },
   {
-    name: 'French',
+    name: 'French (Français)',
     level: 'CEFR A1',
     spoken: 'Basic',
     written: '-'
   },
   {
-    name: 'Japanese',
+    name: 'Japanese (日本語)',
     level: 'JLPT N5',
     spoken: 'Basic',
     written: 'Basic'
+  }
+]
+
+export const works = [
+  {
+    name: 'FlyEasy',
+    desc: 'Self-initiated project. Concept website for a fictitious travel agency based in Malaysia, with the purpose of practising the use of Bootstrap components and framework.',
+    link: 'https://stephjohnsons.com/flyeasy/'
+  },
+  {
+    name: 'Quote for Instagram Posts',
+    desc: 'Self-initiated project. A website to generate inspirational quotes for Instagram posts, with the purpose of practising the use of Tailwind CSS and integrating API into a site.',
+    link: 'https://stephjohnsons.com/quotes/'
+  },
+  {
+    name: 'Ionic',
+    desc: "Self-initiated project.Inspired by @ui.shreyash's UI design (posted on Instagram), and wanted to recreate the same design based on his UI. Buttons, table layout were slightly changed.",
+    link: '-'
+  },
+  {
+    name: 'Weather App',
+    desc: "Self-initiated project. An app that generates weather information of a local city based on user's search.",
+    link: '-'
+  }
+]
+
+export const designs = [
+  {
+    client: 'Kamerata KL',
+    description:
+      'Kamerata Kuala Lumpur (Kamerata KL) is a chamber orchestra made up of outstanding up-and-coming Malaysian musicians. Founded by Foo Yin Hong and Nasran Nawi, Kamerata KL is currently led by Ergys Koni in their artistic direction in delivering high-quality chamber music performances, while providing a platform for outstanding artists to showcase their craft. <br> Since its inaugural performance in March 2018, Kamerata KL has enjoyed a dynamic musical journey: having performed in over 20 concerts with various soloists of the highest calibres such as Carlos Mejía, Maïa Darmé, Dr Poom Prommachart, Saskia Lethiec, Valerie Almard, Izzywan Musib, and Ang Mei Foong, among many others.'
   }
 ]
