@@ -4,40 +4,23 @@
 
     <!-- Teaching Bio -->
     <div v-for="(paragraph, index) in teachingBio" :key="index">
-      <p
-        :class="{ 'fs-7': index === teachingBio.length - 1 }"
-      >
+      <p :class="{ 'fs-7': index === teachingBio.length - 1 }">
         {{ paragraph }}
       </p>
     </div>
 
     <!-- Teaching Profile Accordion -->
-    <div 
-      class="accordion" 
-      v-for="(items, category, idx) in teachingProfile" 
-      :key="category"
-    >
+    <div class="accordion" v-for="(items, category, idx) in teachingProfile" :key="category">
       <div class="accordion-item">
         <h2 class="accordion-header" :id="`heading${idx}`">
-          <button
-            class="accordion-button"
-            type="button"
-            :class="{'collapsed': !isActive[idx]}"
-            data-bs-toggle="collapse"
-            :data-bs-target="`#collapse${idx}`"
-            :aria-expanded="isActive[idx] ? 'true' : 'false'"
-            @click="toggle(idx)"
-          >
+          <button class="accordion-button" type="button" :class="{ 'collapsed': !isActive[idx] }"
+            data-bs-toggle="collapse" :data-bs-target="`#collapse${idx}`"
+            :aria-expanded="isActive[idx] ? 'true' : 'false'" @click="toggle(idx)">
             <strong>{{ category }}</strong>
           </button>
         </h2>
-        <div
-          :id="`collapse${idx}`"
-          class="accordion-collapse collapse"
-          :class="{'show': isActive[idx]}"
-          :aria-labelledby="`heading${idx}`"
-          data-bs-parent="#accordionExample"
-        >
+        <div :id="`collapse${idx}`" class="accordion-collapse collapse" :class="{ 'show': isActive[idx] }"
+          :aria-labelledby="`heading${idx}`" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <ul>
               <li v-for="item in items" :key="item">{{ item }}</li>
@@ -58,37 +41,28 @@
           from Scandinavian Cello School in Stevns, Denmark to the class of Stephen Johnson-Tseu.
         </p>
         <div class="d-flex">
-          <Link
-            link="https://www.youtube.com/watch?v=hSYOXMHuUsA"
-            text="Video"
-          />
+          <Link link="https://www.youtube.com/watch?v=hSYOXMHuUsA" text="Video" />
         </div>
       </div>
 
       <div class="d-flex flex-column custom-width">
         <h4>Jesselton Philharmonic Orchestra Broadcast</h4>
         <p class="mb-2">
-          Jesselton Philharmonic Orchestra Family Programme is a live broadcast via ZOOM and stream LIVE on YouTube.  
+          Jesselton Philharmonic Orchestra Family Programme is a live broadcast via ZOOM and stream LIVE on YouTube.
         </p>
         <div class="d-flex">
-          <Link
-            link="https://www.youtube.com/watch?v=xaVXcMYjgSw"
-            text="Video"
-          />
+          <Link link="https://www.youtube.com/watch?v=xaVXcMYjgSw" text="Video" />
         </div>
       </div>
-      
+
       <div class="d-flex flex-column custom-width">
         <h4>A short introduction to the cello</h4>
         <p class="mb-2">
-          Guest speaker for the Malaysian Brass Outreach Project's Guest Series video. 
+          Guest speaker for the Malaysian Brass Outreach Project's Guest Series video.
           Recorded for Jul 2020.
         </p>
         <div class="d-flex">
-          <Link
-            link="https://www.youtube.com/watch?v=r9GTmInXLSo"
-            text="Video"
-          />
+          <Link link="https://www.youtube.com/watch?v=r9GTmInXLSo" text="Video" />
         </div>
       </div>
     </div>
@@ -108,7 +82,7 @@ const toggle = (index) => {
 
 onMounted(() => {
   Object.keys(teachingProfile).forEach((key, index) => {
-    isActive[index] = index === 0; 
+    isActive[index] = index === 0;
   });
 });
 </script>
@@ -116,11 +90,6 @@ onMounted(() => {
 <style scoped>
 body {
   background-color: #BEFAFD;
-}
-
-.fs-7 {
-  font-size: 0.75rem;
-  font-style: italic;
 }
 
 .accordion {

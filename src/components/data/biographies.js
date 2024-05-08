@@ -80,3 +80,218 @@ export const teachingProfile = reactive({
     'Tseu. 2022. Physical Considerations in Teaching the Cello. (Presentation)'
   ]
 })
+
+export const devBio = [
+  "Outside of music, I develop websites and I love all things tech and artsy. When I'm not practicing on my cello, I'm usually knee-deep in looking out for latest design trends and web development technologies. I started out in mid-2021 as a self-taught developer, and since learning the bits and pieces of the tech industry, I decided that I would dive into the industry in early 2023, and got a position as a software developer later.",
+  'In web development, I currently specialise in front-end development, but I have a little bit of experience with everything from UI/UX writing and design to coding to QA, and also project management.',
+  'I also get the occasional design gigs and am always looking for new ways to improve my skills.',
+  'Updated Apr 2024. Do not use or amend without permission.'
+]
+
+export const devProfile = reactive({
+  'Front-End Development': [
+    'Vanilla HTML, CSS, Javascript',
+    'Bootstrap CSS and Tailwind CSS',
+    'Typescript',
+    'Vue.js',
+    'Angular',
+    'React',
+    'GraphQL',
+    'REST APIs'
+  ],
+  'Back-End Development': ['Ruby on Rails', 'Node.js', 'Python'],
+  CMS: ['Wordpress', 'Wix'],
+  Wireframing: ['Figma'],
+  'Design and Art': ['Adobe Photoshop', 'Adobe Illustrator'],
+  Music: ['Logic Pro', 'Sibelius'],
+  Marketing: ['Mailchimp'],
+  Other: ['Git', 'Postman', 'QA Testing', 'Microsoft 365', 'Google Workspace']
+})
+
+export const certificates = [
+  {
+    name: 'Technical Support Fundamentals',
+    provider: 'Google',
+    issuanceDate: 'Apr 2020',
+    credentials: 'N7MCXSEG6MEU'
+  },
+  {
+    name: 'Operating Systems and You: Becoming a Power User',
+    provider: 'Google',
+    issuanceDate: 'Apr 2020',
+    credentials: 'ZWKKXVDMMF8F'
+  },
+  {
+    name: 'The Bits and Bytes of Computer Networking',
+    provider: 'Google',
+    issuanceDate: 'Apr 2020',
+    credentials: 'JFN9XPSVYPDE'
+  },
+  {
+    name: 'Foundations of UX Design',
+    provider: 'Google',
+    issuanceDate: 'Sep 2022',
+    credentials: 'S7QXXMK93KPU'
+  },
+  {
+    name: 'Introduction to Back-End Development',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2022',
+    credentials: '4EV9QWAVSJ97'
+  },
+  {
+    name: 'Introduction to Databases for Back-End Development',
+    provider: 'Meta',
+    issuanceDate: 'Nov 2022',
+    credentials: '6D7JSCNGXA9N'
+  },
+  {
+    name: 'Introduction to Front-End Development',
+    provider: 'Meta',
+    issuanceDate: 'Jan 2023',
+    credentials: 'AK5S39VSNNCB'
+  },
+  {
+    name: 'AWS Cloud Technical Essentials',
+    provider: 'Amazon Web Services (AWS)',
+    issuanceDate: 'Aug 2023',
+    credentials: 'TLM7YTCXS3EQ'
+  },
+  {
+    name: 'Version Control',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2023',
+    credentials: '8HPG64UXWADB'
+  },
+  {
+    name: 'Python Basics',
+    provider: 'University of Michigan',
+    issuanceDate: 'Oct 2023',
+    credentials: '5F4BCTM5JS7G'
+  },
+  {
+    name: 'Programming with JavaScript',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2023',
+    credentials: '6FPGQU7BUXZ5'
+  },
+  {
+    name: 'Principles of UX/UI Design',
+    provider: 'Meta',
+    issuanceDate: 'Oct 2023',
+    credentials: 'Z7G47PQRCSF4'
+  },
+  {
+    name: 'Introduction to Google SEO',
+    provider: 'University of California, Davis',
+    issuanceDate: 'May 2024',
+    credentials: '-'
+  }
+]
+
+export const education = [
+  {
+    degree: 'Postgraduate Diploma in Tertiary Education',
+    provider: 'UCSI University, Kuala Lumpur',
+    graduated: 'Apr 2022',
+    major: 'Educational psychology, sociology, and philosophy; microteaching'
+  },
+  {
+    degree: 'Master of Music',
+    provider: 'UCSI Institute of Music, Kuala Lumpur',
+    graduated: 'Apr 2018',
+    major: 'Performance studies; chamber music',
+    teachers:
+      '• Julie Dessureault (cello)<br> • Orfeo Trio, Raphaël Chrétien, Ruth Rosique, Guillaume Chilemme (ensemble)<br> • Asier Polo, Thomas Duran (masterclass)'
+  },
+  {
+    degree: 'Bachelor of Classical Music (with honours)',
+    provider: 'UCSI Institute of Music, Kuala Lumpur',
+    graduated: 'Aug 2016',
+    major: 'Classical music performance',
+    teachers:
+      '• Julie Dessureault, Leonid Shukaev (cello)<br> • Gleb Stepanov, Alexander Buzlov (masterclasses)'
+  }
+]
+
+export const languages = [
+  {
+    name: 'English',
+    level: 'Trilingual native speaker',
+    spoken: 'Fluent',
+    written: 'Fluent'
+  },
+  {
+    name: 'Malay',
+    level: 'Trilingual native speaker',
+    spoken: 'Fluent',
+    written: 'Conversational'
+  },
+  {
+    name: 'Hakka Chinese (客家話)',
+    level: 'Trilingual native speaker',
+    spoken: 'Fluent',
+    written: '-'
+  },
+  {
+    name: 'Mandarin Chinese (简体/繁体)',
+    level: '12 years of school; UEC (SM3) B4',
+    spoken: 'Conversational',
+    written: 'Proficient'
+  },
+  {
+    name: 'German (Deutsch)',
+    level: 'CEFR A2',
+    spoken: 'Conversational',
+    written: 'Conversational'
+  },
+  {
+    name: 'Spanish (Español)',
+    level: 'CEFR A1',
+    spoken: 'Basic',
+    written: 'Basic'
+  },
+  {
+    name: 'French (Français)',
+    level: 'CEFR A1',
+    spoken: 'Basic',
+    written: '-'
+  },
+  {
+    name: 'Japanese (日本語)',
+    level: 'JLPT N5',
+    spoken: 'Basic',
+    written: 'Basic'
+  }
+]
+
+export const works = [
+  {
+    name: 'FlyEasy',
+    desc: 'Self-initiated project. Concept website for a fictitious travel agency based in Malaysia, with the purpose of practising the use of Bootstrap components and framework.',
+    link: 'https://stephjohnsons.com/flyeasy/'
+  },
+  {
+    name: 'Quote for Instagram Posts',
+    desc: 'Self-initiated project. A website to generate inspirational quotes for Instagram posts, with the purpose of practising the use of Tailwind CSS and integrating API into a site.',
+    link: 'https://stephjohnsons.com/quotes/'
+  },
+  {
+    name: 'Ionic',
+    desc: "Self-initiated project.Inspired by @ui.shreyash's UI design (posted on Instagram), and wanted to recreate the same design based on his UI. Buttons, table layout were slightly changed.",
+    link: '-'
+  },
+  {
+    name: 'Weather App',
+    desc: "Self-initiated project. An app that generates weather information of a local city based on user's search.",
+    link: 'https://stephjohnsons.com/weather-app/'
+  }
+]
+
+export const designs = [
+  {
+    client: 'Kamerata KL',
+    description:
+      'Kamerata Kuala Lumpur (Kamerata KL) is a chamber orchestra made up of outstanding up-and-coming Malaysian musicians. Founded by Foo Yin Hong and Nasran Nawi, Kamerata KL is currently led by Ergys Koni in their artistic direction in delivering high-quality chamber music performances, while providing a platform for outstanding artists to showcase their craft. <br> Since its inaugural performance in March 2018, Kamerata KL has enjoyed a dynamic musical journey: having performed in over 20 concerts with various soloists of the highest calibres such as Carlos Mejía, Maïa Darmé, Dr Poom Prommachart, Saskia Lethiec, Valerie Almard, Izzywan Musib, and Ang Mei Foong, among many others.'
+  }
+]

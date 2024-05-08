@@ -80,9 +80,4 @@ function buttonClass(language) {
 body {
   background-color: #BEFAFD;
 }
-
-.fs-7 {
-  font-size: 0.75rem;
-  font-style: italic;
-}
 </style>
