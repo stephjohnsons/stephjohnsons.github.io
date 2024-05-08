@@ -1,6 +1,7 @@
 <template>
-  <header class="d-flex flex-wrap m-3 p-3 pt-0 sticky-top border-bottom z-3">
-    <a href="/" id="no-deco">
+  <header class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
+    <a href="/" id="no-deco" class="mb-3">
+      <div class="mt-2"></div>
       <h1 id="no-deco">
         Stephen Johnson-Tseu
       </h1>
