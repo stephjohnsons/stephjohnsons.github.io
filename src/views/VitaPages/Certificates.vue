@@ -11,7 +11,11 @@
     </p>
     <p class="text-muted fs-7 fst-normal">
       Credential ID
-      <a :href="certificateLink + cert.credentials" class="link" target="_blank">
+
+      <a v-if="!cert.link" :href="certificateLink + cert.credentials" class="link" target="_blank">
+        {{ cert.credentials }}
+      </a>
+      <a v-else :href="cert.link" class="link" target="_blank">
         {{ cert.credentials }}
       </a>
     </p>

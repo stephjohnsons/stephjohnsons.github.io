@@ -110,24 +110,6 @@ export const devProfile = reactive({
 
 export const certificates = [
   {
-    name: 'Technical Support Fundamentals',
-    provider: 'Google',
-    issuanceDate: 'Apr 2020',
-    credentials: 'N7MCXSEG6MEU'
-  },
-  {
-    name: 'Operating Systems and You: Becoming a Power User',
-    provider: 'Google',
-    issuanceDate: 'Apr 2020',
-    credentials: 'ZWKKXVDMMF8F'
-  },
-  {
-    name: 'The Bits and Bytes of Computer Networking',
-    provider: 'Google',
-    issuanceDate: 'Apr 2020',
-    credentials: 'JFN9XPSVYPDE'
-  },
-  {
     name: 'Foundations of UX Design',
     provider: 'Google',
     issuanceDate: 'Sep 2022',
@@ -182,10 +164,11 @@ export const certificates = [
     credentials: 'Z7G47PQRCSF4'
   },
   {
-    name: 'Introduction to Google SEO',
-    provider: 'University of California, Davis',
+    name: 'IT Support Specialization Certificate',
+    provider: 'Google',
     issuanceDate: 'May 2024',
-    credentials: '-'
+    credentials: 'KNLGDHFZNAA4',
+    link: 'https://www.coursera.org/account/accomplishments/specialization/certificate/KNLGDHFZNAA4'
   }
 ]
 
@@ -255,7 +238,7 @@ export const languages = [
     name: 'French (Français)',
     level: 'CEFR A1',
     spoken: 'Basic',
-    written: '-'
+    written: 'Basic'
   },
   {
     name: 'Japanese (日本語)',
