@@ -21,7 +21,7 @@
 
     <div class="sticky-top z-2">
       <Skills v-if="currentPage === 'Skills'" />
-      <Development v-if="currentPage === 'Development'" />
+      <Development v-if="currentPage === 'Portfolio'" />
       <!-- <Design v-if="currentPage === 'Design'" /> -->
       <Certificates v-if="currentPage === 'Certificates'" />
       <Languages v-if="currentPage === 'Languages'" />
@@ -43,7 +43,7 @@ const currentPage = ref('Skills');
 
 const pages = ref([
   'Skills',
-  'Development',
+  'Portfolio',
   // 'Design',
   'Certificates',
   'Languages',

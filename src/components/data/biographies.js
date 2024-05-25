@@ -90,14 +90,11 @@ export const devBio = [
 
 export const devProfile = reactive({
   'Front-End Development': [
-    'Vanilla HTML, CSS, Javascript',
     'Bootstrap CSS and Tailwind CSS',
-    'Typescript',
-    'Vue.js',
-    'Angular',
-    'React',
+    'Javascript, Typescript',
+    'Frameworks: Vue.js, Angular, React',
     'GraphQL',
-    'REST APIs'
+    'APIs'
   ],
   'Back-End Development': ['Ruby on Rails', 'Node.js', 'Python'],
   CMS: ['Wordpress', 'Wix'],
@@ -105,7 +102,7 @@ export const devProfile = reactive({
   'Design and Art': ['Adobe Photoshop', 'Adobe Illustrator'],
   Music: ['Logic Pro', 'Sibelius'],
   Marketing: ['Mailchimp'],
-  Other: ['Git', 'Postman', 'QA Testing', 'Microsoft 365', 'Google Workspace']
+  Other: ['Git', 'Postman', 'QA Testing', 'Microsoft 365', 'Google Workspace', 'Yapsody']
 })
 
 export const certificates = [

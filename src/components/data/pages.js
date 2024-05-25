@@ -4,12 +4,12 @@ export const pageLinks = [
     link: '/'
   },
   {
-    name: 'About',
-    link: '/about'
-  },
-  {
     name: 'Projects',
     link: '/projects'
+  },
+  {
+    name: 'Musician Bio',
+    link: '/bio'
   },
   {
     name: 'Vita',
