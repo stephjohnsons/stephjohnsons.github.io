@@ -4,20 +4,25 @@ export const pageLinks = [
     link: '/'
   },
   {
-    name: '🎵 Bio',
-    link: '/bio'
-  },
-  {
-    name: '🎵 Projects',
-    link: '/projects'
-  },
-  {
-    name: '🎵 Media Gallery',
-    link: '/gallery'
-  },
-  {
-    name: '🎵 Upcoming Dates',
-    link: '/dates'
+    name: '🎵 Music',
+    children: [
+      {
+        name: 'Bio',
+        link: '/bio'
+      },
+      {
+        name: 'Projects',
+        link: '/projects'
+      },
+      {
+        name: 'Media Gallery',
+        link: '/gallery'
+      },
+      {
+        name: 'Upcoming Dates',
+        link: '/dates'
+      }
+    ]
   },
   {
     name: '🧑🏻‍🏫 Teaching',
