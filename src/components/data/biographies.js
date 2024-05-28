@@ -248,7 +248,7 @@ export const languages = [
 export const works = [
   {
     name: 'FlyEasy',
-    desc: 'Self-initiated project. Concept website for a fictitious travel agency based in Malaysia, with the purpose of practising the use of Bootstrap components and framework.',
+    desc: "Self-initiated project. Concept website for a fictitious travel agency based in Malaysia, with the purpose of practising the use of Bootstrap's components.",
     link: 'https://stephjohnsons.com/flyeasy/'
   },
   {
@@ -265,6 +265,11 @@ export const works = [
     name: 'Weather App',
     desc: "Self-initiated project. An app that generates weather information of a local city based on user's search.",
     link: 'https://stephjohnsons.com/weather-app/'
+  },
+  {
+    name: 'Karl Thöne',
+    desc: "Website created for Datin Veronika Thöne's father, Karl (1924-1993), who was a German composer of contemporary music. The website is created in conjunction of his 100th birthday in 2024 and the '100th Anniversary Festival', which will feature world premiere of his Concertino and Malaysian premiere of some of his chamber works. Website is completed and under vetting; it will be published soon (June 2024).",
+    link: '-'
   }
 ]
 
