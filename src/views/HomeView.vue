@@ -26,9 +26,9 @@
       He also has a keen interest in software development and enjoys reading.
     </p>
     <p>
-      <RouterLink :to="{ path: pageLinks[1].link }" class="text-muted">
-        read more here
-      </RouterLink>
+      <RouterLink :to="{ path: pageLinks[1].children[0].link }" class="text-muted">musician bio</RouterLink>
+      <RouterLink :to="{ path: pageLinks[3].link }" class="text-muted ms-3">developer bio</RouterLink>
+      <RouterLink :to="{ path: pageLinks[2].link }" class="text-muted ms-3">teaching bio</RouterLink>
     </p>
   </main>
 </template>
@@ -64,19 +64,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* .home-image {
-  position: absolute;
-  left: calc(-35% + 12vw);
-}
-
-@media (min-width: 992px) {
-  .home-image {
-    left: calc(-25% + 15vw);
-  }
-} */
-
-/* 
- */
 .image-container {
   display: inline-block;
   position: relative;
@@ -117,6 +104,10 @@ onMounted(() => {
   .anti-caption {
     opacity: 0;
   }
+}
+
+.text-muted:hover {
+  color: #19191A !important;
 }
 
 @media (min-width: 992px) {

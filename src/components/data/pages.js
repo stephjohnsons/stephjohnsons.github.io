@@ -4,32 +4,37 @@ export const pageLinks = [
     link: '/'
   },
   {
-    name: 'Projects',
-    link: '/projects'
+    name: '🎵 Music',
+    children: [
+      {
+        name: 'Bio',
+        link: '/bio'
+      },
+      {
+        name: 'Projects',
+        link: '/projects'
+      },
+      {
+        name: 'Media Gallery',
+        link: '/gallery'
+      },
+      {
+        name: 'Upcoming Dates',
+        link: '/dates'
+      }
+    ]
   },
   {
-    name: 'Musician Bio',
-    link: '/bio'
+    name: '🧑🏻‍🏫 Teaching',
+    link: '/teaching'
   },
   {
-    name: 'Vita',
+    name: '🧑🏻‍💻 Vita',
     link: '/vita'
   },
   {
     name: 'Blog',
     link: '/blog'
-  },
-  {
-    name: 'Gallery',
-    link: '/gallery'
-  },
-  {
-    name: 'Dates',
-    link: '/dates'
-  },
-  {
-    name: 'Teaching',
-    link: '/teaching'
   },
   {
     name: 'Contact',
