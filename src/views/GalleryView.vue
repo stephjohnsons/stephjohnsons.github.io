@@ -23,12 +23,18 @@
       </div>
     </div>
     <hr>
+
+    <h3>Instagram</h3>
+    <div class="d-flex">
+      <InstagramEmbed />
+    </div>
+    <hr>
   </div>
 </template>
 
 <script setup>
-// import { computed } from 'vue';
 import { descriptions } from '@/images/description.js';
+import InstagramEmbed from '@/components/InstagramEmbed.vue';
 
 const getImgSrc = (imageName) => {
   return `/imgs/${imageName}`;
