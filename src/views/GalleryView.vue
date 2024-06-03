@@ -24,7 +24,11 @@
     </div>
     <hr>
 
-    <h3>Instagram</h3>
+    <h3 class="mb-0">Instagram</h3>
+    <p class="text-muted fst-italic">
+      Posts are shown at random. For more posts, please visit my
+      <a href="https://www.instagram.com/stephjohnsons/">Instagram</a>.
+    </p>
     <div class="d-flex">
       <InstagramEmbed />
     </div>

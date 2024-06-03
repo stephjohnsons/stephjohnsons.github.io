@@ -1,13 +1,13 @@
 export const descriptions = [
-  {
-    image: 'david-heart-electronic.jpg',
-    alt: 'Photo of Daniel and Stephen working with Ableton Push.',
-    year: 2023,
-    photographer: 'David Simon Martret / Leafhopper',
-    photographerLink: 'https://www.instagram.com/leafhopperproject/',
-    event: 'heART • Working on Ableton Push',
-    venue: 'Barcelona'
-  },
+  // {
+  //   image: 'david-heart-electronic.jpg',
+  //   alt: 'Photo of Daniel and Stephen working with Ableton Push.',
+  //   year: 2023,
+  //   photographer: 'David Simon Martret / Leafhopper',
+  //   photographerLink: 'https://www.instagram.com/leafhopperproject/',
+  //   event: 'heART • Working on Ableton Push',
+  //   venue: 'Barcelona'
+  // },
   {
     image: 'david-heart-portrait2.jpg',
     alt: 'Photo of two guys facing different directions in front of trees.',
@@ -17,14 +17,14 @@ export const descriptions = [
     event: 'Mas Palou Artist Residency • heART: Stephen & Daniel',
     venue: 'Barcelona'
   },
-  {
-    image: 'tarakucha-2021.JPG',
-    alt: 'Photo of a big band.',
-    year: 2021,
-    photographer: 'Tate Ghazi',
-    event: 'Tarakucha',
-    venue: 'Bobo KL'
-  },
+  // {
+  //   image: 'tarakucha-2021.JPG',
+  //   alt: 'Photo of a big band.',
+  //   year: 2021,
+  //   photographer: 'Tate Ghazi',
+  //   event: 'Tarakucha',
+  //   venue: 'Bobo KL'
+  // },
   {
     image: 'china-2020.jpg',
     alt: 'Photo of musicians performing at the Leonardo Da Vinci Opera Omnia Exhibition in Malaysia, 2018.',
@@ -33,14 +33,14 @@ export const descriptions = [
     event: 'American Festival Orchestra / Malaysian delegates',
     venue: 'Baotou, China'
   },
-  {
-    image: 'davinci-2019.jpeg',
-    alt: 'Photo of musicians performing at the Leonardo Da Vinci Opera Omnia Exhibition in Malaysia, 2018.',
-    year: 2019,
-    photographer: 'Aldwin Lee',
-    event: 'Leonardo Da Vinci Opera Omnia Exhibition',
-    venue: 'National Art Gallery, Malaysia'
-  },
+  // {
+  //   image: 'davinci-2019.jpeg',
+  //   alt: 'Photo of musicians performing at the Leonardo Da Vinci Opera Omnia Exhibition in Malaysia, 2018.',
+  //   year: 2019,
+  //   photographer: 'Aldwin Lee',
+  //   event: 'Leonardo Da Vinci Opera Omnia Exhibition',
+  //   venue: 'National Art Gallery, Malaysia'
+  // },
   {
     image: 'klco-2019.jpeg',
     alt: 'Photo of Stephen with his cello, seated down.',
@@ -93,30 +93,30 @@ export const descriptions = [
     event: "'Retrospective'",
     venue: 'Greyskymorning'
   },
-  {
-    image: 'klpac-2016.jpg',
-    alt: 'Back photo of Stephen.',
-    year: 2016,
-    photographer: 'Sha / klpac',
-    event: 'klpac Orchestra',
-    venue: 'The Kuala Lumpur Performing Arts Centre'
-  },
-  {
-    image: 'dfp-2016.jpg',
-    alt: 'Photos of sextet.',
-    year: 2016,
-    photographer: 'DFP / MPO',
-    event: 'MPO/MPYO Chamber Music Concert • Brahms Sextet',
-    venue: 'Dewan Filharmonik Petronas'
-  },
-  {
-    image: 'yphil-2015.jpeg',
-    alt: 'Closeup photo of Stephen.',
-    year: 2015,
-    photographer: 'YPHIL',
-    event: 'YPHIL International Philharmonic Youth Orchestra',
-    venue: 'Queens Theatre, NY'
-  },
+  // {
+  //   image: 'klpac-2016.jpg',
+  //   alt: 'Back photo of Stephen.',
+  //   year: 2016,
+  //   photographer: 'Sha / klpac',
+  //   event: 'klpac Orchestra',
+  //   venue: 'The Kuala Lumpur Performing Arts Centre'
+  // },
+  // {
+  //   image: 'dfp-2016.jpg',
+  //   alt: 'Photos of sextet.',
+  //   year: 2016,
+  //   photographer: 'DFP / MPO',
+  //   event: 'MPO/MPYO Chamber Music Concert • Brahms Sextet',
+  //   venue: 'Dewan Filharmonik Petronas'
+  // },
+  // {
+  //   image: 'yphil-2015.jpeg',
+  //   alt: 'Closeup photo of Stephen.',
+  //   year: 2015,
+  //   photographer: 'YPHIL',
+  //   event: 'YPHIL International Philharmonic Youth Orchestra',
+  //   venue: 'Queens Theatre, NY'
+  // },
   {
     image: 'dsch-2014.jpg',
     alt: 'Photo of string quartet.',
@@ -124,15 +124,15 @@ export const descriptions = [
     photographer: 'Eugene Lim',
     event: 'DSCH Quartet',
     venue: 'Catholic Church of the Holy Rosary, Bangsar'
-  },
-  {
-    image: 'taiwan-2011.jpg',
-    alt: 'Closeup photo of Stephen.',
-    year: 2011,
-    photographer: 'Jacqueline Goh',
-    event: 'KKCO Taiwan Tour',
-    venue: 'Taipei, Taiwan'
   }
+  // {
+  //   image: 'taiwan-2011.jpg',
+  //   alt: 'Closeup photo of Stephen.',
+  //   year: 2011,
+  //   photographer: 'Jacqueline Goh',
+  //   event: 'KKCO Taiwan Tour',
+  //   venue: 'Taipei, Taiwan'
+  // }
 ]
 
 export const homeDescription = {
