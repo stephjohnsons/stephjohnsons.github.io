@@ -1,30 +1,33 @@
 <template>
   <header class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
-    <a href="/" id="no-deco" class="mb-3">
-      <div class="mt-2"></div>
-      <h1 id="no-deco">
-        Stephen Johnson-Tseu
+    <a href="/" id="no-deco" class="d-flex align-items-center">
+      <h1 class="fw-light py-2 mb-1" id="no-deco">
+        Stephen
+        <span class="fw-medium">Johnson-Tseu</span>
       </h1>
     </a>
 
     <a class="hamburger ms-auto my-auto" :class="{ 'hamburger--active': showMenu }"
-      @click.prevent="showMenu = !showMenu">
+      @click.prevent="showMenu = !showMenu" @onclick="rememberScrollPosition">
       <span class="hamburger_line"></span>
       <span class="hamburger_line"></span>
       <span class="hamburger_line"></span>
     </a>
   </header>
 
-  <Transition name="slide-fade" appear>
-    <RouterView v-if="!showMenu" class="mx-4 mb-2 px-2" id="router" />
-  </Transition>
+  <!-- Fixed router view as per suggested in console -->
+  <RouterView v-slot="{ Component }">
+    <Transition name="slide-fade" appear>
+      <Component :is="Component" v-if="!showMenu" class="mx-4 mb-2 px-2" id="router" />
+    </Transition>
+  </RouterView>
   <Transition name="slide-fade" appear>
     <MenuView v-if="showMenu" class="mx-4 mb-2 px-2" id="menu" />
   </Transition>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import MenuView from '@/views/MenuView.vue'
 
@@ -53,7 +56,8 @@ watch(() => route.path, () => {
 header {
   position: sticky;
   color: #19191A;
-  background-color: white;
+  background-color: rgb(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
 }
 
 #no-deco {
