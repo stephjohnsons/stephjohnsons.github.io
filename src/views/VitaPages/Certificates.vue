@@ -10,7 +10,7 @@
       Issued {{ cert.issuanceDate }} <br />
     </p>
     <p class="text-muted fs-7 fst-normal">
-      Credential ID
+      Coursera Credential ID
 
       <a v-if="!cert.link" :href="certificateLink + cert.credentials" class="link" target="_blank">
         {{ cert.credentials }}
