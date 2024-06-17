@@ -11,22 +11,13 @@
     </div>
     <div v-else v-for="event in upcomingEvents" class="d-flex flex-row align-items-start py-4 border-bottom"
       :key="event.id">
-      <div class="px-0 px-sm-1 d-flex flex-column d-none d-sm-block">
-        <div class="border border-2 border-black pt-1 rounded-3 text-center w-fixed">
-          <h6 class="mt-1 mb-0 fw-normal">{{ event.shortenMonth }}</h6>
-          <h4 class="mb-2">{{ event.shortenDate }}</h4>
-        </div>
-      </div>
-      <div class="ms-0 ms-sm-2 justify-content-start">
-        <h5 class="mb-1 d-sm-none" id="item">
+      <div class="ms-0 justify-content-start">
+        <h5 class="mb-1" id="item">
           <span class="fw-normal">
             {{ event.shortenDate }} {{ event.shortenMonth }} •
           </span>
           {{ event.time }}
         </h5>
-        <h6 class="mb-0 d-none d-sm-block">
-          {{ event.time }}
-        </h6>
         <div>
           <h4 class="mb-0 d-sm-none">{{ event.title }}</h4>
           <h3 class="mb-0 d-none d-sm-block">{{ event.title }}</h3>
