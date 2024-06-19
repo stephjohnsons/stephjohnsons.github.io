@@ -180,9 +180,9 @@ export const education = [
     degree: 'Master of Music',
     provider: 'UCSI Institute of Music, Kuala Lumpur',
     graduated: 'Apr 2018',
-    major: 'Performance studies; chamber music',
+    major: 'Performance studies; chamber music (string quartet)',
     teachers:
-      '• Julie Dessureault (cello)<br> • Orfeo Trio, Raphaël Chrétien, Ruth Rosique, Guillaume Chilemme (ensemble)<br> • Asier Polo, Thomas Duran (masterclass)'
+      '• Julie Dessureault (cello)<br> • Orfeo Trio, Raphaël Chrétien, Ruth Rosique, Guillaume Chilemme (ensemble)<br> • Asier Polo, Thomas Duran, Thomas Loewenheim (masterclasses)'
   },
   {
     degree: 'Bachelor of Classical Music (with honours)',
@@ -190,7 +190,7 @@ export const education = [
     graduated: 'Aug 2016',
     major: 'Classical music performance',
     teachers:
-      '• Julie Dessureault, Leonid Shukaev (cello)<br> • Gleb Stepanov, Alexander Buzlov (masterclasses)'
+      '• Julie Dessureault, Leonid Shukaev (cello)<br> • Lee Yin Hwa, Alla Yanisheva, Orfeo Trio (ensemble)<br> • Gleb Stepanov, Alexander Buzlov, Albert Wang (masterclasses)'
   }
 ]
 
