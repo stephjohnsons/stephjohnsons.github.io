@@ -32,39 +32,14 @@
 
     <!-- Stuffs done -->
     <h3 class="mt-4 mb-2">Teaching Diary</h3>
-    <div class="d-flex flex-wrap gap-3">
-      <div class="d-flex flex-column custom-width">
-        <h4>Cello Yoga</h4>
-        <p class="mb-2">
-          Live stream on Zoom + Instagram. <br />
-          Jacob Shaw explaining the "cello yoga" daily routine and Q&A on 24th March 2020
-          from Scandinavian Cello School in Stevns, Denmark to the class of Stephen Johnson-Tseu.
-        </p>
-        <div class="d-flex">
-          <Link link="https://www.youtube.com/watch?v=hSYOXMHuUsA" text="Video" />
-        </div>
+    <div v-for="item in teachingDiary" :key="item.project" class="d-flex flex-column border-bottom py-2 my-2">
+      <div class="d-inline-flex flex-row align-items-center">
+        <h4 class="mb-0">{{ item.project }}</h4>
+        <Link :link="item.link" text="Video" class="ms-2 h-auto" />
       </div>
-
-      <div class="d-flex flex-column custom-width">
-        <h4>Jesselton Philharmonic Orchestra Broadcast</h4>
-        <p class="mb-2">
-          Jesselton Philharmonic Orchestra Family Programme is a live broadcast via ZOOM and stream LIVE on YouTube.
-        </p>
-        <div class="d-flex">
-          <Link link="https://www.youtube.com/watch?v=xaVXcMYjgSw" text="Video" />
-        </div>
-      </div>
-
-      <div class="d-flex flex-column custom-width">
-        <h4>A short introduction to the cello</h4>
-        <p class="mb-2">
-          Guest speaker for the Malaysian Brass Outreach Project's Guest Series video.
-          Recorded for Jul 2020.
-        </p>
-        <div class="d-flex">
-          <Link link="https://www.youtube.com/watch?v=r9GTmInXLSo" text="Video" />
-        </div>
-      </div>
+      <p class="my-2">
+        {{ item.description }}
+      </p>
     </div>
   </div>
 </template>
@@ -73,6 +48,7 @@
 import Link from '@/components/PromptButton.vue';
 import { reactive, onMounted } from 'vue';
 import { teachingBio, teachingProfile } from "@/components/data/biographies.js";
+import { teachingDiary } from "@/components/data/teachingDiary.js";
 
 const isActive = reactive({});
 
