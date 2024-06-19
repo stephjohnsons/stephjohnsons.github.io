@@ -1,7 +1,7 @@
 <template>
   <header class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
     <a href="/" id="no-deco" class="d-flex align-items-center">
-      <h1 class="fw-light py-2 mb-1" id="no-deco">
+      <h1 class="fw-light py-2 mb-1 fs-2" id="no-deco">
         Stephen
         <span class="fw-medium">Johnson-Tseu</span>
       </h1>
@@ -53,6 +53,14 @@ watch(() => route.path, () => {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+html,
+body,
+#app {
+  font-family: 'Sora', sans-serif;
+}
+
 header {
   position: sticky;
   color: #19191A;
@@ -63,6 +71,26 @@ header {
 #no-deco {
   color: #19191A;
   text-decoration: none;
+}
+
+h2 {
+  font-size: 2.986rem !important;
+}
+
+h3 {
+  font-size: 2.074rem !important;
+}
+
+h4 {
+  font-size: 1.728rem !important;
+}
+
+h5 {
+  font-size: 1.44rem !important;
+}
+
+h6 {
+  font-size: 1.2rem !important;
 }
 
 li>a,
