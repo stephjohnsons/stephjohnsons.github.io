@@ -38,23 +38,22 @@
       <div class="d-flex flex-row gap-1 align-items-center">
         <h5 class="mb-0">{{ project.organisation }}</h5>
         <Link class="ms-1" v-if="project.link" :link="project.link" :text="project.linkText" />
-        <span v-if="project.ongoing" class="badge text-bg-success ms-1">
+        <span v-if="project.ongoing" class="badge text-bg-success ms-1 fw-light">
           Ongoing
         </span>
       </div>
-      <p class="mb-1">
+      <p class="mb-1 text-muted">
         {{ project.location }}
         <span>{{ getFlagEmoji(project.cc) }}</span>
       </p>
 
-      <p class="mb-1">{{ project.description }}</p>
+      <p class="mb-2">{{ project.description }}</p>
 
       <div class="d-flex flex-row gap-1 ms-n1">
-        <span class="badge text-bg-dark fs-6 fw-normal ms-n1">{{ project.type[0] }}</span>
-        <span v-if="project.type.length > 1" class="badge text-bg-dark fs-6 fw-normal ms-n1">{{ project.type[1]
-          }}</span>
-        <span v-if="project.type.length > 2" class="badge text-bg-dark fs-6 fw-normal ms-n1">{{ project.type[2]
-          }}</span>
+        <span v-for="(type, index) in project.type" :key="index" :class="getClass(type)"
+          class="badge fs-6 fw-normal ms-n1">
+          {{ type }}
+        </span>
       </div>
 
       <hr>
@@ -107,6 +106,29 @@ function sortProjects(array) {
     return yearB - yearA;
   })
 }
+
+const getClass = (type) => {
+  const classicalTypes = ['Chamber Music', 'Orchestra', 'Concerts', 'Recital'];
+  const contemporaryTypes = ['Band', 'Musicals', 'Recordings'];
+  const teachingTypes = ['Community', 'Teaching', 'Masterclass'];
+  const curationTypes = ['Curation', 'Management', 'Projects', 'Tour'];
+  const genres = ['Orchestra']; // Add more if needed
+
+  if (classicalTypes.includes(type)) {
+    return 'text-bg-success';
+  } else if (contemporaryTypes.includes(type)) {
+    return 'text-bg-primary';
+  } else if (curationTypes.includes(type)) {
+    return 'text-bg-warning';
+  } else if (teachingTypes.includes(type)) {
+    return 'text-bg-danger';
+  } else if (genres.includes(type)) {
+    return 'text-bg-light';
+  } else {
+    return 'text-bg-secondary';
+  }
+};
+
 </script>
 
 <style scoped>
