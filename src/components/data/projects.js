@@ -372,7 +372,7 @@ export const projects = [
     year: '2023',
     type: ['Residency', 'Tour'],
     ongoing: false,
-    organisation: "Mas Palou Artist Residency'",
+    organisation: 'Mas Palou Artist Residency',
     location: 'Barcelona',
     cc: 'ES',
     description:

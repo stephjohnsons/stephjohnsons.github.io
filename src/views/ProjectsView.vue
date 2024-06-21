@@ -38,7 +38,7 @@
       <div class="d-flex flex-row gap-1 align-items-center">
         <h5 class="mb-0">{{ project.organisation }}</h5>
         <Link class="ms-1" v-if="project.link" :link="project.link" :text="project.linkText" />
-        <span v-if="project.ongoing" class="badge text-bg-success ms-1 fw-light">
+        <span v-if="project.ongoing" class="badge text-bg-success fw-light ms-1">
           Ongoing
         </span>
       </div>
@@ -48,12 +48,11 @@
       </p>
 
       <p class="mb-2">{{ project.description }}</p>
-
       <div class="d-flex flex-row gap-1 ms-n1">
-        <span v-for="(type, index) in project.type" :key="index" :class="getClass(type)"
-          class="badge fs-6 fw-normal ms-n1">
+        <btn v-for="(type, index) in project.type" :key="index" :class="getClass(type)"
+          class="btn btn-sm fw-normal ms-n1 disable-pointer fs-smaller">
           {{ type }}
-        </span>
+        </btn>
       </div>
 
       <hr>
@@ -70,7 +69,7 @@ import Filter from '@/assets/filter.svg';
 import Ongoing from '@/assets/active.svg';
 
 const selectedCategory = ref('');
-const ongoingFilter = ref(true);
+const ongoingFilter = ref(false);
 
 const selectCategory = (category) => {
   if (selectedCategory.value === category) {
@@ -112,20 +111,20 @@ const getClass = (type) => {
   const contemporaryTypes = ['Band', 'Musicals', 'Recordings'];
   const teachingTypes = ['Community', 'Teaching', 'Masterclass'];
   const curationTypes = ['Curation', 'Management', 'Projects', 'Tour'];
-  const genres = ['Orchestra']; // Add more if needed
+  const genres = ['Orchestra'];
 
   if (classicalTypes.includes(type)) {
-    return 'text-bg-success';
+    return 'btn-outline-success';
   } else if (contemporaryTypes.includes(type)) {
-    return 'text-bg-primary';
+    return 'btn-outline-primary';
   } else if (curationTypes.includes(type)) {
-    return 'text-bg-warning';
+    return 'btn-outline-danger';
   } else if (teachingTypes.includes(type)) {
-    return 'text-bg-danger';
+    return 'btn-outline-info';
   } else if (genres.includes(type)) {
-    return 'text-bg-light';
+    return 'btn-outline-secondary';
   } else {
-    return 'text-bg-secondary';
+    return 'btn-outline-secondary';
   }
 };
 
@@ -140,5 +139,13 @@ body {
 
 .ms-n1 {
   margin-left: -0.1rem;
+}
+
+.disable-pointer {
+  cursor: default;
+}
+
+.fs-smaller {
+  font-size: 0.7rem;
 }
 </style>
