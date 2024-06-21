@@ -8,36 +8,36 @@ export const pageLinks = [
     children: [
       {
         name: 'Bio',
-        link: '/#/bio'
+        link: '/bio'
       },
       {
         name: 'Projects',
-        link: '/#/projects'
+        link: '/projects'
       },
       {
         name: 'Media Gallery',
-        link: '/#/gallery'
+        link: '/gallery'
       },
       {
         name: 'Upcoming Dates',
-        link: '/#/dates'
+        link: '/dates'
       }
     ]
   },
   {
     name: '🧑🏻‍🏫 Teaching',
-    link: '/#/teaching'
+    link: '/teaching'
   },
   {
     name: '🧑🏻‍💻 Vita',
-    link: '/#/vita'
+    link: '/vita'
   },
   {
     name: 'Blog',
-    link: '/#/blog'
+    link: '/blog'
   },
   {
     name: 'Contact',
-    link: '/#/contact'
+    link: '/contact'
   }
 ]
