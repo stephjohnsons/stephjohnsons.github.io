@@ -107,7 +107,7 @@ onMounted(() => {
 }
 
 .text-muted:hover {
-  color: #19191A !important;
+  color: #262526 !important;
 }
 
 @media (min-width: 992px) {

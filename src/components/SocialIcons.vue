@@ -43,11 +43,11 @@ const fixedWidth = 24;
 <style scoped>
 a {
   text-decoration-line: none;
-  color: #19191A;
+  color: #262526;
   transition: all 0.2s ease-in-out;
 
   svg {
-    fill: #19191A;
+    fill: #262526;
   }
 }
 

@@ -66,16 +66,12 @@ function buttonClass(page) {
 
 <style scoped>
 .accordion {
-  --bs-accordion-color: var(--bs-warning-text-emphasis);
+  --bs-accordion-bg: rgb(248, 248, 248);
   --bs-accordion-active-bg: var(--bs-warning);
 
   .accordion-button:not(.collapsed)::after {
     -webkit-mask-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23aaaaaa'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
     background: var(--bs-warning-text-emphasis);
-  }
-
-  .accordion-button:not(.collapsed) {
-    color: var(--bs-warning-text-emphasis);
   }
 }
 </style>

@@ -59,17 +59,18 @@ html,
 body,
 #app {
   font-family: 'Sora', sans-serif;
+  background-color: #f4f4f4;
+  color: #262526;
 }
 
 header {
   position: sticky;
-  color: #19191A;
-  background-color: rgb(255, 255, 255, 0.4);
+  background-color: rgb(244, 244, 244, 0.4);
   backdrop-filter: blur(4px);
 }
 
 #no-deco {
-  color: #19191A;
+  color: #262526;
   text-decoration: none;
 }
 
@@ -95,7 +96,7 @@ h6 {
 
 li>a,
 p>a {
-  color: #19191A !important;
+  color: #262526 !important;
   transition: 200ms cubic-bezier(.29, .57, .94, .61);
   text-decoration: underline;
 }

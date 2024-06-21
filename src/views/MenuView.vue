@@ -85,7 +85,7 @@ p {
 }
 
 nav>a {
-  color: #19191A !important;
+  color: #262526 !important;
 }
 
 nav>a,
@@ -101,7 +101,7 @@ nav>a.bi-arrow-right,
 
 nav>a:hover,
 #menu-child-item:hover {
-  color: #19191A !important;
+  color: #262526 !important;
   background-position: 0 100%;
   background-repeat: repeat;
   transition: 200ms cubic-bezier(.29, .57, .94, .61);
