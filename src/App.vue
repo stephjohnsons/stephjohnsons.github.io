@@ -188,4 +188,27 @@ p>a:hover {
   transition: none;
   transition-delay: 0.2s;
 }
+
+#hightlighted-title {
+  position: relative;
+  display: inline-block;
+}
+
+#hightlighted-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: -5%;
+  height: 40%;
+  background-color: rgb(252, 192, 14);
+  z-index: -1;
+  transition: 100ms cubic-bezier(.29, .57, .94, .61);
+}
+
+#hightlighted-title:hover::after {
+  position: absolute;
+  left: -5%;
+  background-color: rgb(252, 192, 14);
+}
 </style>
