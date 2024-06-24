@@ -15,47 +15,33 @@
     </p>
 
     <div v-for="(site, index) in works" :key="index">
-      <p v-if="site.link != '-'">
-        <a data-bs-toggle="offcanvas" href="#example" role="button">
+      <p v-if="site.link != '-'" class="mb-0 fw-normal fs-4">
+        <a data-bs-toggle="offcanvas" href="#example" @click.prevent="openOffcanvas(site)">
           {{ site.name }}
         </a>
       </p>
-      <p v-else class="mb-0 fw-semibold fs-4">
+      <p v-else class="mb-0 fw-light fs-4">
         {{ site.name }}
         <span class="fs-7">
           🚧 Under maintenance 🚧
         </span>
       </p>
 
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="example">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title">{{ site.name }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <p class="mb-0 fs-custom">
-            {{ site.desc }}
-          </p>
-        </div>
-      </div>
+      <Offcanvas :works="selectedSite" />
     </div>
-
-    <!-- <p class="mb-0 fs-custom">
-      {{ site.desc }}
-    </p> -->
-    <!-- <div>
-      <ul>
-        <li>role</li>
-        <li>objectives: aim, goal</li>
-        <li>resources: physical, design</li>
-        <li>solution: list down what was done</li>
-      </ul>
-    </div> -->
   </div>
 </template>
 
 <script setup>
-import { works } from "@/components/data/biographies.js";
+import { ref } from "vue";
+import { works } from "@/components/data/portfolio.js";
+import Offcanvas from "@/components/OffcanvasTemplate.vue";
+
+const selectedSite = ref({});
+
+const openOffcanvas = (site) => {
+  selectedSite.value = site;
+}
 </script>
 
 <style scoped>

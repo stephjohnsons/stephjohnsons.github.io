@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { works } from "@/components/data/biographies.js";
+import { works } from "@/components/data/portfolio.js";
 </script>
 
 <style scoped>
