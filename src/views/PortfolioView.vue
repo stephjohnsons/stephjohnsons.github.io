@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <h3 class="mb-1">Portfolio</h3>
@@ -15,21 +14,43 @@
       any affiliation or endorsement by any organization.
     </p>
 
-    <div v-for="site in    works   " :key="site.index">
-      <h6 class="mb-0 fw-semibold">{{ site.name }}</h6>
-      <p class="mb-0 fs-custom">
-        {{ site.desc }}
-      </p>
-      <p v-if="site.link === '-'" class="fs-7 fst-normal ">
-        🚧 Under maintenance 🚧
-      </p>
-      <p v-else class="text-muted fs-custom">
-        <a :href="site.link" target="_blank">
-          Link
+    <div v-for="(site, index) in works" :key="index">
+      <p v-if="site.link != '-'">
+        <a data-bs-toggle="offcanvas" href="#example" role="button">
+          {{ site.name }}
         </a>
       </p>
-      <hr>
+      <p v-else class="mb-0 fw-semibold fs-4">
+        {{ site.name }}
+        <span class="fs-7">
+          🚧 Under maintenance 🚧
+        </span>
+      </p>
+
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="example">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">{{ site.name }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <p class="mb-0 fs-custom">
+            {{ site.desc }}
+          </p>
+        </div>
+      </div>
     </div>
+
+    <!-- <p class="mb-0 fs-custom">
+      {{ site.desc }}
+    </p> -->
+    <!-- <div>
+      <ul>
+        <li>role</li>
+        <li>objectives: aim, goal</li>
+        <li>resources: physical, design</li>
+        <li>solution: list down what was done</li>
+      </ul>
+    </div> -->
   </div>
 </template>
 
