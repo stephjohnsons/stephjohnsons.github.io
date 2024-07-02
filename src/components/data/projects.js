@@ -3,7 +3,8 @@ export const projects = [
     year: '2010',
     type: ['Orchestra', 'Tour'],
     ongoing: false,
-    organisation: '香港青年音樂訓練基金交流音樂會 HKMOY Exchange Programme and Tour 2010',
+    organisation:
+      '香港青年音樂訓練基金交流音樂會 HKMOY Exchange Programme and Tour 2010',
     location: 'Hong Kong',
     cc: 'HK',
     description:
@@ -27,7 +28,8 @@ export const projects = [
     year: '2011',
     type: ['Orchestra', 'Tour'],
     ongoing: false,
-    organisation: '庇建中華樂團「樂定在台灣」巡迴演奏交流會 Kian Kok Chinese Orchestra Taiwan Tour',
+    organisation:
+      '庇建中華樂團「樂定在台灣」巡迴演奏交流會 Kian Kok Chinese Orchestra Taiwan Tour',
     location: 'Taipei, Taichung, Kaohsiung',
     cc: 'TW',
     description:
@@ -124,7 +126,8 @@ export const projects = [
     organisation: 'PAN Productions • Into the Woods by Stephen Sondheim',
     location: 'Kuala Lumpur',
     cc: 'MY',
-    description: 'Performed under the direction of Nell Ng and musical direction of Shen.'
+    description:
+      'Performed under the direction of Nell Ng and musical direction of Shen.'
   },
   {
     year: '2016',
@@ -143,7 +146,8 @@ export const projects = [
     organisation: 'Miyakojima Youth International Music Festival',
     location: 'Okinawa',
     cc: 'JP',
-    description: 'Performed with Sarah Chang under Malaysian Philharmonic Youth Orchestra.'
+    description:
+      'Performed with Sarah Chang under Malaysian Philharmonic Youth Orchestra.'
   },
   {
     year: '2017',
@@ -206,7 +210,8 @@ export const projects = [
     organisation: "PAN Productions • That's Entertainment 2018",
     location: 'Kuala Lumpur',
     cc: 'MY',
-    description: 'Performed under the direction of Nell Ng and musical direction of Dennis Law.'
+    description:
+      'Performed under the direction of Nell Ng and musical direction of Dennis Law.'
   },
   {
     year: '2019',
@@ -395,7 +400,8 @@ export const projects = [
     organisation: 'Nathania Ong • Spirit of Giving - A Musical Homecoming',
     location: 'Esplanade Concert Hall',
     cc: 'SG',
-    description: 'Performed with in the concert under the direction of Kelvin Loh.'
+    description:
+      'Performed with in the concert under the direction of Kelvin Loh.'
   },
   {
     year: '2023-2024',
@@ -404,7 +410,8 @@ export const projects = [
     organisation: 'klpac String Orchestra',
     location: 'klpac',
     cc: 'MY',
-    description: 'Led the sectionals for the klpac String Orchestra in two separate occasions.'
+    description:
+      'Led the sectionals for the klpac String Orchestra in two separate occasions.'
   },
   {
     year: '2024',
@@ -425,8 +432,27 @@ export const projects = [
     cc: 'MY',
     description:
       'Managed and curated multiple events and performances for the Peninsular Festival Orchestra under Red Carpet Artist Management. Past projects included ESL Dota 2 Malaysia 2022 & 2023, Heineken Refresh 2024 (set with DJ Blink), and Disney in Concert Malaysia (May, July 2023, Jan 2024).'
+  },
+  {
+    year: '2024',
+    type: ['Concerts'],
+    ongoing: false,
+    organisation: 'Naan Pradeep Kumar',
+    location: 'Axiata Arena',
+    cc: 'MY',
+    description:
+      'Performed with Pradeep Kumar in the orchestra under the baton of Datuk Mustafa Fuzer bin Nawi.'
+  },
+  {
+    year: '2024',
+    type: ['Concerts', 'Tour'],
+    ongoing: false,
+    organisation: 'This is Johan - Live in Singapore',
+    location: 'Axiata Arena',
+    cc: 'MY',
+    description: "Hip-Hop singer Joe Flizzow's concert in Singapore."
   }
-]
+];
 
 export const projectTypes = [
   'Band',
@@ -444,4 +470,4 @@ export const projectTypes = [
   'Recordings',
   'Teaching',
   'Tour'
-]
+];
