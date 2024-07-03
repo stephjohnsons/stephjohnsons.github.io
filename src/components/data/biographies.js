@@ -84,25 +84,35 @@ export const teachingProfile = reactive({
 export const devBio = [
   "Outside of music, I develop websites and I love all things tech and artsy. When I'm not practicing on my cello, I'm usually knee-deep in looking out for latest design trends and web development technologies. I started out in mid-2021 as a self-taught developer, and since learning the bits and pieces of the tech industry, I decided that I would dive into the industry in early 2023, and got a position as a software developer later.",
   'In web development, I currently specialise in front-end development, but I have a little bit of experience with everything from UI/UX writing and design to coding to QA, and also project management.',
-  'I also get the occasional design gigs and am always looking for new ways to improve my skills.',
-  'Updated Apr 2024. Do not use or amend without permission.'
+  'I am currently on a career hiatus but is actively looking for a remote role. I am looking for a position where I can put my skills to use and help others build their projects.',
+  'Updated Jul 2024. Do not use or amend without permission.'
 ]
 
 export const devProfile = reactive({
-  'Front-End Development': [
-    'Bootstrap CSS and Tailwind CSS',
-    'Javascript, Typescript',
-    'Frameworks: Vue.js, Angular, React',
-    'GraphQL',
-    'APIs'
+  'Music Software': ['Logic Pro', 'MainStage', 'Sibelius', 'Finale'],
+  'Music Education': [
+    'Higher Education Curriculum and Syllabi Writing (MQA)',
+    'Classroom and Lesson Management',
+    'Digital integration and process improvement',
+    'Google Workspace',
+    'Microsoft Office and 365 Apps'
   ],
-  'Back-End Development': ['Ruby on Rails', 'Node.js', 'Python'],
-  CMS: ['Wordpress', 'Wix'],
-  Wireframing: ['Figma'],
-  'Design and Art': ['Adobe Photoshop', 'Adobe Illustrator'],
-  Music: ['Logic Pro', 'Sibelius'],
-  Marketing: ['Mailchimp'],
-  Other: ['Git', 'Postman', 'QA Testing', 'Microsoft 365', 'Google Workspace', 'Yapsody']
+  'Web Development': [
+    'Javascript, Typescript',
+    'Vue.js (Nuxt), Angular, React (Next.js)',
+    'Bootstrap and Tailwind CSS',
+    'GraphQL',
+    'API Integration and Testing (Postman)',
+    'Ruby on Rails',
+    'Node.js',
+    'Python',
+    'Version Control (GitHub, GitLab, Git)'
+  ],
+  'Content Management System': ['Wordpress', 'Wix'],
+  'Project Management': ['ClickUp', 'Trello', 'Slack (integrated with PM tools)'],
+  Wireframing: ['Figma', 'Adobe XD'],
+  'Graphic Design': ['Adobe Photoshop', 'Adobe Illustrator'],
+  'Marketing and CRM': ['Mailchimp', 'Yapsody']
 })
 
 export const certificates = [
@@ -269,7 +279,7 @@ export const works = [
   {
     name: 'Karl Thöne',
     desc: "Website created for Datin Veronika Thöne's father, Karl (1924-1993), who was a German composer of contemporary music. The website is created in conjunction of his 100th birthday in 2024 and the '100th Anniversary Festival', which will feature world premiere of his Concertino and Malaysian premiere of some of his chamber works. Website is completed and under vetting; it will be published soon (June 2024).",
-    link: '-'
+    link: 'https://www.karlthoene.com'
   }
 ]
 

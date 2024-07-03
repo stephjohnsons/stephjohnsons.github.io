@@ -43,11 +43,11 @@ const currentPage = ref('Skills');
 
 const pages = ref([
   'Skills',
-  'Portfolio',
+  'Education',
   // 'Design',
   'Certificates',
   'Languages',
-  'Education',
+  'Portfolio',
 ])
 
 function switchPage(page) {

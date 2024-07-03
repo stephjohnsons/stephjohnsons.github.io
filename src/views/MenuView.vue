@@ -142,14 +142,15 @@ a>span:hover {
   #item {
     position: relative;
     display: inline-block;
+    z-index: 1;
   }
 
   #item::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 10%;
-    right: -5%;
+    left: 0;
+    right: 0;
     height: 40%;
     background-color: rgb(252, 192, 14);
     z-index: -1;
@@ -158,7 +159,7 @@ a>span:hover {
 
   #item:hover::after {
     position: absolute;
-    left: -5%;
+    height: 100%;
     background-color: rgb(252, 192, 14);
   }
 

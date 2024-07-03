@@ -53,23 +53,18 @@ onMounted(async () => {
 #post-title {
   position: relative;
   display: inline-block;
+  z-index: 1;
 }
 
 #post-title::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 10%;
-  right: -5%;
+  left: 0%;
+  right: 0;
   height: 40%;
   background-color: rgb(252, 192, 14);
   z-index: -1;
   transition: 100ms cubic-bezier(.29, .57, .94, .61);
-}
-
-#post-title:hover::after {
-  position: absolute;
-  left: -5%;
-  background-color: rgb(252, 192, 14);
 }
 </style>

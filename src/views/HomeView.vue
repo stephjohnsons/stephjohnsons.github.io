@@ -24,8 +24,8 @@
         </p>
         <p class="d-flex flex-row">
           <RouterLink :to="{ path: pageLinks[1].children[0].link }" class="text-muted">musician bio</RouterLink>
-          <RouterLink :to="{ path: pageLinks[3].link }" class="text-muted ms-3">developer bio</RouterLink>
           <RouterLink :to="{ path: pageLinks[2].link }" class="text-muted ms-3">teaching bio</RouterLink>
+          <RouterLink :to="{ path: pageLinks[3].link }" class="text-muted ms-3">vita</RouterLink>
         </p>
       </div>
     </div>
