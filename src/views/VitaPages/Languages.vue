@@ -10,7 +10,7 @@
     <div>
       <p class="text-muted fs-7 fst-normal">
         <span>Spoken: </span>
-        <span v-if="language.spoken !== '-'" v-for="level in levels" :key="`spoken-${language.name}-${level}`"
+        <span v-if="language.spoken !== '-'" v-for="level in spokenLevels" :key="`spoken-${language.name}-${level}`"
           class="mx-1"
           :class="{ 'fw-bold': language.spoken === level, 'text-muted opacity-25': language.spoken !== level }">
           {{ level }}
@@ -18,7 +18,7 @@
         <span v-else class="text-muted opacity-25 ms-1">-</span>
         <br />
         <span>Written: </span>
-        <span v-if="language.written !== '-'" v-for=" level in levels" :key="`written-${language.name}-${level}`"
+        <span v-if="language.written !== '-'" v-for=" level in writtenLevels" :key="`written-${language.name}-${level}`"
           class="mx-1"
           :class="{ 'fw-bold': language.written === level, 'text-muted opacity-25': language.written !== level }">
           {{ level }}
@@ -35,9 +35,16 @@
 import { ref } from "vue";
 import { languages } from "@/components/data/biographies.js";
 
-const levels = ref([
+const spokenLevels = ref([
   'Basic',
   'Conversational',
+  'Proficient',
+  'Fluent'
+]);
+
+const writtenLevels = ref([
+  'Basic',
+  'Intermediate',
   'Proficient',
   'Fluent'
 ]);

@@ -35,7 +35,7 @@
     <div v-for="item in teachingDiary" :key="item.project" class="d-flex flex-column border-bottom py-2 my-2">
       <div class="d-inline-flex flex-row align-items-center">
         <h4 class="mb-0">{{ item.project }}</h4>
-        <Link :link="item.link" text="Video" class="ms-2 h-auto" />
+        <Link :link="item.link" text="Video" class="ms-auto ms-md-2 py-1 px-2 py-md-0" />
       </div>
       <p class="my-2">
         {{ item.description }}

@@ -21,11 +21,11 @@
 
     <div class="sticky-top z-2">
       <Skills v-if="currentPage === 'Skills'" />
-      <Development v-if="currentPage === 'Portfolio'" />
-      <!-- <Design v-if="currentPage === 'Design'" /> -->
       <Certificates v-if="currentPage === 'Certificates'" />
       <Languages v-if="currentPage === 'Languages'" />
       <Education v-if="currentPage === 'Education'" />
+      <!-- <Design v-if="currentPage === 'Design'" /> -->
+      <!-- <Development v-if="currentPage === 'Portfolio'" /> -->
     </div>
   </div>
 </template>
@@ -33,21 +33,21 @@
 <script setup>
 import { ref } from 'vue';
 import Skills from './VitaPages/Skills.vue';
-import Development from './VitaPages/Development.vue';
-// import Design from './VitaPages/Design.vue';
 import Certificates from './VitaPages/Certificates.vue';
 import Languages from './VitaPages/Languages.vue';
 import Education from './VitaPages/Education.vue';
+// import Design from './VitaPages/Design.vue';
+// import Development from './VitaPages/Development.vue';
 import { devBio } from "@/components/data/biographies.js";
 const currentPage = ref('Skills');
 
 const pages = ref([
   'Skills',
   'Education',
-  // 'Design',
   'Certificates',
   'Languages',
-  'Portfolio',
+  // 'Design',
+  // 'Portfolio',
 ])
 
 function switchPage(page) {

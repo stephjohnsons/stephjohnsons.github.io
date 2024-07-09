@@ -85,8 +85,6 @@ const truncateDescription = (description, maxWords) => {
   }
   return description;
 }
-
-console.log(upcomingEvents);
 </script>
 
 <style scoped>

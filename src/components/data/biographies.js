@@ -215,7 +215,7 @@ export const languages = [
     name: 'Malay',
     level: 'Trilingual native speaker',
     spoken: 'Fluent',
-    written: 'Conversational'
+    written: 'Proficient'
   },
   {
     name: 'Hakka Chinese (客家話)',
@@ -233,7 +233,7 @@ export const languages = [
     name: 'German (Deutsch)',
     level: 'CEFR A2',
     spoken: 'Conversational',
-    written: 'Conversational'
+    written: 'Intermediate'
   },
   {
     name: 'Spanish (Español)',
