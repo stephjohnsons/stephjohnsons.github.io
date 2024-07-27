@@ -1,24 +1,47 @@
 <template>
   <div class="d-flex flex-column">
-    <h2>Biography</h2>
-    <div class="d-flex flex-row gap-1 mt-1 mb-2">
-      <button :class="buttonClass('English')" @click="switchLanguage('English')">
-        English
-      </button>
-      <button :class="buttonClass('Chinese')" @click="switchLanguage('Chinese')">
-        中文
-      </button>
-      <!-- <button 
+    <div class="d-flex">
+      <div clas="w-75">
+        <h2>Biography</h2>
+        <div class="d-flex flex-row gap-1 mt-1 mb-2">
+          <button :class="buttonClass('English')" @click="switchLanguage('English')">
+            English
+          </button>
+          <button :class="buttonClass('Chinese')" @click="switchLanguage('Chinese')">
+            中文
+          </button>
+          <!-- <button 
         :class="buttonClass('Malay')"
         @click="switchLanguage('Malay')"
-      >
+        >
         B. Malaysia
       </button> -->
-    </div>
-    <div v-for="(paragraph, index) in bioText" :key="index">
-      <p :class="{ 'fs-7 text-muted': isLastParagraph(index) }">
-        {{ paragraph }}
-      </p>
+        </div>
+        <div>
+          <p v-for="(paragraph, index) in bioText" :key="index" :class="{ 'fs-7 text-muted': isLastParagraph(index) }">
+            {{ paragraph }}
+          </p>
+        </div>
+      </div>
+      <div class="mt-5 ms-5 w-25 text-end">
+        <h4 class="text-nowrap pe-2 mt-4">
+          Media Kit
+        </h4>
+        <div class="border-end border-3 pe-2">
+          <p>
+            <a href="https://docs.google.com/document/d/15yC7uHUr3l1Ie7iT9xna6haMhzNeC8pKG64E4rkNuzQ/edit?usp=sharing">
+              Biography
+            </a>
+          </p>
+        </div>
+        <div class="border-end border-3 pe-2">
+          <p>
+            <a href="https://drive.google.com/drive/folders/1dT7uiiKr9raq-t9l7V3_uB0ZuldVkDV6?usp=sharing">
+              Professional photos
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
     <hr />
     <h3>Personal Statement</h3>
