@@ -84,7 +84,7 @@ export const teachingProfile = reactive({
 export const devBio = [
   "Outside of music, I develop websites and I love all things tech and artsy. When I'm not practicing on my cello, I'm usually knee-deep in looking out for latest design trends and web development technologies. I started out in mid-2021 as a self-taught developer, and since learning the bits and pieces of the tech industry, I decided that I would dive into the industry in early 2023, and got a position as a software developer later.",
   'In web development, I currently specialise in front-end development, but I have a little bit of experience with everything from UI/UX writing and design to coding to QA, and also project management.',
-  'I am currently on a career hiatus but is actively looking for a remote role. I am looking for a position where I can put my skills to use and help others build their projects.',
+  'I am currently on a career hiatus and is currently freelancing as a performing cellist.',
   'Updated Jul 2024. Do not use or amend without permission.'
 ]
 
