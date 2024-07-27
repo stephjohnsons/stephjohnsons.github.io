@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column">
-    <div class="d-flex">
-      <div clas="w-75">
+    <div class="d-flex flex-column flex-md-row">
+      <div>
         <h2>Biography</h2>
         <div class="d-flex flex-row gap-1 mt-1 mb-2">
           <button :class="buttonClass('English')" @click="switchLanguage('English')">
@@ -23,23 +23,38 @@
           </p>
         </div>
       </div>
-      <div class="mt-5 ms-5 w-25 text-end">
-        <h4 class="text-nowrap pe-2 mt-4">
+      <div class="mt-md-5 ms-md-5 mt-1 text-md-end text-start">
+        <h4 class="text-nowrap pe-md-2 mt-md-4">
           Media Kit
         </h4>
-        <div class="border-end border-3 pe-2">
-          <p>
+        <div class="d-flex d-md-none">
+          <p class="me-2">
             <a href="https://docs.google.com/document/d/15yC7uHUr3l1Ie7iT9xna6haMhzNeC8pKG64E4rkNuzQ/edit?usp=sharing">
               Biography
             </a>
           </p>
-        </div>
-        <div class="border-end border-3 pe-2">
           <p>
             <a href="https://drive.google.com/drive/folders/1dT7uiiKr9raq-t9l7V3_uB0ZuldVkDV6?usp=sharing">
               Professional photos
             </a>
           </p>
+        </div>
+        <div class="d-none d-md-block">
+          <div class="border-end border-3 pe-md-2">
+            <p>
+              <a
+                href="https://docs.google.com/document/d/15yC7uHUr3l1Ie7iT9xna6haMhzNeC8pKG64E4rkNuzQ/edit?usp=sharing">
+                Biography
+              </a>
+            </p>
+          </div>
+          <div class="border-end border-3 pe-md-2">
+            <p>
+              <a href="https://drive.google.com/drive/folders/1dT7uiiKr9raq-t9l7V3_uB0ZuldVkDV6?usp=sharing">
+                Professional photos
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
