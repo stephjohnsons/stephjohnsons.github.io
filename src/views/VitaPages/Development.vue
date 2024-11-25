@@ -3,14 +3,16 @@
   <h3>Portfolio</h3>
 
   <div v-for="site in    works   " :key="site.index">
-    <h6 class="mb-0 fw-semibold">{{ site.name }}</h6>
+    <h6 class="mb-1 fw-semibold">
+      {{ site.name }}
+    </h6>
     <p class="mb-0 fs-custom">
       {{ site.desc }}
     </p>
-    <p v-if="site.link === '-'" class="fs-7 fst-normal mb-1">
+    <p v-if="site.link === '-'" class="fs-7 fst-normal">
       🚧 Under maintenance 🚧
     </p>
-    <p v-else class="text-muted fs-custom mb-1">
+    <p v-else class="text-muted fs-custom">
       <a :href="site.link" target="_blank">
         Link
       </a>
