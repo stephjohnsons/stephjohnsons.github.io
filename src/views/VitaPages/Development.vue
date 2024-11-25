@@ -48,6 +48,6 @@ import { works } from "@/components/data/biographies.js";
 }
 
 hr {
-  margin: 0.75rem 0%;
+  margin-top: 0.75rem;
 }
 </style>
