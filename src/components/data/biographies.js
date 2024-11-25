@@ -264,7 +264,8 @@ export const works = [
   {
     name: 'Quote for Instagram Posts',
     desc: 'Self-initiated project. A website to generate inspirational quotes for Instagram posts, with the purpose of practising the use of Tailwind CSS and integrating API into a site.',
-    link: 'https://stephjohnsons.com/quotes/'
+    link: '-'
+    // link: 'https://stephjohnsons.com/quotes/'
   },
   {
     name: 'Ionic',
@@ -274,7 +275,8 @@ export const works = [
   {
     name: 'Weather App',
     desc: "Self-initiated project. An app that generates weather information of a local city based on user's search.",
-    link: 'https://stephjohnsons.com/weather-app/'
+    link: '-'
+    // link: 'https://stephjohnsons.com/weather-app/'
   },
   {
     name: 'Karl Thöne',
