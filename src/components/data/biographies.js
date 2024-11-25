@@ -278,7 +278,7 @@ export const works = [
   },
   {
     name: 'Karl Thöne',
-    desc: "Website created for Datin Veronika Thöne's father, Karl (1924-1993), who was a German composer of contemporary music. The website is created in conjunction of his 100th birthday in 2024 and the '100th Anniversary Festival', which will feature world premiere of his Concertino and Malaysian premiere of some of his chamber works. Website is completed and under vetting; it will be published soon (June 2024).",
+    desc: "Website created for Datin Veronika Thöne's father, Karl (1924-1993), who was a German composer of contemporary music. The website is created in conjunction of his 100th birthday in 2024 and the '100th Anniversary Festival', which will feature world premiere of his Concertino and Malaysian premiere of some of his chamber works.",
     link: 'https://www.karlthoene.com'
   }
 ]

@@ -7,10 +7,10 @@
     <p class="mb-0 fs-custom">
       {{ site.desc }}
     </p>
-    <p v-if="site.link === '-'" class="fs-7 fst-normal ">
+    <p v-if="site.link === '-'" class="fs-7 fst-normal mb-1">
       🚧 Under maintenance 🚧
     </p>
-    <p v-else class="text-muted fs-custom">
+    <p v-else class="text-muted fs-custom mb-1">
       <a :href="site.link" target="_blank">
         Link
       </a>
@@ -43,5 +43,9 @@ import { works } from "@/components/data/biographies.js";
 
 .smaller-text {
   font-size: 0.8rem;
+}
+
+hr {
+  margin: 0.75rem 0%;
 }
 </style>
