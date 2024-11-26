@@ -264,8 +264,7 @@ export const works = [
   {
     name: 'Quote for Instagram Posts',
     desc: 'Self-initiated project. A website to generate inspirational quotes for Instagram posts, with the purpose of practising the use of Tailwind CSS and integrating API into a site.',
-    link: '-'
-    // link: 'https://stephjohnsons.com/quotes/'
+    link: 'https://stephjohnsons.com/quotes/'
   },
   {
     name: 'Ionic',
