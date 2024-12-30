@@ -4,9 +4,14 @@ export const contactInfo = {
     link: 'mailto:info@stephjohnsons.com'
   },
   'Booking Enquiries': {
-    remarks: 'Brian CHOONG (manager) • Red Carpet Artist Management',
+    remarks: 'Martin LOOI (booking manager)',
     remarks2:
       'Kindly indicate your preferred inquiry, i.e., quartet performance, solo performance etc.',
+    label: 'martinlooimusic@gmail.com',
+    link: 'mailto:martinlooimusic@gmail.com'
+  },
+  'General Management': {
+    remarks: 'Brian CHOONG (manager) • Red Carpet Artist Management',
     label: 'brian@rcam.my',
     link: 'mailto:brian@rcam.my'
   },

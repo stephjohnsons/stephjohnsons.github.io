@@ -1,20 +1,22 @@
 <template>
   <div class="about">
     <h2>Contact</h2>
-    <p class="fw-bold mb-0">
-      Meeting
-    </p>
 
-    <Calendly text="Schedule a meeting to meet with me (30 min)" />
+    <div class="contact-items">
+      <p class="fw-bold mb-0">
+        Meeting
+      </p>
+      <Calendly text="Schedule a meeting to meet with me (30 min)" />
+    </div>
 
-    <div v-for="(item, key) in contactInfo" :key="key">
+    <div v-for="(item, key) in contactInfo" :key="key" class="contact-items">
       <p class="fw-bold mb-0">
         {{ key }}
       </p>
 
       <p v-if="item.remarks" class="mb-0 fw-medium">
         {{ item.remarks }} <br />
-        <i class="fw-normal">
+        <i v-if="item.remarks2" class="fw-normal">
           {{ item.remarks2 }}
         </i>
       </p>
@@ -44,5 +46,9 @@ a {
 
 a:hover {
   text-decoration: none;
+}
+
+.contact-items> :not(:first-child) {
+  margin-left: 1rem;
 }
 </style>
