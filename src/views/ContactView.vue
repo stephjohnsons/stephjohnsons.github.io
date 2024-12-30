@@ -15,10 +15,13 @@
       </p>
 
       <p v-if="item.remarks" class="mb-0 fw-medium">
-        {{ item.remarks }} <br />
-        <i v-if="item.remarks2" class="fw-normal">
-          {{ item.remarks2 }}
-        </i>
+        {{ item.remarks }}
+        <span v-if="item.remarks2" class="fw-normal fs-7 text-muted fst-normal">
+          {{ item.remarks2 }} <br />
+        </span>
+        <span v-if="item.description" class="fw-normal mt-1 fst-italic text-muted">
+          {{ item.description }}
+        </span>
       </p>
 
       <p>
