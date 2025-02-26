@@ -23,13 +23,13 @@
           He also has a keen interest in software development and enjoys reading.
         </p>
         <p class="d-flex flex-row">
-          <RouterLink :to="{ path: pageLinks[1].children[0].link }" class="text-muted">musician bio</RouterLink>
+          <RouterLink :to="{ path: pageLinks[1].link }" class="text-muted">musician bio</RouterLink>
           <RouterLink :to="{ path: pageLinks[2].link }" class="text-muted ms-3">teaching bio</RouterLink>
-          <RouterLink :to="{ path: pageLinks[3].link }" class="text-muted ms-3">vita</RouterLink>
+          <!-- <RouterLink :to="{ path: pageLinks[3].link }" class="text-muted ms-3">vita</RouterLink> -->
         </p>
       </div>
     </div>
-    <div class="border-top py-3">
+    <!-- <div class="border-top py-3">
       <h3 class="mb-0">Latest posts</h3>
       <p class="text-muted fst-italic">
         For more posts, please visit my
@@ -39,7 +39,7 @@
       <div class="d-flex">
         <InstagramEmbed />
       </div>
-    </div>
+    </div> -->
   </main>
 </template>
 
@@ -49,7 +49,7 @@ import { homeDescription } from '@/images/description.js';
 import { pageLinks } from '@/components/data/pages.js'
 import { RouterLink } from 'vue-router'
 
-import InstagramEmbed from '@/components/InstagramEmbed.vue';
+// import InstagramEmbed from '@/components/InstagramEmbed.vue';
 
 const greeting = ref("");
 

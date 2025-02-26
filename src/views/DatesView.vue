@@ -6,6 +6,11 @@
         Powered by <a href="https://www.bandsintown.com/">Bandsintown</a>
       </p>
     </div>
+    <div v-if="!upcomingEvents.length && !loading">
+      <h5 class="text-muted">There are no upcoming concerts!</h5>
+      <p><a href="/" class="text-muted">Back to home</a>
+      </p>
+    </div>
     <div v-if="loading" class="d-flex justify-content-start">
       <Loading />
     </div>

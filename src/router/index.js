@@ -27,11 +27,11 @@ const routes = [
     name: 'gallery',
     component: () => import('../views/GalleryView.vue')
   },
-  {
-    path: '/vita',
-    name: 'vita',
-    component: () => import('../views/VitaView.vue')
-  },
+  // {
+  //   path: '/vita',
+  //   name: 'vita',
+  //   component: () => import('../views/VitaView.vue')
+  // },
   {
     path: '/portfolio',
     name: 'portfolio',
