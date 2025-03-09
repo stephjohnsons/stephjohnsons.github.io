@@ -40,12 +40,11 @@ export const biographies = {
 }
 
 export const teachingBio = [
-  'As a teacher, Stephen has taught students from all walks of life ranging from ages 6 to 60 for the past 13 years. He started out as an assistant conductor at both the Kian Kok String- and Youth Orchestra, gave individual lessons to stringed instruments at Yamaha Tawau, and was later a cello tutor at the Epsom College in Malaysia and British International School of Kuala Lumpur.',
-  'He then progressed to instrumental and academic classes teaching as faculty at the University of Malaya (adjunct) and now UCSI University. Stephen is also a long-time tutor for the Genius Seni Muzik programme at Istana Budaya.',
-  'In his lessons, Stephen focuses mainly on the awareness of the body, strong aural skills, and concepts of musical and acoustical aesthetics in his lessons. He also emphasises on providing individualised lesson plans to students of various learning styles. Masterclasses given around Malaysia, namely at the Sunway University and Century Music School (Kuching).',
-  'In academia, Stephen was appointed the Head of Diploma Programmes at the Institute of Music, UCSI University for 2 years since 2021, where he oversees and manages the curriculum for Diploma in Music programmes. As a lecturer, he has taught theory, aural, orchestral instrument and string pedagogy, performance skills, and chamber music classes. He holds a postgraduate diploma in education.',
-  'Stephen is currently the cello faculty for Sunway University and UCSI Institute of Music.',
-  'Updated Dec 2022. Do not use or amend without permission.'
+  'Stephen Tseu is the cello faculty at the University of Malaya and the UCSI Institute of Music, where he used to teach music theory and chamber music. Previously, he was a peripatetic cello and string tutor at the Epsom College, British International School, Yamaha Tawau, as well as at the Kian Kok Middle School.',
+  'In academia, Stephen was appointed the Head of Diploma Programmes at the Institute of Music, UCSI University for 2 years from 2021, where he oversees and manages the curriculum for Diploma in Music programmes. As a lecturer, he has taught theory, string quartet studies, string pedagogy, performance skills, and chamber music classes.',
+  'Stephen is a long-time tutor for the Genius Seni Muzik (formerly Permata Seni) programme at the Istana Budaya, and has experience teaching solo- and ensemble style playing on the cello. In his lessons, Stephen focuses mainly on the connection of kinesiological awareness to tone colour and concepts of acoustical aesthetics in his lessons.',
+  'Stephen is the co-author, with Yew Cheong Choong, of Music Theory Rudiments (UCSI University Press, 2024), a theory book focused on preparing prospective students for tertiary level theory classes at his alma mater. His research focuses on performance studies, string pedagogy, and cultural management studies, as well as an accomplished performing cellist outside of research.',
+  'Updated Mar 2025. Do not use or amend without permission.'
 ]
 
 export const teachingProfile = reactive({
