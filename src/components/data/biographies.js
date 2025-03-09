@@ -59,24 +59,10 @@ export const teachingProfile = reactive({
     'Chamber music coaching',
     'Music theory lessons'
   ],
-  'Areas of Interest and Teachings': [
-    'Post-romantic & fin-de-siècle (programmatic) music',
-    'Analytical models in music theory',
-    'Cello literature and string pedagogy',
-    'Chamber music'
-  ],
-  'Interdisciplinary Areas': [
-    'User experience design',
-    'Visual, interface, and graphic design',
-    'Software development'
-  ],
   'Other Trainings and Experience': [
     'Classroom Management & Safety',
-    'Special Educational Needs (SEN)'
-  ],
-  'Research and Creative Output': [
-    'Cheong, Tseu. tba. Music Theory Rudiments. (Book) - to be published soon',
-    'Tseu. 2022. Physical Considerations in Teaching the Cello. (Presentation)'
+    'Special Educational Needs (SEN)',
+    'Postgraduate Diploma in Education'
   ]
 })
 

@@ -10,6 +10,12 @@
       </p>
     </div>
 
+    <div class="mb-2">
+      <p><a href="https://www.researchgate.net/profile/Stephen-Tseu">ResearchGate Profile</a></p>
+    </div>
+
+
+
     <!-- Teaching Profile Accordion -->
     <div class="accordion" v-for="(items, category, idx) in teachingProfile" :key="category">
       <div class="accordion-item">
@@ -23,7 +29,7 @@
         <div :id="`collapse${idx}`" class="accordion-collapse collapse" :class="{ 'show': isActive[idx] }"
           :aria-labelledby="`heading${idx}`" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p v-for="item in items" :key="item">
+            <p v-for="item in items" :key="item" class="mb-0">
               <li>
                 {{ item }}
               </li>
