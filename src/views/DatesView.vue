@@ -1,7 +1,8 @@
 <template>
   <div class="d-flex flex-column">
     <div class="w-100">
-      <h2 class="mb-1">Upcoming Dates</h2>
+      <h3 class="mb-1 d-none d-md-block">Upcoming Dates</h3>
+      <h4 class="mb-1 d-block d-md-none">Upcoming Dates</h4>
       <p class="text-muted small fst-italic">
         Powered by <a href="https://www.bandsintown.com/">Bandsintown</a>
       </p>

@@ -1,6 +1,7 @@
 <template>
   <div class="d-flex flex-column">
-    <h2>Teaching</h2>
+    <h2 class="d-none d-md-block">Teaching</h2>
+    <h3 class="d-block d-md-none">Teaching</h3>
 
     <!-- Teaching Bio -->
     <div v-for="(paragraph, index) in teachingBio" :key="index">

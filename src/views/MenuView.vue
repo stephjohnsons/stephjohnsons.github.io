@@ -43,7 +43,7 @@
     </div>
 
     <p class="text-body-secondary fs-8 p-2 mt-4">
-      2018 - 2024 © All rights reserved. <br />
+      2018 - 2025 © All rights reserved. <br />
       Do not replicate or use any parts of the site without permission.
     </p>
   </div>

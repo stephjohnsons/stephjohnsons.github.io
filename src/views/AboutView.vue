@@ -2,7 +2,8 @@
   <div class="d-flex flex-column">
     <div class="d-flex flex-column flex-md-row">
       <div>
-        <h2>Biography</h2>
+        <h2 class="d-none d-md-block">Biography</h2>
+        <h3 class="d-block d-md-none">Biography</h3>
         <div class="d-flex flex-row gap-1 mt-1 mb-2">
           <button :class="buttonClass('English')" @click="switchLanguage('English')">
             English
@@ -59,7 +60,8 @@
       </div>
     </div>
     <hr />
-    <h3>Personal Statement</h3>
+    <h3 class="d-none d-md-block">Personal Statement</h3>
+    <h4 class="d-block d-md-none">Personal Statement</h4>
     <p>
       At a young age, I was always fascinated by art and languages. Growing up in a trilingual and multicultural
       environment gave me first-hand experience in understanding how different aspects of society come together to

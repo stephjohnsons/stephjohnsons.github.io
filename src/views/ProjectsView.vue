@@ -1,6 +1,7 @@
 <template>
   <div class="about">
-    <h2 class="mb-0">Past Musical Projects and Concerts</h2>
+    <h2 class="mb-0 d-none d-md-block">Past Musical Projects and Concerts</h2>
+    <h3 class="mb-0 d-block d-md-none">Past Musical Projects and Concerts</h3>
     <p class="text-muted small">Sorted by starting year in descending order.</p>
 
     <div class="d-flex align-items-center gap-1 my-2">

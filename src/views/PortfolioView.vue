@@ -1,7 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <h3 class="mb-1">Portfolio</h3>
+    <h2 class="mb-0 d-none d-md-block">Portfolio</h2>
+    <h3 class="mb-0 d-block d-md-none">Portfolio</h3>
     <p class="text-muted fst-italic mt-1 smaller-text">
       <span class="fw-bold">Disclaimer: </span>
       The content presented in this portfolio,

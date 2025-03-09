@@ -1,6 +1,7 @@
 <template>
   <div class="about">
-    <h2>Contact</h2>
+    <h2 class="d-none d-md-block">Contact</h2>
+    <h3 class="d-block d-md-none">Contact</h3>
 
     <div class="contact-items">
       <p class="fw-bold mb-0">

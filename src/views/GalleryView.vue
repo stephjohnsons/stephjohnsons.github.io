@@ -1,8 +1,10 @@
 <template>
   <div class="gallery">
-    <h2>Gallery</h2>
+    <h3 class="d-none d-md-block">Gallery</h3>
+    <h4 class="d-block d-md-none">Gallery</h4>
 
-    <h3>Photos</h3>
+    <h4 class="d-none d-md-block">Photos</h4>
+    <h5 class="d-block d-md-none">Photos</h5>
     <div class="photo-grid d-flex flex-wrap gap-2 justify-content-around">
       <div v-for="(desc, index) in descriptions" :key="index" class="photo-container text-start">
         <img :src="getImgSrc(desc.image)" :alt="desc.alt" class="photo">
