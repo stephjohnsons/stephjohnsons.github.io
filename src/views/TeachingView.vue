@@ -23,9 +23,11 @@
         <div :id="`collapse${idx}`" class="accordion-collapse collapse" :class="{ 'show': isActive[idx] }"
           :aria-labelledby="`heading${idx}`" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <ul>
-              <li v-for="item in items" :key="item">{{ item }}</li>
-            </ul>
+            <p v-for="item in items" :key="item">
+              <li>
+                {{ item }}
+              </li>
+            </p>
           </div>
         </div>
       </div>
