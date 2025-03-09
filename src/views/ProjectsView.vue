@@ -33,7 +33,7 @@
     <hr>
 
     <div v-for="project in filteredProjects" :key="project.description" class="mb-3">
-      <p class="mb-0">{{ project.year }}</p>
+      <p class="mb-0">{{ formatDate(project.year) }}</p>
 
       <div class="d-flex flex-row gap-1 align-items-center">
         <h5 class="mb-0">{{ project.organisation }}</h5>
@@ -119,6 +119,60 @@ const getClass = (type) => {
   }
 };
 
+const parseProjectDate = (date) => {
+  if (date.includes('-')) {
+    const parts = date.split('-');
+
+    if (parts[1] === 'present') {
+      return { year: parseInt(parts[0]), month: 13, ongoing: true };
+    }
+
+    if (parts[1].length === 2) {
+      return { year: parseInt(parts[0]), month: parseInt(parts[1]), ongoing: false };
+    }
+
+    return { year: parseInt(parts[0]), month: 0, endYear: parseInt(parts[1]), ongoing: false };
+  }
+
+  return { year: parseInt(date), month: 0, ongoing: false };
+};
+
+
+function sortProjects(array) {
+  return array.slice().sort((a, b) => {
+    const dateA = parseProjectDate(a.year);
+    const dateB = parseProjectDate(b.year);
+
+    const yearA = dateA.endYear || dateA.year;
+    const yearB = dateB.endYear || dateB.year;
+
+    return yearB - yearA || dateB.month - dateA.month;
+  });
+}
+
+
+const formatDate = (year) => {
+  const { year: startYear, month, endYear, ongoing } = parseProjectDate(year);
+
+  if (ongoing) {
+    return `${startYear}-present`;
+  }
+
+  if (endYear) {
+    return `${startYear}-${endYear}`;
+  }
+
+  if (month === 0) {
+    return `${startYear}`;
+  }
+
+  const monthNames = [
+    '', 'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  return `${startYear} ${monthNames[month]}`;
+};
 </script>
 
 <style scoped>

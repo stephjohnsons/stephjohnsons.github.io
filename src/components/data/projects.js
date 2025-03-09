@@ -326,6 +326,7 @@ export const projects = [
     location: 'Lahad Datu (virtual)',
     cc: 'MY',
     link: 'https://www.ucsiuniversity.edu.my/sites/default/files/4-imus_newsletter_vol.4.pdf',
+    linkText: 'Archive',
     description:
       'Conducted a virtual class on music theory for students of the Lahad Datu Middle School.'
   },
@@ -337,6 +338,7 @@ export const projects = [
     location: 'Lahad Datu (virtual)',
     cc: 'MY',
     link: 'https://www.ucsiuniversity.edu.my/sites/default/files/4-imus_newsletter_vol.4.pdf',
+    linkText: 'Archive',
     description:
       'A talk between Dr Andrew Filmer and Stephen Johnson-Tseu aimed at dealing with the tricky subject of money and musicians, which included conversations on earning a living as a musician, the current industry rates, funding sources, and current issues and hurdles in the music industry and the topic of when and if a musician should consider to provide their service free of charge. '
   },
@@ -429,7 +431,7 @@ export const projects = [
       'Performed with multiple ensembles and chamber music settings for the fundraising concert of Down Syndrome kids. Organised by the music society of USM Kelantan.'
   },
   {
-    year: '2023-current',
+    year: '2023-present',
     type: ['Curation', 'Management', 'Orchestra'],
     ongoing: true,
     organisation: 'Peninsular Festival Orchestra',
