@@ -32,7 +32,7 @@
     </div>
     <hr>
 
-    <div v-for="project in filteredProjects" :key="project.description" class="mb-3">
+    <div v-for="project in filteredProjects.slice().reverse()" :key="project.description" class="mb-3">
       <p class="mb-0">{{ formatDate(project.year) }}</p>
 
       <div class="d-flex flex-row gap-1 align-items-center">
@@ -47,7 +47,8 @@
         <span>{{ getFlagEmoji(project.cc) }}</span>
       </p>
 
-      <p class="mb-2">{{ project.description }}</p>
+      <p class="mb-2"> {{ project.description }} </p>
+
       <div class="d-flex flex-row gap-1 ms-n1">
         <btn v-for="(type, index) in project.type" :key="index" :class="getClass(type)"
           class="btn btn-sm fw-normal ms-n1 disable-pointer fs-smaller">
@@ -73,9 +74,9 @@ const ongoingFilter = ref(false);
 
 const selectCategory = (category) => {
   if (selectedCategory.value === category) {
-    selectedCategory.value = ''; // Unselect the category
+    selectedCategory.value = '';
   } else {
-    selectedCategory.value = category; // Select the new category
+    selectedCategory.value = category;
   }
 }
 
@@ -146,10 +147,13 @@ function sortProjects(array) {
     const yearA = dateA.endYear || dateA.year;
     const yearB = dateB.endYear || dateB.year;
 
-    return yearB - yearA || dateB.month - dateA.month;
+    if (yearA !== yearB) {
+      return yearB - yearA;
+    }
+
+    return dateB.month - dateA.month;
   });
 }
-
 
 const formatDate = (year) => {
   const { year: startYear, month, endYear, ongoing } = parseProjectDate(year);

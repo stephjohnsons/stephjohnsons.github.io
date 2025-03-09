@@ -457,7 +457,8 @@ export const projects = [
     organisation: 'This is Johan - Live in Singapore',
     location: 'Axiata Arena',
     cc: 'MY',
-    description: "Hip-Hop singer Joe Flizzow's concert in Singapore."
+    description:
+      'Hip-hop icon Joe Flizzow, known for his powerful lyrics and chart-topping hits, is set to deliver an electrifying performance in Singapore, bringing his signature energy and charisma to the stage. With a stellar lineup of musicians and an unforgettable night of music and entertainment, this must-see event promises to be a highlight for hip-hop fans in Southeast Asia.'
   },
   {
     year: '2024-11',
@@ -466,7 +467,8 @@ export const projects = [
     organisation: 'MONO Asia Tour: Kuala Lumpur',
     location: 'Zepp Kuala Lumpur',
     cc: 'MY',
-    description: ''
+    description:
+      'MONO, one of the most influential Asian instrumental bands, celebrates their 25th anniversary with their first Asian Orchestra tour alongside a 12-piece orchestra, featuring music from their new album OATH. Recorded with Steve Albini, OATH is a 71-minute exploration of time and life, blending MONO’s signature slow-building compositions with orchestral grandeur.'
   },
   {
     year: '2024-12',
@@ -475,7 +477,8 @@ export const projects = [
     organisation: 'Spirit of Giving: Corey Koh',
     location: 'SingTel Waterfront Theatre at Esplanade',
     cc: 'SG',
-    description: ''
+    description:
+      'Spirit of Giving is an annual concert series organised by TRCL and produced by Global Cultural Alliance. The band was led by music director Kelvin Loh.'
   }
 ]
 
