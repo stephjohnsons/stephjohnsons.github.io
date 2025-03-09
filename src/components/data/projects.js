@@ -341,7 +341,7 @@ export const projects = [
   {
     year: '2021',
     type: ['Projects', 'Chamber Music', 'Tour'],
-    ongoing: true,
+    ongoing: false,
     organisation: 'heART • Interdisciplinary Research on "Social Identity"',
     location: 'Germany',
     cc: 'DE',
@@ -349,9 +349,9 @@ export const projects = [
       '"heART" is an art collective founded by German pianist Daniel Bucurescu and Malaysian cellist Stephen Johnson-Tseu. As a creative ensemble, they seek to redefine classical music through interactions with society to ensure constant encounters and engagement between music and the people. For this purposes, they focus mainly on: (1) interdisciplinary performances; (2) education projects; and (3) workshops on creativity, dramaturgy, and concert design.'
   },
   {
-    year: '2022-present',
+    year: '2022-2023',
     type: ['Chamber Music', 'Recital', 'Tour'],
-    ongoing: true,
+    ongoing: false,
     organisation: 'Faculty Chamber Group',
     location: 'Cheras',
     cc: 'MY',
