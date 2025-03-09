@@ -97,15 +97,6 @@ const clearFilter = () => {
   ongoingFilter.value = false;
 }
 
-function sortProjects(array) {
-  array.sort((a, b) => {
-    const yearA = a.year.includes('-') ? parseInt(a.year.split('-')[0]) : parseInt(a.year);
-    const yearB = b.year.includes('-') ? parseInt(b.year.split('-')[0]) : parseInt(b.year);
-
-    return yearB - yearA;
-  })
-}
-
 const getClass = (type) => {
   const classicalTypes = ['Chamber Music', 'Orchestra', 'Concerts', 'Recital'];
   const contemporaryTypes = ['Band', 'Musicals', 'Recordings'];
