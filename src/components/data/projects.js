@@ -448,7 +448,7 @@ export const projects = [
     location: 'Axiata Arena',
     cc: 'MY',
     description:
-      'Performed with Pradeep Kumar in the orchestra under the baton of Datuk Mustafa Fuzer bin Nawi.'
+      'Pradeep Kumar headlined his concert performing with 24 classical musicians under the baton of Datuk Mustafa Fuzer Nawi in a first-of-its-kind collaboration for a South Indian singer in Malaysia. Organized by the Aakaar Foundation, the concert featured Indian guest artists, traditional arts like wayang kulit, and a symphonic fusion of visuals and music.'
   },
   {
     year: '2024-07',
