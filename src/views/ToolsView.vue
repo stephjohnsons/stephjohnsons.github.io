@@ -1,14 +1,20 @@
 <template>
   <div class="d-flex flex-column">
-    <h2 class="mb-0 d-none d-md-block">Tools</h2>
-    <h3 class="mb-0 d-block d-md-none">Tools</h3>
-
     <ZhTwConverter />
     <TimeZoneConverter />
+
+    <p class="my-4">
+      <a href="https://www.timeanddate.com/date/workdays.html">
+        Business Day Calculator
+      </a>
+    </p>
+
+    <CurrentTime />
   </div>
 </template>
 
 <script setup>
 import ZhTwConverter from '@/components/ZhTwConverter.vue';
 import TimeZoneConverter from '@/components/TimeZoneConverter.vue';
+import CurrentTime from '@/components/CurrentTime.vue';
 </script>

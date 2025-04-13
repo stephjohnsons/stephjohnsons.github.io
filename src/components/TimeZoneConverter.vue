@@ -8,7 +8,7 @@
         <label class="form-label">Your Time Zone</label>
         <input type="text" class="form-control" :value="localZone" disabled />
       </div>
-      <div>
+      <div class="mt-2">
         <label class="form-label">Your Location Time</label>
         <input type="datetime-local" v-model="localTime" class="form-control" />
         <input type="text" class="form-control mt-1" :value="localTimeZh" readonly />
@@ -22,7 +22,7 @@
           <option v-for="zone in zones" :key="zone" :value="zone">{{ zone }}</option>
         </select>
       </div>
-      <div>
+      <div class="mt-2">
         <label class="form-label">Target Local Time</label>
         <input type="text" class="form-control" :value="targetTimeEn" readonly />
         <input type="text" class="form-control mt-1" :value="targetTimeZh" readonly />
