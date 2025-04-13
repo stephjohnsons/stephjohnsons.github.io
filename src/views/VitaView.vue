@@ -1,6 +1,7 @@
 <template>
   <div class="d-flex flex-column">
-    <h2>Vita</h2>
+    <h2 class="mb-0 d-none d-md-block">Vita</h2>
+    <h3 class="mb-0 d-block d-md-none">Vita</h3>
 
     <p class="text-muted fst-italic">
       This page is a comprehensive showcase of things that I've done outside of music, particularly in design and web
