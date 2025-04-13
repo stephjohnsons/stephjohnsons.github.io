@@ -6,6 +6,11 @@
     <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
     <textarea :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese" readonly></textarea>
   </div>
+  <div class="d-flex gap-2 mb-2">
+    <button class="btn btn-sm btn-outline-secondary" @click="setTemplate1">开头</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="setTemplate2">接听</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="setTemplate3">未接听</button>
+  </div>
 </template>
 
 <script setup>
@@ -26,6 +31,18 @@ watch(simplified, (newVal) => {
     traditional.value = converter(newVal);
   }
 });
+
+const setTemplate1 = () => {
+  simplified.value = '__xx__，您好。感谢您选择爱彼迎。我是您的专属社区支持代表小桀 (Stephen T.)';
+};
+
+const setTemplate2 = () => {
+  simplified.value = '非常感谢您的时间来接听我的来电。如刚刚所说，__xx__';
+};
+
+const setTemplate3 = () => {
+  simplified.value = '您好，刚刚尝试以【__xx__】号码就__xx__问题给您致电，但是未能接通。如果打扰您，这边深感抱歉。';
+};
 </script>
 
 <style scoped>
