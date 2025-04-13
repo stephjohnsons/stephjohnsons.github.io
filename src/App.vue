@@ -1,5 +1,5 @@
 <template>
-  <header class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
+  <header v-if="route.path !== '/tools'" class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
     <a href="/" id="no-deco" class="d-flex align-items-center">
       <h1 class="fw-light py-2 mb-1 fs-2" id="no-deco">
         Stephen
@@ -13,6 +13,11 @@
       <span class="hamburger_line"></span>
       <span class="hamburger_line"></span>
     </a>
+  </header>
+  <header v-else class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
+    <h1 class="fw-light py-2 mb-1 fs-2" id="no-deco">
+      Tools
+    </h1>
   </header>
 
   <!-- Fixed router view as per suggested in console -->
