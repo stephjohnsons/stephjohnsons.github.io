@@ -1,44 +1,78 @@
 <template>
-  <h5 class="mb-2 fw-normal mt-2">
-    Timezone Converter
-  </h5>
-  <div class="d-flex gap-2 mb-2">
-    <div>
-      <p class="mb-1">Kuala Lumpur</p>
-      <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
+  <div class="container py-4">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Your Time Zone</label>
+        <input type="text" class="form-control" :value="localZone" disabled />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Target Time Zone</label>
+        <select v-model="targetZone" class="form-select">
+          <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
+        </select>
+      </div>
     </div>
-    <div>
-      <select class="mb-1">
-        <option value="Asia/Kuala_Lumpur">Asia/Kuala_Lumpur</option>
-      </select>
-      <textarea :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese"
-        readonly></textarea>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Your Location Time</label>
+        <input type="datetime-local" v-model="localTime" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Target Local Time</label>
+        <input type="text" class="form-control" :value="targetTimeEn" readonly />
+        <input type="text" class="form-control" :value="targetTimeZh" readonly />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
-import * as OpenCC from 'opencc-js/core';
-import * as Locale from 'opencc-js/preset';
+import { ref, computed } from 'vue';
+import moment from 'moment-timezone';
+import 'moment/locale/zh-cn'; // Chinese locale
+import 'moment/locale/en-gb'; // English GB (or use 'en' for US style)
 
-const simplified = ref('');
-const traditional = ref('');
-let converter = null;
+const zones = moment.tz.names();
 
-onMounted(async () => {
-  converter = await OpenCC.ConverterFactory(Locale.from.cn, Locale.to.tw);;
+function filterCityTimezones(timezones) {
+  return timezones.filter(zone => /\/[a-zA-Z]+$/.test(zone));
+}
+
+function removeRegionFromTimezones(timezones) {
+  return timezones.map(zone => {
+    const parts = zone.split('/');
+    return parts[parts.length - 1];
+  });
+}
+
+function sortedTimezones(timezones) {
+  return timezones.sort((a, b) => a.localeCompare(b));
+}
+
+const cityTimezones = filterCityTimezones(zones);
+const cities = sortedTimezones(removeRegionFromTimezones(cityTimezones));
+
+const targetZone = ref('UTC');
+const localZone = moment.tz.guess();
+
+const localTime = ref(moment().format('YYYY-MM-DDTHH:mm')); // datetime-local needs "T" format
+
+// English target time
+const targetTimeEn = computed(() => {
+  if (!localTime.value) return '';
+  return moment.tz(localTime.value, localZone)
+    .clone().tz(targetZone.value)
+    .locale('en')
+    .format('DD MMM YYYY, HH:mm');
 });
 
-watch(simplified, (newVal) => {
-  if (converter) {
-    traditional.value = converter(newVal);
-  }
+// Chinese target time
+const targetTimeZh = computed(() => {
+  if (!localTime.value) return '';
+  return moment.tz(localTime.value, localZone)
+    .clone().tz(targetZone.value)
+    .locale('zh-cn')
+    .format('YYYY年M月DD日, HH:mm');
 });
 </script>
-
-<style scoped>
-textarea {
-  resize: none;
-}
-</style>
