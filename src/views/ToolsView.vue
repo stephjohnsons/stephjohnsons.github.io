@@ -1,6 +1,7 @@
 <template>
   <div class="d-flex flex-column">
     <ZhTwConverter />
+    <CurrencyConverter />
     <TimeZoneConverter />
 
     <p class="my-4">
@@ -16,5 +17,6 @@
 <script setup>
 import ZhTwConverter from '@/components/ZhTwConverter.vue';
 import TimeZoneConverter from '@/components/TimeZoneConverter.vue';
+import CurrencyConverter from '@/components/CurrencyConverter.vue';
 import CurrentTime from '@/components/CurrentTime.vue';
 </script>
