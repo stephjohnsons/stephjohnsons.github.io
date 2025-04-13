@@ -1,10 +1,19 @@
 <template>
-  <h5 class="mb-2 fw-normal">
-    Simplified and Traditional Chinese Converter
+  <h5 class="mb-2 fw-normal mt-2">
+    Timezone Converter
   </h5>
   <div class="d-flex gap-2 mb-2">
-    <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
-    <textarea :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese" readonly></textarea>
+    <div>
+      <p class="mb-1">Kuala Lumpur</p>
+      <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
+    </div>
+    <div>
+      <select class="mb-1">
+        <option value="Asia/Kuala_Lumpur">Asia/Kuala_Lumpur</option>
+      </select>
+      <textarea :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese"
+        readonly></textarea>
+    </div>
   </div>
 </template>
 

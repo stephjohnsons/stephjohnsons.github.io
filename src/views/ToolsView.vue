@@ -4,9 +4,11 @@
     <h3 class="mb-0 d-block d-md-none">Tools</h3>
 
     <ZhTwConverter />
+    <TimeZoneConverter />
   </div>
 </template>
 
 <script setup>
 import ZhTwConverter from '@/components/ZhTwConverter.vue';
+import TimeZoneConverter from '@/components/TimeZoneConverter.vue';
 </script>
