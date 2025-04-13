@@ -3,29 +3,43 @@
     Time Zone Converter
   </h5>
   <div class="d-flex gap-2">
-    <div class="w-50">
+    <div class="w-20">
       <div>
-        <label class="form-label">Your Time Zone</label>
+        <label class="form-label">Time Zone</label>
         <input type="text" class="form-control" :value="localZone" disabled />
       </div>
       <div class="mt-2">
-        <label class="form-label">Your Location Time</label>
+        <label class="form-label">Time</label>
         <input type="datetime-local" v-model="localTime" class="form-control" />
         <input type="text" class="form-control mt-1" :value="localTimeZh" readonly />
       </div>
     </div>
 
-    <div class="w-50">
+    <div class="w-30">
       <div>
-        <label class="form-label">Target Time Zone</label>
-        <select v-model="targetZone" class="form-select">
+        <label class="form-label">Target TZ 1</label>
+        <select v-model="targetZoneOne" class="form-select">
           <option v-for="zone in zones" :key="zone" :value="zone">{{ zone }}</option>
         </select>
       </div>
       <div class="mt-2">
-        <label class="form-label">Target Local Time</label>
-        <input type="text" class="form-control" :value="targetTimeEn" readonly />
-        <input type="text" class="form-control mt-1" :value="targetTimeZh" readonly />
+        <label class="form-label">{{ timeDiffOne }}</label>
+        <input type="text" class="form-control" :value="targetTimeOneEn" readonly />
+        <input type="text" class="form-control mt-1" :value="targetTimeOneZh" readonly />
+      </div>
+    </div>
+
+    <div class="w-30">
+      <div>
+        <label class="form-label">Target TZ 2</label>
+        <select v-model="targetZoneTwo" class="form-select">
+          <option v-for="zone in zones" :key="zone" :value="zone">{{ zone }}</option>
+        </select>
+      </div>
+      <div class="mt-2">
+        <label class="form-label">{{ timeDiffTwo }}</label>
+        <input type="text" class="form-control" :value="targetTimeTwoEn" readonly />
+        <input type="text" class="form-control mt-1" :value="targetTimeTwoZh" readonly />
       </div>
     </div>
   </div>
@@ -34,36 +48,50 @@
 <script setup>
 import { ref, computed } from 'vue';
 import moment from 'moment-timezone';
-import 'moment/locale/zh-cn'; // Chinese locale
-import 'moment/locale/en-gb'; // English GB (or use 'en' for US style)
+import 'moment/locale/zh-cn';
+import 'moment/locale/en-gb';
 
 const zones = moment.tz.names();
 
-const targetZone = ref('UTC');
 const localZone = moment.tz.guess();
+const localTime = ref(moment().tz(localZone).format('YYYY-MM-DDTHH:mm'));
 
-const localTime = ref(moment().format('YYYY-MM-DDTHH:mm')); // datetime-local needs "T" format
+const targetZoneOne = ref('UTC');
+const targetZoneTwo = ref('UTC');
 
-const targetTimeEn = computed(() => {
-  if (!localTime.value) return '';
-  return moment.tz(localTime.value, localZone)
-    .clone().tz(targetZone.value)
-    .locale('en')
-    .format('DD MMM YYYY, HH:mm');
-});
+/** Reusable formatter */
+function formatTime(targetZoneRef, locale, formatStr) {
+  return computed(() => {
+    if (!localTime.value) return '';
+    return moment.tz(localTime.value, localZone)
+      .tz(targetZoneRef.value)
+      .locale(locale)
+      .format(formatStr);
+  });
+}
 
-const localTimeZh = computed(() => {
-  if (!localTime.value) return '';
-  return moment.tz(localTime.value, localZone)
-    .clone().locale('zh-cn')
-    .format('YYYY年M月DD日, HH:mm');
-});
+const localTimeZh = formatTime(ref(localZone), 'zh-cn', 'YYYY年M月DD日, HH:mm');
+const targetTimeOneEn = formatTime(targetZoneOne, 'en', 'DD MMM YYYY, HH:mm');
+const targetTimeOneZh = formatTime(targetZoneOne, 'zh-cn', 'YYYY年M月DD日, HH:mm');
+const targetTimeTwoEn = formatTime(targetZoneTwo, 'en', 'DD MMM YYYY, HH:mm');
+const targetTimeTwoZh = formatTime(targetZoneTwo, 'zh-cn', 'YYYY年M月DD日, HH:mm');
 
-const targetTimeZh = computed(() => {
-  if (!localTime.value) return '';
-  return moment.tz(localTime.value, localZone)
-    .clone().tz(targetZone.value)
-    .locale('zh-cn')
-    .format('YYYY年M月DD日, HH:mm');
-});
+const klZone = 'Asia/Kuala_Lumpur';
+
+function getOffsetDiff(targetZoneRef) {
+  return computed(() => {
+    const now = moment();
+    const klOffset = now.tz(klZone).utcOffset();
+    const targetOffset = now.tz(targetZoneRef.value).utcOffset();
+    const diff = (targetOffset - klOffset) / 60;
+
+    if (diff === 0) return 'Same time as KL';
+    const hours = Math.abs(diff);
+    const direction = diff > 0 ? 'ahead' : 'behind';
+    return `${hours} hour${hours !== 1 ? 's' : ''} ${direction}`;
+  });
+}
+
+const timeDiffOne = getOffsetDiff(targetZoneOne);
+const timeDiffTwo = getOffsetDiff(targetZoneTwo);
 </script>
