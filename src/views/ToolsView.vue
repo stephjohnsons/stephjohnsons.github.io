@@ -10,7 +10,9 @@
       </a>
     </p>
 
-    <CurrentTime />
+    <div class="footer sticky-bottom bg-body rounded-3 px-2 pt-2">
+      <CurrentTime />
+    </div>
   </div>
 </template>
 

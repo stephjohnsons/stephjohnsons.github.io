@@ -1,5 +1,5 @@
 <template>
-  <div class=" fs-4">
+  <div class="fs-4">
     <h2>{{ currentTime }}</h2>
   </div>
 </template>

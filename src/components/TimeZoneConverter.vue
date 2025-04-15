@@ -1,5 +1,5 @@
 <template>
-  <h5 class="my-2 fw-normal">
+  <h5 class="mt-4 mb-2 fw-normal">
     Time Zone Converter
   </h5>
   <div class="d-flex gap-2">
@@ -9,7 +9,6 @@
         <input type="text" class="form-control" :value="localZone" disabled />
       </div>
       <div class="mt-2">
-        <label class="form-label">Time</label>
         <input type="datetime-local" v-model="localTime" class="form-control" />
         <input type="text" class="form-control mt-1" :value="localTimeZh" readonly />
       </div>
@@ -17,13 +16,12 @@
 
     <div class="w-30">
       <div>
-        <label class="form-label">Target TZ 1</label>
+        <label class="form-label">{{ timeDiffOne }}</label>
         <select v-model="targetZoneOne" class="form-select">
           <option v-for="zone in zones" :key="zone" :value="zone">{{ zone }}</option>
         </select>
       </div>
       <div class="mt-2">
-        <label class="form-label">{{ timeDiffOne }}</label>
         <input type="text" class="form-control" :value="targetTimeOneEn" readonly />
         <input type="text" class="form-control mt-1" :value="targetTimeOneZh" readonly />
       </div>
@@ -31,13 +29,12 @@
 
     <div class="w-30">
       <div>
-        <label class="form-label">Target TZ 2</label>
+        <label class="form-label">{{ timeDiffTwo }}</label>
         <select v-model="targetZoneTwo" class="form-select">
           <option v-for="zone in zones" :key="zone" :value="zone">{{ zone }}</option>
         </select>
       </div>
       <div class="mt-2">
-        <label class="form-label">{{ timeDiffTwo }}</label>
         <input type="text" class="form-control" :value="targetTimeTwoEn" readonly />
         <input type="text" class="form-control mt-1" :value="targetTimeTwoZh" readonly />
       </div>

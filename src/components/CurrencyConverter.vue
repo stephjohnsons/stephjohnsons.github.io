@@ -1,32 +1,29 @@
 <template>
-  <div class="d-flex gap-2 mb-3 mt-3">
-    <div class="mb-3">
-      <label class="form-label fw-bold">Currency</label>
-      <div class="input-group">
-        <select v-model="fromCurrency" class="form-select">
-          <option v-for="currency in currencies" :key="currency.code" :value="currency.code">
-            {{ currency.symbol }} {{ currency.name }}
-          </option>
-        </select>
-        <input type="number" v-model="amount" class="form-control" placeholder="Amount" />
-      </div>
+  <h5 class="mt-3 fw-normal">Currency Converter</h5>
+  <div class="mb-2">
+    <div class="input-group">
+      <select v-model="fromCurrency" class="form-select">
+        <option v-for="currency in currencies" :key="currency.code" :value="currency.code">
+          {{ currency.symbol }} {{ currency.name }}
+        </option>
+      </select>
+      <input type="number" v-model="amount" class="form-control" placeholder="Amount" />
     </div>
+  </div>
 
-    <div class="d-flex flex-column ms-4">
-      <label class="form-label fw-bold">Converted</label>
-      <div class="d-flex gap-2">
-        <div class="input-group">
-          <span class="input-group-text" id="basic-addon1">{{ fromCurrency }}</span>
-          <input type="text" class="form-control" :value="formattedAmount" disabled />
-        </div>
-        <div v-if="fromCurrency !== 'CNY'" class="input-group">
-          <span class="input-group-text" id="basic-addon1">CNY</span>
-          <input type="text" class="form-control" :value="formattedCNY" disabled />
-        </div>
-        <div v-if="fromCurrency !== 'USD'" class="input-group">
-          <span class="input-group-text" id="basic-addon1">USD</span>
-          <input type="text" class="form-control" :value="formattedUSD" disabled />
-        </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex gap-2">
+      <div class="input-group">
+        <span class="input-group-text" id="basic-addon1">{{ fromCurrency }}</span>
+        <input type="text" class="form-control" :value="formattedAmount" disabled />
+      </div>
+      <div v-if="fromCurrency !== 'CNY'" class="input-group">
+        <span class="input-group-text" id="basic-addon1">CNY</span>
+        <input type="text" class="form-control" :value="formattedCNY" disabled />
+      </div>
+      <div v-if="fromCurrency !== 'USD'" class="input-group">
+        <span class="input-group-text" id="basic-addon1">USD</span>
+        <input type="text" class="form-control" :value="formattedUSD" disabled />
       </div>
     </div>
   </div>
