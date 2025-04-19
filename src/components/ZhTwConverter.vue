@@ -8,27 +8,25 @@
   </div>
   <div class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-primary" @click="opening">开头</button>
-    <button class="btn btn-sm btn-outline-primary" @click="quickOpening">开窗口</button>
-    <button class="btn btn-sm btn-outline-primary" @click="probe">Probe</button>
-  </div>
-  <div class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-outline-secondary" @click="resoG">预订G</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="resoH">预订H</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="multipleReso">多个订单</button>
-  </div>
-  <div class="d-flex gap-2 mb-2">
+    <button class="btn btn-sm btn-outline-primary" @click="quickOpening">开窗</button>
+    <button class="btn btn-sm btn-outline-primary" @click="probe">探测</button>
+    <button class="btn btn-sm btn-outline-success" @click="resoG">房客</button>
+    <button class="btn btn-sm btn-outline-success" @click="resoH">房东</button>
+    <button class="btn btn-sm btn-outline-success" @click="multipleReso">多笔</button>
     <button class="btn btn-sm btn-outline-secondary" @click="pickup">接听</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="noPickup">未接听</button>
-    <span class="mx-2"></span>
-    <button class="btn btn-sm btn-outline-danger" @click="delay">迟回复</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="sorry">抱歉</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="waiting">等待</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="noPickup">未接</button>
+    <button class="btn btn-sm btn-outline-danger" @click="delay">迟回</button>
+    <button class="btn btn-sm btn-outline-danger" @click="sorry">抱歉</button>
+    <button class="btn btn-sm btn-outline-danger" @click="waiting">等待</button>
   </div>
   <div class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-outline-primary" @click="closingZh">结束</button>
-    <button class="btn btn-sm btn-outline-danger" @click="closingTw">結束</button>
-    <span class="mx-2"></span>
-    <button class="btn btn-sm btn-outline-primary" @click="symbols">符号</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="fapiao">发票</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="defender">屏蔽</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="search">搜索</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="aircover">诶卡</button>
+    <button class="btn btn-sm btn-outline-danger" @click="closingZh">结语</button>
+    <button class="btn btn-sm btn-outline-danger" @click="closingTw">結語</button>
+    <button class="btn btn-sm btn-outline-info" @click="symbols">符号</button>
   </div>
 
   <TranslationPrompt />
@@ -115,8 +113,24 @@ const closingTw = () => {
   );
 };
 
+const fapiao = () => {
+  simplified.value = '您好，我明白这会给您带来不便，因为需要发票来申请报销的流程。可是由于发票是针对于中国境内使用的报税方式。很抱歉，针对境外预订，我们是无法提供相应的发票的。那这里建议您可以尝试和您的公司沟通（建议行程单），告知他们具体的情况，看是否可以使用平台的收据或行程单来代替发票进行报税流程呢。'
+};
+
+const defender = () => {
+  simplified.value = '这里收到了您给我发送的截图。我理解您的手机程序现在无法让您继续预订。此情况是因为手机程序会自动侦测尝试多次预订的用户，然后给予屏蔽。很抱歉得知您遇到了这个情况。我这边建议您尝试明天再次尝试进行预订。\n\n如果您比较着急需要现在下预订的话，这边也建议您可以尝试使用网页端。要获得使用爱彼迎网站的最佳体验，我们建议您使用最新版的谷歌浏览器、火狐浏览器、微软 Edge 浏览器或 Opera 浏览器。您可以浏览以下链接以了解更多详情：\nairbnb.cn/help/article/446\n\n希望我以上的回复能解决到您的问题。'
+};
+
+const search = () => {
+  simplified.value = '房源也有可能受到算法和搜索可变性的影响。由于旅行者的需求各不相同，房东的活跃度也存在差别，因此每次搜索结果中的房源排序可能会出现很大差异。\n\n每次的搜索结果都是根据房客的独特需求形成的，因此不同用户的搜索结果不具备可比性。此外：爱彼迎搜索算法会定期更新。因此，在改进算法后，您可能会发现您所在地区的搜索结果发生很大变化。\n\n基于以上原因，即使在同一天内，每次搜索结果中的房源排名都可能有很大差异。我们很难计算个别房源的排名。\n\n您可以阅读帮助中心文章，进一步了解搜索结果是如何得出的:\nairbnb.com/help/question/39'
+};
+
+const aircover = () => {
+  simplified.value = '如您在后续的预订中遇到了问题，您可以随时来联系我们：我们平台「AirCover 四海无忧」房客保障为每笔订单提供保护。如果您的爱彼迎房源存在严重问题，且房东无法解决，我们将根据可订状态，以可比价格帮助您找到类似的房源。如果类似房源不可订，或您不想重新预订，我们将为您提供全额或部分退款。\n\n欲了解更多，您可以查看：\nairbnb.com/help/article/3218';
+};
+
 const symbols = () => {
-  simplified.value = '「__xx__」『__xx__』\n ⬤ ● ‣ ▼ ※';
+  simplified.value = '「__xx__」『__xx__』\n ⬤ ● ‣ ▼ ✓ ⛌';
 };
 </script>
 
