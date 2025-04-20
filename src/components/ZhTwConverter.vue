@@ -29,10 +29,10 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.defender">屏蔽</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.search">搜索</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircover">诶卡</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh1; hideTw = true">结一</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2; hideTw = true">结二</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw1; hideTw = true">結壹</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw2; hideTw = true">結贰</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh1(); hideTw = true">结一</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">结二</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw1(); hideTw = true">結壹</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw2(); hideTw = true">結贰</button>
     <button class="btn btn-sm btn-outline-info" @click="templates.symbols">符号</button>
     <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
