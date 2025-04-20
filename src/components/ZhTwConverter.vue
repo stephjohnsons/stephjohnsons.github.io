@@ -24,8 +24,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.defender">屏蔽</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.search">搜索</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.aircover">诶卡</button>
-    <button class="btn btn-sm btn-outline-danger" @click="closingZh">结语</button>
-    <button class="btn btn-sm btn-outline-danger" @click="closingTw">結語</button>
+    <button class="btn btn-sm btn-outline-danger" @click="fetchSubtemplates('closing', 'zh')">结语</button>
+    <button class="btn btn-sm btn-outline-danger" @click="fetchSubtemplates('closing', 'tw')">結語</button>
     <button class="btn btn-sm btn-outline-info" @click="templates.symbols">符号</button>
   </div>
 
@@ -60,19 +60,40 @@ const fetchTemplate = async (endpoint) => {
   simplified.value = json.text;
 };
 
+const fetchSubtemplates = async (type, template) => {
+  try {
+    const res = await fetch(`${backend}/${type}?type=${template}`);
+    const json = await res.json();
+    simplified.value = json.text;
+  } catch (err) {
+    console.error('Fetch failed:', err);
+  }
+};
+
+const templates = {};
+
 const templateNames = [
-  'opening', 'quickOpening', 'noPickup', 'pickup', 'fapiao',
-  'sorry', 'waiting', 'defender', 'search', 'aircover',
+  'opening', 'quickOpening', 'noPickup', 'pickup',
+  'sorry', 'search', 'symbols',
   'resoG', 'resoH', 'multipleReso'
 ];
 
-const templates = {};
 templateNames.forEach(name => {
   templates[name] = () => fetchTemplate(name);
 });
 
-const closingZh = () => fetchTemplate('closingZh');
-const closingTw = () => fetchTemplate('closingTw');
+const subtemplateNames = [
+  'aircover',
+  'delay',
+  'defender',
+  'probe',
+  'fapiao',
+  'waiting'
+]
+
+subtemplateNames.forEach(name => {
+  templates[name] = () => fetchSubtemplates('educate', name);
+});
 </script>
 
 <style scoped>
