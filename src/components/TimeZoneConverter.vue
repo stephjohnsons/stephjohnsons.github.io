@@ -56,7 +56,6 @@ const localTime = ref(moment().tz(localZone).format('YYYY-MM-DDTHH:mm'));
 const targetZoneOne = ref('UTC');
 const targetZoneTwo = ref('UTC');
 
-/** Reusable formatter */
 function formatTime(targetZoneRef, locale, formatStr) {
   return computed(() => {
     if (!localTime.value) return '';
