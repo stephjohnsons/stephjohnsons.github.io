@@ -1,12 +1,16 @@
 <template>
   <div v-if="loading" class="loading-bar" :style="{ width: progress + '%' }"></div>
-  <h5 class="mb-2 fw-normal">
-    Converter
-    <select class="text-sm" v-model="name">
-      <option value="st" default>Step</option>
-      <option value="kx">KX</option>
-    </select>
-  </h5>
+  <div class="d-flex flex-row gap-3">
+    <h5 class="fw-normal">
+      Converter
+    </h5>
+    <p class="my-auto">
+      <select class="text-sm mb-2" v-model="name">
+        <option value="st" default>Step</option>
+        <option value="kx">KX</option>
+      </select>
+    </p>
+  </div>
   <div class="d-flex gap-2 mb-2">
     <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
     <textarea v-if="!hideTw" :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese"
@@ -202,7 +206,7 @@ textarea {
   position: fixed;
   top: 0;
   left: 0;
-  height: 4px;
+  height: 6px;
   background-color: #fd890d;
   transition: width 0.2s ease;
   z-index: 9999;
