@@ -40,6 +40,7 @@ import TranslationPrompt from './TranslationPrompt.vue';
 
 const simplified = ref('')
 const traditional = ref('')
+const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 
 let converter = null;
 
@@ -54,7 +55,7 @@ watch(simplified, (newVal) => {
 });
 
 const fetchTemplate = async (endpoint) => {
-  const res = await fetch(`https://private-zqa8mxl7snt3eq8.vercel.app/api/${endpoint}`);
+  const res = await fetch(`${backend}/${endpoint}`);
   const json = await res.json();
   simplified.value = json.text;
 };
