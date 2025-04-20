@@ -1,4 +1,5 @@
 <template>
+  <div v-if="loading" class="loading-bar" :style="{ width: progress + '%' }"></div>
   <h5 class="mb-2 fw-normal">
     Converter
     <select class="text-sm" v-model="name">
@@ -50,6 +51,29 @@ import * as OpenCC from 'opencc-js/core';
 import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
 
+const loading = ref(false);
+const progress = ref(0);
+let progressInterval = null;
+
+const startLoading = () => {
+  loading.value = true;
+  progress.value = 0;
+  progressInterval = setInterval(() => {
+    if (progress.value < 90) {
+      progress.value += 2; // Simulate progress
+    }
+  }, 50);
+};
+
+const stopLoading = () => {
+  clearInterval(progressInterval);
+  progress.value = 100;
+  setTimeout(() => {
+    loading.value = false;
+    progress.value = 0;
+  }, 300); // Smooth finish
+};
+
 const simplified = ref('')
 const traditional = ref('')
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
@@ -90,12 +114,20 @@ const allTemplates = {
 };
 
 const fetchTemplate = async (endpoint) => {
-  const res = await fetch(`${backend}/${endpoint}`);
-  const json = await res.json();
-  simplified.value = json.text;
+  startLoading();
+  try {
+    const res = await fetch(`${backend}/${endpoint}`);
+    const json = await res.json();
+    simplified.value = json.text;
+  } catch (err) {
+    console.error('Fetch failed:', err);
+  } finally {
+    stopLoading();
+  }
 };
 
 const fetchSubtemplates = async (type, template) => {
+  startLoading();
   try {
     const res = await fetch(`${backend}/${type}?type=${template}`);
     const json = await res.json();
@@ -107,15 +139,22 @@ const fetchSubtemplates = async (type, template) => {
   } catch (err) {
     console.error('Fetch failed:', err);
     return { text: '' };
+  } finally {
+    stopLoading();
   }
 };
 
 const templates = {};
 
 // Unhides TW text area if hideTw = true
-const callWithUnhide = (fn) => {
-  if (hideTw.value) hideTw.value = false;
-  return fn();
+const callWithUnhide = async (fn) => {
+  startLoading();
+  try {
+    if (hideTw.value) hideTw.value = false;
+    return await fn();
+  } finally {
+    stopLoading();
+  }
 };
 
 allTemplates.direct.forEach(name => {
@@ -136,7 +175,7 @@ Object.entries(allTemplates.parametric).forEach(([type, names]) => {
     } else if (type !== 'closing') {
       templates[type][name] = () => callWithUnhide(() => fetchSubtemplates(type, name));
     } else {
-      templates[type][name] = () => fetchSubtemplates(type, name);
+      templates[type][name] = () => callWithUnhide(() => fetchSubtemplates(type, name));
     }
   });
 });
@@ -157,5 +196,15 @@ const symbol = () => {
 <style scoped>
 textarea {
   resize: none;
+}
+
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background-color: #fd890d;
+  transition: width 0.2s ease;
+  z-index: 9999;
 }
 </style>
