@@ -479,6 +479,16 @@ export const projects = [
     cc: 'SG',
     description:
       'Spirit of Giving is an annual concert series organised by TRCL and produced by Global Cultural Alliance. The band was led by music director Kelvin Loh.'
+  },
+  {
+    year: '2025-03',
+    type: ['Concerts', 'Orchestra'],
+    ongoing: false,
+    organisation: 'Fables and Fugues | MPO',
+    location: 'Dewan Filharmonik Petronas',
+    cc: 'MY',
+    description:
+      'Spend a quality family afternoon with the Malaysian Philharmonic Orchestra and be entertained by an unexpected blend of tales and music as the MPO brings to life, Dorff’s Three Fun Fables to pique interest in the young as they learn about music and discover orchestral instruments.'
   }
 ]
 

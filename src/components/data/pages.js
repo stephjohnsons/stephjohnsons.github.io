@@ -15,18 +15,18 @@ export const pageLinks = [
     name: 'Media Gallery',
     link: '/gallery'
   },
-  {
-    name: 'Upcoming Dates',
-    link: '/dates'
-  },
+  // {
+  //   name: 'Upcoming Dates',
+  //   link: '/dates'
+  // },
   {
     name: 'Teaching',
     link: '/teaching'
   },
-  // {
-  //   name: '🧑🏻‍💻 Vita',
-  //   link: '/vita'
-  // },
+  {
+    name: '🧑🏻‍💻 Vita',
+    link: '/vita'
+  },
   // {
   //   name: 'Blog',
   //   link: '/blog'

@@ -4,8 +4,7 @@
     <h3 class="mb-0 d-block d-md-none">Vita</h3>
 
     <p class="text-muted fst-italic">
-      This page is a comprehensive showcase of things that I've done outside of music, particularly in design and web
-      development.
+      This page is a comprehensive showcase of things that I've done outside of music.
       I have included a selection of works done that highlights the diversity and depth of my skills across domains.
     </p>
     <div v-for="(paragraph, index) in devBio" :key="index">
@@ -46,7 +45,7 @@ const pages = ref([
   'Skills',
   'Education',
   'Certificates',
-  'Portfolio',
+  // 'Portfolio',
   'Languages',
   // 'Design',
 ])
