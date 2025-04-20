@@ -36,8 +36,8 @@ jobs:
         run: npm run build
         env:
           VITE_BANDSINTOWN_APP_ID: ${{ secrets.VITE_BANDSINTOWN_APP_ID }}
-          VITE_TEMPLATE_BACKEND_API_UR: ${{ secrets. VITE_TEMPLATE_BACKEND_API_URL }}
-          VITE_TOOLS_PASSWORD: ${{ secrets. VITE_TOOLS_PASSWORD }}
+          VITE_TEMPLATE_BACKEND_API_UR: ${{ secrets.VITE_TEMPLATE_BACKEND_API_URL }}
+          VITE_TOOLS_PASSWORD: ${{ secrets.VITE_TOOLS_PASSWORD }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
