@@ -1,6 +1,10 @@
 <template>
   <h5 class="mb-2 fw-normal">
-    Simplified and Traditional Chinese Converter
+    Converter
+    <select class="text-sm" v-model="name">
+      <option value="st" default>Step</option>
+      <option value="kx">KX</option>
+    </select>
   </h5>
   <div class="d-flex gap-2 mb-2">
     <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
@@ -8,8 +12,7 @@
       readonly></textarea>
   </div>
   <div class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-outline-primary" @click="templates.opening">开头</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.quickOpening">开窗</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.opening[name]()">开头</button>
     <button class="btn btn-sm btn-outline-info" @click="templates.educate.probe">探测</button>
     <button class="btn btn-sm btn-outline-info" @click="templates.educate.followup">跟进</button>
     <button class="btn btn-sm btn-outline-success" @click="templates.reso.G">房客</button>
@@ -33,7 +36,7 @@
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">结二</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw1(); hideTw = true">結壹</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw2(); hideTw = true">結贰</button>
-    <button class="btn btn-sm btn-outline-info" @click="templates.symbols">符号</button>
+    <button class="btn btn-sm btn-outline-info" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
   </div>
@@ -51,6 +54,7 @@ const simplified = ref('')
 const traditional = ref('')
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const hideTw = ref(false);
+const name = ref('st')
 
 let converter = null;
 
@@ -68,11 +72,14 @@ watch(simplified, (newVal) => {
 // Fetch API
 const allTemplates = {
   direct: [
-    'opening', 'quickOpening', 'noPickup', 'pickup',
+    'noPickup', 'pickup',
     'sorry', 'search', 'symbols',
     'resoG', 'resoH', 'multipleReso'
   ],
   parametric: {
+    opening: [
+      'st', 'kx', 'quick'
+    ],
     educate: [
       'aircover', 'delay', 'defender', 'followup', 'feedback',
       'probe', 'fapiao', 'waiting', 'international'
@@ -92,9 +99,14 @@ const fetchSubtemplates = async (type, template) => {
   try {
     const res = await fetch(`${backend}/${type}?type=${template}`);
     const json = await res.json();
-    simplified.value = json.text;
+    if (type === 'opening') {
+      return json;
+    } else {
+      simplified.value = json.text;
+    }
   } catch (err) {
     console.error('Fetch failed:', err);
+    return { text: '' };
   }
 };
 
@@ -113,7 +125,15 @@ allTemplates.direct.forEach(name => {
 Object.entries(allTemplates.parametric).forEach(([type, names]) => {
   templates[type] = {};
   names.forEach(name => {
-    if (type !== 'closing') {
+    if (type === 'opening') {
+      templates[type][name] = () => {
+        callWithUnhide(async () => {
+          const openingMessage = await fetchSubtemplates(type, name);
+          const openWindow = await fetchSubtemplates(type, 'quick');
+          simplified.value = `${openingMessage.text}\n\n${openWindow.text}`;
+        });
+      };
+    } else if (type !== 'closing') {
       templates[type][name] = () => callWithUnhide(() => fetchSubtemplates(type, name));
     } else {
       templates[type][name] = () => fetchSubtemplates(type, name);
@@ -128,6 +148,10 @@ const help = () => {
 const lead = () => {
   simplified.value = '【主管通话】\n问题描述：\n用户为什么想与主管交谈：\n用户期望的结果是什么：\n已提供的选项或替代解决方案：\n个案链接：\n预订链接：\n相关个案：';
 };
+
+const symbol = () => {
+  simplified.value = "「__xx__」『__xx__』\n ⬤ ● ‣ ▼ ✓ ⛌ ◆";
+}
 </script>
 
 <style scoped>
