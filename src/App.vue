@@ -20,7 +20,6 @@
     </h1>
   </header>
 
-  <!-- Fixed router view as per suggested in console -->
   <RouterView v-slot="{ Component }">
     <Transition name="slide-fade" appear>
       <Component :is="Component" v-if="!showMenu" class="mx-4 mb-2 px-2" id="router" />
@@ -39,11 +38,7 @@ import MenuView from '@/views/MenuView.vue'
 const showMenu = ref(false);
 const route = useRoute();
 
-const title = ref(document.title);
-window.addEventListener("blur", () => {
-  document.title = "Come back 😭";
-});
-
+const title = route.path === '/tools' ? ref("Tools") : ref(document.title);
 window.addEventListener("focus", () => {
   document.title = title.value;
 });
