@@ -2,7 +2,7 @@
   <h5 class="mt-4 mb-2 fw-normal">
     Time Zone Converter
   </h5>
-  <div class="d-flex gap-2">
+  <div class="d-flex gap-2 mb-3">
     <div class="w-20">
       <div>
         <label class="form-label">Time Zone</label>
