@@ -41,6 +41,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.feedback">反馈</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.international">国际</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.defender">屏蔽</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.search">搜索</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircover">诶卡</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh1(); hideTw = true">结一</button>
@@ -140,7 +141,7 @@ const allTemplates = {
     ],
     educate: [
       'aircover', 'delay', 'defender', 'followup', 'feedback',
-      'probe', 'fapiao', 'waiting', 'international'
+      'probe', 'fapiao', 'waiting', 'international', 'specify', 'noReply'
     ],
     reso: ['G', 'H', 'M'],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
