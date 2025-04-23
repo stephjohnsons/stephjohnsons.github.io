@@ -1,5 +1,8 @@
 <template>
   <h5 class="mt-3 fw-normal">Currency Converter</h5>
+  <p>
+    ※ 暂时未有<span class="fw-bold">新台币</span>
+  </p>
   <div class="mb-2">
     <div class="input-group">
       <select v-model="fromCurrency" class="form-select">
@@ -35,19 +38,26 @@ import { ref, computed, watch, onMounted } from 'vue';
 const amount = ref(1);
 const fromCurrency = ref('EUR');
 const currencies = [
-  { code: 'EUR', symbol: '€', name: 'Euro' },
-  { code: 'USD', symbol: '$', name: 'US Dollar' },
   { code: 'CNY', symbol: '¥', name: 'Chinese Yuan' },
-  { code: 'MYR', symbol: 'RM', name: 'Malaysian Ringgit' },
-  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+  { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: '---', symbol: '-', name: '---' },
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'AUD', symbol: '$', name: 'Australian Dollar' },
   { code: 'GBP', symbol: '£', name: 'British Pound' },
-  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
+  { code: 'CAD', symbol: '$', name: 'Canadian Dollar' },
+  { code: 'CZK', symbol: 'Czk.', name: 'Czech Koruna' },
+  { code: 'DKK', symbol: 'kr.', name: 'Danish Krone' },
+  { code: 'MYR', symbol: 'RM', name: 'Malaysian Ringgit' },
+  { code: 'HKD', symbol: '$', name: 'Hong Kong Dollar' },
   { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
-  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
-  { code: 'THB', symbol: '฿', name: 'Thai Baht' },
+  { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
   { code: 'MXN', symbol: '$', name: 'Mexican Peso' },
   { code: 'PLN', symbol: 'zł', name: 'Polish Zloty' },
+  { code: 'SGD', symbol: '$', name: 'Singapore Dollar' },
+  { code: 'CHF', symbol: '₣', name: 'Swiss Franc' },
+  { code: 'THB', symbol: '฿', name: 'Thai Baht' },
 ];
+
 const rates = ref({ CNY: null, USD: null });
 
 async function fetchRates() {
