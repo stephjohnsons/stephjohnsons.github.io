@@ -4,8 +4,12 @@
     <h5 class="fw-normal">
       Converter
     </h5>
-    <p class="my-auto">
-      <select class="text-sm mb-2" v-model="name">
+    <p class="my-auto d-flex gap-2">
+      <select class="text-sm mb-2" v-model="lang">
+        <option value="cn" default>中</option>
+        <option value="en">英</option>
+      </select>
+      <select v-if="lang === 'cn'" class="text-sm mb-2" v-model="name">
         <option value="st" default>Step</option>
         <option value="kx">KX</option>
       </select>
@@ -13,24 +17,26 @@
   </div>
   <div class="d-flex gap-2 mb-2">
     <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
-    <textarea v-if="!hideTw" :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese"
-      readonly></textarea>
+    <textarea v-if="!hideTw && lang === 'cn'" :value="traditional" rows="5" class="form-control"
+      placeholder="Traditional Chinese" readonly></textarea>
   </div>
-  <div class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-outline-primary" @click="templates.opening[name]()">开头</button>
-    <button class="btn btn-sm btn-outline-info" @click="templates.educate.probe">探测</button>
-    <button class="btn btn-sm btn-outline-info" @click="templates.educate.followup">跟进</button>
-    <button class="btn btn-sm btn-outline-success" @click="templates.reso.G">房客</button>
-    <button class="btn btn-sm btn-outline-success" @click="templates.reso.H">房东</button>
-    <button class="btn btn-sm btn-outline-success" @click="templates.reso.M">多笔</button>
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.followup">跟进</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">房客</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.H">房东</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="rTwo()">啊二</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.noPickup">未接</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.educate.delay">迟回</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.sorry">抱歉</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.educate.waiting">等待</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.closing.p">待处理</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.noReply">未回</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.sorry">抱歉</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.p">待处理</button>
   </div>
-  <div class="d-flex gap-2 mb-2">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.feedback">反馈</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.international">国际</button>
@@ -41,7 +47,21 @@
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">结二</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw1(); hideTw = true">結壹</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw2(); hideTw = true">結贰</button>
-    <button class="btn btn-sm btn-outline-info" @click="symbol(); hideTw = true">符号</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
+    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
+    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
+  </div>
+  <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.opening">开头</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.resoG">房客</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.resoH">房东</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.nova">翻译</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.hc">HC</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.aircover">诶卡</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.thanks">谢谢</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.instantBook">闪订</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.closing">结束</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
   </div>
@@ -56,15 +76,23 @@ import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
 
 const loading = ref(false);
+const simplified = ref('')
+const traditional = ref('')
+const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
+const hideTw = ref(false);
+const name = ref('st')
+const lang = ref('cn')
 const progress = ref(0);
+
 let progressInterval = null;
+let converter = null;
 
 const startLoading = () => {
   loading.value = true;
   progress.value = 0;
   progressInterval = setInterval(() => {
     if (progress.value < 90) {
-      progress.value += 2; // Simulate progress
+      progress.value += 2;
     }
   }, 50);
 };
@@ -75,16 +103,8 @@ const stopLoading = () => {
   setTimeout(() => {
     loading.value = false;
     progress.value = 0;
-  }, 300); // Smooth finish
+  }, 300);
 };
-
-const simplified = ref('')
-const traditional = ref('')
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
-const hideTw = ref(false);
-const name = ref('st')
-
-let converter = null;
 
 // ZH > TW converter
 onMounted(async () => {
@@ -107,6 +127,16 @@ const allTemplates = {
   parametric: {
     opening: [
       'st', 'kx', 'quick'
+    ],
+    english: [
+      'opening',
+      'resoG',
+      'resoH',
+      'nova',
+      'hc',
+      'thanks',
+      'instantBook',
+      'closing', 'aircover'
     ],
     educate: [
       'aircover', 'delay', 'defender', 'followup', 'feedback',
@@ -193,7 +223,11 @@ const lead = () => {
 };
 
 const symbol = () => {
-  simplified.value = "「__xx__」『__xx__』\n ⬤ ● ‣ ▼ ✓ ⛌ ◆";
+  simplified.value = "「__xx__」『__xx__』\n ● ▼ ‣ ◆\n※ Translation\n✓ ⛌";
+}
+
+const rTwo = () => {
+  simplified.value = '理解用户的问题\n主要发生的问题：\n主要诉求（离开房源或继续留宿？）：\n是否已就此问题联系房东：\n房东是否有尝试解决问题：\n受影响的天数（准确日期）：\n发生问题时的证明文件（照片、视频等）：\n目前是否已离开房源（离开的准确日期）：';
 }
 </script>
 
