@@ -52,6 +52,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
+    <button class="btn btn-sm btn-outline-danger"
+      @click="hideTw = false; simplified = ''; traditional = '';">清空</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.opening">开头</button>
