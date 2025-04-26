@@ -22,9 +22,3 @@ onUnmounted(() => {
   clearInterval(interval);
 });
 </script>
-
-<style scoped>
-h2 {
-  color: black;
-}
-</style>
