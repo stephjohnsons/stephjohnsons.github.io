@@ -14,6 +14,9 @@
         <option value="kx">KX</option>
       </select>
     </p>
+    <button class="btn btn-sm btn-outline-dark ms-auto mb-2" @click="ui.toggleDark()">
+      {{ ui.isDark ? '☼' : '☾' }}
+    </button>
   </div>
   <div class="d-flex gap-2 mb-2">
     <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
@@ -78,7 +81,9 @@ import { ref, watch, onMounted } from 'vue';
 import * as OpenCC from 'opencc-js/core';
 import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
+import { useUIStore } from '@/stores/ui';
 
+const ui = useUIStore();
 const loading = ref(false);
 const simplified = ref('')
 const traditional = ref('')
