@@ -1,5 +1,6 @@
 <template>
-  <header v-if="route.path !== '/tools'" class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
+  <header v-if="route.path !== '/tools'" class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3"
+    :class="{ 'dark-mode': ui.isDark }">
     <a href="/" id="no-deco" class="d-flex align-items-center">
       <h1 class="fw-light py-2 mb-1 fs-2" id="no-deco">
         Stephen
@@ -14,26 +15,27 @@
       <span class="hamburger_line"></span>
     </a>
   </header>
-  <header v-else class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
-  </header>
-
-  <RouterView v-slot="{ Component }">
+  <div :class="{ 'dark-mode': ui.isDark }">
+    <RouterView v-slot="{ Component }">
+      <Transition name="slide-fade" appear>
+        <Component :is="Component" v-if="!showMenu" class="mx-4 mb-2 px-2" id="router" />
+      </Transition>
+    </RouterView>
     <Transition name="slide-fade" appear>
-      <Component :is="Component" v-if="!showMenu" class="mx-4 mb-2 px-2" id="router" />
+      <MenuView v-if="showMenu" class="mx-4 mb-2 px-2" id="menu" />
     </Transition>
-  </RouterView>
-  <Transition name="slide-fade" appear>
-    <MenuView v-if="showMenu" class="mx-4 mb-2 px-2" id="menu" />
-  </Transition>
+  </div>
 </template>
 
 <script setup>
 import { ref, watch, } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import MenuView from '@/views/MenuView.vue'
+import { useUIStore } from '@/stores/ui';
 
 const showMenu = ref(false);
 const route = useRoute();
+const ui = useUIStore();
 
 const title = route.path === '/tools' ? ref("Tools") : ref(document.title);
 window.addEventListener("focus", () => {
@@ -184,5 +186,42 @@ p>a:hover {
 #router .slide-fade-enter-from {
   transition: none;
   transition-delay: 0.2s;
+}
+
+.dark-mode,
+.dark-mode .form-control,
+.dark-mode .btn {
+  background-color: #191818;
+  color: #e7dfdf;
+}
+
+.dark-mode a {
+  color: #89c4ff;
+}
+
+.dark-mode .form-control,
+.dark-mode .btn {
+  border-color: #444;
+}
+
+.dark-mode .form-control::placeholder {
+  color: #888;
+}
+
+.dark-mode .form-control:focus {
+  border-color: #89c4ff00;
+  box-shadow: 0 0 0 0.1rem rgba(255, 213, 0, 0.328);
+  background-color: #191818;
+  color: #e7dfdf;
+}
+
+.dark-mode .form-control:read-only {
+  color: #7f7b7b;
+}
+
+/* text select color */
+::-moz-selection {
+  color: #fff;
+  background: yellow;
 }
 </style>

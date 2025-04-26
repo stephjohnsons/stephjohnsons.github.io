@@ -1,6 +1,6 @@
 <template>
-  <div v-if="loading" class="loading-bar" :style="{ width: progress + '%' }"></div>
-  <div class="d-flex flex-row gap-3">
+  <div v-if="loading" class="loading-bar" :style="{ width: progress + '%' }" :class="{ 'dark-mode': ui.isDark }"></div>
+  <div class="d-flex flex-row gap-3" :class="{ 'dark-mode': ui.isDark }">
     <h5 class="fw-normal">
       Converter
     </h5>
