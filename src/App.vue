@@ -15,9 +15,6 @@
     </a>
   </header>
   <header v-else class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3">
-    <h1 class="fw-light py-2 mb-1 fs-2" id="no-deco">
-      Tools
-    </h1>
   </header>
 
   <RouterView v-slot="{ Component }">
