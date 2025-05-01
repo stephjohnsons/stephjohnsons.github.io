@@ -37,9 +37,12 @@ const showMenu = ref(false);
 const route = useRoute();
 const ui = useUIStore();
 
-const title = route.path === '/tools' ? ref("Tools") : ref(document.title);
 window.addEventListener("focus", () => {
-  document.title = title.value;
+  if (route.path === '/tools') {
+    document.title = "Tools";
+  } else {
+    document.title = "Stephen Johnson-Tseu";
+  }
 });
 
 const removeMenu = () => {
