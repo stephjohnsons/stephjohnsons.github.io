@@ -4,15 +4,17 @@
     <h5 class="fw-normal">
       Converter
     </h5>
-    <p class="my-auto d-flex gap-2">
+    <p class="my-auto d-flex gap-2 justify-content-center">
       <select class="text-sm mb-2" v-model="lang">
         <option value="cn" default>中</option>
         <option value="en">英</option>
       </select>
       <select v-if="lang === 'cn'" class="text-sm mb-2" v-model="name">
-        <option value="st" default>Step</option>
-        <option value="kx">KX</option>
+        <option value="st" default>桀</option>
+        <option value="kx">欣</option>
       </select>
+      <button class="btn btn-sm btn-outline-danger mb-2"
+        @click="hideTw = false; simplified = ''; traditional = '';">清空</button>
     </p>
     <button class="btn btn-sm btn-outline-dark ms-auto mb-2" @click="ui.toggleDark()">
       {{ ui.isDark ? '☼' : '☾' }}
@@ -25,18 +27,12 @@
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.followup">跟进</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.meantime">期间</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.ghost">被鬼</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.waitingResponse">待处理</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">客 检查点</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">东 检查点</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.waitingResponse">待处</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">房客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.H">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="rTwo()">啊二</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
@@ -44,6 +40,18 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.sorry">抱歉</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.p">待处理</button>
+  </div>
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.followup">跟进</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.meantime">期间</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="rTwo()">啊二</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
+    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
+    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
+    <button class="btn btn-sm btn-warning" @click="loss(); hideTw = true">损失</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
@@ -58,11 +66,6 @@
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">结二</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw1(); hideTw = true">結壹</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw2(); hideTw = true">結贰</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
-    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
-    <button class="btn btn-sm btn-outline-danger"
-      @click="hideTw = false; simplified = ''; traditional = '';">清空</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.opening">开头</button>
@@ -238,7 +241,11 @@ const lead = () => {
 };
 
 const symbol = () => {
-  simplified.value = "「__xx__」『__xx__』\n ● ▼ ‣ ◆\n※ Translation\n✓ ⛌";
+  simplified.value = "「__xx__」『__xx__』\n ● ▼ ▲ ‣ ◆ 〇\n※ Translation\n✓ ⛌";
+}
+
+const loss = () => {
+  simplified.value = "Loss/Coupon\n+Amount: __amount__ (~US$__)\n+Coupon code: xxxxx__remove_if_not_coupon\n+Loss reason: Goodwill, Rebooking, Bug, CS Mistake\n+Reso code: xxx\n+Summary: Reason，WF，那一条\n+Approved by:";
 }
 
 const rTwo = () => {
