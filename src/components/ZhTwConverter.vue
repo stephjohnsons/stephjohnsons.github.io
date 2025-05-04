@@ -27,6 +27,12 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.followup">跟进</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.meantime">期间</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.ghost">被鬼</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.waitingResponse">待处理</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">客 检查点</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">东 检查点</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">房客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.H">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
@@ -148,10 +154,10 @@ const allTemplates = {
       'closing', 'aircover'
     ],
     educate: [
-      'aircover', 'delay', 'defender', 'followup', 'feedback',
+      'aircover', 'delay', 'defender', 'followup', 'feedback', 'meantime', 'report', 'ghost',
       'probe', 'fapiao', 'waiting', 'international', 'specify', 'noReply', 'instantBook'
     ],
-    reso: ['G', 'H', 'M'],
+    reso: ['G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost'],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
   }
 };
