@@ -51,7 +51,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
-    <button class="btn btn-sm btn-warning" @click="loss(); hideTw = true">损失</button>
+    <button class="btn btn-sm btn-outline-dark" @click="loss(); hideTw = true">损失</button>
+    <button class="btn btn-sm btn-outline-dark" @click="double(); hideTw = true">双票</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
@@ -246,6 +247,10 @@ const symbol = () => {
 
 const loss = () => {
   simplified.value = "Loss/Coupon\n+Amount: __amount__ (~US$__)\n+Coupon code: xxxxx__remove_if_not_coupon\n+Loss reason: Goodwill, Rebooking, Bug, CS Mistake\n+Reso code: xxx\n+Summary: Reason，WF，那一条\n+Approved by:";
+}
+
+const double = () => {
+  simplified.value = "UI\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:"
 }
 
 const rTwo = () => {
