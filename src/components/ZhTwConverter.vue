@@ -36,6 +36,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.upcomingTrip">即将</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
@@ -169,7 +170,7 @@ const allTemplates = {
     ],
     educate: [
       'aircoverHost', 'aircoverGuest', 'delay', 'defender', 'followup', 'feedback', 'meantime', 'report', 'ghost',
-      'probe', 'fapiao', 'waiting', 'international', 'specify', 'noReply', 'instantBook'
+      'probe', 'fapiao', 'waiting', 'international', 'specify', 'noReply', 'instantBook', 'upcomingTrip'
     ],
     reso: ['G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost', 'loss'],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
