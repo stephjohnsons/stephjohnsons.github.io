@@ -36,10 +36,6 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.noReply">未回</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.sorry">抱歉</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.p">待处理</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
@@ -49,10 +45,10 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="rTwo()">啊二</button>
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
-    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
-    <button class="btn btn-sm btn-outline-dark" @click="loss(); hideTw = true">损失</button>
-    <button class="btn btn-sm btn-outline-dark" @click="double(); hideTw = true">双票</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.noReply">未回</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.sorry">抱歉</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
@@ -62,11 +58,25 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.search">搜索</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.instantBook">闪订</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircover">诶卡</button>
+    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
+    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
+    <button class="btn btn-sm btn-outline-dark" @click="templates.reso.loss">损失</button>
+    <button class="btn btn-sm btn-outline-dark" @click="double(); hideTw = true">双票</button>
+  </div>
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+    <div class="badge text-bg-primary text-wrap" style="width: 6.3rem;">
+      教育 > AirCover
+    </div>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.aircoverHost">房东</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.aircoverGuest">房客</button>
+    <div class="badge text-bg-danger text-wrap" style="width: 6.3rem;">
+      结束语 > 简繁体 & Pending
+    </div>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh1(); hideTw = true">结一</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">结二</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw1(); hideTw = true">結壹</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw2(); hideTw = true">結贰</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.p">待处理</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.opening">开头</button>
@@ -158,10 +168,10 @@ const allTemplates = {
       'closing', 'aircover'
     ],
     educate: [
-      'aircover', 'delay', 'defender', 'followup', 'feedback', 'meantime', 'report', 'ghost',
+      'aircoverHost', 'aircoverGuest', 'delay', 'defender', 'followup', 'feedback', 'meantime', 'report', 'ghost',
       'probe', 'fapiao', 'waiting', 'international', 'specify', 'noReply', 'instantBook'
     ],
-    reso: ['G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost'],
+    reso: ['G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost', 'loss'],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
   }
 };
@@ -242,11 +252,11 @@ const lead = () => {
 };
 
 const symbol = () => {
-  simplified.value = "「__xx__」『__xx__』\n ● ▼ ▲ ‣ ◆ 〇\n※ Translation\n✓ ⛌";
+  simplified.value = "「__xx__」>「__xx__」>「__xx__」>「__xx__」\n『__xx__』 ＜__action__＞\n ▼幫助中心 ▲ ‣ ◆ Between ・\n※ Translation\n✓ ⛌";
 }
 
-const loss = () => {
-  simplified.value = "Loss/Coupon\n+Amount: __amount__ (~US$__)\n+Coupon code: xxxxx__remove_if_not_coupon\n+Loss reason: Goodwill, Rebooking, Bug, CS Mistake\n+Reso code: xxx\n+Summary: Reason，WF，那一条\n+Approved by:";
+const numbering = () => {
+  simplified.value = "（1）\n（2）\n（3）\n（4）\n（5）\n（6）\n（7）\n（8）";
 }
 
 const double = () => {
