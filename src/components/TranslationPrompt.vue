@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2">
+  <div class="mt-2 d-flex gap-3 align-items-center">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="toggleTranslation" v-model="showTranslation" />
       <label class="form-check-label" for="toggleTranslation">
@@ -7,9 +7,9 @@
       </label>
     </div>
 
-    <div v-if="showTranslation" class="mt-3 d-flex">
+    <div v-if="showTranslation" class="d-flex mb-0">
       <div class="me-3">
-        <label for="languageSelect" class="form-label me-2">Select Language</label>
+        <label for="languageSelect" class="form-label me-2 mb-0">Select Language</label>
         <select id="languageSelect" class="form-select-sm" v-model="selectedLanguage">
           <option value="">-- Choose --</option>
           <option value="ja">Japanese</option>
@@ -24,12 +24,10 @@
         </select>
       </div>
 
-      <div class="w-50 ms-0">
-        <label class="form-labe me-2">Translation</label>
-        <input v-if="selectedLanguage && translation" type="text" :value="translation" class="form-control-sm" readonly
-          ref="translationBox" />
-        <button v-if="selectedLanguage && translation" class="btn btn-outline-secondary btn-sm ms-2"
-          @click="copyToClipboard">
+      <div class="w-50 ms-0 d-flex gap-2 align-items-center">
+        <label class="form-label me-2 mb-0">Translation</label>
+        <input type="text" :value="translation" class="form-control-sm" readonly ref="translationBox" />
+        <button class="btn btn-outline-secondary btn-sm" @click="copyToClipboard">
           Copy
         </button>
       </div>

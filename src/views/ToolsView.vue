@@ -114,10 +114,21 @@ const sortedAlarms = computed(() =>
 .dark-mode textarea,
 .dark-mode select,
 .dark-mode button,
-.dark-mode .form-control {
+.dark-mode .form-control,
+.dark-mode .list-group-item {
   background-color: #191818;
   color: #e7dfdf;
   border-color: #444;
+}
+
+.dark-mode .btn {
+  background-color: #333;
+  color: #e7dfdf;
+}
+
+.dark-mode .btn-danger {
+  background-color: rgb(168, 46, 46);
+  color: #e7dfdf;
 }
 
 .dark-mode .btn-outline-secondary {

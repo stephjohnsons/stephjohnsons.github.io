@@ -37,6 +37,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.upcomingTrip">即将</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">退款</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
@@ -45,11 +47,13 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="rTwo()">啊二</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.noReply">未回</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.sorry">抱歉</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.duplicate">重复</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refund">退款</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.bug">漏洞</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
@@ -63,6 +67,8 @@
     <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
     <button class="btn btn-sm btn-outline-dark" @click="templates.reso.loss">损失</button>
     <button class="btn btn-sm btn-outline-dark" @click="double(); hideTw = true">双票</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <div class="badge text-bg-primary text-wrap" style="width: 6.3rem;">
@@ -169,8 +175,16 @@ const allTemplates = {
       'closing', 'aircover'
     ],
     educate: [
-      'aircoverHost', 'aircoverGuest', 'delay', 'defender', 'followup', 'feedback', 'meantime', 'report', 'ghost',
-      'probe', 'fapiao', 'waiting', 'international', 'specify', 'noReply', 'instantBook', 'upcomingTrip'
+      'aircoverHost',
+      'aircoverGuest',
+      'delay', 'defender',
+      'followup', 'feedback',
+      'meantime', 'report', 'ghost',
+      'probe', 'fapiao',
+      'waiting', 'international',
+      'specify', 'noReply', 'instantBook',
+      'upcomingTrip', 'duplicate',
+      'refundDisabled', 'coupon', 'refund', 'photography', 'bug'
     ],
     reso: ['G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost', 'loss'],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
