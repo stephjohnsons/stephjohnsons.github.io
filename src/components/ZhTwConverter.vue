@@ -46,7 +46,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.meantime">期间</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="rTwo()">啊二</button>
+    <button class="btn btn-sm btn-warning" @click="rTwo()">啊二</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.noReply">未回</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.sorry">抱歉</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
@@ -65,8 +65,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.instantBook">闪订</button>
     <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
-    <button class="btn btn-sm btn-outline-dark" @click="templates.reso.loss">损失</button>
-    <button class="btn btn-sm btn-outline-dark" @click="double(); hideTw = true">双票</button>
+    <button class="btn btn-sm btn-warning" @click="templates.reso.loss">损失</button>
+    <button class="btn btn-sm btn-warning" @click="double(); hideTw = true">双票</button>
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
   </div>
@@ -296,5 +296,46 @@ textarea {
   background-color: #fd890d;
   transition: width 0.2s ease;
   z-index: 9999;
+}
+
+.dark-mode .loading-bar {
+  background-color: #874905;
+}
+
+.dark-mode .btn:hover {
+  color: #fff;
+}
+
+.dark-mode .btn-outline-danger {
+  color: #c71d1d;
+  border-color: #c71d1d;
+}
+
+.dark-mode .btn-outline-primary {
+  color: #0E6EFD;
+  border-color: #0E6EFD;
+}
+
+.btn-warning {
+  color: #d87308;
+  background-color: #fd890d00;
+  border-color: #d87308;
+
+  &:hover {
+    background-color: #d87308;
+    border-color: #d87308;
+    color: #000;
+  }
+}
+
+.dark-mode .btn-warning {
+  color: #fd890d;
+  border-color: #fd890d;
+
+  &:hover {
+    background-color: #fd890d;
+    border-color: #fd890d;
+    color: #000;
+  }
 }
 </style>
