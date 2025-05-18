@@ -42,7 +42,7 @@
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.followup">跟进</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.followup">不客气+/跟进</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.meantime">期间</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
