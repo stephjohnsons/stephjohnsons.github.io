@@ -2,6 +2,27 @@
   <div :class="{ 'dark-mode': ui.isDark }" class="p-2">
     <div v-if="authenticated" class="d-flex flex-column">
       <ZhTwConverter />
+
+      <h3 class="mt-2">Alarms</h3>
+      <div class="mb-2">
+        <div class="d-flex gap-2 align-items-center">
+          <input v-model="newAlarmTime" type="time" class="form-control" />
+          <input v-model="newAlarmLabel" type="text" placeholder="Label" class="form-control" />
+          <button @click="addNewAlarm" class="btn btn-dark w-auto text-nowrap">Add Alarm</button>
+          <label class="ms-2 d-flex align-items-center gap-1">
+            <input type="checkbox" v-model="repeat" /> Repeat
+          </label>
+        </div>
+      </div>
+
+      <ul class="list-group">
+        <li class="list-group-item d-flex align-items-center" v-for="(alarm, index) in alarmStore.alarms" :key="index">
+          {{ alarm.time }} • {{ alarm.label || 'No label' }}
+          <span v-if="alarm.repeat">(recurring)</span>
+          <button @click="alarmStore.removeAlarm(index)" class="ms-auto btn btn-sm btn-danger ms-2">Remove</button>
+        </li>
+      </ul>
+
       <CurrencyConverter />
       <TimeZoneConverter />
 
@@ -30,8 +51,10 @@ import ZhTwConverter from '@/components/ZhTwConverter.vue';
 import TimeZoneConverter from '@/components/TimeZoneConverter.vue';
 import CurrencyConverter from '@/components/CurrencyConverter.vue';
 import CurrentTime from '@/components/CurrentTime.vue';
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useUIStore } from '@/stores/ui';
+import { useAlarmStore } from '@/stores/alarm';
+import moment from 'moment';
 
 const ui = useUIStore();
 const authenticated = ref(localStorage.getItem('authenticated') === 'true');
@@ -45,6 +68,37 @@ const checkPassword = () => {
     alert('Incorrect password. Please try again.');
   }
 };
+
+const alarmStore = useAlarmStore();
+const newAlarmTime = ref('');
+const newAlarmLabel = ref('');
+const repeat = ref(false);
+
+const addNewAlarm = () => {
+  if (!newAlarmTime.value) return;
+  alarmStore.addAlarm(newAlarmTime.value, repeat.value, newAlarmLabel.value.trim());
+  newAlarmTime.value = '';
+  newAlarmLabel.value = '';
+  repeat.value = false;
+};
+
+const checkAlarms = () => {
+  const now = moment().format('HH:mm');
+  alarmStore.alarms.forEach((alarm) => {
+    if (!alarm.triggered && alarm.time === now) {
+      alarm.triggered = true;
+      alert(`⏰ Alarm for ${alarm.time} triggered!`);
+    }
+  });
+};
+
+let interval;
+onMounted(() => {
+  setInterval(() => {
+    checkAlarms();
+  }, 1000);
+});
+onUnmounted(() => clearInterval(interval));
 </script>
 
 <style scoped>
@@ -78,5 +132,9 @@ const checkPassword = () => {
 
 .dark-mode p>a {
   color: #aaa !important;
+}
+
+.list-group-item {
+  font-family: monospace;
 }
 </style>
