@@ -4,8 +4,8 @@ import moment from 'moment'
 
 export const useAlarmStore = defineStore('alarm', () => {
   const alarms = ref([
-    { time: '10:25', repeat: true, label: 'Start of Shift' },
-    { time: '19:55', repeat: true, label: 'EOS Busy' }
+    { id: 0, time: '10:25', repeat: true, label: 'Start of Shift' },
+    { id: 1, time: '19:55', repeat: true, label: 'EOS Busy' }
   ])
 
   const addAlarm = (time, repeat = false, label = '') => {

@@ -16,9 +16,9 @@
       </div>
 
       <ul class="list-group">
-        <li class="list-group-item d-flex align-items-center" v-for="(alarm, index) in alarmStore.alarms" :key="index">
+        <li class="list-group-item d-flex align-items-center" v-for="alarm in sortedAlarms" :key="alarm.id">
           {{ alarm.time }} • {{ alarm.label || 'No label' }}
-          <span v-if="alarm.repeat">(recurring)</span>
+          <span class="ms-2" v-if="alarm.repeat">🔁 recurring</span>
           <button @click="alarmStore.removeAlarm(index)" class="ms-auto btn btn-sm btn-danger ms-2">Remove</button>
         </li>
       </ul>
@@ -51,7 +51,7 @@ import ZhTwConverter from '@/components/ZhTwConverter.vue';
 import TimeZoneConverter from '@/components/TimeZoneConverter.vue';
 import CurrencyConverter from '@/components/CurrencyConverter.vue';
 import CurrentTime from '@/components/CurrentTime.vue';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useUIStore } from '@/stores/ui';
 import { useAlarmStore } from '@/stores/alarm';
 import moment from 'moment';
@@ -99,6 +99,10 @@ onMounted(() => {
   }, 1000);
 });
 onUnmounted(() => clearInterval(interval));
+
+const sortedAlarms = computed(() =>
+  [...alarmStore.alarms].sort((a, b) => a.time.localeCompare(b.time))
+);
 </script>
 
 <style scoped>
