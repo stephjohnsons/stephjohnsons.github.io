@@ -51,7 +51,7 @@ import ZhTwConverter from '@/components/ZhTwConverter.vue';
 import TimeZoneConverter from '@/components/TimeZoneConverter.vue';
 import CurrencyConverter from '@/components/CurrencyConverter.vue';
 import CurrentTime from '@/components/CurrentTime.vue';
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useUIStore } from '@/stores/ui';
 import { useAlarmStore } from '@/stores/alarm';
 import moment from 'moment';
