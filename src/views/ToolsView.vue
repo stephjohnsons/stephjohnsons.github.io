@@ -87,8 +87,8 @@ const checkAlarms = () => {
   alarmStore.alarms.forEach((alarm) => {
     if (!alarm.triggered && alarm.time === now) {
       alarm.triggered = true;
-      playAlarmSound();
       alert(`⏰ Alarm for ${alarm.time} triggered!`);
+      playAlarmSound();
     }
   });
 };
@@ -102,7 +102,7 @@ onMounted(() => {
 onUnmounted(() => clearInterval(interval));
 
 const playAlarmSound = () => {
-  const audio = new Audio('/sounds/alarm.mp3');
+  const audio = new Audio('/sounds/alarm.wav');
   audio.play();
 };
 
