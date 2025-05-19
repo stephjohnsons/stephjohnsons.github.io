@@ -26,19 +26,23 @@
       placeholder="Traditional Chinese" readonly></textarea>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+    <div class="badge text-bg-secondary text-wrap" style="width: 6.3rem;">
+      开头<br>
+      預定
+    </div>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.ghost">被鬼</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.waitingResponse">待处</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">房客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.H">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.educate.ghost">被鬼</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.waitingResponse">待处</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.upcomingTrip">即将</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">退款</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">退款还未到账</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payout">收款</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
@@ -53,6 +57,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.duplicate">重复</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refund">退款</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.bug">漏洞</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
@@ -177,7 +182,7 @@ const allTemplates = {
     educate: [
       'aircoverHost',
       'aircoverGuest',
-      'delay', 'defender',
+      'delay', 'defender', 'payout',
       'followup', 'feedback',
       'meantime', 'report', 'ghost',
       'probe', 'fapiao',
