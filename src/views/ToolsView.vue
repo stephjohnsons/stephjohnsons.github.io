@@ -16,7 +16,7 @@
       </div>
 
       <ul class="list-group">
-        <li class="list-group-item d-flex align-items-center" v-for="alarm in sortedAlarms" :key="alarm.id">
+        <li class="list-group-item d-flex align-items-center" v-for="(alarm, index) in alarmStore.alarms" :key="index">
           {{ alarm.time }} • {{ alarm.label || 'No label' }}
           <span class="ms-2" v-if="alarm.repeat">🔁 recurring</span>
           <button @click="alarmStore.removeAlarm(index)" class="ms-auto btn btn-sm btn-danger ms-2">Remove</button>
@@ -87,6 +87,7 @@ const checkAlarms = () => {
   alarmStore.alarms.forEach((alarm) => {
     if (!alarm.triggered && alarm.time === now) {
       alarm.triggered = true;
+      playAlarmSound();
       alert(`⏰ Alarm for ${alarm.time} triggered!`);
     }
   });
@@ -100,9 +101,11 @@ onMounted(() => {
 });
 onUnmounted(() => clearInterval(interval));
 
-const sortedAlarms = computed(() =>
-  [...alarmStore.alarms].sort((a, b) => a.time.localeCompare(b.time))
-);
+const playAlarmSound = () => {
+  const audio = new Audio('/sounds/alarm.mp3');
+  audio.play();
+};
+
 </script>
 
 <style scoped>
