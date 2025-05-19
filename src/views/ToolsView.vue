@@ -82,13 +82,20 @@ const addNewAlarm = () => {
   repeat.value = false;
 };
 
+const alarmSound = new Audio('/sounds/alarm.wav');
+
 const checkAlarms = () => {
   const now = moment().format('HH:mm');
   alarmStore.alarms.forEach((alarm) => {
     if (!alarm.triggered && alarm.time === now) {
+      alarmSound.play();
       alarm.triggered = true;
-      alert(`⏰ Alarm for ${alarm.time} triggered!`);
-      playAlarmSound();
+      setTimeout(() => {
+        if (confirm(`⏰ Alarm for ${alarm.time} triggered!`)) {
+          alarmSound.pause();
+          alarmSound.currentTime = 0;
+        };
+      }, 1500);
     }
   });
 };
@@ -100,12 +107,6 @@ onMounted(() => {
   }, 1000);
 });
 onUnmounted(() => clearInterval(interval));
-
-const playAlarmSound = () => {
-  const audio = new Audio('/sounds/alarm.wav');
-  audio.play();
-};
-
 </script>
 
 <style scoped>
