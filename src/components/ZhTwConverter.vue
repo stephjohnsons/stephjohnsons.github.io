@@ -12,6 +12,7 @@
       <select v-if="lang === 'cn'" class="text-sm mb-2" v-model="name">
         <option value="st" default>桀</option>
         <option value="kx">欣</option>
+        <option value="jf">苏</option>
       </select>
       <button class="btn btn-sm btn-outline-danger mb-2"
         @click="hideTw = false; simplified = ''; traditional = '';">清空</button>
@@ -74,6 +75,7 @@
     <button class="btn btn-sm btn-warning" @click="double(); hideTw = true">双票</button>
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.repeat">反复</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <div class="badge text-bg-primary text-wrap" style="width: 6.3rem;">
@@ -167,7 +169,7 @@ const allTemplates = {
   ],
   parametric: {
     opening: [
-      'st', 'kx', 'quick'
+      'st', 'kx', 'jf', 'quick'
     ],
     english: [
       'opening',
@@ -188,7 +190,7 @@ const allTemplates = {
       'probe', 'fapiao',
       'waiting', 'international',
       'specify', 'noReply', 'instantBook',
-      'upcomingTrip', 'duplicate',
+      'upcomingTrip', 'duplicate', 'repeat',
       'refundDisabled', 'coupon', 'refund', 'photography', 'bug'
     ],
     reso: ['G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost', 'loss'],
