@@ -3,12 +3,12 @@
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="toggleTranslation" v-model="showTranslation" />
       <label class="form-check-label" for="toggleTranslation">
-        Show Translation
+        Translation
       </label>
     </div>
 
     <div v-if="showTranslation" class="d-flex mb-0">
-      <div class="me-3">
+      <div class="me-3 my-auto">
         <label for="languageSelect" class="form-label me-2 mb-0">Select Language</label>
         <select id="languageSelect" class="form-select-sm" v-model="selectedLanguage">
           <option value="">-- Choose --</option>
@@ -24,8 +24,7 @@
         </select>
       </div>
 
-      <div class="w-50 ms-0 d-flex gap-2 align-items-center">
-        <label class="form-label me-2 mb-0">Translation</label>
+      <div class="ms-0 d-flex gap-2 align-items-center">
         <input type="text" :value="translation" class="form-control-sm" readonly ref="translationBox" />
         <button class="btn btn-outline-secondary btn-sm" @click="copyToClipboard">
           Copy

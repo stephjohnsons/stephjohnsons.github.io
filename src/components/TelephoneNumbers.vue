@@ -8,7 +8,7 @@
     </div>
 
     <div v-if="showPhones" class="d-flex mb-0">
-      <div class="me-3">
+      <div class="me-3 my-auto">
         <label for="countrySelect" class="form-label me-2 mb-0">Country</label>
         <select id="countrySelect" class="form-select-sm" v-model="selectedCountry">
           <option value="">-- Choose --</option>
@@ -57,7 +57,7 @@
         </select>
       </div>
 
-      <div class="w-50 ms-0 d-flex gap-2 align-items-center">
+      <div class="w-50 ms-0 d-flex gap-2 align-items-center my-auto">
         <input type="text" :value="numbers" class="form-control-sm" readonly ref="numberBox" />
         <button class="btn btn-outline-secondary btn-sm" @click="copyToClipboard">
           Copy
