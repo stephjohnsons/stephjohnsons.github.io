@@ -39,6 +39,9 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">退款还未到账</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payout">收款</button>
+    <button class="btn btn-sm btn-primary" disabled>帮助</button>
+    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
+    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-dark" disabled>忽悠</button>
@@ -72,9 +75,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.repeat">反复</button>
-    <button class="btn btn-sm btn-primary" disabled>帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.robotCBG">多笔</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-primary" disabled>保障</button>
