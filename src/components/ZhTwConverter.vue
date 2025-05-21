@@ -75,7 +75,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.repeat">反复</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.robotCBG">多笔</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.robotCBG">房客取消协商</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-primary" disabled>保障</button>
@@ -183,7 +183,7 @@ const allTemplates = {
     ],
     educate: [
       'aircoverHost',
-      'aircoverGuest',
+      'aircoverGuest', 'robotCBG',
       'delay', 'defender', 'payout',
       'followup', 'feedback',
       'meantime', 'report', 'ghost',
