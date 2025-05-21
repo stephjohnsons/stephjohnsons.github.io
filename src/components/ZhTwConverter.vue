@@ -108,6 +108,7 @@
   </div>
 
   <TranslationPrompt />
+  <TelephoneNumbers />
 </template>
 
 <script setup>
@@ -115,6 +116,7 @@ import { ref, watch, onMounted } from 'vue';
 import * as OpenCC from 'opencc-js/core';
 import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
+import TelephoneNumbers from './TelephoneNumbers.vue';
 import { useUIStore } from '@/stores/ui';
 
 const ui = useUIStore();
