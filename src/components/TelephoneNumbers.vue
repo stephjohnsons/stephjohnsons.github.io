@@ -2,7 +2,7 @@
   <div class="mt-2 d-flex gap-3 align-items-center">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="togglePhones" v-model="showPhones" />
-      <label class="form-check-label" for="togglePhones">
+      <label class="form-check-label" for="togglePhones" :class="{ 'opacity-25': showPhones }">
         Phone Numbers
       </label>
     </div>
@@ -58,7 +58,7 @@
       </div>
 
       <div class="w-50 ms-0 d-flex gap-2 align-items-center my-auto">
-        <input type="text" :value="numbers" class="form-control-sm" readonly ref="numberBox" />
+        <input type="text" :value="numbers" class="form-control-sm py-0 border-1" readonly ref="numberBox" />
         <button class="btn btn-outline-secondary btn-sm" @click="copyToClipboard">
           Copy
         </button>
@@ -96,3 +96,9 @@ const copyToClipboard = () => {
   }
 };
 </script>
+
+<style scoped>
+.form-select-sm {
+  padding: 0.4rem 0.25r;
+}
+</style>

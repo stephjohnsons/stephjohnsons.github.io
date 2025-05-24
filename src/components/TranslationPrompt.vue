@@ -2,7 +2,7 @@
   <div class="mt-2 d-flex gap-3 align-items-center">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="toggleTranslation" v-model="showTranslation" />
-      <label class="form-check-label" for="toggleTranslation">
+      <label class="form-check-label" :class="{ 'opacity-25': showTranslation }" for="toggleTranslation">
         Translation
       </label>
     </div>
@@ -25,7 +25,7 @@
       </div>
 
       <div class="ms-0 d-flex gap-2 align-items-center">
-        <input type="text" :value="translation" class="form-control-sm" readonly ref="translationBox" />
+        <input type="text" :value="translation" class="form-control-sm py-0 border-1" readonly ref="translationBox" />
         <button class="btn btn-outline-secondary btn-sm" @click="copyToClipboard">
           Copy
         </button>
@@ -60,3 +60,10 @@ const copyToClipboard = () => {
   }
 };
 </script>
+
+
+<style scoped>
+.form-select-sm {
+  padding: 0.4rem 0.25rem;
+}
+</style>

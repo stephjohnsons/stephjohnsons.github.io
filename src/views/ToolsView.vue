@@ -3,7 +3,9 @@
     <div v-if="authenticated" class="d-flex flex-column">
       <ZhTwConverter />
 
-      <h3 class="mt-2">Alarms</h3>
+      <h5 class="fw-normal mt-3">
+        Alarms
+      </h5>
       <div class="mb-2">
         <div class="d-flex gap-2 align-items-center">
           <input v-model="newAlarmTime" type="time" class="form-control" />
