@@ -9,7 +9,7 @@
         <option value="cn" default>中</option>
         <option value="en">英</option>
       </select>
-      <select v-if="lang === 'cn'" class="text-sm mb-2" v-model="name">
+      <select class="text-sm mb-2" v-model="name">
         <option value="st" default>桀</option>
         <option value="kx">欣</option>
         <option value="jf">苏</option>
@@ -94,10 +94,10 @@
     <button class="btn btn-sm btn-warning" @click="rTwo()">啊二</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.opening">开头</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english[name]()">开头</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.nova">翻译</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.resoG">房客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.resoH">房东</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.nova">翻译</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.hc">HC</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.aircover">诶卡</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.thanks">谢谢</button>
@@ -183,7 +183,7 @@ const allTemplates = {
       'st', 'kx', 'jf', 'ly', 'quick'
     ],
     english: [
-      'opening',
+      'st', 'kx', 'jf', 'ly',
       'resoG', 'resoH',
       'nova', 'hc', 'thanks', 'instantBook',
       'closing', 'aircover', 'noPickup', 'ghosted',
