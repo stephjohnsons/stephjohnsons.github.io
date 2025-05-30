@@ -1,8 +1,8 @@
 <template>
   <div :class="{ 'dark-mode': ui.isDark }" class="p-2">
     <div v-if="authenticated" class="d-flex flex-column">
-      <div class="d-flex flex-row">
-        <div>
+      <!-- <div class="d-flex flex-row"> -->
+        <!-- <div> -->
           <ZhTwConverter />
 
           <h5 class="fw-normal mt-3">Alarms</h5>
@@ -46,11 +46,11 @@
 
           <CurrencyConverter />
           <TimeZoneConverter />
-        </div>
-        <div>
+        <!-- </div> -->
+        <!-- <div>
           <Changelog />
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
 
       <div
         class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex"
@@ -97,7 +97,7 @@ import ZhTwConverter from "@/components/ZhTwConverter.vue";
 import TimeZoneConverter from "@/components/TimeZoneConverter.vue";
 import CurrencyConverter from "@/components/CurrencyConverter.vue";
 import CurrentTime from "@/components/CurrentTime.vue";
-import Changelog from "@/components/Changelog.vue";
+// import Changelog from "@/components/Changelog.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useUIStore } from "@/stores/ui";
 import { useAlarmStore } from "@/stores/alarm";
