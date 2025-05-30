@@ -1,7 +1,7 @@
 <template>
   <div :class="{ 'dark-mode': ui.isDark }" class="p-2">
     <div v-if="authenticated" class="d-flex flex-column">
-      <div>
+      <div class="d-flex flex-row">
         <div>
           <ZhTwConverter />
 
