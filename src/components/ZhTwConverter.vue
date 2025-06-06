@@ -93,7 +93,7 @@
     <button class="btn btn-sm btn-dark" disabled>备注</button>
     <button class="btn btn-sm btn-warning" @click="templates.reso.loss">损失</button>
     <button class="btn btn-sm btn-warning" @click="double(); hideTw = true">双票</button>
-    <button class="btn btn-sm btn-warning" @click="rTwo()">啊二</button>
+    <button class="btn btn-sm btn-warning" @click="templates.educate.rTwo">啊二</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english[name]()">开头</button>
@@ -194,7 +194,7 @@ const allTemplates = {
       'coupon', 'refund', 'report', 'international'
     ],
     educate: [
-      'aircoverHost',
+      'aircoverHost', 'rTwo',
       'aircoverGuest', 'robotCBG',
       'delay', 'defender', 'payout',
       'followup', 'feedback', 'help', 'lead',
@@ -290,10 +290,6 @@ const numbering = () => {
 
 const double = () => {
   simplified.value = "UI\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:"
-}
-
-const rTwo = () => {
-  simplified.value = '理解用户的问题\n主要发生的问题：\n主要诉求（离开房源或继续留宿？）：\n是否已就此问题联系房东：\n房东是否有尝试解决问题：\n受影响的天数（准确日期）：\n发生问题时的证明文件（照片、视频等）：\n目前是否已离开房源（离开的准确日期）：';
 }
 </script>
 
