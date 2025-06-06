@@ -41,8 +41,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">退款还未到账</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payout">收款</button>
     <button class="btn btn-sm btn-primary" disabled>帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="help(); hideTw = true">帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="lead(); hideTw = true">主管</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.help; hideTw = true">帮助</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.lead; hideTw = true">主管</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-dark" disabled>忽悠</button>
@@ -73,10 +73,11 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.search">搜索</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.instantBook">闪订</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="numbering(); hideTw = true">号码</button>
+    <button class="btn btn-sm btn-outline-warning" @click="symbol(); hideTw = true">符号</button>
+    <button class="btn btn-sm btn-outline-warning" @click="numbering(); hideTw = true">号码</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.repeat">反复</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.robotCBG">房客取消协商</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.register">绑定</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-primary" disabled>保障</button>
@@ -87,6 +88,7 @@
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">结二</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw1(); hideTw = true">結壹</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.tw2(); hideTw = true">結贰</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkEmail">检查</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.p">Pen</button>
     <button class="btn btn-sm btn-dark" disabled>备注</button>
     <button class="btn btn-sm btn-warning" @click="templates.reso.loss">损失</button>
@@ -195,15 +197,18 @@ const allTemplates = {
       'aircoverHost',
       'aircoverGuest', 'robotCBG',
       'delay', 'defender', 'payout',
-      'followup', 'feedback',
+      'followup', 'feedback', 'help', 'lead',
       'meantime', 'report', 'ghost',
-      'probe', 'fapiao',
+      'probe', 'fapiao', 'views',
       'waiting', 'international',
       'specify', 'noReply', 'instantBook',
       'upcomingTrip', 'duplicate', 'repeat',
       'refundDisabled', 'coupon', 'refund', 'photography', 'bug'
     ],
-    reso: ['G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost', 'loss'],
+    reso: [
+      'G', 'H', 'M', 'waitingResponse', 'checkpointGuest', 'checkpointHost',
+      'loss', 'checkEmail', 'register'
+    ],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
   }
 };
@@ -274,14 +279,6 @@ Object.entries(allTemplates.parametric).forEach(([type, names]) => {
     }
   });
 });
-
-const help = () => {
-  simplified.value = '【Help Needed】\n问题描述：\nSurvey：Yes/No\nPotential：Promoter/Detractor\n期待解决方案：\n个案链接：\n预订链接：\n相关个案：';
-};
-
-const lead = () => {
-  simplified.value = '【主管通话】\n问题描述：\n用户为什么想与主管交谈：\n用户期望的结果是什么：\n已提供的选项或替代解决方案：\n个案链接：\n预订链接：\n相关个案：';
-};
 
 const symbol = () => {
   simplified.value = "「__xx__」>「__xx__」>「__xx__」>「__xx__」\n『__xx__』 ＜__action__＞\n▼幫助中心 ▲ ‣ ◆ Between ・ VISA ••••1234 \n※ Translation\n✓ ⛌";
