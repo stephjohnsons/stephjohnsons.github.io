@@ -3,10 +3,7 @@ import { ref } from 'vue'
 import moment from 'moment'
 
 export const useAlarmStore = defineStore('alarm', () => {
-  const alarms = ref([
-    { id: 0, time: '05:55', repeat: true, label: 'Start of Shift' },
-    { id: 1, time: '15:25', repeat: true, label: 'EOS Busy' }
-  ])
+  const alarms = ref([])
 
   const addAlarm = (time, repeat = false, label = '') => {
     alarms.value.push({ time, repeat, label })
