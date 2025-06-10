@@ -1,7 +1,3 @@
-import { ref } from 'vue'
-
-const simplified = ref('')
-
 export const allTemplates = {
   direct: ['noPickup', 'pickup', 'symbols', 'resoG', 'resoH', 'multipleReso'],
   parametric: {
@@ -81,17 +77,4 @@ export const allTemplates = {
     res2: ['gConsole', 'requestDocs', 'hSolution', 'gSolution', 'notQualified', 'reviews'],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
   }
-}
-
-export const symbol = () => {
-  simplified.value =
-    '「__xx__」>「__xx__」>「__xx__」>「__xx__」\n『__xx__』 ＜__action__＞\n▼幫助中心 ▲ ‣ ◆ Between ・ VISA ••••1234 \n※ Translation\n✓ ⛌'
-}
-
-export const numbering = () => {
-  simplified.value = '（1）\n（2）\n（3）\n（4）\n（5）\n（6）\n（7）\n（8）'
-}
-
-export const double = () => {
-  simplified.value = 'UI\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:'
 }

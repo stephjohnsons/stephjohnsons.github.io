@@ -42,8 +42,8 @@
     <button class="btn btn-sm btn-outline-danger" @click="templates.educate.refund">退款</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebooking">重订</button>
     <button class="btn btn-sm btn-primary " disabled>帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.help; hideTw = true">帮助</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.lead; hideTw = true">主管</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.help(); hideTw = true">帮助</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.educate.lead(); hideTw = true">主管</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-dark " disabled>忽悠</button>
@@ -147,7 +147,7 @@ import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
 import TelephoneNumbers from './TelephoneNumbers.vue';
 import { useUIStore } from '@/stores/ui';
-import { allTemplates, symbol, numbering, double } from './data/templates';
+import { allTemplates } from './data/templates';
 
 const ui = useUIStore();
 const loading = ref(false);
@@ -257,6 +257,19 @@ Object.entries(allTemplates.parametric).forEach(([type, names]) => {
     }
   });
 });
+
+const symbol = () => {
+  simplified.value =
+    '「__xx__」>「__xx__」>「__xx__」>「__xx__」\n『__xx__』 ＜__action__＞\n▼幫助中心 ▲ ‣ ◆ Between ・ VISA ••••1234 \n※ Translation\n✓ ⛌'
+}
+
+const numbering = () => {
+  simplified.value = '（1）\n（2）\n（3）\n（4）\n（5）\n（6）\n（7）\n（8）'
+}
+
+const double = () => {
+  simplified.value = 'UI\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:'
+}
 </script>
 
 <style scoped>
