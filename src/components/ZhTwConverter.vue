@@ -80,7 +80,7 @@
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-dark" disabled>十分</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.upcomingTrip">即将</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.upcomingTrip">即将</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.register">绑定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentHost">房东</button>
     <button class="btn btn-sm btn-secondary btn-grand" disabled>Ｒ２</button>

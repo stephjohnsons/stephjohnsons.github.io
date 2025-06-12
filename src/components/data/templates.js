@@ -51,7 +51,6 @@ export const allTemplates = {
       'specify',
       'noReply',
       'instantBook',
-      'upcomingTrip',
       'duplicate',
       'repeat',
       'refundDisabled',
@@ -72,7 +71,8 @@ export const allTemplates = {
       'register',
       'consoleHost',
       'consoleGuest',
-      'complimentHost'
+      'complimentHost',
+      'upcomingTrip'
     ],
     res2: ['gConsole', 'requestDocs', 'hSolution', 'gSolution', 'notQualified', 'reviews'],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
