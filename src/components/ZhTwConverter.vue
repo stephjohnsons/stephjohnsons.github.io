@@ -9,6 +9,10 @@
         <option value="cn" default>中</option>
         <option value="en">英</option>
       </select>
+      <select class="text-sm mb-2" v-model="domain">
+        <option value="cn" default>cn</option>
+        <option value="com">com</option>
+      </select>
       <select class="text-sm mb-2" v-model="name">
         <option value="st" default>桀</option>
         <option value="kx">欣</option>
@@ -159,6 +163,7 @@ const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const hideTw = ref(false);
 const name = ref('st')
 const lang = ref('cn')
+const domain = ref('cn')
 const progress = ref(0);
 
 let progressInterval = null;
@@ -210,7 +215,7 @@ const fetchTemplate = async (endpoint) => {
 const fetchSubtemplates = async (type, template) => {
   startLoading();
   try {
-    const res = await fetch(`${backend}/${type}?type=${template}`);
+    const res = await fetch(`${backend}/${type}?type=${template}&domain=${domain.value}`);
     const json = await res.json();
     if (type === 'opening') {
       return json;
