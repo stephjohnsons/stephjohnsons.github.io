@@ -71,7 +71,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.defender">屏蔽</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.instantBook">闪订</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">退款还未到账</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnhappyReview">房东评价</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">未到账</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.search">搜索</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payout">收款</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.repeat">反复</button>
@@ -85,7 +86,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentHost">房东</button>
     <button class="btn btn-sm btn-secondary btn-grand" disabled>Ｒ２</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.res2.requestDocs">文件</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.res2.notQualified">不符</button>
+    <button class="btn btn-sm btn-warning" @click="templates.res2.notQualified">不符</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.res2.countryHumid">湿润</button>
     <button class="btn btn-sm btn-secondary" disabled>房东</button>
     <button class="btn btn-sm btn-outline-success" @click="templates.res2.hSolution">符合</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.res2.reviews">评价</button>

@@ -69,6 +69,7 @@ export const allTemplates = {
       'loss',
       'checkEmail',
       'register',
+      'hostUnhappyReview',
       'consoleHost',
       'consoleGuest',
       'complimentHost',
