@@ -74,7 +74,16 @@ export const allTemplates = {
       'complimentHost',
       'upcomingTrip'
     ],
-    res2: ['gConsole', 'requestDocs', 'hSolution', 'gSolution', 'notQualified', 'reviews'],
+    res2: [
+      'gConsole',
+      'requestDocs',
+      'hSolution',
+      'gSolution',
+      'notQualified',
+      'reviews',
+      'informPayout',
+      'countryHumid'
+    ],
     closing: ['p', 'zh1', 'zh2', 'tw1', 'tw2']
   }
 }
