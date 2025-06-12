@@ -6,18 +6,18 @@
     </h5>
     <p class="my-auto d-flex gap-2 justify-content-center">
       <select class="text-sm mb-2" v-model="lang">
-        <option value="cn" default>中</option>
-        <option value="en">英</option>
-      </select>
-      <select class="text-sm mb-2" v-model="domain">
-        <option value="cn" default>cn</option>
-        <option value="com">com</option>
+        <option value="cn" default>中文</option>
+        <option value="en">英文</option>
       </select>
       <select class="text-sm mb-2" v-model="name">
-        <option value="st" default>桀</option>
-        <option value="kx">欣</option>
-        <option value="jf">苏</option>
-        <option value="ly">亚</option>
+        <option value="st" default>小桀</option>
+        <option value="kx">可欣</option>
+        <option value="jf">小苏</option>
+        <option value="ly">丽亚</option>
+      </select>
+      <select class="text-sm mb-2" v-model="domain">
+        <option value="cn" default>.cn</option>
+        <option value="com">.com</option>
       </select>
       <button class="btn btn-sm btn-outline-danger mb-2"
         @click="hideTw = false; simplified = ''; traditional = '';">清空</button>
