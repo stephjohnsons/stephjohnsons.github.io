@@ -23,10 +23,10 @@ export const pageLinks = [
     name: 'Teaching',
     link: '/teaching'
   },
-  {
-    name: '🧑🏻‍💻 Vita',
-    link: '/vita'
-  },
+  // {
+  //   name: '🧑🏻‍💻 Vita',
+  //   link: '/vita'
+  // },
   // {
   //   name: 'Blog',
   //   link: '/blog'
