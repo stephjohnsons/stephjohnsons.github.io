@@ -73,6 +73,7 @@ export const allTemplates = {
       'consoleHost',
       'consoleGuest',
       'complimentHost',
+      'complimentGuest',
       'upcomingTrip'
     ],
     res2: [

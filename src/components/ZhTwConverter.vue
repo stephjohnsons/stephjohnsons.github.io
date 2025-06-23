@@ -88,6 +88,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.upcomingTrip">即将</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.register">绑定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentHost">房东</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentGuest">房客</button>
     <button class="btn btn-sm btn-secondary btn-grand" disabled>Ｒ２</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.res2.requestDocs">文件</button>
     <button class="btn btn-sm btn-warning" @click="templates.res2.notQualified">不符</button>
