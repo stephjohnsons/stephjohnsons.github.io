@@ -27,11 +27,11 @@
     </button>
   </div>
   <div class="d-flex gap-2 mb-2">
-    <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
-    <textarea v-if="!hideTw && lang === 'cn'" :value="traditional" rows="5" class="form-control"
+    <textarea v-model="simplified" rows="8" class="form-control" placeholder="Simplified Chinese"></textarea>
+    <textarea v-if="!hideTw && lang === 'cn'" :value="traditional" rows="8" class="form-control"
       placeholder="Traditional Chinese" readonly></textarea>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap">
     <span class="mx-2 my-auto">开头</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">房客</button>
@@ -40,15 +40,14 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.educate.ghost">被鬼</button>
-    <span class="mx-2 my-auto">填充 </span>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.educate.refund">退款</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebooking">重订</button>
+    <span class="mx-2 my-auto">检查</span>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
     <span class="mx-2 my-auto">帮助</span>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.lead(); hideTw = true">主管</button>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap">
     <span class="mx-2 my-auto">消息</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.noReply">未回</button>
@@ -60,11 +59,12 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.duplicate">重复</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.bug">漏洞</button>
-    <span class="mx-2 my-auto">检查</span>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
+    <span class="mx-2 my-auto">填充 </span>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.educate.refund">退款</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebooking">重订</button>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto">
     <span class="mx-2 my-auto">教育</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.educate.report">举报</button>
@@ -74,15 +74,15 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.defender">屏蔽</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.instantBook">闪订</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnhappyReview">房东评价</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">未到账</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnhappyReview">评价</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">到账</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.search">搜索</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payout">收款</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.repeat">反复</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.robotCBG">协商</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.listingViews">浏览</button>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap">
     <span class="mx-2 my-auto">十分</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.upcomingTrip">即将</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.register">绑定</button>
@@ -98,18 +98,21 @@
     <button class="btn btn-sm btn-outline-primary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-primary" @click="numbering(); hideTw = true">号码</button>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
-    <span class="mx-2 my-auto">啊二</span>
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto">
+    <span class="mx-custom my-auto">R2</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.requestDocs">文件</button>
-    <button class="btn btn-sm btn-warning" @click="templates.reso.notQualified">不符</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.reso.countryHumid">告知</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.countryHumid">告知</button>
     <span class="mx-2 my-auto">房东</span>
-    <button class="btn btn-sm btn-outline-success" @click="templates.reso.hSolution">符合</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.reso.reviews">评价</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hSolution">符合</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.reviews">评价</button>
     <span class="mx-2 my-auto">房客</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.gConsole">安抚</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.rba">重新</button>
     <button class="btn btn-sm btn-outline-success" @click="templates.reso.gSolution">符合</button>
-    <button class="btn btn-sm btn-outline-success" @click="templates.reso.informPayout">收款</button>
+    <button class="btn btn-sm btn-warning" @click="templates.reso.notQualified">不符</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.informPayout">收款</button>
+  </div>
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap">
     <span class="mx-2 my-auto">结束</span>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh1(); hideTw = true">简一</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">简二</button>
@@ -167,6 +170,8 @@ const lang = ref('cn')
 const domain = ref('cn')
 const progress = ref(0);
 
+const templates = {};
+
 let progressInterval = null;
 let converter = null;
 
@@ -189,9 +194,8 @@ const stopLoading = () => {
   }, 300);
 };
 
-// ZH > TW converter
 onMounted(async () => {
-  converter = await OpenCC.ConverterFactory(Locale.from.cn, Locale.to.tw);;
+  converter = await OpenCC.ConverterFactory(Locale.from.cn, Locale.to.tw);
 });
 
 watch(simplified, (newVal) => {
@@ -203,10 +207,16 @@ watch(simplified, (newVal) => {
 const fetchSubtemplates = async (type, template) => {
   startLoading();
   try {
-    const res = await fetch(`${backend}/${type}?type=${template}&domain=${domain.value}`);
-    const json = await res.json();
+    // opening then different res
+    const res = ref('');
     if (type === 'opening') {
-      return json;
+      res.value = await fetch(`${backend}/${type}?type=${template}`);
+    } else {
+      res.value = await fetch(`${backend}/${type}?type=${template}&domain=${domain.value}`);
+    }
+    const json = await res.value.json();
+    if (type === 'opening') {
+      return { text: json.text };
     } else {
       simplified.value = json.text;
     }
@@ -218,8 +228,6 @@ const fetchSubtemplates = async (type, template) => {
   }
 };
 
-const templates = {};
-
 const callWithUnhide = async (fn) => {
   startLoading();
   try {
@@ -230,12 +238,12 @@ const callWithUnhide = async (fn) => {
   }
 };
 
-Object.entries(allTemplates.parametric).forEach(([type, names]) => {
+Object.entries(allTemplates).forEach(([type, names]) => {
   templates[type] = {};
   names.forEach(name => {
     if (type === 'opening') {
       templates[type][name] = () => {
-        callWithUnhide(async () => {
+        return callWithUnhide(async () => {
           const openingMessage = await fetchSubtemplates(type, name);
           const openWindow = await fetchSubtemplates(type, 'quick');
           simplified.value = `${openingMessage.text}\n\n${openWindow.text}`;
@@ -323,5 +331,13 @@ textarea {
     border-color: #fd890d;
     color: #000;
   }
+}
+
+.mx-custom {
+  margin: auto 0.85rem;
+}
+
+.bg-row {
+  background-color: #e3e3e3;
 }
 </style>
