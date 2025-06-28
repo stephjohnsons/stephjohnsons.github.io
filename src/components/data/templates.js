@@ -1,7 +1,6 @@
 export const allTemplates = {
-  direct: ['noPickup', 'pickup', 'symbols', 'resoG', 'resoH', 'multipleReso'],
   parametric: {
-    opening: ['st', 'kx', 'jf', 'ly', 'quick'],
+    opening: ['st', 'kx', 'jf', 'ly', 'quick', 'pickup', 'noPickup'],
     english: [
       'st',
       'kx',
@@ -61,7 +60,6 @@ export const allTemplates = {
     ],
     reso: [
       'G',
-      'H',
       'M',
       'waitingResponse',
       'checkpointGuest',
@@ -74,9 +72,7 @@ export const allTemplates = {
       'consoleGuest',
       'complimentHost',
       'complimentGuest',
-      'upcomingTrip'
-    ],
-    res2: [
+      'upcomingTrip',
       'gConsole',
       'requestDocs',
       'hSolution',
