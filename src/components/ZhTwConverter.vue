@@ -131,22 +131,22 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.instantBook">闪订</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.report">举报</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.international">国际</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.rebooking">重订</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.defenderBlock">屏蔽</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.closing">结束</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-primary">保障</button>
+    <span class="mx-2 my-auto">AirCover</span>
     <button class="btn btn-sm btn-warning" @click="templates.english.aircoverG">房客</button>
     <button class="btn btn-sm btn-warning" @click="templates.english.aircoverH">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.ghosted">被鬼</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.rebooking">重订</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.defenderBlock">屏蔽</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.coupon">礼金</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.refund">退款</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-warning" @click="help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-warning" @click="lead(); hideTw = true">主管</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.closing">结束</button>
   </div>
 
   <TranslationPrompt />
