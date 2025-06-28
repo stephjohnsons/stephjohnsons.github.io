@@ -32,25 +32,24 @@
       placeholder="Traditional Chinese" readonly></textarea>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-dark " disabled>开头</button>
+    <span class="mx-2 my-auto">开头</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">房客</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.H">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
-    <button class="btn btn-sm btn-dark " disabled>通话</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.pickup">接听</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.noPickup">未接</button>
+    <span class="mx-2 my-auto">通话</span>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.pickup">接听</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.educate.ghost">被鬼</button>
-    <button class="btn btn-sm btn-dark " disabled>填充 </button>
+    <span class="mx-2 my-auto">填充 </span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.educate.refund">退款</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebooking">重订</button>
-    <button class="btn btn-sm btn-primary " disabled>帮助</button>
+    <span class="mx-2 my-auto">帮助</span>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.help(); hideTw = true">帮助</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.lead(); hideTw = true">主管</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-dark " disabled>忽悠</button>
+    <span class="mx-2 my-auto">消息</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.educate.noReply">未回</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
@@ -61,12 +60,12 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.duplicate">重复</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.bug">漏洞</button>
-    <button class="btn btn-sm btn-dark " disabled>检查</button>
+    <span class="mx-2 my-auto">检查</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-dark " disabled>教育</button>
+    <span class="mx-2 my-auto">教育</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
     <button class="btn btn-sm btn-outline-danger" @click="templates.educate.report">举报</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
@@ -84,39 +83,40 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.listingViews">浏览</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-dark" disabled>十分</button>
+    <span class="mx-2 my-auto">十分</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.upcomingTrip">即将</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.register">绑定</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentHost">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentGuest">房客</button>
-    <button class="btn btn-sm btn-secondary btn-grand" disabled>Ｒ２</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.res2.requestDocs">文件</button>
-    <button class="btn btn-sm btn-warning" @click="templates.res2.notQualified">不符</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.res2.countryHumid">湿润</button>
-    <button class="btn btn-sm btn-secondary" disabled>房东</button>
-    <button class="btn btn-sm btn-outline-success" @click="templates.res2.hSolution">符合</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.res2.reviews">评价</button>
-    <button class="btn btn-sm btn-secondary" disabled>房客</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.res2.gConsole">安抚</button>
-    <button class="btn btn-sm btn-outline-success" @click="templates.res2.gSolution">符合</button>
-  </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-dark" disabled>保障</button>
+    <span class="mx-2 my-auto">保障</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircoverHost">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircoverGuest">房客</button>
-    <button class="btn btn-sm btn-danger " disabled>结束</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh1(); hideTw = true">结一</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">结二</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.closing.tw1(); hideTw = true">結壹</button>
-    <button class="btn btn-sm btn-outline-primary" @click="templates.closing.tw2(); hideTw = true">結贰</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkEmail">检查</button>
-    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.p">待处</button>
-    <button class="btn btn-sm btn-dark " disabled>备注</button>
+    <span class="mx-2 my-auto">备注</span>
     <button class="btn btn-sm btn-warning" @click="templates.reso.loss">损失</button>
     <button class="btn btn-sm btn-warning" @click="double(); hideTw = true">双票</button>
     <button class="btn btn-sm btn-warning" @click="templates.educate.rTwo">啊二</button>
     <button class="btn btn-sm btn-outline-primary" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-outline-primary" @click="numbering(); hideTw = true">号码</button>
+  </div>
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2">
+    <span class="mx-2 my-auto">啊二</span>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.requestDocs">文件</button>
+    <button class="btn btn-sm btn-warning" @click="templates.reso.notQualified">不符</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.reso.countryHumid">告知</button>
+    <span class="mx-2 my-auto">房东</span>
+    <button class="btn btn-sm btn-outline-success" @click="templates.reso.hSolution">符合</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.reso.reviews">评价</button>
+    <span class="mx-2 my-auto">房客</span>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.gConsole">安抚</button>
+    <button class="btn btn-sm btn-outline-success" @click="templates.reso.gSolution">符合</button>
+    <button class="btn btn-sm btn-outline-success" @click="templates.reso.informPayout">收款</button>
+    <span class="mx-2 my-auto">结束</span>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh1(); hideTw = true">简一</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.zh2(); hideTw = true">简二</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.closing.tw1(); hideTw = true">繁壹</button>
+    <button class="btn btn-sm btn-outline-primary" @click="templates.closing.tw2(); hideTw = true">繁贰</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkEmail">检查</button>
+    <button class="btn btn-sm btn-outline-danger" @click="templates.closing.p">待处</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english[name]()">开头</button>
@@ -131,7 +131,7 @@
     <button class="btn btn-sm btn-outline-secondary" @click="symbol(); hideTw = true">符号</button>
   </div>
   <div v-if="lang === 'en'" class="d-flex gap-2 mb-2">
-    <button class="btn btn-sm btn-primary" disabled>保障</button>
+    <button class="btn btn-sm btn-primary">保障</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.english.aircoverG">房客</button>
     <button class="btn btn-sm btn-outline-primary" @click="templates.english.aircoverH">房东</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.noPickup">未接</button>
