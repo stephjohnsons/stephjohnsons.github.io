@@ -137,8 +137,11 @@
     <button class="btn btn-sm btn-primary">保障</button>
     <button class="btn btn-sm btn-warning" @click="templates.english.aircoverG">房客</button>
     <button class="btn btn-sm btn-warning" @click="templates.english.aircoverH">房东</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.pickup">接听</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.noPickup">未接</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.ghosted">被鬼</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.rebooking">重订</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.english.defenderBlock">屏蔽</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.coupon">礼金</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.english.refund">退款</button>
     <button class="btn btn-sm btn-warning" @click="help(); hideTw = true">帮助</button>

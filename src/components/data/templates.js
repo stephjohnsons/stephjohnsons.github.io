@@ -19,7 +19,10 @@ export const allTemplates = {
     'coupon',
     'refund',
     'report',
-    'international'
+    'international',
+    'pickup',
+    'rebooking',
+    'defenderBlock'
   ],
   educate: [
     'aircoverHost',
