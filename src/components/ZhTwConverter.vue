@@ -20,7 +20,7 @@
         <option value="com">.com</option>
       </select>
       <button class="btn btn-sm btn-outline-danger mb-2"
-        @click="hideTw = false; simplified = ''; traditional = '';">清空</button>
+        @click="hideTw = false; simplified = ''; traditional = '';">清<span class="d-none d-sm-inline">空</span></button>
     </p>
     <button class="btn btn-sm btn-outline-dark ms-auto mb-2" @click="ui.toggleDark()">
       {{ ui.isDark ? '☼' : '☾' }}
@@ -202,6 +202,9 @@ watch(simplified, (newVal) => {
   if (converter) {
     traditional.value = converter(newVal);
   }
+
+  simplified.value = newVal.replace(/"([^"]*)"/g, '「$1」');
+  simplified.value = newVal.replace(/'([^"]*)'/g, '『$1』');
 });
 
 const fetchSubtemplates = async (type, template) => {
