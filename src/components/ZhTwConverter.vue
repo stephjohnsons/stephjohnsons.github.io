@@ -204,7 +204,6 @@ watch(simplified, (newVal) => {
   }
 
   simplified.value = newVal.replace(/"([^"]*)"/g, '「$1」');
-  simplified.value = newVal.replace(/'([^"]*)'/g, '『$1』');
 });
 
 const fetchSubtemplates = async (type, template) => {
