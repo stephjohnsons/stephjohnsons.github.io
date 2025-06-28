@@ -200,19 +200,6 @@ watch(simplified, (newVal) => {
   }
 });
 
-const fetchTemplate = async (endpoint) => {
-  startLoading();
-  try {
-    const res = await fetch(`${backend}/${endpoint}`);
-    const json = await res.json();
-    simplified.value = json.text;
-  } catch (err) {
-    console.error('Fetch failed:', err);
-  } finally {
-    stopLoading();
-  }
-};
-
 const fetchSubtemplates = async (type, template) => {
   startLoading();
   try {
@@ -243,10 +230,6 @@ const callWithUnhide = async (fn) => {
   }
 };
 
-allTemplates.direct.forEach(name => {
-  templates[name] = () => callWithUnhide(() => fetchTemplate(name));
-});
-
 Object.entries(allTemplates.parametric).forEach(([type, names]) => {
   templates[type] = {};
   names.forEach(name => {
@@ -272,11 +255,11 @@ const symbol = () => {
 }
 
 const numbering = () => {
-  simplified.value = '（1）\n（2）\n（3）\n（4）\n（5）\n（6）\n（7）\n（8）'
+  simplified.value = '（1）\n（2）\n（3）\n（4）\n（5）\n（6）\n（7）\n（8）\n（9）\n（10）'
 }
 
 const double = () => {
-  simplified.value = 'UI\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:'
+  simplified.value = 'UI\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:\n-\n⚠️ __Promises/Refunds_for_noting__'
 }
 </script>
 
