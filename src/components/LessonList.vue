@@ -5,26 +5,29 @@
       Lesson</button>
   </div>
   <!-- Add Student Form -->
-  <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow">
+  <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
-      <h4 class="2">Add Student</h4>
+      <h4 class="2">Add Lesson</h4>
       <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="closeForm">X</button>
     </div>
-    <div class="mt-2 mb-2 d-flex justify-content-around">
-      <label class="block font-medium col-1">Student</label>
-      <input v-model="form.student" class="form-input-sm w-full col-3" required />
-      <label class="block font-medium col-2">Total Lesson</label>
-      <input v-model.number="form.total_minutes" type="number" min="0" class="form-input-sm w-full col-3" required />
+    <label for="student" class="mb-1">Student name</label>
+    <select v-model="form.student_id" class="form-select" required>
+      <option disabled value="">Select Student</option>
+      <option v-for="s in students" :key="s.id" :value="s.id">
+        {{ s.student }}
+      </option>
+    </select>
+    <div class="d-flex mt-2 mb-2">
+      <div class="col-6 me-1">
+        <label for="date">Date and Time</label>
+        <input type="datetime-local" v-model="form.date" class="form-control" required />
+      </div>
+      <div class="col-6 me-1">
+        <label for="duration">Duration</label>
+        <input type="number" v-model.number="form.duration" placeholder="Minutes" class="form-control" required />
+      </div>
     </div>
-
-    <div class="d-flex mb-4 justify-content-around">
-      <label class="block font-medium col-1">Institution</label>
-      <input v-model="form.institution" class="form-input-sm w-full col-3" required />
-      <label class="block font-medium col-2">Minutes Attended</label>
-      <input v-model.number="form.minutes_attended" type="number" min="0" class="form-input-sm w-full col-3" required />
-    </div>
-
-    <button class="btn btn-sm btn-secondary w-100" type="submit">Add Student</button>
+    <button class="btn btn-sm btn-success w-100 mt-1" type="submit">Add Lesson</button>
   </form>
 
   <!-- List of Students -->
@@ -75,19 +78,19 @@ const fetchStudents = async () => {
 };
 
 // Add a student
-const addStudent = async () => {
-  const res = await fetch(`${backend}/students`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(form.value),
-  });
-  if (res.ok) {
-    form.value = { student: '', institution: '', total_minutes: 0, minutes_attended: 0 };
-    fetchStudents();
-  } else {
-    const error = await res.json();
-    Error(error.message);
-  }
+const addLesson = async () => {
+  // const res = await fetch(`${backend}/students`, {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(form.value),
+  // });
+  // if (res.ok) {
+  //   form.value = { student: '', institution: '', total_minutes: 0, minutes_attended: 0 };
+  //   fetchStudents();
+  // } else {
+  //   const error = await res.json();
+  //   Error(error.message);
+  // }
 };
 
 onMounted(() => {

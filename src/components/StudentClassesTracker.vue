@@ -5,7 +5,7 @@
       Student</button>
   </div>
   <!-- Add Student Form -->
-  <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow">
+  <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
       <h4 class="2">Add Student</h4>
       <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="closeForm">X</button>
