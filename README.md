@@ -8,21 +8,20 @@ Welcome to the official repository for my personal portfolio website. This proje
 - **Interactive Projects Section**: Detailed list of my past projects.
 - **Gallery**: Grid of photos from past performances or photo shoot.
 - **Contact Form**: Integrated form for easy communication.
-~~- Instagram Posts: Updated posts that is directly embedded from my Instagram profile.~~ `removed`
 
 ## Technologies Used
 
-- **Next.js using Vue 3**: Frontend framework for building user interfaces. `updated`
-- **Bootstrap**: CSS framework. `updated`
+- **Next.js using Vue 3**: Frontend framework for building user interfaces.
+- **Bootstrap**: CSS framework.
 - **GitHub Pages**: For hosting the static site.
-- **Node.js**: Backend runtime. `updated`
+- **Node.js**: Backend runtime.
+- **Supabase**: Database. `updated`
 
 ## Integrations
 
-- **Vercel**: Serverless API hosting. `new`
-~~- WordPress: For blog posts.~~ `removed`
-~~- Bandsintown: For concert date listings and ticketing links.~~ `removed`
-~~- Bandsintown: For embedding and displaying Instagram posts on websites.~~ `removed`
+- **Vercel**: Serverless API hosting.
+- **Bandsintown**: For concert date listings and ticketing links.~~
+- **Bandsintown**: For embedding and displaying Instagram posts on websites.
 - **Calendly**: For calendar scheduling, which is integrated to my personal and GCal to avoid any scheduling conflicts.
 
-`updated on 2025.05.30`
+`updated on 2025.06.29`
