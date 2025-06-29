@@ -1,40 +1,44 @@
 <template>
   <div class="p-4">
-    <h2 class="text-xl font-bold mb-4">Students</h2>
+    <div class="mb-2 d-flex align-items-center">
+      <h2 class="text-xl font-bold">Students</h2>
+      <button class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50" @click="showForm = !showForm">+ Add
+        Student</button>
+    </div>
     <!-- Add Student Form -->
-    <form @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow">
-      <div class="mb-2">
-        <label class="block font-medium">Student Name</label>
-        <input v-model="form.student" class="form-input w-full" required />
+    <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow">
+      <div class="d-flex">
+        <h4 class="2">Add Student</h4>
+        <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="closeForm">X</button>
+      </div>
+      <div class="mt-2 mb-2 d-flex justify-content-around">
+        <label class="block font-medium col-1">Student</label>
+        <input v-model="form.student" class="form-input-sm w-full col-3" required />
+        <label class="block font-medium col-2">Total Lesson</label>
+        <input v-model.number="form.total_minutes" type="number" min="0" class="form-input-sm w-full col-3" required />
       </div>
 
-      <div class="mb-2">
-        <label class="block font-medium">Institution</label>
-        <input v-model="form.institution" class="form-input w-full" required />
+      <div class="d-flex mb-4 justify-content-around">
+        <label class="block font-medium col-1">Institution</label>
+        <input v-model="form.institution" class="form-input-sm w-full col-3" required />
+        <label class="block font-medium col-2">Minutes Attended</label>
+        <input v-model.number="form.minutes_attended" type="number" min="0" class="form-input-sm w-full col-3"
+          required />
       </div>
 
-      <div class="mb-2">
-        <label class="block font-medium">Total Minutes of Lessons</label>
-        <input v-model.number="form.total_minutes" type="number" min="0" class="form-input w-full" required />
-      </div>
-
-      <div class="mb-4">
-        <label class="block font-medium">Minutes Attended</label>
-        <input v-model.number="form.minutes_attended" type="number" min="0" class="form-input w-full" required />
-      </div>
-
-      <button class="btn btn-primary" type="submit">Add Student</button>
+      <button class="btn btn-sm btn-secondary w-100" type="submit">Add Student</button>
     </form>
 
     <!-- List of Students -->
     <div v-if="students.length">
-      <table class="table-auto w-full">
+      <table class="table table-hover w-full rounded-4">
         <thead>
           <tr class="bg-gray-200">
             <th class="p-2">Student</th>
             <th class="p-2">Institution</th>
             <th class="p-2">Total Minutes</th>
             <th class="p-2">Minutes Attended</th>
+            <th class="p-2">Active</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +47,7 @@
             <td class="p-2">{{ student.institution }}</td>
             <td class="p-2">{{ student.total_minutes }}</td>
             <td class="p-2">{{ student.minutes_attended }}</td>
+            <td class="p-2">{{ student.active }}</td>
           </tr>
         </tbody>
       </table>
@@ -54,6 +59,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+const showForm = ref(false);
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 
 const students = ref([]);
@@ -104,5 +110,9 @@ onMounted(() => {
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 4px;
+}
+
+label {
+  margin-right: 1rem;
 }
 </style>
