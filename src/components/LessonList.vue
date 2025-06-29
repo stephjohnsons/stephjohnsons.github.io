@@ -1,8 +1,8 @@
 <template>
-  <div class="mb-2 d-flex align-items-center" id="students">
-    <h2 class="text-xl font-bold">Students</h2>
+  <div class="mb-2 d-flex align-items-center" id="lessons">
+    <h2 class="text-xl font-bold">Lessons</h2>
     <button class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50" @click="showForm = !showForm">+ Add
-      Student</button>
+      Lesson</button>
   </div>
   <!-- Add Student Form -->
   <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow">
