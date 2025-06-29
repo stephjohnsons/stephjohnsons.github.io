@@ -41,6 +41,11 @@
     <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center">
       <SocialIcons />
     </div>
+    <div class="d-flex flex-column align-items-center justify-content-center mt-2">
+      <a href="/classes" class="d-flex align-items-center text-black fs-5">
+        <i class="bi bi-person-workspace me-2 d-none d-sm-block"></i>
+      </a>
+    </div>
 
     <p class="text-body-secondary fs-8 p-2 mt-4">
       2018 - 2025 © All rights reserved. <br />
@@ -191,5 +196,13 @@ a>span:hover {
 .submenu-fade-leave-to {
   transform: translateY(-10px);
   opacity: 0;
+}
+
+a:hover,
+a:hover svg,
+a>i:hover {
+  color: rgb(252, 192, 14);
+  fill: rgb(252, 192, 14);
+  transition: all 0.2s ease-in-out;
 }
 </style>
