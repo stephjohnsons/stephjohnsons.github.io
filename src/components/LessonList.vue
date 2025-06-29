@@ -36,65 +36,61 @@
       <thead>
         <tr class="bg-gray-200">
           <th class="p-2">Student</th>
-          <th class="p-2">Institution</th>
-          <th class="p-2">Total Minutes</th>
-          <th class="p-2">Minutes Attended</th>
-          <th class="p-2">Active</th>
+          <th class="p-2">Date</th>
+          <th class="p-2">Duration</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="student in students" :key="student.id" class="border-b">
-          <td class="p-2">{{ student.student }}</td>
-          <td class="p-2">{{ student.institution }}</td>
-          <td class="p-2">{{ student.total_minutes }}</td>
-          <td class="p-2">{{ student.minutes_attended }}</td>
-          <td class="p-2">{{ student.active }}</td>
+        <tr v-for="cls in classes" :key="cls.id">
+          <td>{{ studentName(cls.student_id) }}</td>
+          <td>{{ formatDate(cls.date) }}</td>
+          <td>{{ cls.duration }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div v-else class="text-gray-500">No students found.</div>
+  <div v-else class="text-gray-500">No lessons found.</div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const showForm = ref(false);
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
-
+const classes = ref([]);
 const students = ref([]);
+const showForm = ref(false);
 const form = ref({
-  student: '',
-  institution: '',
-  total_minutes: 0,
-  minutes_attended: 0,
+  student_id: '',
+  date: '',
+  duration: 0,
 });
 
-// Fetch existing students
-const fetchStudents = async () => {
-  const res = await fetch(`${backend}/students`);
-  const data = await res.json();
-  students.value = data;
+const fetchLessons = async () => {
+  const clsRes = await fetch(`${backend}/classes`);
+  const stdRes = await fetch(`${backend}/students`);
+  classes.value = await clsRes.json();
+  students.value = await stdRes.json();
 };
 
-// Add a student
+
 const addLesson = async () => {
-  // const res = await fetch(`${backend}/students`, {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(form.value),
-  // });
-  // if (res.ok) {
-  //   form.value = { student: '', institution: '', total_minutes: 0, minutes_attended: 0 };
-  //   fetchStudents();
-  // } else {
-  //   const error = await res.json();
-  //   Error(error.message);
-  // }
+  await fetch(`${backend}/classes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form.value),
+  });
+  form.value = { student_id: '', date: '', duration: 0 };
+  fetchLessons();
+};
+
+const formatDate = (date) => new Date(date).toLocaleString();
+const studentName = (id) => {
+  const student = students.value.find(s => s.id === id);
+  return student ? student.student : 'Unknown';
 };
 
 onMounted(() => {
-  fetchStudents();
+  fetchLessons();
 });
 </script>
 
