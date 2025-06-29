@@ -15,10 +15,10 @@ export const pageLinks = [
     name: 'Media Gallery',
     link: '/gallery'
   },
-  // {
-  //   name: 'Upcoming Dates',
-  //   link: '/dates'
-  // },
+  {
+    name: 'Upcoming Dates',
+    link: '/dates'
+  },
   {
     name: 'Teaching',
     link: '/teaching'

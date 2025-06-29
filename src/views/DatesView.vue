@@ -15,10 +15,10 @@
     <div v-if="loading" class="d-flex justify-content-start">
       <Loading />
     </div>
-    <div v-else v-for="event in upcomingEvents" class="d-flex flex-row align-items-start py-4 border-bottom"
+    <div v-else v-for="event in upcomingEvents" class="d-flex flex-row align-items-start pt-3 pb-4 border-bottom"
       :key="event.id">
       <div class="ms-0 justify-content-start">
-        <h5 class="mb-1" id="item">
+        <h5 class="mb-1 fs-6" id="item">
           <span class="fw-normal">
             {{ event.shortenDate }} {{ event.shortenMonth }} •
           </span>
@@ -26,10 +26,10 @@
         </h5>
         <div>
           <h4 class="mb-0 d-sm-none">{{ event.title }}</h4>
-          <h3 class="mb-0 d-none d-sm-block">{{ event.title }}</h3>
-          <h6 class="fw-normal mb-0">{{ event.venue.location }}</h6>
+          <h3 class="mb-0 d-none d-sm-block fs-4">{{ event.title }}</h3>
+          <h6 class="fw-light mb-0 fs-6">{{ event.venue.location }}</h6>
         </div>
-        <p class="fst-italic mt-1 mb-2 text-muted">{{ truncateDescription(event.description, 12) }}</p>
+        <p class="fst-italic mt-1 mb-2 text-muted fs-7">{{ truncateDescription(event.description, 30) }}</p>
         <div class="d-flex gap-2">
           <EventButton v-if="event.offers.length > 0" type="ticket" :link="event.offers[0].url" />
           <EventButton v-else type="ticket-disabled" />

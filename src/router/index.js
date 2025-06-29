@@ -43,6 +43,11 @@ const routes = [
     component: () => import('../views/VitaView.vue')
   },
   {
+    path: '/dates',
+    name: 'dates',
+    component: () => import('../views/DatesView.vue')
+  },
+  {
     path: '/teaching',
     name: 'teaching',
     component: () => import('../views/TeachingView.vue')
