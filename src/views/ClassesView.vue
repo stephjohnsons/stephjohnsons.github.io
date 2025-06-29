@@ -7,8 +7,8 @@
     <div class="position-fixed top-25 end-0 me-4 pe-1 text-end">
       <h5>Sitemap</h5>
       <div class="d-flex flex-column">
-        <button @click="scrollToStudents()">Students</button>
-        <button @click="scrollToClasses()">Classes</button>
+        <button class="btn btn-sm btn-warning my-1" @click="scrollToStudents()">Students</button>
+        <button class="btn btn-sm btn-warning my-1" @click="scrollToClasses()">Classes</button>
       </div>
     </div>
   </div>
