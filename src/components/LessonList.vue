@@ -8,7 +8,7 @@
   <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
       <h4 class="2">Add Lesson</h4>
-      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="closeForm">X</button>
+      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="showForm = !showForm">X</button>
     </div>
     <label for="student" class="mb-1">Student name</label>
     <select v-model="form.student_id" class="form-select" required>
@@ -43,7 +43,7 @@
       <tbody>
         <tr v-for="cls in classes" :key="cls.id">
           <td>{{ studentName(cls.student_id) }}</td>
-          <td>{{ formatDate(cls.date) }}</td>
+          <td>{{ formatDate(cls.class_date) }}</td>
           <td>{{ cls.duration }}</td>
         </tr>
       </tbody>
@@ -65,13 +65,21 @@ const form = ref({
   duration: 0,
 });
 
+const formatDate = (date) => {
+  const local = new Date(date);
+  return local.toLocaleString('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  });
+};
+
 const fetchLessons = async () => {
   const clsRes = await fetch(`${backend}/classes`);
   const stdRes = await fetch(`${backend}/students`);
   classes.value = await clsRes.json();
   students.value = await stdRes.json();
 };
-
 
 const addLesson = async () => {
   await fetch(`${backend}/classes`, {
@@ -83,7 +91,6 @@ const addLesson = async () => {
   fetchLessons();
 };
 
-const formatDate = (date) => new Date(date).toLocaleString();
 const studentName = (id) => {
   const student = students.value.find(s => s.id === id);
   return student ? student.student : 'Unknown';
