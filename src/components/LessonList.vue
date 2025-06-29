@@ -8,7 +8,7 @@
   <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
       <h4 class="2">Add Lesson</h4>
-      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="showForm = !showForm">X</button>
+      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="showForm = !showForm; resetForm()">X</button>
     </div>
     <label for="student" class="mb-1">Student name</label>
     <select v-model="form.student_id" class="form-select" required>
@@ -19,8 +19,8 @@
     </select>
     <div class="d-flex mt-2 mb-2">
       <div class="col-6 me-1">
-        <label for="date">Date and Time</label>
-        <input type="datetime-local" v-model="form.date" class="form-control" required />
+        <label for="class_date">Date and Time</label>
+        <input type="date" v-model="form.class_date" class="form-control" required />
       </div>
       <div class="col-6 me-1">
         <label for="duration">Duration</label>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const classes = ref([]);
@@ -61,7 +61,7 @@ const students = ref([]);
 const showForm = ref(false);
 const form = ref({
   student_id: '',
-  date: '',
+  class_date: '',
   duration: 0,
 });
 
@@ -87,13 +87,20 @@ const addLesson = async () => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(form.value),
   });
-  form.value = { student_id: '', date: '', duration: 0 };
   fetchLessons();
 };
 
 const studentName = (id) => {
   const student = students.value.find(s => s.id === id);
   return student ? student.student : 'Unknown';
+};
+
+const resetForm = () => {
+  form.value = {
+    student_id: '',
+    class_date: '',
+    duration: 0,
+  };
 };
 
 onMounted(() => {
