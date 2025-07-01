@@ -65,7 +65,7 @@
           <td v-if="editingId === rep.id">
             <textarea v-model="editForm.pieces" class="form-control form-control-sm" rows="2"></textarea>
           </td>
-          <td v-else>{{ rep.pieces }}</td>
+          <td style="white-space: pre-line;" v-else>{{ rep.pieces }}</td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">{{ formatDate(rep.updated_at) }}</td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
             <div v-if="editingId !== rep.id" class="d-flex gap-1">
