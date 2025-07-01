@@ -16,8 +16,9 @@
   <div v-else class="d-flex flex-column align-items-center justify-content-center vh-100">
     <div class="d-flex flex-column gap-2">
       <h4 class="mt-0">This page is password protected</h4>
-      <input v-model="inputPassword" type="password" class="form-control" placeholder="Password" />
-      <button class="btn btn-warning" @click="checkPassword" @enter="checkPassword">
+      <input v-model="inputPassword" type="password" class="form-control" placeholder="Password"
+        @keyup.enter="checkPassword" />
+      <button class="btn btn-warning" @click="checkPassword">
         Submit
       </button>
     </div>
