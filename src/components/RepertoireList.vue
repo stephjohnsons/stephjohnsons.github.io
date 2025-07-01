@@ -16,27 +16,31 @@
       </button>
     </div>
 
-    <label class="mb-1">Student Name</label>
-    <select v-model="form.student_id" class="form-select" required>
-      <option disabled value="">Select Student</option>
-      <option v-for="s in students" :key="s.id" :value="s.id">
-        {{ s.student }}
-      </option>
-    </select>
-
     <div class="d-flex mt-2 mb-2">
       <div class="col-6 me-1">
-        <label>Semester (yyyy-mm)</label>
+        <label class="mb-1">Student Name</label>
+        <select v-model="form.student_id" class="form-select" required>
+          <option disabled value="">Select Student</option>
+          <option v-for="s in students" :key="s.id" :value="s.id">
+            {{ s.student }}
+          </option>
+        </select>
+      </div>
+      <div class="col-6 me-1">
+        <label class="mb-1">Semester (yyyy-mm)</label>
         <input type="text" v-model="form.semester" placeholder="YYYY-MM" pattern="\d{4}-\d{2}" class="form-control"
           required />
       </div>
-      <div class="col-6 me-1">
+    </div>
+
+    <div class="d-flex mt-2 mb-2">
+      <div class="col-12 me-1">
         <label>Repertoire</label>
-        <input type="text" v-model="form.pieces" placeholder="Repertoire pieces" class="form-control" required />
+        <textarea v-model="form.pieces" placeholder="Repertoire pieces" class="form-control" rows="3" required />
       </div>
     </div>
 
-    <button class="btn btn-sm btn-success w-100 mt-1" type="submit">
+    <button class="btn btn-sm btn-success w-100 mt-1 py-2" type="submit">
       Add Repertoire
     </button>
   </form>
@@ -59,7 +63,7 @@
           <td>{{ rep.semester }}</td>
           <!-- Conditional edit/display -->
           <td v-if="editingId === rep.id">
-            <input v-model="editForm.pieces" class="form-control form-control-sm" placeholder="Edit pieces" />
+            <textarea v-model="editForm.pieces" class="form-control form-control-sm" rows="2"></textarea>
           </td>
           <td v-else>{{ rep.pieces }}</td>
           <td class="d-none d-sm-table-cell">{{ formatDate(rep.updated_at) }}</td>
@@ -86,6 +90,12 @@
     </table>
   </div>
   <div v-else class="text-gray-500">No repertoire found.</div>
+  <div v-if="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -96,6 +106,7 @@ const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated'
 const repertoireList = ref([]);
 const students = ref([]);
 const showForm = ref(false);
+const loading = ref(false);
 
 const editingId = ref(null);
 const editForm = ref({
@@ -119,8 +130,9 @@ const fetchRepertoire = async () => {
 };
 
 const addRepertoire = async () => {
+  loading.value = true;
   try {
-    const res = await fetch('/api/rep', {
+    const res = await fetch(`${backend}/rep`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form.value)
@@ -137,6 +149,8 @@ const addRepertoire = async () => {
     await fetchRepertoire();
   } catch (err) {
     console.error('Add error:', err);
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -176,8 +190,9 @@ const cancelEdit = () => {
 };
 
 const saveEdit = async () => {
+  loading.value = true;
   try {
-    const res = await fetch('/api/rep', {
+    const res = await fetch(`${backend}/rep`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editForm.value)
@@ -193,14 +208,16 @@ const saveEdit = async () => {
     cancelEdit();
   } catch (err) {
     alert('Failed to update:', err);
+  } finally {
+    loading.value = false;
   }
 };
 
 const deleteRep = async (id) => {
   if (!confirm('Are you sure you want to delete this repertoire entry?')) return;
-
+  loading.value = true;
   try {
-    const res = await fetch(`/api/repertoire?id=${id}`, {
+    const res = await fetch(`${backend}/rep?id=${id}`, {
       method: 'DELETE'
     });
 
@@ -213,6 +230,8 @@ const deleteRep = async (id) => {
     await fetchRepertoire(); // refresh
   } catch (err) {
     alert('Failed to delete repertoire:', err);
+  } finally {
+    loading.value = false;
   }
 };
 
