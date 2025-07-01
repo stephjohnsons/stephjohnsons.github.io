@@ -1,7 +1,7 @@
 <template>
-  <div v-if="authenticated" class="d-flex">
+  <div v-if="adminAuthenticated || studentAuthenticated" class="d-flex">
     <div class="col-10">
-      <StudentClassesTracker />
+      <StudentClassesTracker v-if="adminAuthenticated" />
       <LessonList />
     </div>
     <div class="position-fixed top-25 end-0 me-4 pe-1 text-end">
@@ -29,7 +29,8 @@ import { ref } from 'vue';
 import StudentClassesTracker from '../components/StudentClassesTracker.vue';
 import LessonList from '../components/LessonList.vue';
 
-const authenticated = ref(localStorage.getItem('studio_authenticated') === 'true');
+const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
+const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');
 const inputPassword = ref('');
 
 const scrollToStudents = () => {
@@ -42,8 +43,11 @@ const scrollToClasses = () => {
 
 const checkPassword = () => {
   if (inputPassword.value === import.meta.env.VITE_STUDIO_PASSWORD) {
-    authenticated.value = true;
-    localStorage.setItem("studio_authenticated", "true");
+    adminAuthenticated.value = true;
+    localStorage.setItem("studio_admin_authenticated", "true");
+  } else if (inputPassword.value === import.meta.env.VITE_STUDENT_PASSWORD) {
+    studentAuthenticated.value = true;
+    localStorage.setItem("studio_student_authenticated", "true");
   } else {
     alert("Incorrect password. Please try again.");
   }

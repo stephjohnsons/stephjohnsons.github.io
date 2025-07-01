@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const classes = ref([]);
