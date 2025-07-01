@@ -42,7 +42,7 @@
       <SocialIcons />
     </div>
     <div class="d-flex flex-column align-items-center justify-content-center mt-2">
-      <a href="/classes" class="d-flex align-items-center text-black fs-5">
+      <a href="https://stephjohnsons.com/#/classes" class="d-flex align-items-center text-black fs-5">
         <i class="bi bi-person-workspace me-2 d-none d-sm-block"></i>
       </a>
     </div>
