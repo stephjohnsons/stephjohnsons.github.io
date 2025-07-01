@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-2 d-flex align-items-center" id="lessons">
-    <h2 class="text-xl font-bold">Lessons</h2>
+  <div class="mb-2 d-flex align-items-center" id="repertoire">
+    <h2 class="text-xl font-bold">Repertoire</h2>
     <button v-if="adminAuthenticated" class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
       @click="showForm = !showForm">+ Add
       Lesson</button>

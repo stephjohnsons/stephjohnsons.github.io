@@ -3,6 +3,7 @@
     <div class="col-10">
       <StudentClassesTracker v-if="adminAuthenticated" />
       <LessonList />
+      <RepertoireList />
     </div>
     <div class="position-fixed top-25 end-0 me-4 pe-1 text-end">
       <h5>Sitemap</h5>
@@ -10,6 +11,7 @@
         <button v-if="adminAuthenticated" class="btn btn-sm btn-warning my-1"
           @click="scrollToStudents()">Students</button>
         <button class="btn btn-sm btn-warning my-1" @click="scrollToClasses()">Classes</button>
+        <button class="btn btn-sm btn-warning my-1" @click="scrollToRepertoire()">Rep</button>
       </div>
     </div>
   </div>
@@ -30,6 +32,7 @@
 import { ref } from 'vue';
 import StudentClassesTracker from '../components/StudentClassesTracker.vue';
 import LessonList from '../components/LessonList.vue';
+import RepertoireList from '../components/RepertoireList.vue';
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');
@@ -41,6 +44,10 @@ const scrollToStudents = () => {
 
 const scrollToClasses = () => {
   document.getElementById('lessons').scrollIntoView({ behavior: 'smooth' });
+};
+
+const scrollToRepertoire = () => {
+  document.getElementById('repertoire').scrollIntoView({ behavior: 'smooth' });
 };
 
 const checkPassword = () => {
