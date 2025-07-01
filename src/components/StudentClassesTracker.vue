@@ -33,19 +33,19 @@
       <thead>
         <tr class="bg-gray-200">
           <th class="p-2">Student</th>
-          <th class="p-2">Institution</th>
+          <th class="p-2 d-none d-md-table-cell">Institution</th>
           <th class="p-2">Total Minutes</th>
           <th class="p-2">Minutes Attended</th>
-          <th class="p-2">Active</th>
+          <th class="p-2 d-none d-md-table-cell">Active</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="student in students" :key="student.id" class="border-b">
           <td class="p-2">{{ student.student }}</td>
-          <td class="p-2">{{ student.institution }}</td>
+          <td class="p-2 d-none d-md-table-cell">{{ student.institution }}</td>
           <td class="p-2">{{ student.total_minutes }}</td>
           <td class="p-2">{{ student.minutes_attended }}</td>
-          <td class="p-2">{{ student.active }}</td>
+          <td class="p-2 d-none d-md-table-cell">{{ student.active }}</td>
         </tr>
       </tbody>
     </table>
