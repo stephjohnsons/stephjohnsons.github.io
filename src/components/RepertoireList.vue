@@ -26,8 +26,9 @@
 
     <div class="d-flex mt-2 mb-2">
       <div class="col-6 me-1">
-        <label>Semester (YYYY-MM)</label>
-        <input type="month" v-model="form.semester" class="form-control" required />
+        <label>Semester (yyyy-mm)</label>
+        <input type="text" v-model="form.semester" placeholder="YYYY-MM" pattern="\d{4}-\d{2}" class="form-control"
+          required />
       </div>
       <div class="col-6 me-1">
         <label>Repertoire</label>
