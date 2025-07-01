@@ -53,8 +53,8 @@
           <th class="p-1">Student</th>
           <th class="p-1">Semester</th>
           <th class="p-1">Pieces</th>
-          <th class="p-1 d-none d-sm-table-cell">Updated At</th>
-          <th class="p-1 d-none d-sm-table-cell"></th>
+          <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated">Updated At</th>
+          <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated"></th>
         </tr>
       </thead>
       <tbody>
@@ -66,7 +66,7 @@
             <textarea v-model="editForm.pieces" class="form-control form-control-sm" rows="2"></textarea>
           </td>
           <td v-else>{{ rep.pieces }}</td>
-          <td class="d-none d-sm-table-cell">{{ formatDate(rep.updated_at) }}</td>
+          <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">{{ formatDate(rep.updated_at) }}</td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
             <div v-if="editingId !== rep.id" class="d-flex gap-1">
               <button class="btn btn-sm btn-warning" @click="startEdit(rep)">

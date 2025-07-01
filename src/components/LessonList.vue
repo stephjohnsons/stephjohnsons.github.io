@@ -1,10 +1,11 @@
 <template>
-  <div class="mb-2 d-flex align-items-center" id="lessons">
+  <div class="d-flex align-items-center" id="lessons">
     <h2 class="text-xl font-bold">Lessons</h2>
     <button v-if="adminAuthenticated" class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
       @click="showForm = !showForm">+ Add
       Lesson</button>
   </div>
+  <p class="mb-1">For <b>2025-05</b> semester</p>
   <!-- Add Student Form -->
   <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
