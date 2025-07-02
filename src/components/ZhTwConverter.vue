@@ -31,7 +31,8 @@
     <textarea v-if="!hideTw && lang === 'cn'" :value="traditional" rows="8" class="form-control"
       placeholder="Traditional Chinese" readonly></textarea>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto"
+    :class="{ 'dark-mode': ui.isDark }">
     <span class="mx-2 my-auto">开头</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">预订</button>
@@ -64,7 +65,8 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refund">退款</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebooking">重订</button>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto"
+    :class="{ 'dark-mode': ui.isDark }">
     <span class="mx-2 my-auto">教育</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
@@ -98,7 +100,8 @@
     <button class="btn btn-sm btn-warning" @click="symbol(); hideTw = true">符号</button>
     <button class="btn btn-sm btn-warning" @click="numbering(); hideTw = true">号码</button>
   </div>
-  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto">
+  <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto"
+    :class="{ 'dark-mode': ui.isDark }">
     <span class="mx-custom my-auto">R2</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.requestDocs">文件</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.countryHumid">告知</button>
@@ -310,11 +313,6 @@ textarea {
   color: #fff;
 }
 
-.dark-mode .btn-outline-secondary {
-  color: #c71d1d;
-  border-color: #c71d1d;
-}
-
 .dark-mode .btn-warning {
   color: #0E6EFD;
   border-color: #0E6EFD;
@@ -349,5 +347,9 @@ textarea {
 
 .bg-row {
   background-color: #e3e3e3;
+}
+
+.dark-mode.bg-row {
+  background-color: #292929;
 }
 </style>
