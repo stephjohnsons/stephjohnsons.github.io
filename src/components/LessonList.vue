@@ -30,7 +30,7 @@
       </div>
       <div class="col-2 ms-2 d-flex flex-column justify-content-center">
         <label for="absent" class="mb-2">Absent?</label>
-        <input type="checkbox" v-model.number="form.absent" class="form-check-input my-2 ms-2" required />
+        <input type="checkbox" v-model.number="form.absent" class="form-check-input my-2 ms-2" />
       </div>
     </div>
     <button class="btn btn-sm btn-success w-100 mt-1" type="submit">Add Lesson</button>
@@ -44,6 +44,7 @@
           <th class="p-2">Student</th>
           <th class="p-2">Date</th>
           <th class="p-2">Duration</th>
+          <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated"></th>
         </tr>
       </thead>
       <tbody>
@@ -51,6 +52,24 @@
           <td>{{ studentName(cls.student_id) }} {{ cls.absent ? '[Absent]' : '' }} </td>
           <td>{{ formatDate(cls.class_date) }}</td>
           <td>{{ cls.duration }}</td>
+          <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
+            <div v-if="editingId !== cls.id" class="d-flex gap-1">
+              <button class="btn btn-sm btn-warning" @click="startEdit(cls)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" @click="deleteLesson(cls.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+            <div v-else class="d-flex gap-1">
+              <button class="btn btn-sm btn-success" @click="saveEdit">
+                <i class="bi bi-check"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" @click="cancelEdit">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -78,15 +97,23 @@ const form = ref({
   class_date: '',
   duration: 0,
 });
+const editingId = ref(null);
+const editForm = ref({
+  id: '',
+  class_date: '',
+  duration: 0,
+  absent: false
+});
+
 
 const formatDate = (date) => {
-  const local = new Date(date);
-  return local.toLocaleString('en-GB', {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-  });
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
+
 
 const fetchLessons = async () => {
   const clsRes = await fetch(`${backend}/classes`);
@@ -120,6 +147,69 @@ const resetForm = () => {
     class_date: '',
     duration: 0,
   };
+};
+
+const startEdit = (cls) => {
+  editingId.value = cls.id;
+  editForm.value = {
+    id: cls.id,
+    class_date: cls.class_date,
+    duration: cls.duration,
+    absent: cls.absent || false
+  };
+};
+
+const cancelEdit = () => {
+  editingId.value = null;
+  editForm.value = {
+    id: '',
+    class_date: '',
+    duration: 0,
+    absent: false
+  };
+};
+
+const saveEdit = async () => {
+  loading.value = true;
+  try {
+    const res = await fetch(`${backend}/classes`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(editForm.value)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      alert('Error: ' + err.error);
+    } else {
+      await fetchLessons();
+      cancelEdit();
+    }
+  } catch (err) {
+    console.error('Failed to update lesson:', err);
+  }
+  loading.value = false;
+};
+
+const deleteLesson = async (id) => {
+  if (!confirm('Are you sure you want to delete this lesson?')) return;
+
+  loading.value = true;
+  try {
+    const res = await fetch(`${backend}/classes?id=${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      alert('Error: ' + err.error);
+    } else {
+      await fetchLessons();
+    }
+  } catch (err) {
+    console.error('Failed to delete lesson:', err);
+  }
+  loading.value = false;
 };
 
 onMounted(() => {

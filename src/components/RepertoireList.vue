@@ -51,7 +51,6 @@
       <thead>
         <tr class="bg-gray-200">
           <th class="p-1">Student</th>
-          <th class="p-1">Semester</th>
           <th class="p-1">Pieces</th>
           <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated">Updated At</th>
           <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated"></th>
@@ -60,12 +59,14 @@
       <tbody>
         <tr v-for="rep in repertoireList" :key="rep.id">
           <td>{{ studentName(rep.student_id) }}</td>
-          <td>{{ rep.semester }}</td>
           <!-- Conditional edit/display -->
           <td v-if="editingId === rep.id">
             <textarea v-model="editForm.pieces" class="form-control form-control-sm" rows="2"></textarea>
           </td>
-          <td style="white-space: pre-line;" v-else>{{ rep.pieces }}</td>
+          <td style="white-space: pre-line;" v-else>
+            <i v-if="rep.semester">{{ rep.semester }}</i> <br v-if="rep.semester" />
+            {{ rep.pieces }}
+          </td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">{{ formatDate(rep.updated_at) }}</td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
             <div v-if="editingId !== rep.id" class="d-flex gap-1">
