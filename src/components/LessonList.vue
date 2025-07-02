@@ -85,6 +85,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import studentName from '../utils/getStudentName';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
@@ -124,21 +125,26 @@ const fetchLessons = async () => {
 
 const addLesson = async () => {
   loading.value = true;
-  await fetch(`${backend}/classes`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(form.value),
-  });
+  try {
+    const res = await fetch(`${backend}/classes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form.value),
+    });
 
-  resetForm();
-  showForm.value = false;
-  fetchLessons();
-  loading.value = false;
-};
-
-const studentName = (id) => {
-  const student = students.value.find(s => s.id === id);
-  return student ? student.student : 'Unknown';
+    if (!res.ok) {
+      const err = await res.json();
+      alert('Error: ' + err.error);
+    } else {
+      resetForm();
+      await fetchLessons();
+      showForm.value = false;
+    }
+  } catch (err) {
+    console.error('Failed to update lesson:', err);
+  } finally {
+    loading.value = false;
+  }
 };
 
 const resetForm = () => {

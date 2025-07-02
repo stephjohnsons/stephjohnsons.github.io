@@ -101,6 +101,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import studentName from '../utils/getStudentName';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
@@ -170,11 +171,6 @@ const formatDate = (date) => {
     month: 'short',
     day: '2-digit'
   });
-};
-
-const studentName = (id) => {
-  const student = students.value.find((s) => s.id === id);
-  return student ? student.student : id;
 };
 
 const startEdit = (rep) => {
