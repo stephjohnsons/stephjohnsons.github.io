@@ -48,7 +48,7 @@
       </thead>
       <tbody>
         <tr v-for="cls in classes" :key="cls.id">
-          <td>{{ studentName(cls.student_id) }}</td>
+          <td>{{ studentName(cls.student_id) }} {{ cls.absent ? '[Absent]' : '' }} </td>
           <td>{{ formatDate(cls.class_date) }}</td>
           <td>{{ cls.duration }}</td>
         </tr>
