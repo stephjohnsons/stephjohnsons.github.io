@@ -6,7 +6,7 @@
       Lesson</button>
   </div>
   <p class="mb-1">For <b>2025-05</b> semester</p>
-  <!-- Add Student Form -->
+  <!-- Add Class Form -->
   <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
       <h4 class="2">Add Lesson</h4>
@@ -20,13 +20,17 @@
       </option>
     </select>
     <div class="d-flex mt-2 mb-2">
-      <div class="col-6 me-1">
+      <div class="col-5 me-1">
         <label for="class_date">Date and Time</label>
         <input type="date" v-model="form.class_date" class="form-control" required />
       </div>
-      <div class="col-6 me-1">
+      <div class="col-5 me-1">
         <label for="duration">Duration</label>
         <input type="number" v-model.number="form.duration" placeholder="Minutes" class="form-control" required />
+      </div>
+      <div class="col-2 ms-2 d-flex flex-column justify-content-center">
+        <label for="absent" class="mb-2">Absent?</label>
+        <input type="checkbox" v-model.number="form.absent" class="form-check-input my-2 ms-2" required />
       </div>
     </div>
     <button class="btn btn-sm btn-success w-100 mt-1" type="submit">Add Lesson</button>
@@ -52,6 +56,12 @@
     </table>
   </div>
   <div v-else class="text-gray-500">No lessons found.</div>
+  <div v-if="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;">
+    <div class="spinner-border text-warning" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -60,6 +70,7 @@ import { ref, onMounted } from 'vue';
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const classes = ref([]);
+const loading = ref(false);
 const students = ref([]);
 const showForm = ref(false);
 const form = ref({
@@ -85,12 +96,17 @@ const fetchLessons = async () => {
 };
 
 const addLesson = async () => {
+  loading.value = true;
   await fetch(`${backend}/classes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(form.value),
   });
+
+  resetForm();
+  showForm.value = false;
   fetchLessons();
+  loading.value = false;
 };
 
 const studentName = (id) => {
