@@ -49,7 +49,7 @@
       </thead>
       <tbody>
         <tr v-for="cls in classes" :key="cls.id">
-          <td>{{ studentName(cls.student_id) }} {{ cls.absent ? '[Absent]' : '' }} </td>
+          <td>{{ getStudentName(cls.student_id) }} {{ cls.absent ? '[Absent]' : '' }} </td>
           <td>{{ formatDate(cls.class_date) }}</td>
           <td>{{ cls.duration }}</td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
@@ -85,7 +85,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import studentName from '../utils/getStudentName';
+import { useStudentStore } from '@/stores/students';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
@@ -106,6 +106,8 @@ const editForm = ref({
   absent: false
 });
 
+const studentStore = useStudentStore();
+const getStudentName = studentStore.getStudentName;
 
 const formatDate = (date) => {
   const d = new Date(date);
@@ -118,9 +120,7 @@ const formatDate = (date) => {
 
 const fetchLessons = async () => {
   const clsRes = await fetch(`${backend}/classes`);
-  const stdRes = await fetch(`${backend}/students`);
   classes.value = await clsRes.json();
-  students.value = await stdRes.json();
 };
 
 const addLesson = async () => {

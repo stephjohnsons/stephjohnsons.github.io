@@ -58,7 +58,7 @@
       </thead>
       <tbody>
         <tr v-for="rep in repertoireList" :key="rep.id">
-          <td>{{ studentName(rep.student_id) }}</td>
+          <td>{{ getStudentName(rep.student_id) }}</td>
           <!-- Conditional edit/display -->
           <td v-if="editingId === rep.id">
             <textarea v-model="editForm.pieces" class="form-control form-control-sm" rows="2"></textarea>
@@ -101,7 +101,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import studentName from '../utils/getStudentName';
+import { useStudentStore } from '@/stores/students';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
@@ -109,6 +109,9 @@ const repertoireList = ref([]);
 const students = ref([]);
 const showForm = ref(false);
 const loading = ref(false);
+
+const studentStore = useStudentStore();
+const getStudentName = studentStore.getStudentName;
 
 const editingId = ref(null);
 const editForm = ref({
