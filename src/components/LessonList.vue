@@ -91,7 +91,6 @@ const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const classes = ref([]);
 const loading = ref(false);
-const students = ref([]);
 const showForm = ref(false);
 const form = ref({
   student_id: '',
@@ -108,6 +107,7 @@ const editForm = ref({
 
 const studentStore = useStudentStore();
 const getStudentName = studentStore.getStudentName;
+const students = studentStore.students;
 
 const formatDate = (date) => {
   const d = new Date(date);
