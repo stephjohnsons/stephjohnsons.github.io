@@ -117,7 +117,6 @@ const formatDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-
 const fetchLessons = async () => {
   const clsRes = await fetch(`${backend}/classes`);
   classes.value = await clsRes.json();
