@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div class="d-flex align-items-center" id="lessons">
     <h2 class="text-xl font-bold">Lessons</h2>
@@ -39,38 +40,54 @@
   <!-- List of Students -->
   <div v-if="classes.length > 0">
     <table class="table table-hover w-full rounded-4">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="p-2">Student</th>
-          <th class="p-2">Date</th>
-          <th class="p-2">Duration</th>
-          <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated"></th>
-        </tr>
-      </thead>
       <tbody>
-        <tr v-for="cls in classes" :key="cls.id">
-          <td>{{ getStudentName(cls.student_id) }} {{ cls.absent ? '[Absent]' : '' }} </td>
-          <td>{{ formatDate(cls.class_date) }}</td>
-          <td>{{ cls.duration }}</td>
-          <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
-            <div v-if="editingId !== cls.id" class="d-flex gap-1">
-              <button class="btn btn-sm btn-warning" @click="startEdit(cls)">
-                <i class="bi bi-pencil"></i>
+        <template v-for="(studentLessons, studentId) in groupedClasses" :key="studentId">
+          <!-- Student Header Row -->
+          <tr :class="isExpanded(studentId) ? 'table-dark' : ''">
+            <td colspan="4" class="fw-bold">
+              <button class="btn btn-sm btn-outline-secondary me-2" @click="toggleExpand(studentId)">
+                {{ isExpanded(studentId) ? '−' : '+' }}
               </button>
-              <button class="btn btn-sm btn-outline-danger" @click="deleteLesson(cls.id)">
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-            <div v-else class="d-flex gap-1">
-              <button class="btn btn-sm btn-success" @click="saveEdit">
-                <i class="bi bi-check"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger" @click="cancelEdit">
-                <i class="bi bi-x"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
+              {{ getStudentName(studentId) }}
+            </td>
+          </tr>
+
+          <!-- Lessons Rows -->
+          <tr v-if="isExpanded(studentId)" v-for="cls in studentLessons" :key="cls.id">
+            <td v-if="editingId !== cls.id">
+              <strong>Date:</strong> {{ formatDate(cls.class_date) }}
+            </td>
+            <td v-else>
+              <input type="date" name="class_date" v-model="editForm.class_date" class="form-control form-control-sm"
+                required>
+            </td>
+
+            <td v-if="editingId !== cls.id">({{ cls.duration }} minutes) {{ cls.absent ? '[Absent]' : '' }}</td>
+            <td v-else>
+              <input type="number" name="duration" v-model="editForm.duration" class="form-control form-control-sm"
+                required>
+            </td>
+
+            <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
+              <div v-if="editingId !== cls.id" class="d-flex gap-1">
+                <button class="btn btn-sm btn-warning" @click="startEdit(cls)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" @click="deleteLesson(cls.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+              <div v-else class="d-flex gap-1">
+                <button class="btn btn-sm btn-success" @click="saveEdit">
+                  <i class="bi bi-check"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" @click="cancelEdit">
+                  <i class="bi bi-x"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
   </div>
@@ -84,7 +101,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
@@ -92,6 +109,8 @@ const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated'
 const classes = ref([]);
 const loading = ref(false);
 const showForm = ref(false);
+const expandedStudents = ref(new Set());
+
 const form = ref({
   student_id: '',
   class_date: '',
@@ -228,6 +247,32 @@ const deleteLesson = async (id) => {
   }
   loading.value = false;
 };
+
+const groupedClasses = computed(() => {
+  const grouped = {};
+  for (const cls of classes.value) {
+    const sid = cls.student_id;
+    if (!grouped[sid]) grouped[sid] = [];
+    grouped[sid].push(cls);
+  }
+
+  // Optional: sort each student's lessons by date
+  for (const sid in grouped) {
+    grouped[sid].sort((a, b) => new Date(a.class_date) - new Date(b.class_date));
+  }
+
+  return grouped;
+});
+
+const toggleExpand = (sid) => {
+  if (expandedStudents.value.has(sid)) {
+    expandedStudents.value.delete(sid);
+  } else {
+    expandedStudents.value.add(sid);
+  }
+};
+
+const isExpanded = (sid) => expandedStudents.value.has(sid);
 
 onMounted(() => {
   fetchLessons();
