@@ -37,18 +37,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import StudentClassesTracker from '../components/StudentClassesTracker.vue';
 import LessonList from '../components/LessonList.vue';
 import RepertoireList from '../components/RepertoireList.vue';
-import { useStudentStore } from '@/stores/students';
-
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
-
-onMounted(async () => {
-  const studentStore = useStudentStore();
-  studentStore.students = await fetch(`${backend}/students`).then(res => res.json());
-})
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');

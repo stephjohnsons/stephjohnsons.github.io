@@ -37,7 +37,7 @@
   </form>
 
   <!-- List of Students -->
-  <div v-if="students.length">
+  <div v-if="classes.length > 0">
     <table class="table table-hover w-full rounded-4">
       <thead>
         <tr class="bg-gray-200">
@@ -118,8 +118,20 @@ const formatDate = (date) => {
 };
 
 const fetchLessons = async () => {
-  const clsRes = await fetch(`${backend}/classes`);
-  classes.value = await clsRes.json();
+  loading.value = true;
+  try {
+    const res = await fetch(`${backend}/classes`);
+    if (!res.ok) {
+      const err = await res.json();
+      console.error('Error fetching classes:', err.error);
+      return;
+    }
+    classes.value = await res.json();
+  } catch (err) {
+    console.error('Network error fetching lessons:', err);
+  } finally {
+    loading.value = false;
+  }
 };
 
 const addLesson = async () => {

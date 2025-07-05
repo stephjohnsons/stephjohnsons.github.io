@@ -106,12 +106,12 @@ import { useStudentStore } from '@/stores/students';
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const repertoireList = ref([]);
-const students = ref([]);
 const showForm = ref(false);
 const loading = ref(false);
 
 const studentStore = useStudentStore();
 const getStudentName = studentStore.getStudentName;
+const students = studentStore.students;
 
 const editingId = ref(null);
 const editForm = ref({
@@ -128,7 +128,6 @@ const form = ref({
 const fetchRepertoire = async () => {
   try {
     repertoireList.value = await fetch(`${backend}/rep`).then(res => res.json());
-    students.value = await fetch(`${backend}/students`).then(res => res.json());
   } catch (err) {
     console.error(err);
   }

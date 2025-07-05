@@ -55,24 +55,18 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useStudentStore } from '@/stores/students';
 
 const showForm = ref(false);
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 
-const students = ref([]);
+const students = ref([])
 const form = ref({
   student: '',
   institution: '',
   total_minutes: 0,
   minutes_attended: 0,
 });
-
-// Fetch existing students
-const fetchStudents = async () => {
-  const res = await fetch(`${backend}/students`);
-  const data = await res.json();
-  students.value = data;
-};
 
 // Add a student
 const addStudent = async () => {
@@ -83,16 +77,17 @@ const addStudent = async () => {
   });
   if (res.ok) {
     form.value = { student: '', institution: '', total_minutes: 0, minutes_attended: 0 };
-    fetchStudents();
   } else {
     const error = await res.json();
     Error(error.message);
   }
 };
 
-onMounted(() => {
-  fetchStudents();
-});
+onMounted(async () => {
+  const studentStore = useStudentStore();
+  studentStore.students = await fetch(`${backend}/students`).then(res => res.json());
+  students.value = studentStore.students;
+})
 </script>
 
 <style scoped>
