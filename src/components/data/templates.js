@@ -27,7 +27,7 @@ export const allTemplates = {
   educate: [
     'aircoverHost',
     'rTwo',
-    'rebooking',
+    'rebookingFillin',
     'aircoverGuest',
     'robotCBG',
     'sorry',
@@ -55,8 +55,9 @@ export const allTemplates = {
     'duplicate',
     'repeat',
     'refundDisabled',
-    'coupon',
-    'refund',
+    'couponFillin',
+    'refundFillin',
+    'payoutFillin',
     'photography',
     'bug'
   ],

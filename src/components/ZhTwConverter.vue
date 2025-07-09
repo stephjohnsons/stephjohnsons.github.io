@@ -61,9 +61,10 @@
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.duplicate">重复</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.bug">漏洞</button>
     <span class="mx-2 my-auto">填充 </span>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.coupon">礼金</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refund">退款</button>
-    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebooking">重订</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.couponFillin">礼金</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundFillin">退款</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payoutFillin">退款</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebookingFillin">重订</button>
   </div>
   <div v-if="lang === 'cn'" class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto"
     :class="{ 'dark-mode': ui.isDark }">
