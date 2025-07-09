@@ -29,6 +29,7 @@ export const allTemplates = {
     'rTwo',
     'rebookingFillin',
     'aircoverGuest',
+    'rTwoRebooking',
     'robotCBG',
     'sorry',
     'delay',
