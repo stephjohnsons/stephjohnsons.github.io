@@ -36,6 +36,7 @@
           <th class="p-2 d-none d-md-table-cell">Institution</th>
           <th class="p-2">Total Minutes</th>
           <th class="p-2">Minutes Attended</th>
+          <th class="p-2">Minutes Left</th>
           <th class="p-2 d-none d-md-table-cell">Active</th>
         </tr>
       </thead>
@@ -45,6 +46,7 @@
           <td class="p-2 d-none d-md-table-cell">{{ student.institution }}</td>
           <td class="p-2">{{ student.total_minutes }}</td>
           <td class="p-2">{{ student.minutes_attended }}</td>
+          <td class="p-2">{{ student.minutes_left }}</td>
           <td class="p-2 d-none d-md-table-cell">{{ student.active }}</td>
         </tr>
       </tbody>
@@ -86,8 +88,8 @@ const addStudent = async () => {
   });
   if (res.ok) {
     form.value = { student: '', institution: '', total_minutes: 0, minutes_attended: 0 };
-    if (students.value === null) {
-      fetchStudents();
+    if (!students.value.length) {
+      await fetchStudents();
     }
   } else {
     const error = await res.json();
@@ -96,7 +98,7 @@ const addStudent = async () => {
 };
 
 onMounted(() => {
-  if (students.value === null) {
+  if (!students.value.length) {
     fetchStudents();
   }
 });
