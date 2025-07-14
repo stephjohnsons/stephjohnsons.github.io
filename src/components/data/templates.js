@@ -71,6 +71,7 @@ export const allTemplates = {
     'loss',
     'checkEmail',
     'register',
+    'hostUnresponsive',
     'hostUnhappyReview',
     'consoleHost',
     'consoleGuest',

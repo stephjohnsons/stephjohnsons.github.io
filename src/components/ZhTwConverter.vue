@@ -106,6 +106,7 @@
     <span class="mx-custom my-auto">R2</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.requestDocs">文件</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.countryHumid">告知</button>
+    <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnresponsive">没回</button>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rTwoRebooking">新房</button>
     <span class="mx-2 my-auto">房东</span>
     <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hSolution">符合</button>
