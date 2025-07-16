@@ -116,7 +116,7 @@
           <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircoverHost">保H</button>
           <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircoverGuest">保G</button>
         </div>
-        <div class="d-flex gap-2 mb-2 flex-wrap  bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
+        <div class="d-flex gap-2 flex-wrap  bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
           <span class="mx-2 my-auto">备注</span>
           <button class="btn btn-sm btn-warning" @click="templates.reso.loss">损失</button>
           <button class="btn btn-sm btn-warning" @click="double(); hideTw = true">双票</button>
@@ -134,7 +134,7 @@
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hSolution">符合</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.reviews">评价</button>
       </div>
-      <div class="d-flex flex-wrap gap-2 mb-3">
+      <div class="d-flex flex-wrap gap-2 mb-2">
         <span class="mx-2 my-auto">房客</span>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.gConsole">安抚</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.rba">重新</button>
