@@ -28,24 +28,31 @@
   </div>
   <div class="d-flex gap-2 mb-2">
     <div class="position-relative w-100">
-      <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"
-        @focus="copyToCnClipboard"></textarea>
+      <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
 
-      <span v-if="cnCopied"
-        class="position-absolute top-0 end-0 bg-success text-white px-2 py-1 rounded small me-2 mt-1"
+      <button v-if="!cnCopied"
+        class="position-absolute top-0 end-0 btn btn-outline-success px-2 py-1 rounded small me-2 mt-1"
+        @click="copyToCnClipboard" style="z-index: 1000;">
+        Copy
+      </button>
+      <button v-if="cnCopied" class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
         style="z-index: 1000;">
         Copied!
-      </span>
+      </button>
     </div>
     <div class="position-relative w-100">
       <textarea v-if="!hideTw && lang === 'cn'" :value="traditional" rows="5" class="form-control"
-        placeholder="Traditional Chinese" @focus="copyToTwClipboard" readonly></textarea>
+        placeholder="Traditional Chinese" readonly></textarea>
 
-      <span v-if="twCopied"
-        class="position-absolute top-0 end-0 bg-success text-white px-2 py-1 rounded small me-2 mt-1"
+      <button v-if="!twCopied"
+        class="position-absolute top-0 end-0 btn btn-outline-success px-2 py-1 rounded small me-2 mt-1"
+        @click="copyToTwClipboard" style="z-index: 1000;">
+        Copy
+      </button>
+      <button v-if="twCopied" class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
         style="z-index: 1000;">
         Copied!
-      </span>
+      </button>
     </div>
   </div>
   <div v-if="lang === 'cn'" class="d-flex flex-row">
