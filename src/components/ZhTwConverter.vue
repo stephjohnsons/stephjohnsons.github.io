@@ -30,8 +30,7 @@
     <div class="position-relative w-100">
       <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
 
-      <button v-if="!cnCopied"
-        class="position-absolute top-0 end-0 btn btn-outline-success px-2 py-1 rounded small me-2 mt-1"
+      <button v-if="!cnCopied" class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
         @click="copyToCnClipboard" style="z-index: 1000;">
         Copy
       </button>
@@ -44,8 +43,7 @@
       <textarea :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese"
         readonly></textarea>
 
-      <button v-if="!twCopied"
-        class="position-absolute top-0 end-0 btn btn-outline-success px-2 py-1 rounded small me-2 mt-1"
+      <button v-if="!twCopied" class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
         @click="copyToTwClipboard" style="z-index: 1000;">
         Copy
       </button>
