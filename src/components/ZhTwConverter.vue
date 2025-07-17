@@ -40,9 +40,9 @@
         Copied!
       </button>
     </div>
-    <div class="position-relative w-100">
-      <textarea v-if="!hideTw && lang === 'cn'" :value="traditional" rows="5" class="form-control"
-        placeholder="Traditional Chinese" readonly></textarea>
+    <div v-if="!hideTw && lang === 'cn'" class="position-relative w-100">
+      <textarea :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese"
+        readonly></textarea>
 
       <button v-if="!twCopied"
         class="position-absolute top-0 end-0 btn btn-outline-success px-2 py-1 rounded small me-2 mt-1"
@@ -58,20 +58,24 @@
   <div v-if="lang === 'cn'" class="d-flex flex-row">
     <div class="d-flex flex-column w-50">
       <div class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto" :class="{ 'dark-mode': ui.isDark }">
-        <span class="mx-2 my-auto">开头</span>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">预订</button>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
-        <span class="mx-2 my-auto">检查</span>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
-        <span class="mx-2 my-auto">通话</span>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.pickup">接听</button>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.noPickup">未接</button>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.ghost">被鬼</button>
-        <span class="mx-2 my-auto">帮助</span>
-        <button class="btn btn-sm btn-warning" @click="templates.educate.help(); hideTw = true">帮助</button>
-        <button class="btn btn-sm btn-warning" @click="templates.educate.lead(); hideTw = true">主管</button>
+        <div class="d-flex gap-2 flex-wrap">
+          <span class="mx-2 my-auto">开头</span>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">预订</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
+          <span class="mx-2 my-auto">检查</span>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <span class="mx-2 my-auto">通话</span>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.pickup">接听</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.noPickup">未接</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.ghost">被鬼</button>
+          <span class="mx-2 my-auto">帮助</span>
+          <button class="btn btn-sm btn-warning" @click="templates.educate.help(); hideTw = true">帮助</button>
+          <button class="btn btn-sm btn-warning" @click="templates.educate.lead(); hideTw = true">主管</button>
+        </div>
       </div>
       <div class="d-flex gap-2 mb-2 flex-wrap">
         <span class="mx-2 my-auto">消息</span>
