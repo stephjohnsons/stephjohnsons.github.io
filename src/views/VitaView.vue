@@ -39,13 +39,13 @@ import Education from './VitaPages/Education.vue';
 import Development from './VitaPages/Development.vue';
 // import Design from './VitaPages/Design.vue';
 import { devBio } from "@/components/data/biographies.js";
-const currentPage = ref('Skills');
+const currentPage = ref('Portfolio');
 
 const pages = ref([
   'Skills',
   'Education',
   'Certificates',
-  // 'Portfolio',
+  'Portfolio',
   'Languages',
   // 'Design',
 ])

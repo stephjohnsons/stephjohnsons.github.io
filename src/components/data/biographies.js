@@ -211,7 +211,7 @@ export const languages = [
   {
     name: 'Mandarin Chinese (简体/繁体)',
     level: '12 years of school; UEC (SM3) B4',
-    spoken: 'Conversational',
+    spoken: 'Fluent',
     written: 'Proficient'
   },
   {
@@ -243,29 +243,33 @@ export const languages = [
 export const works = [
   {
     name: 'FlyEasy',
-    desc: "Self-initiated project. Concept website for a fictitious travel agency based in Malaysia, with the purpose of practising the use of Bootstrap's components.",
+    desc: "First self-initiated project as I was learning to code. Concept website for a fictitious travel agency, with the purpose of practising the use of Bootstrap's components.",
     link: 'https://stephjohnsons.com/flyeasy/'
   },
   {
-    name: 'Quote for Instagram Posts',
-    desc: 'Self-initiated project. A website to generate inspirational quotes for Instagram posts, with the purpose of practising the use of Tailwind CSS and integrating API into a site.',
-    link: 'https://stephjohnsons.com/quotes/'
+    name: 'Stephen Johnson-Tseu',
+    desc: 'Responsive personal website originally built as a portfolio, now expanded to support multiple work-related tools. Developed with Vue.js (with Pinia for state management), Bootstrap, Node.js backend. Hosted on GitHub Pages, and primary database on Supabase. Integrated Bandsintown API for displaying upcoming concert dates. Private tools (password available upon request) include: a class tracker for monitoring student lessons, and a chat template generator to assist with customer communications.',
+    link: 'https://stephjohnsons.com/#/'
   },
   {
-    name: 'Ionic',
-    desc: "Self-initiated project.Inspired by @ui.shreyash's UI design (posted on Instagram), and wanted to recreate the same design based on his UI. Buttons, table layout were slightly changed.",
-    link: '-'
+    name: 'Red Carpet Artist Management',
+    desc: "My other company's responsive website, built to showcase artists and services. Built with Vue.js, hosted on Vercel, with media assets hosted on AWS EC2 for scalable storage. Focused on performance optimization and visual presentation for artist portfolios.",
+    link: 'https://rcam.my/'
   },
   {
-    name: 'Weather App',
-    desc: "Self-initiated project. An app that generates weather information of a local city based on user's search.",
-    link: '-'
-    // link: 'https://stephjohnsons.com/weather-app/'
+    name: 'SimpleLoyalty (Client-facing)',
+    desc: "Previous company's website, previously known as Mulah Technologies. An SaaS product used for CRM in food and beverage industry. Daily tasks included translating Figma prototypes into scalable front- and back-end components and pages, integration with platform APIs such as POS systems and Meta, database design for revamped dashboards with appropriate documentations and automatic tests in Rails, and refactoring legacy code. Important technologies used: Vue.js, Ruby on Rails, Bootstrap, PostgreSQL, GraphQL. Unable to share more information due to confidentiality.",
+    link: 'https://dashboard.simpleloyalty.com/'
   },
   {
-    name: 'Karl Thöne',
-    desc: "Website created for Datin Veronika Thöne's father, Karl (1924-1993), who was a German composer of contemporary music. The website is created in conjunction of his 100th birthday in 2024 and the '100th Anniversary Festival', which will feature world premiere of his Concertino and Malaysian premiere of some of his chamber works.",
-    link: 'https://www.karlthoene.com'
+    name: 'SimpleLoyalty (Consumer-facing)',
+    desc: 'Same as above, on top of optimising pages and components for mobile-first design with Tailwind instead of Bootstrap.',
+    link: 'https://app.simpleloyalty.com/'
+  },
+  {
+    name: 'GitHub',
+    desc: 'Other embarassing projects...',
+    link: 'https://github.com/stephjohnsons'
   }
 ]
 
