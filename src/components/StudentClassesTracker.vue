@@ -30,7 +30,7 @@
       <input v-model.number="form.minutes_attended" type="number" min="0" class="form-input-sm w-full col-3" required />
     </div>
 
-    <button class="btn btn-sm btn-secondary w-100" type="submit">Add Student</button>
+    <button class="btn btn-sm btn-secondary w-100" type="submit" :disabled="!adminAuthenticated">Add Student</button>
   </form>
 
   <!-- List of Students -->
@@ -47,9 +47,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-show="!activeStudents || student.active" v-for="student in students" :key="student.id" class="border-b">
-          <td class="p-2">{{ student.student }}</td>
-          <td class="p-2 d-none d-md-table-cell">{{ student.institution }}</td>
+        <tr v-show="!activeStudents || student.active" v-for="(student, index) in students" :key="student.id"
+          class="border-b">
+          <td v-if="!demoAuthenticated" class="p-2">{{ student.student }}</td>
+          <td v-if="demoAuthenticated" class="p-2">Student {{ index + 1 }}</td>
+          <td v-if="demoAuthenticated" class="p-2 d-none d-md-table-cell">Lorem ipsum</td>
+          <td v-if="!demoAuthenticated" class="p-2 d-none d-md-table-cell">{{ student.institution }}</td>
           <td class="p-2">{{ student.total_minutes }}</td>
           <td class="p-2">
             <template v-if="editingId === student.id">
@@ -98,6 +101,7 @@ const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const loading = ref(false);
 const editingId = ref(null);
 const editMinutes = ref(0);
+const demoAuthenticated = ref(localStorage.getItem('studio_demo_authenticated') === 'true');
 
 const activeStudents = ref(true);
 

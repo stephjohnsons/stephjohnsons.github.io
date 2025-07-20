@@ -2,8 +2,8 @@
 <template>
   <div class="d-flex align-items-center" id="lessons">
     <h2 class="text-xl font-bold">Lessons</h2>
-    <button v-if="adminAuthenticated" class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
-      @click="showForm = !showForm">+ Add
+    <button v-if="adminAuthenticated || demoAuthenticated"
+      class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50" @click="showForm = !showForm">+ Add
       Lesson</button>
   </div>
   <p class="mb-1">For <b>2025-05</b> semester</p>
@@ -34,21 +34,22 @@
         <input type="checkbox" v-model.number="form.absent" class="form-check-input my-2 ms-2" />
       </div>
     </div>
-    <button class="btn btn-sm btn-success w-100 mt-1" type="submit">Add Lesson</button>
+    <button class="btn btn-sm btn-success w-100 mt-1" type="submit" :disabled="!adminAuthenticated">Add Lesson</button>
   </form>
 
   <!-- List of Students -->
   <div v-if="classes.length > 0">
     <table class="table table-hover w-full rounded-4">
       <tbody>
-        <template v-for="(studentLessons, studentId) in groupedClasses" :key="studentId">
+        <template v-for="(studentLessons, studentId, index) in groupedClasses" :key="studentId">
           <!-- Student Header Row -->
           <tr :class="isExpanded(studentId) ? 'table-dark' : ''">
             <td colspan="4" class="fw-bold">
               <button class="btn btn-sm btn-outline-secondary me-2" @click="toggleExpand(studentId)">
                 {{ isExpanded(studentId) ? '−' : '+' }}
               </button>
-              {{ getStudentName(studentId) }}
+              <span v-if="!demoAuthenticated">{{ getStudentName(studentId) }}</span>
+              <span v-if="demoAuthenticated">Student {{ index + 1 }}</span>
             </td>
           </tr>
 
@@ -106,6 +107,7 @@ import { useStudentStore } from '@/stores/students';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
+const demoAuthenticated = ref(localStorage.getItem('studio_demo_authenticated') === 'true');
 const classes = ref([]);
 const loading = ref(false);
 const showForm = ref(false);

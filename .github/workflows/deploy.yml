@@ -40,6 +40,7 @@ jobs:
           VITE_TOOLS_PASSWORD: ${{ secrets.VITE_TOOLS_PASSWORD }}
           VITE_STUDIO_PASSWORD: ${{ secrets.VITE_STUDIO_PASSWORD }}
           VITE_STUDENT_PASSWORD: ${{ secrets.VITE_STUDENT_PASSWORD }}
+          VITE_DEMO_PASSWORD: ${{ secrets.VITE_DEMO_PASSWORD }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

@@ -1,8 +1,8 @@
 <template>
   <div class="mb-2 d-flex align-items-center" id="repertoire">
     <h2 class="text-xl font-bold">Repertoire</h2>
-    <button v-if="adminAuthenticated" class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
-      @click="showForm = !showForm">
+    <button v-if="adminAuthenticated || demoAuthenticated"
+      class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50" @click="showForm = !showForm">
       + Add Repertoire
     </button>
   </div>
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <button class="btn btn-sm btn-success w-100 mt-1 py-2" type="submit">
+    <button class="btn btn-sm btn-success w-100 mt-1 py-2" type="submit" :disabled="demoAuthenticated">
       Add Repertoire
     </button>
   </form>
@@ -52,22 +52,25 @@
         <tr class="bg-gray-200">
           <th class="p-1">Student</th>
           <th class="p-1">Pieces</th>
-          <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated">Updated At</th>
+          <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated || demoAuthenticated">Updated At</th>
           <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated"></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="rep in repertoireList" :key="rep.id">
-          <td>{{ getStudentName(rep.student_id) }}</td>
+        <tr v-for="(rep, index) in repertoireList" :key="rep.id">
+          <td v-if="!demoAuthenticated">{{ getStudentName(rep.student_id) }}</td>
+          <td v-if="demoAuthenticated">Student {{ index + 1 }}</td>
           <!-- Conditional edit/display -->
           <td v-if="editingId === rep.id">
             <textarea v-model="editForm.pieces" class="form-control form-control-sm" rows="2"></textarea>
           </td>
           <td style="white-space: pre-line;" v-else>
-            <i v-if="rep.semester">{{ rep.semester }}</i> <br v-if="rep.semester" />
+            <i v-if="rep.semester && !demoAuthenticated">{{ rep.semester }}</i> <br
+              v-if="rep.semester && !demoAuthenticated" />
             {{ rep.pieces }}
           </td>
-          <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">{{ formatDate(rep.updated_at) }}</td>
+          <td class="d-none d-sm-table-cell" v-if="adminAuthenticated || demoAuthenticated">{{
+      formatDate(rep.updated_at) }}</td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
             <div v-if="editingId !== rep.id" class="d-flex gap-1">
               <button class="btn btn-sm btn-warning" @click="startEdit(rep)">
@@ -105,6 +108,7 @@ import { useStudentStore } from '@/stores/students';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
+const demoAuthenticated = ref(localStorage.getItem('studio_demo_authenticated') === 'true');
 const repertoireList = ref([]);
 const showForm = ref(false);
 const loading = ref(false);
