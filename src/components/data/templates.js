@@ -26,6 +26,7 @@ export const allTemplates = {
   ],
   educate: [
     'aircoverHost',
+    'cotraveller',
     'rTwo',
     'rebookingFillin',
     'aircoverGuest',
@@ -68,6 +69,7 @@ export const allTemplates = {
     'waitingResponse',
     'checkpointGuest',
     'checkpointHost',
+    'hostUnhappy',
     'loss',
     'checkEmail',
     'register',

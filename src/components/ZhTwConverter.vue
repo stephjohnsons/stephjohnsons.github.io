@@ -87,15 +87,16 @@
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.duplicate">重复</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.bug">漏洞</button>
+        <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.feedback">反馈</button>
+        <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
+        <button class="btn btn-sm btn-warning" @click="templates.educate.cotraveller">旅伴</button>
       </div>
       <div class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
         <span class=" mx-2 my-auto">教育</span>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.feedback">反馈</button>
         <button class="btn btn-sm btn-warning" @click="templates.educate.international">国际</button>
-        <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.defender">屏蔽</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.instantBook">闪订</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnhappyReview">评价</button>
@@ -140,6 +141,7 @@
         <button class="btn btn-sm btn-outline-primary" @click="templates.reso.hostUnresponsive">没回</button>
         <span class="mx-2 my-auto">房东</span>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hSolution">符合</button>
+        <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnhappy">不爽</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.reviews">评价</button>
       </div>
       <div class="d-flex flex-wrap gap-2 mb-2">
@@ -251,6 +253,10 @@ watch(simplified, (newVal) => {
   }
 
   simplified.value = newVal.replace(/"([^"]*)"/g, '「$1」');
+  simplified.value = simplified.value.replace(/-yes/g, '✓');
+  simplified.value = simplified.value.replace(/-no/g, '⛌');
+  simplified.value = simplified.value.replace(/-hc/g, '▼');
+  simplified.value = simplified.value.replace(/-card/g, '••••');
 });
 
 const fetchSubtemplates = async (type, template) => {
@@ -313,7 +319,7 @@ Object.entries(allTemplates).forEach(([type, names]) => {
 
 const symbol = () => {
   simplified.value =
-    '「__xx__」>「__xx__」>「__xx__」>「__xx__」\n『__xx__』 ＜__action__＞\n▼幫助中心 ▲ ‣ ◆ Between ・ VISA ••••1234 \n※ Translation\n✓ ⛌'
+    '「__xx__」>「__xx__」>「__xx__」 『__xx__』\n▼幫助中心 ▲ ‣ ◆ Between ・ \n»»━━━━[xx]━━━━««'
 }
 
 const numbering = () => {
@@ -321,7 +327,7 @@ const numbering = () => {
 }
 
 const double = () => {
-  simplified.value = 'UI\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:\n-\n⚠️ __Promises/Refunds_for_noting__'
+  simplified.value = '»»━━━━[UI]━━━━««\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:\n-\n⚠️ __Promises/Refunds_for_noting__'
 }
 
 const copyToCnClipboard = async () => {
