@@ -42,15 +42,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import StudentClassesTracker from '../components/StudentClassesTracker.vue';
 import LessonList from '../components/LessonList.vue';
 import RepertoireList from '../components/RepertoireList.vue';
+import { useStudentStore } from '@/stores/students';
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');
 const demoAuthenticated = ref(localStorage.getItem('studio_demo_authenticated') === 'true');
 const inputPassword = ref('');
+
+const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
+const endpoint = demoAuthenticated.value ? `${backend}/students?visitor=true` : `${backend}/students`;
+const students = ref([]);
 
 const scrollToStudents = () => {
   document.getElementById('students').scrollIntoView({ behavior: 'smooth' });
@@ -78,4 +83,10 @@ const checkPassword = () => {
     alert("Incorrect password. Please try again.");
   }
 };
+
+onMounted(async () => {
+  const studentStore = useStudentStore();
+  studentStore.students = await fetch(endpoint).then(res => res.json());
+  students.value = studentStore.students;
+})
 </script>

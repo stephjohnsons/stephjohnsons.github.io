@@ -28,15 +28,12 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import MenuView from '@/views/MenuView.vue'
 import { useUIStore } from '@/stores/ui';
-import { useStudentStore } from '@/stores/students';
 
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const showMenu = ref(false);
-const students = ref([]);
 const route = useRoute();
 const ui = useUIStore();
 
@@ -51,12 +48,6 @@ window.addEventListener("focus", () => {
 const removeMenu = () => {
   showMenu.value = false;
 }
-
-onMounted(async () => {
-  const studentStore = useStudentStore();
-  studentStore.students = await fetch(`${backend}/students`).then(res => res.json());
-  students.value = studentStore.students;
-})
 
 watch(() => route.path, () => {
   removeMenu();
