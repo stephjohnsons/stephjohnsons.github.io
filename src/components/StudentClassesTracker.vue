@@ -108,8 +108,9 @@ const form = ref({
   minutes_attended: 0,
 });
 
+const endpoint = demoAuthenticated.value ? `${backend}/students?visitor=true` : `${backend}/students`;
 const studentStore = useStudentStore();
-const students = studentStore.students;
+const students = ref([]);
 
 // Fetch existing students
 const fetchStudents = async () => {
@@ -174,7 +175,10 @@ const saveMinutes = async (id) => {
   }
 };
 
-onMounted(fetchStudents); 
+onMounted(
+  studentStore.students = await fetch(endpoint).then(res => res.json()),
+  students.value = studentStore.students
+); 
 </script>
 
 <style scoped>

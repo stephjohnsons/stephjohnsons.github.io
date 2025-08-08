@@ -54,8 +54,6 @@ const demoAuthenticated = ref(localStorage.getItem('studio_demo_authenticated') 
 const inputPassword = ref('');
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
-const endpoint = demoAuthenticated.value ? `${backend}/students?visitor=true` : `${backend}/students`;
-const students = ref([]);
 
 const scrollToStudents = () => {
   document.getElementById('students').scrollIntoView({ behavior: 'smooth' });
@@ -83,10 +81,4 @@ const checkPassword = () => {
     alert("Incorrect password. Please try again.");
   }
 };
-
-onMounted(async () => {
-  const studentStore = useStudentStore();
-  studentStore.students = await fetch(endpoint).then(res => res.json());
-  students.value = studentStore.students;
-})
 </script>
