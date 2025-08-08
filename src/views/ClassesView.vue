@@ -42,11 +42,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import StudentClassesTracker from '../components/StudentClassesTracker.vue';
 import LessonList from '../components/LessonList.vue';
 import RepertoireList from '../components/RepertoireList.vue';
-import { useStudentStore } from '@/stores/students';
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');

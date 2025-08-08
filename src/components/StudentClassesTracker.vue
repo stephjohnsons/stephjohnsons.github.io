@@ -99,6 +99,8 @@ const loading = ref(false);
 const editingId = ref(null);
 const editMinutes = ref(0);
 
+const demoAuthenticated = ref(localStorage.getItem('studio_demo_authenticated') === 'true');
+
 const activeStudents = ref(true);
 
 const form = ref({
@@ -175,10 +177,10 @@ const saveMinutes = async (id) => {
   }
 };
 
-onMounted(
+onMounted(async () => {
   studentStore.students = await fetch(endpoint).then(res => res.json()),
-  students.value = studentStore.students
-); 
+    students.value = studentStore.students
+}); 
 </script>
 
 <style scoped>
