@@ -319,7 +319,7 @@ Object.entries(allTemplates).forEach(([type, names]) => {
 
 const symbol = () => {
   simplified.value =
-    '「__xx__」>「__xx__」>「__xx__」 『__xx__』\n▼幫助中心 ▲ ‣ ◆ Between ・ \n»»━━━━[xx]━━━━««'
+    '『__xx__』\n▼幫助中心 ▲ ‣ ◆ Between ・ \n»»━━━◆ xx ◆━━━««'
 }
 
 const numbering = () => {
@@ -327,7 +327,7 @@ const numbering = () => {
 }
 
 const double = () => {
-  simplified.value = '»»━━━━[UI]━━━━««\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:\n-\n⚠️ __Promises/Refunds_for_noting__'
+  simplified.value = '»»━━━◆ UI ◆━━━««\nInitiator (G/H?): _who_\nShort Summary of Outcome/Next Steps:\n-\n⚠️ __Promises/Refunds_for_noting__'
 }
 
 const copyToCnClipboard = async () => {
