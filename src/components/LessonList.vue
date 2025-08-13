@@ -2,10 +2,16 @@
 <template>
   <div class="d-flex align-items-center" id="lessons">
     <h2 class="text-xl font-bold">Lessons</h2>
-    <button v-if="adminAuthenticated" class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
-      @click="showForm = !showForm">+ Add
-      Lesson</button>
+    <button v-if="adminAuthenticated" class="d-none d-sm-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
+      @click="showForm = !showForm">+ Add Lesson</button>
+    <button v-if="adminAuthenticated" class="d-none d-sm-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
+      @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
   </div>
+  <button v-if="adminAuthenticated" class="d d-block d-sm-none btn btn-sm btn-warning w-100"
+    @click="showForm = !showForm">+ Add
+    Lesson</button>
+  <button v-if="adminAuthenticated" class="d d-block d-sm-none btn btn-sm btn-warning w-100 my-2"
+    @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
   <p class="mb-1">For <b>2025-05</b> semester</p>
   <!-- Add Class Form -->
   <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
@@ -33,6 +39,34 @@
         <label for="absent" class="mb-2">Absent?</label>
         <input type="checkbox" v-model.number="form.absent" class="form-check-input my-2 ms-2" />
       </div>
+    </div>
+    <button class="btn btn-sm btn-success w-100 mt-1" type="submit" :disabled="!adminAuthenticated">Add Lesson</button>
+  </form>
+  <form v-if="showQuickAddForm" @submit.prevent="quickAdd" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
+    <div class="d-flex">
+      <h4 class="2">Quick Add</h4>
+      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="showForm = !showForm; resetForm()">X</button>
+    </div>
+    <div class="d-flex flex-row mb-2 mx-2">
+      <div class="d-flex col-6">
+        <label for="student" class="my-auto col-4">Student name</label>
+        <select v-model="form.student_ids" multiple required class="form-select">
+          <option disabled value="">Select Student</option>
+          <option v-for="s in students" :key="s.id" :value="s.id">
+            {{ s.student }}
+          </option>
+        </select>
+      </div>
+      <div v-if="selectedStudentNames.length" class="mx-3">
+        <strong>Selected: </strong><br>
+        <ul v-for="(name, index) in selectedStudentNames" :key="index" class="mt-2">
+          <li class="mb-1 font-monospace lh-0">{{ name }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="d-flex flex-col col-6 m-2">
+      <label class="col-4 me-2" for="class_date">Date</label>
+      <input type="date" v-model="form.class_date" class="form-control me-2" required />
     </div>
     <button class="btn btn-sm btn-success w-100 mt-1" type="submit" :disabled="!adminAuthenticated">Add Lesson</button>
   </form>
@@ -101,7 +135,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
@@ -109,12 +143,13 @@ const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated'
 const classes = ref([]);
 const loading = ref(false);
 const showForm = ref(false);
+const showQuickAddForm = ref(false);
 const expandedStudents = ref(new Set());
 
 const form = ref({
   student_id: '',
   class_date: '',
-  duration: 0,
+  duration: 60,
 });
 const editingId = ref(null);
 const editForm = ref({
@@ -126,7 +161,7 @@ const editForm = ref({
 
 const studentStore = useStudentStore();
 const getStudentName = studentStore.getStudentName;
-const students = studentStore.students;
+const students = computed(() => studentStore.students);
 
 const formatDate = (date) => {
   const d = new Date(date);
@@ -176,6 +211,40 @@ const addLesson = async () => {
     loading.value = false;
   }
 };
+
+const quickAdd = async () => {
+  if (!form.value.student_ids.length) {
+    alert('Please select at least one student.');
+    return;
+  }
+
+  const res = await fetch(`${backend}/classes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      student_ids: form.value.student_ids,
+      class_date: form.value.class_date,
+      duration: 60,
+      absent: false
+    })
+  });
+
+  if (res.ok) {
+    await res.json();
+    fetchLessons();
+    resetForm();
+    showQuickAddForm.value = false;
+  } else {
+    alert('Failed quick add.');
+  }
+};
+
+const selectedStudentNames = computed(() => {
+  if (!Array.isArray(form.value.student_ids)) return [];
+  return form.value.student_ids
+    .map(id => studentStore.getStudentName(id))
+    .filter(name => name !== 'Unknown');
+});
 
 const resetForm = () => {
   form.value = {
@@ -256,7 +325,6 @@ const groupedClasses = computed(() => {
     grouped[sid].push(cls);
   }
 
-  // Optional: sort each student's lessons by date
   for (const sid in grouped) {
     grouped[sid].sort((a, b) => new Date(a.class_date) - new Date(b.class_date));
   }
@@ -274,9 +342,18 @@ const toggleExpand = (sid) => {
 
 const isExpanded = (sid) => expandedStudents.value.has(sid);
 
-onMounted(() => {
-  fetchLessons();
-});
+onMounted(fetchLessons);
+
+watch(
+  () => studentStore.loaded,
+  (loaded) => {
+    if (loaded) {
+      fetchLessons();
+    }
+  },
+  { immediate: true }
+);
+
 </script>
 
 <style scoped>
@@ -295,5 +372,9 @@ onMounted(() => {
 
 label {
   margin-right: 1rem;
+}
+
+.lh-0 {
+  line-height: 0.4rem;
 }
 </style>

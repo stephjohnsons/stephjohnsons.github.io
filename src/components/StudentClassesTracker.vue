@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useStudentStore } from '@/stores/students';
 
 const showForm = ref(false);
@@ -112,7 +112,7 @@ const form = ref({
 
 const endpoint = demoAuthenticated.value ? `${backend}/students?visitor=true` : `${backend}/students`;
 const studentStore = useStudentStore();
-const students = ref([]);
+const students = computed(() => studentStore.students);
 
 // Fetch existing students
 const fetchStudents = async () => {

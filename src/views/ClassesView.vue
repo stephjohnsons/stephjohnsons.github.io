@@ -46,6 +46,8 @@ import { ref } from 'vue';
 import StudentClassesTracker from '../components/StudentClassesTracker.vue';
 import LessonList from '../components/LessonList.vue';
 import RepertoireList from '../components/RepertoireList.vue';
+import { onMounted } from 'vue';
+import { useStudentStore } from '@/stores/students';
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');
@@ -80,4 +82,12 @@ const checkPassword = () => {
     alert("Incorrect password. Please try again.");
   }
 };
+
+const studentStore = useStudentStore();
+const endpoint = demoAuthenticated.value ? `${backend}/students?visitor=true` : `${backend}/students`;
+
+onMounted(async () => {
+  studentStore.students = await fetch(endpoint).then(res => res.json())
+});
+
 </script>
