@@ -1,15 +1,21 @@
 <template>
   <div v-if="adminAuthenticated || studentAuthenticated || demoAuthenticated" class="d-flex">
-    <div class="col-12 col-md-10">
+    <div class="col-12 col-lg-10 d-none d-lg-block">
       <div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="demoAuthenticated">
         <strong>Demo Mode:</strong> All confidential information has been masked for privacy, and all buttons will be
         disabled.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      <StudentClassesTracker v-if="!studentAuthenticated" />
-      <LessonList />
+      <div class="d-flex g-2">
+        <div class="col-6 me-2">
+          <StudentClassesTracker v-if="!studentAuthenticated" />
+        </div>
+        <div class="col-6">
+          <LessonList />
+        </div>
+      </div>
       <RepertoireList />
-      <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-md-none bg-warning">
+      <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
         <div class="d-flex flex-row mb-2">
           <button v-if="adminAuthenticated" class="btn btn-sm btn-outline-dark m-1"
             @click="scrollToStudents()">Students</button>
@@ -18,7 +24,25 @@
         </div>
       </div>
     </div>
-    <div class="position-fixed top-25 end-0 me-4 pe-1 text-end d-none d-md-block">
+    <div class="d-block d-lg-none">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="demoAuthenticated">
+        <strong>Demo Mode:</strong> All confidential information has been masked for privacy, and all buttons will be
+        disabled.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <StudentClassesTracker v-if="!studentAuthenticated" />
+      <LessonList />
+      <RepertoireList />
+      <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
+        <div class="d-flex flex-row mb-2">
+          <button v-if="adminAuthenticated" class="btn btn-sm btn-outline-dark m-1"
+            @click="scrollToStudents()">Students</button>
+          <button class="btn btn-sm btn-outline-dark m-1" @click="scrollToClasses()">Classes</button>
+          <button class="btn btn-sm btn-outline-dark m-1" @click="scrollToRepertoire()">Rep</button>
+        </div>
+      </div>
+    </div>
+    <div class="position-fixed top-25 end-0 me-4 pe-1 text-end d-none d-lg-block">
       <h5>Sitemap</h5>
       <div class="d-flex flex-column">
         <button v-if="!studentAuthenticated" class="btn btn-sm btn-warning my-1"

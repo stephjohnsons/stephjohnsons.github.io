@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-2 d-flex" id="students">
+  <div class="d-flex" id="students">
     <h2 class="text-xl font-bold">Students</h2>
     <button v-if="activeStudents" class="d d-flex btn btn-sm btn-success ms-auto me-0 mt-2 h-50"
       @click="activeStudents = !activeStudents">Active
@@ -9,7 +9,7 @@
     <button class="d d-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50" @click="showForm = !showForm">+ Add
       Student</button>
   </div>
-  <p>Updated at 4 Aug 2025</p>
+  <p class="mb-1">Updated at 4 Aug 2025</p>
   <!-- Add Student Form -->
   <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
@@ -40,8 +40,7 @@
         <tr class="bg-gray-200">
           <th class="p-2">Student</th>
           <th class="p-2">Attended</th>
-          <th class="p-2">Left / Total</th>
-          <th class="p-2 d-none d-md-table-cell">Act.</th>
+          <th class="p-2">Left</th>
         </tr>
       </thead>
       <tbody>
@@ -71,10 +70,6 @@
 
           <td class="p-2">{{ student.minutes_left }}
             <span class="text-secondary">/ {{ student.total_minutes }}</span>
-          </td>
-          <td class="p-2 d-none d-md-table-cell">
-            <span v-if="student.active">✅</span>
-            <span v-else>❌</span>
           </td>
         </tr>
       </tbody>
