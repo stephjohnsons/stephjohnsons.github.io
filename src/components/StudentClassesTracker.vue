@@ -9,7 +9,7 @@
     <button class="d d-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50" @click="showForm = !showForm">+ Add
       Student</button>
   </div>
-  <p class="mb-1">Updated at 4 Aug 2025</p>
+  <p class="mb-1">Updated at 1 Sep 2025</p>
   <!-- Add Student Form -->
   <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
@@ -69,7 +69,7 @@
           </td>
 
           <td class="p-2">{{ student.minutes_left }}
-            <span class="text-secondary">/ {{ student.total_minutes }}</span>
+            <span class="text-secondary fs-7">/ {{ student.total_minutes }}</span>
           </td>
         </tr>
       </tbody>
@@ -194,5 +194,9 @@ onMounted(async () => {
 
 label {
   margin-right: 1rem;
+}
+
+.fs-7 {
+  font-size: 0.7rem;
 }
 </style>
