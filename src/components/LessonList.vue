@@ -1,17 +1,18 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div class="d-flex align-items-center" id="lessons">
-    <h2 class="text-xl font-bold">Lessons</h2>
-    <button v-if="adminAuthenticated" class="d-none d-sm-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
+    <h2 class="text-xl font-bold mb-1">Lessons</h2>
+    <button v-if="adminAuthenticated" class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
       @click="showForm = !showForm">+ Add Lesson</button>
-    <button v-if="adminAuthenticated" class="d-none d-sm-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
+    <button v-if="adminAuthenticated" class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
       @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
   </div>
-  <button v-if="adminAuthenticated" class="d d-block d-sm-none btn btn-sm btn-warning w-100"
-    @click="showForm = !showForm">+ Add
-    Lesson</button>
-  <button v-if="adminAuthenticated" class="d d-block d-sm-none btn btn-sm btn-warning w-100 my-2"
-    @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
+  <div class="d-flex d-md-none d-lg-flex mb-2">
+    <button v-if="adminAuthenticated" class="d d-flex btn btn-warning w-50 me-1" @click="showForm = !showForm">+ Add
+      Lesson</button>
+    <button v-if="adminAuthenticated" class="d d-flex btn btn-warning w-50"
+      @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
+  </div>
   <p class="mb-1">For <b>2025-05</b> semester</p>
   <!-- Add Class Form -->
   <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">

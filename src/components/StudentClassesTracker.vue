@@ -1,12 +1,22 @@
 <template>
   <div class="d-flex" id="students">
-    <h2 class="text-xl font-bold">Students</h2>
-    <button v-if="activeStudents" class="d d-flex btn btn-sm btn-success ms-auto me-0 mt-2 h-50"
+    <h2 class="text-xl font-bold mb-0">Students</h2>
+    <button v-if="activeStudents" class="d-none d-md-flex d-lg-none btn btn-sm btn-success ms-auto me-0 mt-2 h-50"
       @click="activeStudents = !activeStudents">Active
       only</button>
-    <button v-else class="d d-flex btn btn-sm btn-outline-success ms-auto me-0 mt-2 h-50"
+    <button v-else class="d-none d-md-flex d-lg-none btn btn-sm btn-outline-success ms-auto me-0 mt-2 h-50"
       @click="activeStudents = !activeStudents">All students</button>
-    <button class="d d-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50" @click="showForm = !showForm">+ Add
+    <button class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
+      @click="showForm = !showForm">+ Add
+      Student</button>
+  </div>
+  <div class="d-flex d-md-none d-lg-flex mb-2">
+    <button v-if="activeStudents" class="d d-flex btn btn-success mt-1 me-1 w-50"
+      @click="activeStudents = !activeStudents">Active
+      only</button>
+    <button v-else class="d d-flex btn btn-outline-success mt-1 w-50" @click="activeStudents = !activeStudents">All
+      students</button>
+    <button class="d d-flex btn btn-warning me-0 mt-1 w-50" @click="showForm = !showForm">+ Add
       Student</button>
   </div>
   <p class="mb-1">Updated at 1 Sep 2025</p>
