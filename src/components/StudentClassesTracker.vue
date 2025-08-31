@@ -39,18 +39,16 @@
       <thead>
         <tr class="bg-gray-200">
           <th class="p-2">Student</th>
-          <th class="p-2 d-none d-md-table-cell">Institution</th>
-          <th class="p-2">Total</th>
           <th class="p-2">Attended</th>
-          <th class="p-2">Left</th>
+          <th class="p-2">Left / Total</th>
           <th class="p-2 d-none d-md-table-cell">Act.</th>
         </tr>
       </thead>
       <tbody>
         <tr v-show="!activeStudents || student.active" v-for="student in students" :key="student.id" class="border-b">
-          <td class="p-2">{{ student.student }}</td>
-          <td class="p-2 d-none d-md-table-cell">{{ student.institution }}</td>
-          <td class="p-2">{{ student.total_minutes }}</td>
+          <td class="p-2">
+            {{ student.student }} <span class="d-none d-md-inline">• {{ student.institution }}</span>
+          </td>
           <td class="p-2">
             <template v-if="editingId === student.id">
               <input v-model.number="editMinutes" type="number" min="0"
@@ -71,7 +69,9 @@
             </template>
           </td>
 
-          <td class="p-2">{{ student.minutes_left }}</td>
+          <td class="p-2">{{ student.minutes_left }}
+            <span class="text-secondary">/ {{ student.total_minutes }}</span>
+          </td>
           <td class="p-2 d-none d-md-table-cell">
             <span v-if="student.active">✅</span>
             <span v-else>❌</span>
