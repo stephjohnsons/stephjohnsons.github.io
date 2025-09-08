@@ -29,8 +29,6 @@
         </li>
       </ul>
 
-      <CurrencyConverter />
-      <TimeZoneConverter />
       <!-- </div> -->
       <!-- <div>
           <Changelog />
@@ -64,8 +62,8 @@
 
 <script setup>
 import ZhTwConverter from "@/components/ZhTwConverter.vue";
-import TimeZoneConverter from "@/components/TimeZoneConverter.vue";
-import CurrencyConverter from "@/components/CurrencyConverter.vue";
+// import TimeZoneConverter from "@/components/TimeZoneConverter.vue";
+// import CurrencyConverter from "@/components/CurrencyConverter.vue";
 import CurrentTime from "@/components/CurrentTime.vue";
 // import Changelog from "@/components/Changelog.vue";
 import { ref, onMounted, onUnmounted } from "vue";
