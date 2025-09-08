@@ -87,6 +87,7 @@ export const allTemplates = {
     'notQualified',
     'reviews',
     'rba',
+    'solution',
     'informPayout',
     'countryHumid'
   ],

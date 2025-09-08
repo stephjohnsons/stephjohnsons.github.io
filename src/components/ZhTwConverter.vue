@@ -151,6 +151,7 @@
         <button class="btn btn-sm btn-outline-success" @click="templates.reso.gSolution">符合</button>
         <button class="btn btn-sm btn-warning" @click="templates.reso.notQualified">不符</button>
         <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.informPayout">收款</button>
+        <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.solution">方案</button>
       </div>
       <div class="d-flex gap-2 flex-wrap bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
         <span class="mx-2 my-auto">结束</span>
