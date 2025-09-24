@@ -64,6 +64,8 @@
             <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
           </div>
+        </div>
+        <div class="d-flex gap-2 mb-2 flex-wrap">
           <div class="d-flex gap-2 flex-wrap">
             <span class="mx-2 my-auto">通话</span>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.pickup">接听</button>
@@ -74,7 +76,7 @@
             <button class="btn btn-sm btn-warning" @click="templates.educate.lead(); hideTw = true">主管</button>
           </div>
         </div>
-        <div class="d-flex gap-2 mb-2 flex-wrap">
+        <div class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto" :class="{ 'dark-mode': ui.isDark }">
           <span class="mx-2 my-auto">消息</span>
           <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
           <button class="btn btn-sm btn-warning" @click="templates.educate.noReply">未回</button>
@@ -90,7 +92,7 @@
           <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
           <button class="btn btn-sm btn-warning" @click="templates.educate.cotraveller">旅伴</button>
         </div>
-        <div class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
+        <div class="d-flex gap-2 mb-2 flex-wrap">
           <span class=" mx-2 my-auto">教育</span>
           <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
           <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
@@ -107,7 +109,7 @@
           <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.listingViews">浏览</button>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
-          <div class="d-flex gap-2 flex-wrap bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
+          <div class=" d-flex gap-2 flex-wrap bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
             <span class="mx-2 my-auto">填充 </span>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.couponFillin">礼金</button>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundFillin">退款</button>
