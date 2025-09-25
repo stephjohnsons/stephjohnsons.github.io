@@ -314,11 +314,11 @@ Object.entries(allTemplates).forEach(([type, names]) => {
 
 const symbol = () => {
   simplified.value =
-    '『__xx__』\n▼幫助中心 ▲ ‣ ◆ Between ・ \n»»━━━◆ xx ◆━━━««\n« No, I\'m done »'
+    '■ title\n※ note\n『__xx__』\n▼幫助中心 ▲ ‣ ◆ Between ・point form\n••••\n»»━━━◆ xx ◆━━━««\n« No, I\'m done »'
 }
 
 const numbering = () => {
-  simplified.value = '（1）\n（2）\n（3）\n（4）\n（5）\n（6）\n（7）\n（8）\n（9）\n（10）'
+  simplified.value = '①\n②\n③\n④\n⑤\n⑥\n⑦\n⑧\n⑨\n⑩\n⑪\n⑫\n⑬\n⑭\n⑮\n⑯\n⑰\n⑱\n⑲\n⑳'
 }
 
 const double = () => {
@@ -416,7 +416,6 @@ textarea {
 }
 
 textarea[readonly] {
-  /* even lighter */
   color: #7a7a7a;
 }
 
