@@ -180,6 +180,8 @@
             @click="templates.english.defenderBlock(); hideTw = true">屏蔽</button>
           <button class="btn btn-sm btn-outline-secondary"
             @click="templates.english.closing(); hideTw = true">结束</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.pending(); hideTw = true">待处</button>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
           <span class="mx-2 my-auto">保障</span>

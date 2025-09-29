@@ -11,6 +11,7 @@ export const allTemplates = {
     'thanks',
     'instantBook',
     'closing',
+    'pending',
     'aircoverG',
     'aircoverH',
     'noPickup',
