@@ -162,32 +162,39 @@
         </div>
         <h4 class="mt-2">英文</h4>
         <div class="d-flex gap-2 mb-2 flex-wrap">
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english[name]; hideTw = true()">开头</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.nova; hideTw = true">翻译</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.reso; hideTw = true">订单</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.hc; hideTw = true">HC</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.thanks; hideTw = true">谢谢</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.english[name]">开头</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.nova(); hideTw = true">翻译</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.reso(); hideTw = true">订单</button>
+          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.hc(); hideTw = true">HC</button>
           <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.instantBook; hideTw = true">闪订</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.report; hideTw = true">举报</button>
+            @click="templates.english.thanks(); hideTw = true">谢谢</button>
           <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.international; hideTw = true">国际</button>
+            @click="templates.english.instantBook(); hideTw = true">闪订</button>
           <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.rebooking; hideTw = true">重订</button>
+            @click="templates.english.report(); hideTw = true">举报</button>
           <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.defenderBlock; hideTw = true">屏蔽</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.closing; hideTw = true">结束</button>
+            @click="templates.english.international(); hideTw = true">国际</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.rebooking(); hideTw = true">重订</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.defenderBlock(); hideTw = true">屏蔽</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.closing(); hideTw = true">结束</button>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
           <span class="mx-2 my-auto">保障</span>
-          <button class="btn btn-sm btn-warning" @click="templates.english.aircoverG; hideTw = true">房客</button>
-          <button class="btn btn-sm btn-warning" @click="templates.english.aircoverH; hideTw = true">房东</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.pickup; hideTw = true">接听</button>
+          <button class="btn btn-sm btn-warning" @click="templates.english.aircoverG(); hideTw = true">房客</button>
+          <button class="btn btn-sm btn-warning" @click="templates.english.aircoverH(); hideTw = true">房东</button>
           <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.noPickup; hideTw = true">未接</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.ghosted; hideTw = true">被鬼</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.coupon; hideTw = true">礼金</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.refund; hideTw = true">退款</button>
+            @click="templates.english.pickup(); hideTw = true">接听</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.noPickup(); hideTw = true">未接</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.ghosted(); hideTw = true">被鬼</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.coupon(); hideTw = true">礼金</button>
+          <button class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.refund(); hideTw = true">退款</button>
         </div>
       </div>
     </div>
