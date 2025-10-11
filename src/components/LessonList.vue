@@ -7,13 +7,21 @@
     <button v-if="adminAuthenticated" class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
       @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
   </div>
-  <div class="d-flex d-md-none d-lg-flex mb-2">
+  <div class="d-flex d-md-none d-lg-flex">
     <button v-if="adminAuthenticated" class="d d-flex btn btn-warning w-50 me-1" @click="showForm = !showForm">+ Add
       Lesson</button>
     <button v-if="adminAuthenticated" class="d d-flex btn btn-warning w-50"
       @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
   </div>
-  <p class="mb-1">For <b>2025-05</b> semester</p>
+  <div class="d-flex my-1">
+    <p class="my-auto me-1 ">
+      Semester:
+    </p>
+    <select class="form-select form-select-sm py-1" v-model="selectedSemester">
+      <option>2025-05</option>
+      <option>2025-09</option>
+    </select>
+  </div>
   <!-- Add Class Form -->
   <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
     <div class="d-flex">
@@ -146,6 +154,7 @@ const loading = ref(false);
 const showForm = ref(false);
 const showQuickAddForm = ref(false);
 const expandedStudents = ref(new Set());
+const selectedSemester = ref('2025-05');
 
 const form = ref({
   student_id: '',
