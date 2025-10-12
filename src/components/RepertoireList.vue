@@ -1,49 +1,7 @@
 <template>
   <div class="mb-2 d-flex align-items-center" id="repertoire">
     <h2 class="text-xl font-bold">Repertoire</h2>
-    <button v-if="adminAuthenticated" class="d d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
-      @click="showForm = !showForm">
-      + Add Repertoire
-    </button>
   </div>
-
-  <!-- Add Repertoire Form -->
-  <form v-if="showForm" @submit.prevent="addRepertoire" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
-    <div class="d-flex">
-      <h4>Add Repertoire</h4>
-      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click.prevent="showForm = !showForm; resetForm()">
-        X
-      </button>
-    </div>
-
-    <div class="d-flex mt-2 mb-2">
-      <div class="col-6 me-1">
-        <label class="mb-1">Student Name</label>
-        <select v-model="form.student_id" class="form-select" required>
-          <option disabled value="">Select Student</option>
-          <option v-for="s in students" :key="s.id" :value="s.id">
-            {{ s.student }}
-          </option>
-        </select>
-      </div>
-      <div class="col-6 me-1">
-        <label class="mb-1">Semester (yyyy-mm)</label>
-        <input type="text" v-model="form.semester" placeholder="YYYY-MM" pattern="\d{4}-\d{2}" class="form-control"
-          required />
-      </div>
-    </div>
-
-    <div class="d-flex mt-2 mb-2">
-      <div class="col-12 me-1">
-        <label>Repertoire</label>
-        <textarea v-model="form.pieces" placeholder="Repertoire pieces" class="form-control" rows="3" required />
-      </div>
-    </div>
-
-    <button class="btn btn-sm btn-success w-100 mt-1 py-2" type="submit">
-      Add Repertoire
-    </button>
-  </form>
 
   <!-- Repertoire List Table -->
   <div v-if="repertoireList.length">
@@ -68,7 +26,7 @@
             {{ rep.pieces }}
           </td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">{{
-      formatDate(rep.updated_at) }}</td>
+    formatDate(rep.updated_at) }}</td>
           <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
             <div v-if="editingId !== rep.id" class="d-flex gap-1">
               <button class="btn btn-sm btn-warning" @click="startEdit(rep)">
@@ -235,7 +193,9 @@ const deleteRep = async (id) => {
   }
 };
 
-onMounted(fetchRepertoire);
+onMounted(async () => {
+  await fetchRepertoire();
+});
 </script>
 
 <style scoped>
