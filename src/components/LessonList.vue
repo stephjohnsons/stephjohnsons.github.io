@@ -57,8 +57,7 @@
       <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="showForm = !showForm; resetForm()">X</button>
     </div>
     <div class="d-flex flex-row mb-2 mx-2">
-      <div class="d-flex col-6">
-        <label for="student" class="my-auto col-4">Student name</label>
+      <div class="d-flex col-7">
         <select v-model="form.student_ids" multiple required class="form-select">
           <option disabled value="">Select Student</option>
           <option v-for="s in students" :key="s.id" :value="s.id">
@@ -66,16 +65,16 @@
           </option>
         </select>
       </div>
-      <div v-if="selectedStudentNames.length" class="mx-3">
-        <strong>Selected: </strong><br>
-        <ul v-for="(name, index) in selectedStudentNames" :key="index" class="mt-2">
-          <li class="mb-1 font-monospace lh-0">{{ name }}</li>
-        </ul>
-      </div>
     </div>
     <div class="d-flex flex-col col-6 m-2">
       <label class="col-4 me-2" for="class_date">Date</label>
       <input type="date" v-model="form.class_date" class="form-control me-2" required />
+    </div>
+    <div v-if="selectedStudentNames.length" class="my-1 ms-2">
+      <strong>Selected: </strong><br>
+      <ul v-for="(name, index) in selectedStudentNames" :key="index" class="mt-2">
+        <li class="mb-1 font-monospace lh-0">{{ name }}</li>
+      </ul>
     </div>
     <button class="btn btn-sm btn-success w-100 mt-1" type="submit" :disabled="!adminAuthenticated">Add Lesson</button>
   </form>
@@ -146,15 +145,19 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
+import { useClassStore } from '@/stores/classes';
 
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
-const classes = ref([]);
 const loading = ref(false);
 const showForm = ref(false);
 const showQuickAddForm = ref(false);
 const expandedStudents = ref(new Set());
-const selectedSemester = ref('2025-05');
+
+const classStore = useClassStore();
+const selectedSemester = ref('2025-09');
+
+const classes = computed(() => classStore.getLessonsBySemester(selectedSemester.value));
 
 const form = ref({
   student_id: '',
@@ -182,20 +185,7 @@ const formatDate = (date) => {
 };
 
 const fetchLessons = async () => {
-  loading.value = true;
-  try {
-    const res = await fetch(`${backend}/classes`);
-    if (!res.ok) {
-      const err = await res.json();
-      console.error('Error fetching classes:', err.error);
-      return;
-    }
-    classes.value = await res.json();
-  } catch (err) {
-    console.error('Network error fetching lessons:', err);
-  } finally {
-    loading.value = false;
-  }
+  await classStore.fetchLessons(backend);
 };
 
 const addLesson = async () => {
@@ -204,7 +194,10 @@ const addLesson = async () => {
     const res = await fetch(`${backend}/classes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form.value),
+      body: JSON.stringify({
+        ...form.value,
+        semester: selectedSemester.value
+      }),
     });
 
     if (!res.ok) {
@@ -235,7 +228,8 @@ const quickAdd = async () => {
       student_ids: form.value.student_ids,
       class_date: form.value.class_date,
       duration: 60,
-      absent: false
+      absent: false,
+      semester: selectedSemester.value
     })
   });
 

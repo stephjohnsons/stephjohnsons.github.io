@@ -11,37 +11,13 @@
       Student</button>
   </div>
   <div class="d-flex d-md-none d-lg-flex mb-2">
-    <button v-if="activeStudents" class="d d-flex btn btn-success mt-1 me-1 w-50"
+    <button v-if="activeStudents" class="d d-flex btn btn-success mt-1 me-1 w-100"
       @click="activeStudents = !activeStudents">Active
       only</button>
-    <button v-else class="d d-flex btn btn-outline-success mt-1 w-50" @click="activeStudents = !activeStudents">All
+    <button v-else class="d d-flex btn btn-outline-success mt-1 w-100" @click="activeStudents = !activeStudents">All
       students</button>
-    <button class="d d-flex btn btn-warning me-0 mt-1 w-50" @click="showForm = !showForm">+ Add
-      Student</button>
   </div>
   <p class="mb-1">Updated at 1 Sep 2025</p>
-  <!-- Add Student Form -->
-  <form v-if="showForm" @submit.prevent="addStudent" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
-    <div class="d-flex">
-      <h4 class="2">Add Student</h4>
-      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="closeForm">X</button>
-    </div>
-    <div class="mt-2 mb-2 d-flex justify-content-around">
-      <label class="block font-medium col-1">Student</label>
-      <input v-model="form.student" class="form-input-sm w-full col-3" required />
-      <label class="block font-medium col-2">Total Lesson</label>
-      <input v-model.number="form.total_minutes" type="number" min="0" class="form-input-sm w-full col-3" required />
-    </div>
-
-    <div class="d-flex mb-4 justify-content-around">
-      <label class="block font-medium col-1">Institution</label>
-      <input v-model="form.institution" class="form-input-sm w-full col-3" required />
-      <label class="block font-medium col-2">Minutes Attended</label>
-      <input v-model.number="form.minutes_attended" type="number" min="0" class="form-input-sm w-full col-3" required />
-    </div>
-
-    <button class="btn btn-sm btn-secondary w-100" type="submit" :disabled="!adminAuthenticated">Add Student</button>
-  </form>
 
   <!-- List of Students -->
   <div v-if="students">
