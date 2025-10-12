@@ -17,7 +17,7 @@
     <button v-else class="d d-flex btn btn-outline-success mt-1 w-100" @click="activeStudents = !activeStudents">All
       students</button>
   </div>
-  <p class="mb-1">Updated at 1 Sep 2025</p>
+  <p class="mb-1">Updated on 12 Oct 2025</p>
 
   <!-- List of Students -->
   <div v-if="students">
