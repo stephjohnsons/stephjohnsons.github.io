@@ -6,11 +6,16 @@
         disabled.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      <div class="d-flex g-2">
+      <div class="d-flex g-2" v-if="!studentAuthenticated">
         <div class="col-6 me-2">
-          <StudentClassesTracker v-if="!studentAuthenticated" />
+          <StudentClassesTracker />
         </div>
         <div class="col-6">
+          <LessonList />
+        </div>
+      </div>
+      <div class="d-flex" v-else>
+        <div class="col-12">
           <LessonList />
         </div>
       </div>
