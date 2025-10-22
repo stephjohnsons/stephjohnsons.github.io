@@ -26,6 +26,7 @@ export const allTemplates = {
   ],
   educate: [
     'aircoverHost',
+    'translate',
     'cotraveller',
     'rTwo',
     'rebookingFillin',

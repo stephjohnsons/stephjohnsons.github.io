@@ -58,7 +58,7 @@
           <div class="d-flex gap-2 flex-wrap">
             <span class="mx-2 my-auto">开头</span>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.G">预订</button>
+            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.translate">翻译</button>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
             <span class="mx-2 my-auto">检查</span>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
