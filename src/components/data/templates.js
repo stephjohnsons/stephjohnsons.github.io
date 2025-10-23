@@ -1,5 +1,5 @@
 export const allTemplates = {
-  opening: ['st', 'kx', 'jf', 'ly', 'quick', 'pickup', 'noPickup'],
+  opening: ['st', 'kx', 'jf', 'ly', 'reso', 'quick', 'pickup', 'noPickup'],
   english: [
     'st',
     'kx',
@@ -65,7 +65,6 @@ export const allTemplates = {
     'bug'
   ],
   reso: [
-    'G',
     'M',
     'waitingResponse',
     'checkpointGuest',

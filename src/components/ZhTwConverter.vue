@@ -58,6 +58,7 @@
           <div class="d-flex gap-2 flex-wrap">
             <span class="mx-2 my-auto">开头</span>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
+            <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.quick">额外</button>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.translate">翻译</button>
             <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
             <span class="mx-2 my-auto">检查</span>
@@ -304,13 +305,8 @@ Object.entries(allTemplates).forEach(([type, names]) => {
       templates[type][name] = () => {
         return callWithUnhide(async () => {
           const openingMessage = await fetchSubtemplates(type, name);
-          const openWindow = await fetchSubtemplates(type, 'quick');
-          if (name === 'pickup' || name === 'noPickup') {
-            simplified.value = `${openingMessage.text}`;
-          } else {
-            simplified.value = `${openingMessage.text}\n\n${openWindow.text}`;
-          }
-
+          const reso = await fetchSubtemplates(type, 'reso');
+          simplified.value = `${openingMessage.text}\n\n${reso.text}`;
         });
       };
     } else if (type !== 'closing') {
