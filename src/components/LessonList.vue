@@ -216,32 +216,45 @@ const addLesson = async () => {
 };
 
 const quickAdd = async () => {
-  if (!form.value.student_ids.length) {
+  if (!form.value.student_ids || !form.value.student_ids.length) {
     alert('Please select at least one student.');
     return;
   }
 
-  const res = await fetch(`${backend}/classes`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      student_ids: form.value.student_ids,
-      class_date: form.value.class_date,
-      duration: 60,
-      absent: false,
-      semester: selectedSemester.value
-    })
-  });
+  // Construct the payload correctly
+  const payload = {
+    student_ids: form.value.student_ids,  // stays as an array
+    class_date: form.value.class_date,
+    duration: form.value.duration || 60,
+    absent: false,
+    semester: selectedSemester.value
+  };
 
-  if (res.ok) {
-    await res.json();
-    fetchLessons();
+  loading.value = true;
+  try {
+    const res = await fetch(`${backend}/classes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      alert('Error adding lessons: ' + err.error);
+      return;
+    }
+
     resetForm();
     showQuickAddForm.value = false;
-  } else {
-    alert('Failed quick add.');
+    await fetchLessons();  // refresh the lesson list
+  } catch (err) {
+    console.error('Quick add failed:', err);
+  } finally {
+    loading.value = false;
   }
 };
+
+
 
 const selectedStudentNames = computed(() => {
   if (!Array.isArray(form.value.student_ids)) return [];
