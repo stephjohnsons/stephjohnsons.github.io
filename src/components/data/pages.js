@@ -12,6 +12,10 @@ export const pageLinks = [
     link: '/projects'
   },
   {
+    name: 'Downloads',
+    link: '/downloads'
+  },
+  {
     name: 'Media Gallery',
     link: '/gallery'
   },
