@@ -1,20 +1,38 @@
 <template>
-  <div class="d-flex" id="students">
+  <div
+    class="d-flex"
+    id="students"
+  >
     <h2 class="text-xl font-bold mb-0">Students</h2>
-    <button v-if="activeStudents" class="d-none d-md-flex d-lg-none btn btn-sm btn-success ms-auto me-0 mt-2 h-50"
-      @click="activeStudents = !activeStudents">Active
+    <button
+      v-if="activeStudents"
+      class="d-none d-md-flex d-lg-none btn btn-sm btn-success ms-auto me-0 mt-2 h-50"
+      @click="activeStudents = !activeStudents"
+    >Active
       only</button>
-    <button v-else class="d-none d-md-flex d-lg-none btn btn-sm btn-outline-success ms-auto me-0 mt-2 h-50"
-      @click="activeStudents = !activeStudents">All students</button>
-    <button class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
-      @click="showForm = !showForm">+ Add
+    <button
+      v-else
+      class="d-none d-md-flex d-lg-none btn btn-sm btn-outline-success ms-auto me-0 mt-2 h-50"
+      @click="activeStudents = !activeStudents"
+    >All students</button>
+    <button
+      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
+      @click="showForm = !showForm"
+    >+ Add
       Student</button>
   </div>
   <div class="d-flex d-md-none d-lg-flex mb-2">
-    <button v-if="activeStudents" class="d d-flex btn btn-success mt-1 me-1 w-100"
-      @click="activeStudents = !activeStudents">Active
+    <button
+      v-if="activeStudents"
+      class="d d-flex btn btn-success mt-1 me-1 w-100"
+      @click="activeStudents = !activeStudents"
+    >Active
       only</button>
-    <button v-else class="d d-flex btn btn-outline-success mt-1 w-100" @click="activeStudents = !activeStudents">All
+    <button
+      v-else
+      class="d d-flex btn btn-outline-success mt-1 w-100"
+      @click="activeStudents = !activeStudents"
+    >All
       students</button>
   </div>
   <p class="mb-1">Updated on 12 Oct 2025</p>
@@ -30,24 +48,42 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-show="!activeStudents || student.active" v-for="student in students" :key="student.id" class="border-b">
+        <tr
+          v-show="!activeStudents || student.active"
+          v-for="student in students"
+          :key="student.id"
+          class="border-b"
+        >
           <td class="p-2">
             {{ student.student }} <span class="d-none d-md-inline">• {{ student.institution }}</span>
           </td>
           <td class="p-2">
             <template v-if="editingId === student.id">
-              <input v-model.number="editMinutes" type="number" min="0"
-                class="form-control form-control-sm w-50 d-inline" />
-              <button class="btn btn-sm btn-success ms-1" :disabled="editMinutes === student.minutes_attended"
-                @click="saveMinutes(student.id)">
+              <input
+                v-model.number="editMinutes"
+                type="number"
+                min="0"
+                class="form-control form-control-sm w-50 d-inline"
+              />
+              <button
+                class="btn btn-sm btn-success ms-1"
+                :disabled="editMinutes === student.minutes_attended"
+                @click="saveMinutes(student.id)"
+              >
                 <i class="bi bi-check"></i>
               </button>
-              <button class="btn btn-sm btn-outline-danger ms-1" @click="cancelEdit">
+              <button
+                class="btn btn-sm btn-outline-danger ms-1"
+                @click="cancelEdit"
+              >
                 <i class="bi bi-x"></i>
               </button>
             </template>
             <template v-else>
-              <button class="btn btn-sm btn-outline-secondary" @click="startEdit(student)">
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                @click="startEdit(student)"
+              >
                 {{ student.minutes_attended }}
                 <i class="bi bi-pencil ms-1"></i>
               </button>
@@ -61,10 +97,19 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="text-gray-500">No students found.</div>
-  <div v-if="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;">
-    <div class="spinner-border text-warning" role="status">
+  <div
+    v-else
+    class="text-gray-500"
+  >No students found.</div>
+  <div
+    v-if="loading"
+    class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;"
+  >
+    <div
+      class="spinner-border text-warning"
+      role="status"
+    >
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
@@ -80,8 +125,6 @@ const loading = ref(false);
 const editingId = ref(null);
 const editMinutes = ref(0);
 
-const demoAuthenticated = ref(localStorage.getItem('studio_demo_authenticated') === 'true');
-
 const activeStudents = ref(true);
 
 const form = ref({
@@ -91,7 +134,7 @@ const form = ref({
   minutes_attended: 0,
 });
 
-const endpoint = demoAuthenticated.value ? `${backend}/students?visitor=true` : `${backend}/students`;
+const endpoint = `${backend}/students`;
 const studentStore = useStudentStore();
 const students = computed(() => studentStore.students);
 
