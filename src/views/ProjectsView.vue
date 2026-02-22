@@ -68,11 +68,12 @@
       class="auth-overlay"
     >
       <div class="auth-box">
+        <h5>Enter password to edit</h5>
         <input
           v-model="password"
           type="password"
-          placeholder="Enter password"
-          class="form-control mb-2"
+          placeholder="Password"
+          class="form-control mb-3"
           @keyup.enter="unlock"
         />
         <div class="d-flex gap-2">
@@ -140,6 +141,161 @@
 
       <hr>
     </div>
+
+    <div
+      v-if="showModal"
+      class="modal-overlay"
+    >
+      <div class="modal-box">
+
+        <h5 class="mb-3">
+          {{ isEditing ? 'Edit Project' : 'Add Project' }}
+        </h5>
+
+        <input
+          v-model="form.title"
+          class="form-control mb-2 bg-warning-subtle"
+          placeholder="Title"
+        />
+
+        <textarea
+          v-model="form.description"
+          class="form-control mb-2 bg-warning-subtle"
+          placeholder="Description"
+        />
+
+        <div class="row g-1 mb-2">
+          <div class="col">
+            <input
+              v-model.number="form.start_year"
+              type="number"
+              class="form-control bg-warning-subtle"
+              placeholder="Start Year"
+            >
+          </div>
+          <div class="col">
+            <input
+              v-model.number="form.start_month"
+              type="number"
+              class="form-control"
+              placeholder="Month"
+            >
+          </div>
+          <div
+            class="col flex-grow-0 m-auto"
+            v-if="!form.is_ongoing"
+          >
+            -
+          </div>
+          <div
+            class="col"
+            v-if="!form.is_ongoing"
+          >
+            <input
+              v-model.number="form.end_year"
+              type="number"
+              class="form-control"
+              placeholder="End Year"
+            >
+          </div>
+          <div
+            class="col col-3"
+            v-if="!form.is_ongoing"
+          >
+            <input
+              v-model.number="form.end_month"
+              type="number"
+              class="form-control"
+              placeholder="Month"
+            >
+          </div>
+        </div>
+        <div class="form-check mb-2">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="form.is_ongoing"
+            id="ongoingCheck"
+          >
+          <label
+            class="form-check-label"
+            for="ongoingCheck"
+          >
+            Ongoing project
+          </label>
+        </div>
+
+        <div class="row g-1 mb-2">
+          <div class="flex m-auto">
+            <span class="fw-bold">Location</span>
+          </div>
+          <div class="col col-9">
+            <input
+              v-model="form.location"
+              class="form-control bg-warning-subtle"
+              placeholder="Location"
+            >
+          </div>
+          <div class="col col-3">
+            <input
+              v-model="form.country_code"
+              class="form-control bg-warning-subtle"
+              placeholder="Country Code"
+            >
+          </div>
+        </div>
+
+        <div class="row g-1">
+          <div class="flex m-auto">
+            <span class="fw-bold">Link</span>
+          </div>
+          <div class="col">
+            <input
+              v-model="form.link"
+              class="form-control mb-2"
+              placeholder="Link"
+            >
+          </div>
+          <div class="col">
+            <input
+              v-model="form.link_text"
+              class="form-control mb-3"
+              placeholder="Link Text"
+            >
+          </div>
+        </div>
+
+        <!-- TYPES -->
+        <label class="fw-bold mb-1">Types</label>
+        <div class="mb-3 types-box">
+          <div
+            v-for="type in typeStore.types"
+            :key="type.id"
+          >
+            <input
+              type="checkbox"
+              :value="type.id"
+              v-model="form.types"
+            />
+            {{ type.name }}
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button
+            class="btn btn-secondary btn-sm"
+            @click="closeModal"
+          >Cancel</button>
+          <button
+            class="btn btn-primary btn-sm"
+            @click="saveProject"
+          >
+            {{ isEditing ? 'Update' : 'Save' }}
+          </button>
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -152,7 +308,6 @@ import Ongoing from '@/assets/active.svg';
 import { useProjectStore } from '@/stores/projects'
 import { useProjectTypesStore } from '@/stores/projectTypes'
 
-
 const editMode = ref(false)
 const showAuth = ref(false)
 const password = ref('')
@@ -162,6 +317,24 @@ const ongoingFilter = ref(false);
 
 const projects = useProjectStore();
 const typeStore = useProjectTypesStore()
+
+const showModal = ref(false)
+const isEditing = ref(false)
+const editingId = ref(null)
+
+const form = ref({
+  title: '',
+  description: '',
+  start_year: null,
+  start_month: null,
+  end_year: null,
+  end_month: null,
+  location: '',
+  country_code: '',
+  link: '',
+  link_text: '',
+  types: []
+})
 
 onMounted(() => {
   if (!projects.loaded) projects.fetchProjects();
@@ -203,11 +376,72 @@ const unlock = () => {
 }
 
 const createProject = () => {
-  // open form modal with empty fields
+  isEditing.value = false
+  editingId.value = null
+
+  form.value = {
+    title: '',
+    description: '',
+    start_year: null,
+    start_month: null,
+    end_year: null,
+    end_month: null,
+    location: '',
+    country_code: '',
+    link: '',
+    link_text: '',
+    types: [],
+    is_ongoing: false
+  }
+
+  showModal.value = true
 }
 
 const editProject = (project) => {
-  // open form modal prefilled
+  isEditing.value = true
+  editingId.value = project.id
+
+  form.value = {
+    title: project.organisation,
+    description: project.description,
+    start_year: parseInt(project.year),
+    start_month: project.start_month ?? null,
+    end_year: project.end_year ?? null,
+    end_month: project.end_month ?? null,
+    is_ongoing: project.ongoing,
+    location: project.location,
+    country_code: project.cc,
+    link: project.link,
+    link_text: project.linkText,
+    types: project.typeIds || []
+  }
+
+  showModal.value = true
+}
+
+const closeModal = () => {
+  showModal.value = false
+}
+
+const saveProject = async () => {
+  const url = editingId.value
+    ? `${backend}/projects?id=${editingId.value}`
+    : `${backend}/projects`
+
+  const method = editingId.value ? 'PATCH' : 'POST'
+
+  const res = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form.value)
+  })
+
+  if (res.ok) {
+    showModal.value = false
+    await projects.fetchProjects()
+  } else {
+    alert('Save failed')
+  }
 }
 
 const clearFilter = () => {
@@ -327,8 +561,39 @@ body {
 
 .auth-box {
   background: white;
-  padding: 20px;
+  padding: 1.4rem;
   border-radius: 8px;
-  width: 260px;
+  width: 40vw;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-box {
+  background: white;
+  padding: 24px;
+  border-radius: 0.5rem;
+  width: 70vw;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.types-box {
+  max-height: 20vh;
+  overflow: auto;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 193, 7, 0.25);
+}
+
+.ms-negative-1 {
+  margin-left: -1rem;
 }
 </style>
