@@ -128,7 +128,6 @@ import { ref } from "vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
 import RepertoireList from "../components/RepertoireList.vue";
-import { onMounted } from "vue";
 import { useStudentStore } from "@/stores/students";
 
 const adminAuthenticated = ref(

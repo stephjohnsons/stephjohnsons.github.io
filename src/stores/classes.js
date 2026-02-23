@@ -9,6 +9,9 @@ export const useClassStore = defineStore('classStore', {
   getters: {
     getLessonsBySemester: (state) => (semester) => {
       return state.lessonList[semester] || []
+    },
+    semesterList: (state) => {
+      return Object.keys(state.lessonList).filter(Boolean).sort().reverse()
     }
   },
 
@@ -27,7 +30,6 @@ export const useClassStore = defineStore('classStore', {
           grouped[sem].push(cls)
         }
 
-        // Sort by class_date within each semester
         for (const sem in grouped) {
           grouped[sem].sort((a, b) => new Date(a.class_date) - new Date(b.class_date))
         }

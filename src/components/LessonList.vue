@@ -37,8 +37,13 @@
       class="form-select form-select-sm py-1"
       v-model="selectedSemester"
     >
-      <option>2025-05</option>
-      <option>2025-09</option>
+      <option
+        v-for="sem in semesterList"
+        :key="sem"
+        :value="sem"
+      >
+        {{ sem }}
+      </option>
     </select>
   </div>
   <!-- Add Class Form -->
@@ -311,7 +316,10 @@ const showQuickAddForm = ref(false);
 const expandedStudents = ref(new Set());
 
 const classStore = useClassStore();
-const selectedSemester = ref('2025-09');
+const selectedSemester = ref('2026-01');
+
+import { storeToRefs } from "pinia";
+const { semesterList } = storeToRefs(classStore);
 
 const lessons = computed(() => classStore.getLessonsBySemester(selectedSemester.value));
 
