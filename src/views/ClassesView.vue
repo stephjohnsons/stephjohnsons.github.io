@@ -9,7 +9,7 @@
         v-if="!studentAuthenticated"
       >
         <div class="col-6 me-2">
-          <StudentClassesTracker />
+          <StudentList />
         </div>
         <div class="col-6">
           <LessonList />
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="d-block d-lg-none">
-      <StudentClassesTracker v-if="!studentAuthenticated" />
+      <StudentList v-if="!studentAuthenticated" />
       <LessonList />
       <RepertoireList />
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
@@ -125,7 +125,7 @@
 
 <script setup>
 import { ref } from "vue";
-import StudentClassesTracker from "../components/StudentClassesTracker.vue";
+import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
 import RepertoireList from "../components/RepertoireList.vue";
 import { onMounted } from "vue";
@@ -166,8 +166,4 @@ const checkPassword = () => {
 };
 
 const studentStore = useStudentStore();
-
-onMounted(async () => {
-  studentStore.students = await fetch(endpoint).then((res) => res.json());
-});
 </script>

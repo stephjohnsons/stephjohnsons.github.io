@@ -1,129 +1,276 @@
 <!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
-  <div class="d-flex align-items-center" id="lessons">
+  <div
+    class="d-flex align-items-center"
+    id="lessons"
+  >
     <h2 class="text-xl font-bold mb-1">Lessons</h2>
-    <button v-if="adminAuthenticated" class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
-      @click="showForm = !showForm">+ Add Lesson</button>
-    <button v-if="adminAuthenticated" class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
-      @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
+    <button
+      v-if="adminAuthenticated"
+      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
+      @click="showForm = !showForm"
+    >+ Add Lesson</button>
+    <button
+      v-if="adminAuthenticated"
+      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
+      @click="showQuickAddForm = !showQuickAddForm"
+    >+ Quick Add</button>
   </div>
   <div class="d-flex d-md-none d-lg-flex">
-    <button v-if="adminAuthenticated" class="d d-flex btn btn-warning w-50 me-1" @click="showForm = !showForm">+ Add
+    <button
+      v-if="adminAuthenticated"
+      class="d d-flex btn btn-warning w-50 me-1"
+      @click="showForm = !showForm"
+    >+ Add
       Lesson</button>
-    <button v-if="adminAuthenticated" class="d d-flex btn btn-warning w-50"
-      @click="showQuickAddForm = !showQuickAddForm">+ Quick Add</button>
+    <button
+      v-if="adminAuthenticated"
+      class="d d-flex btn btn-warning w-50"
+      @click="showQuickAddForm = !showQuickAddForm"
+    >+ Quick Add</button>
   </div>
   <div class="d-flex my-1">
     <p class="my-auto me-1 ">
       Semester:
     </p>
-    <select class="form-select form-select-sm py-1" v-model="selectedSemester">
+    <select
+      class="form-select form-select-sm py-1"
+      v-model="selectedSemester"
+    >
       <option>2025-05</option>
       <option>2025-09</option>
     </select>
   </div>
   <!-- Add Class Form -->
-  <form v-if="showForm" @submit.prevent="addLesson" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
+  <form
+    v-if="showForm"
+    @submit.prevent="addLesson"
+    class="mb-6 bg-gray-50 p-4 rounded shadow mb-2"
+  >
     <div class="d-flex">
       <h4 class="2">Add Lesson</h4>
-      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="showForm = !showForm; resetForm()">X</button>
+      <button
+        class="btn btn-sm btn-danger ms-auto me-0 h-50"
+        @click="showForm = !showForm; resetForm()"
+      >X</button>
     </div>
-    <label for="student" class="mb-1">Student name</label>
-    <select v-model="form.student_id" class="form-select" required>
-      <option disabled value="">Select Student</option>
-      <option v-for="s in students" :key="s.id" :value="s.id">
+    <label
+      for="student"
+      class="mb-1"
+    >Student name</label>
+    <select
+      v-model="form.student_id"
+      class="form-select"
+      required
+    >
+      <option
+        disabled
+        value=""
+      >Select Student</option>
+      <option
+        v-for="s in students"
+        :key="s.id"
+        :value="s.id"
+      >
         {{ s.student }}
       </option>
     </select>
     <div class="d-flex mt-2 mb-2">
       <div class="col-5 me-1">
         <label for="class_date">Date and Time</label>
-        <input type="date" v-model="form.class_date" class="form-control" required />
+        <input
+          type="date"
+          v-model="form.class_date"
+          class="form-control"
+          required
+        />
       </div>
       <div class="col-5 me-1">
         <label for="duration">Duration</label>
-        <input type="number" v-model.number="form.duration" placeholder="Minutes" class="form-control" required />
+        <input
+          type="number"
+          v-model.number="form.duration"
+          placeholder="Minutes"
+          class="form-control"
+          required
+        />
       </div>
       <div class="col-2 ms-2 d-flex flex-column justify-content-center">
-        <label for="absent" class="mb-2">Absent?</label>
-        <input type="checkbox" v-model.number="form.absent" class="form-check-input my-2 ms-2" />
+        <label
+          for="absent"
+          class="mb-2"
+        >Absent?</label>
+        <input
+          type="checkbox"
+          v-model.number="form.absent"
+          class="form-check-input my-2 ms-2"
+        />
       </div>
     </div>
-    <button class="btn btn-sm btn-success w-100 mt-1" type="submit" :disabled="!adminAuthenticated">Add Lesson</button>
+    <button
+      class="btn btn-sm btn-success w-100 mt-1"
+      type="submit"
+      :disabled="!adminAuthenticated"
+    >Add Lesson</button>
   </form>
-  <form v-if="showQuickAddForm" @submit.prevent="quickAdd" class="mb-6 bg-gray-50 p-4 rounded shadow mb-2">
+  <form
+    v-if="showQuickAddForm"
+    @submit.prevent="quickAdd"
+    class="mb-6 bg-gray-50 p-4 rounded shadow mb-2"
+  >
     <div class="d-flex">
       <h4 class="2">Quick Add</h4>
-      <button class="btn btn-sm btn-danger ms-auto me-0 h-50" @click="showForm = !showForm; resetForm()">X</button>
+      <button
+        class="btn btn-sm btn-danger ms-auto me-0 h-50"
+        @click="showForm = !showForm; resetForm()"
+      >X</button>
     </div>
     <div class="d-flex flex-row mb-2 mx-2">
       <div class="d-flex col-7">
-        <select v-model="form.student_ids" multiple required class="form-select">
-          <option disabled value="">Select Student</option>
-          <option v-for="s in students" :key="s.id" :value="s.id">
+        <select
+          v-model="form.student_ids"
+          multiple
+          required
+          class="form-select"
+        >
+          <option
+            disabled
+            value=""
+          >Select Student</option>
+          <option
+            v-for="s in students"
+            :key="s.id"
+            :value="s.id"
+          >
             {{ s.student }}
           </option>
         </select>
       </div>
     </div>
     <div class="d-flex flex-col col-6 m-2">
-      <label class="col-4 me-2" for="class_date">Date</label>
-      <input type="date" v-model="form.class_date" class="form-control me-2" required />
+      <label
+        class="col-4 me-2"
+        for="class_date"
+      >Date</label>
+      <input
+        type="date"
+        v-model="form.class_date"
+        class="form-control me-2"
+        required
+      />
     </div>
-    <div v-if="selectedStudentNames.length" class="my-1 ms-2">
+    <div
+      v-if="selectedStudentNames.length"
+      class="my-1 ms-2"
+    >
       <strong>Selected: </strong><br>
-      <ul v-for="(name, index) in selectedStudentNames" :key="index" class="mt-2">
+      <ul
+        v-for="(name, index) in selectedStudentNames"
+        :key="index"
+        class="mt-2"
+      >
         <li class="mb-1 font-monospace lh-0">{{ name }}</li>
       </ul>
     </div>
-    <button class="btn btn-sm btn-success w-100 mt-1" type="submit" :disabled="!adminAuthenticated">Add Lesson</button>
+    <button
+      class="btn btn-sm btn-success w-100 mt-1"
+      type="submit"
+      :disabled="!adminAuthenticated"
+    >Add Lesson</button>
   </form>
 
   <!-- List of Students -->
-  <div v-if="classes.length > 0">
+  <div v-if="lessons.length > 0">
     <table class="table table-hover w-full rounded-4">
       <tbody>
-        <template v-for="(studentLessons, studentId) in groupedClasses" :key="studentId">
+        <template
+          v-for="(studentLessons, studentId) in groupedLessons"
+          :key="studentId"
+        >
           <!-- Student Header Row -->
           <tr :class="isExpanded(studentId) ? 'table-dark' : ''">
-            <td colspan="4" class="fw-bold">
-              <button class="btn btn-sm btn-outline-secondary me-2" @click="toggleExpand(studentId)">
+            <td
+              colspan="4"
+              class="fw-bold"
+            >
+              <button
+                class="btn btn-sm btn-outline-secondary me-2"
+                @click="toggleExpand(studentId)"
+              >
                 {{ isExpanded(studentId) ? '−' : '+' }}
               </button>
-              <span>{{ getStudentName(studentId) }}</span>
+              <span>
+                {{ getStudentName(studentId) }}
+                <span class="fw-normal font-monospace ms-1">({{ studentTotalDuration(studentLessons) }} mins)</span>
+              </span>
             </td>
           </tr>
 
           <!-- Lessons Rows -->
-          <tr v-if="isExpanded(studentId)" v-for="cls in studentLessons" :key="cls.id">
+          <tr
+            v-if="isExpanded(studentId)"
+            v-for="cls in studentLessons"
+            :key="cls.id"
+          >
             <td v-if="editingId !== cls.id">
               <strong>Date:</strong> {{ formatDate(cls.class_date) }}
             </td>
             <td v-else>
-              <input type="date" name="class_date" v-model="editForm.class_date" class="form-control form-control-sm"
-                required>
+              <input
+                type="date"
+                name="class_date"
+                v-model="editForm.class_date"
+                class="form-control form-control-sm"
+                required
+              >
             </td>
 
             <td v-if="editingId !== cls.id">({{ cls.duration }} minutes) {{ cls.absent ? '[Absent]' : '' }}</td>
             <td v-else>
-              <input type="number" name="duration" v-model="editForm.duration" class="form-control form-control-sm"
-                required>
+              <input
+                type="number"
+                name="duration"
+                v-model="editForm.duration"
+                class="form-control form-control-sm"
+                required
+              >
             </td>
 
-            <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
-              <div v-if="editingId !== cls.id" class="d-flex gap-1">
-                <button class="btn btn-sm btn-warning" @click="startEdit(cls)">
+            <td
+              class="d-none d-sm-table-cell"
+              v-if="adminAuthenticated"
+            >
+              <div
+                v-if="editingId !== cls.id"
+                class="d-flex gap-1"
+              >
+                <button
+                  class="btn btn-sm btn-warning"
+                  @click="startEdit(cls)"
+                >
                   <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-danger" @click="deleteLesson(cls.id)">
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  @click="deleteLesson(cls.id)"
+                >
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
-              <div v-else class="d-flex gap-1">
-                <button class="btn btn-sm btn-success" @click="saveEdit">
+              <div
+                v-else
+                class="d-flex gap-1"
+              >
+                <button
+                  class="btn btn-sm btn-success"
+                  @click="saveEdit"
+                >
                   <i class="bi bi-check"></i>
                 </button>
-                <button class="btn btn-sm btn-outline-danger" @click="cancelEdit">
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  @click="cancelEdit"
+                >
                   <i class="bi bi-x"></i>
                 </button>
               </div>
@@ -133,10 +280,19 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="text-gray-500">No lessons found.</div>
-  <div v-if="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;">
-    <div class="spinner-border text-warning" role="status">
+  <div
+    v-else
+    class="text-gray-500"
+  >No lessons found.</div>
+  <div
+    v-if="loading"
+    class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;"
+  >
+    <div
+      class="spinner-border text-warning"
+      role="status"
+    >
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
@@ -157,7 +313,7 @@ const expandedStudents = ref(new Set());
 const classStore = useClassStore();
 const selectedSemester = ref('2025-09');
 
-const classes = computed(() => classStore.getLessonsBySemester(selectedSemester.value));
+const lessons = computed(() => classStore.getLessonsBySemester(selectedSemester.value));
 
 const form = ref({
   student_id: '',
@@ -254,8 +410,6 @@ const quickAdd = async () => {
   }
 };
 
-
-
 const selectedStudentNames = computed(() => {
   if (!Array.isArray(form.value.student_ids)) return [];
   return form.value.student_ids
@@ -334,9 +488,9 @@ const deleteLesson = async (id) => {
   loading.value = false;
 };
 
-const groupedClasses = computed(() => {
+const groupedLessons = computed(() => {
   const grouped = {};
-  for (const cls of classes.value) {
+  for (const cls of lessons.value) {
     const sid = cls.student_id;
     if (!grouped[sid]) grouped[sid] = [];
     grouped[sid].push(cls);
@@ -371,6 +525,14 @@ watch(
   { immediate: true }
 );
 
+const studentTotalDuration = (lessons) => {
+  return (lessons || [])
+    .filter(l =>
+      l.semester === selectedSemester.value &&
+      !l.absent
+    )
+    .reduce((sum, l) => sum + (l.duration || 0), 0)
+}
 </script>
 
 <style scoped>
