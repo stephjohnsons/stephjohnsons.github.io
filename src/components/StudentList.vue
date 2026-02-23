@@ -246,13 +246,6 @@ const endpoint = `${backend}/students`;
 const studentStore = useStudentStore();
 const students = computed(() => studentStore.students);
 
-// Fetch existing students
-const fetchStudents = async () => {
-  const res = await fetch(`${backend}/students`);
-  const data = await res.json();
-  students.value = data;
-};
-
 const startEdit = (student) => {
   editingId.value = student.id;
   editMinutes.value = student.minutes_attended;

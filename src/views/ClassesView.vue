@@ -124,7 +124,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
 import RepertoireList from "../components/RepertoireList.vue";
@@ -165,4 +165,8 @@ const checkPassword = () => {
 };
 
 const studentStore = useStudentStore();
+
+onMounted(async () => {
+  await studentStore.fetchStudents();
+});
 </script>
