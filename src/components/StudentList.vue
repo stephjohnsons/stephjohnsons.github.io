@@ -3,7 +3,7 @@
     class="d-flex"
     id="students"
   >
-    <h2 class="text-xl font-bold mb-0">Students</h2>
+    <h3 class="text-xl font-bold mb-0">Students</h3>
     <button
       v-if="activeStudents"
       class="d-none d-md-flex d-lg-none btn btn-sm btn-success ms-auto me-0 mt-2 h-50"

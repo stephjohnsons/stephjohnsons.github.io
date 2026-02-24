@@ -8,10 +8,16 @@
         class="d-flex g-2"
         v-if="!studentAuthenticated"
       >
-        <div class="col-6 me-2">
+        <div
+          class="col-6 me-2"
+          id="students"
+        >
           <StudentList />
         </div>
-        <div class="col-6">
+        <div
+          class="col-6"
+          id="lessons"
+        >
           <LessonList />
         </div>
       </div>
@@ -23,7 +29,7 @@
           <LessonList />
         </div>
       </div>
-      <RepertoireList />
+      <RepertoireList id="repertoire" />
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
         <div class="d-flex flex-row mb-2">
           <button
@@ -44,14 +50,33 @@
             @click="scrollToRepertoire()"
           >
             Rep
+          </button>
+          <button
+            class="btn btn-sm btn-outline-dark m-1"
+            @click="scrollToPolicy()"
+          >
+            Policy
           </button>
         </div>
       </div>
+
+      <div class="border-top pt-4">
+        <ClassPolicy />
+      </div>
     </div>
     <div class="d-block d-lg-none">
-      <StudentList v-if="!studentAuthenticated" />
-      <LessonList />
-      <RepertoireList />
+      <StudentList
+        id="students"
+        v-if="!studentAuthenticated"
+      />
+      <LessonList id="lessons" />
+      <RepertoireList id="repertoire" />
+      <div
+        class="border-top pt-4"
+        id="policy"
+      >
+        <ClassPolicy />
+      </div>
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
         <div class="d-flex flex-row mb-2">
           <button
@@ -72,6 +97,12 @@
             @click="scrollToRepertoire()"
           >
             Rep
+          </button>
+          <button
+            class="btn btn-sm btn-outline-dark m-1"
+            @click="scrollToPolicy()"
+          >
+            Policy
           </button>
         </div>
       </div>
@@ -97,6 +128,12 @@
           @click="scrollToRepertoire()"
         >
           Rep
+        </button>
+        <button
+          class="btn btn-sm btn-warning my-1"
+          @click="scrollToPolicy()"
+        >
+          Policy
         </button>
       </div>
     </div>
@@ -125,6 +162,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import ClassPolicy from "../components/ClassPolicy.vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
 import RepertoireList from "../components/RepertoireList.vue";
@@ -138,8 +176,6 @@ const studentAuthenticated = ref(
 );
 const inputPassword = ref("");
 
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
-
 const scrollToStudents = () => {
   document.getElementById("students").scrollIntoView({ behavior: "smooth" });
 };
@@ -150,6 +186,10 @@ const scrollToClasses = () => {
 
 const scrollToRepertoire = () => {
   document.getElementById("repertoire").scrollIntoView({ behavior: "smooth" });
+};
+
+const scrollToPolicy = () => {
+  document.getElementById("policy").scrollIntoView({ behavior: "smooth" });
 };
 
 const checkPassword = () => {

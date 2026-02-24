@@ -1,6 +1,9 @@
 <template>
-  <div class="mb-2 d-flex align-items-center" id="repertoire">
-    <h2 class="text-xl font-bold">Repertoire</h2>
+  <div
+    class="mb-2 d-flex align-items-center"
+    id="repertoire"
+  >
+    <h3 class="text-xl font-bold">Repertoire</h3>
   </div>
 
   <!-- Repertoire List Table -->
@@ -10,11 +13,17 @@
         <tr class="bg-gray-200">
           <th class="p-1">Student</th>
           <th class="p-1">Pieces</th>
-          <th class="p-1 d-none d-sm-table-cell" v-if="adminAuthenticated"></th>
+          <th
+            class="p-1 d-none d-sm-table-cell"
+            v-if="adminAuthenticated"
+          ></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="rep in repertoireList" :key="rep.id">
+        <tr
+          v-for="rep in repertoireList"
+          :key="rep.id"
+        >
           <td>
             {{ getStudentName(rep.student_id) }}
             <span class="font-bold opacity-50 form-control-sm">
@@ -25,25 +34,53 @@
           </td>
           <!-- Conditional edit/display -->
           <td v-if="editingId === rep.id">
-            <textarea v-model="editForm.pieces" class="form-control form-control-sm mb-0" rows="4"></textarea>
+            <textarea
+              v-model="editForm.pieces"
+              class="form-control form-control-sm mb-0"
+              rows="4"
+            ></textarea>
           </td>
-          <td style="white-space: pre-line;" v-else>
+          <td
+            style="white-space: pre-line;"
+            v-else
+          >
             {{ rep.pieces }}
           </td>
-          <td class="d-none d-sm-table-cell" v-if="adminAuthenticated">
-            <div v-if="editingId !== rep.id" class="d-flex gap-1">
-              <button class="btn btn-sm btn-warning" @click="startEdit(rep)">
+          <td
+            class="d-none d-sm-table-cell"
+            v-if="adminAuthenticated"
+          >
+            <div
+              v-if="editingId !== rep.id"
+              class="d-flex gap-1"
+            >
+              <button
+                class="btn btn-sm btn-warning"
+                @click="startEdit(rep)"
+              >
                 <i class="bi bi-pencil"></i>
               </button>
-              <button class="btn btn-sm btn-outline-danger" @click="deleteRep(rep.id)">
+              <button
+                class="btn btn-sm btn-outline-danger"
+                @click="deleteRep(rep.id)"
+              >
                 <i class="bi bi-trash"></i>
               </button>
             </div>
-            <div v-else class="d-flex gap-1">
-              <button class="btn btn-sm btn-success" @click="saveEdit">
+            <div
+              v-else
+              class="d-flex gap-1"
+            >
+              <button
+                class="btn btn-sm btn-success"
+                @click="saveEdit"
+              >
                 <i class="bi bi-check"></i>
               </button>
-              <button class="btn btn-sm btn-outline-danger" @click="cancelEdit">
+              <button
+                class="btn btn-sm btn-outline-danger"
+                @click="cancelEdit"
+              >
                 <i class="bi bi-x"></i>
               </button>
             </div>
@@ -52,10 +89,19 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="text-gray-500">No repertoire found.</div>
-  <div v-if="loading" class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;">
-    <div class="spinner-border text-warning" role="status">
+  <div
+    v-else
+    class="text-gray-500"
+  >No repertoire found.</div>
+  <div
+    v-if="loading"
+    class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;"
+  >
+    <div
+      class="spinner-border text-warning"
+      role="status"
+    >
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
