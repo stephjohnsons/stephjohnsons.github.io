@@ -9,6 +9,8 @@
     >
       <ZhTwConverter />
 
+      <RegulatoryResponseMacro />
+
       <h5 class="fw-normal mt-3">Alarms</h5>
       <div class="mb-2">
         <div class="d-flex gap-2 align-items-center">
@@ -100,6 +102,7 @@
 
 <script setup>
 import ZhTwConverter from "@/components/ZhTwConverter.vue";
+import RegulatoryResponseMacro from "@/components/RegulatoryResponseMacro.vue";
 import CurrentTime from "@/components/CurrentTime.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useUIStore } from "@/stores/ui";
