@@ -34,7 +34,18 @@
             :class="['macro-item', { active: i === highlightedIndex }]"
             @mousedown.prevent="insertMacro(item)"
           >
-            {{ i + 1 }} {{ item }}
+            <div class="macro-number">
+              {{ i + 1 }}
+            </div>
+
+            <div class="macro-text">
+              <div class="macro-label">
+                {{ macroRegistry[item].label }}
+              </div>
+              <div class="macro-key">
+                {{ item }}
+              </div>
+            </div>
           </span>
         </div>
       </div>
@@ -72,22 +83,99 @@ const exemptionGiven = 'Hi ____name____,\n\nThank you for letting us know about 
 const reviewRemovedEEA = 'Hi ___name___,\n\nThis is Liam from Airbnb\'s specialized team. I hope this message finds you well.\n\nWe wanted to let you know that we received a report about your review for reservation __CODE__ about __USER__ and it has been removed for not following our Reviews Policy.\n\nThe review didn\'t have enough relevant information to help the Airbnb community make informed booking or hosting decisions.\n\nWe understand how important a trustworthy and reliable review system is.\n\nOur Reviews Policy is designed to help ensure that Hosts and guests provide reviews that are authentic, trustworthy, and useful to our community. You can find more information about our policy in our Help Center at: airbnb.com/help/article/548.\n\nYou can learn more about redress rights available to EU users in our Help Center article: \nairbnb.com/help/article/3508.\n\nBest,\nLiam T.';
 
 const macroRegistry = {
-  '-ft-en': firstTouch,
-  '-ft-zh': zhFirstTouch,
-  '-ft-rrr': reviewFirstTouch,
-  '-de-esc': mistransfer,
-  '-ra': acknowledgement,
-  '-te-R': reporter,
-  '-te-A': accused,
-  '-refund': refund,
-  '-aa-ra-G': accessibilityGuestRa,
-  '-aa-ra-H': accessibilityHostRa,
-  '-aa-exemption': exemptionGiven,
-  '-rrr-removed-eea': reviewRemovedEEA,
-  '-map-ndp': ndpFinalMapping,
-  '-map-ap': apFinalMapping,
-  '-map-od': openDoors,
-  '-map-rrr': reviewOutcome,
+  /* ========= FIRST TOUCH ========= */
+  '-ft-en': {
+    label: 'FT:: English',
+    category: 'FT',
+    text: firstTouch
+  },
+  '-ft-zh': {
+    label: 'FT:: Chinese',
+    category: 'FT',
+    text: zhFirstTouch
+  },
+  '-ft-rrr': {
+    label: 'FT:: Review Dispute',
+    category: 'FT',
+    text: reviewFirstTouch
+  },
+
+  /* ========= NOTES ========= */
+  '-de-esc': {
+    label: 'Notes:: Mistransfer',
+    category: 'Notes',
+    text: mistransfer
+  },
+
+  /* ========= NDP ========= */
+  '-ra': {
+    label: 'NDP::RA',
+    category: 'NDP',
+    text: acknowledgement
+  },
+  '-te-R': {
+    label: 'NDP::TE_R',
+    category: 'NDP',
+    text: reporter
+  },
+  '-te-A': {
+    label: 'NDP::TE_A',
+    category: 'NDP',
+    text: accused
+  },
+
+  /* ========= ACCESSIBILITY POLICY ========= */
+  '-aa-ra-G': {
+    label: 'AP:: RA (Guest)',
+    category: 'AP',
+    text: accessibilityGuestRa
+  },
+  '-aa-ra-H': {
+    label: 'AP:: RA (Host)',
+    category: 'AP',
+    text: accessibilityHostRa
+  },
+  '-aa-exemption': {
+    label: 'AP:: Exemption Granted',
+    category: 'AP',
+    text: exemptionGiven
+  },
+
+  /* ========= REFUNDS ========= */
+  '-refund': {
+    label: 'NDP:: Refund after Inv',
+    category: 'NDP',
+    text: refund
+  },
+
+  /* ========= REVIEW DISPUTE ========= */
+  '-rrr-removed-eea': {
+    label: 'RRR:: Review Removed (EEA)',
+    category: 'RRR',
+    text: reviewRemovedEEA
+  },
+
+  /* ========= MAPPINGS ========= */
+  '-map-ndp': {
+    label: 'NDP:: Case Mapping',
+    category: 'NDP',
+    text: ndpFinalMapping
+  },
+  '-map-ap': {
+    label: 'AP:: Case Mapping',
+    category: 'AP',
+    text: apFinalMapping
+  },
+  '-map-od': {
+    label: 'AP:: Open Doors Refund Mapping',
+    category: 'AP',
+    text: openDoors
+  },
+  '-map-rrr': {
+    label: 'RRR:: Outcome Mapping',
+    category: 'RRR',
+    text: reviewOutcome
+  }
 }
 
 const macros = Object.keys(macroRegistry)
@@ -96,7 +184,7 @@ watch(macro, (newVal) => {
   let val = newVal
 
   for (const key in macroRegistry) {
-    val = val.replaceAll(key, macroRegistry[key])
+    val = val.replaceAll(key, macroRegistry[key].text)
   }
 
   if (val !== newVal) macro.value = val
@@ -113,7 +201,10 @@ const filteredMacros = computed(() => {
   return macros
     .map(m => ({
       value: m,
-      score: fuzzyScore(query, m.slice(1)) // remove leading dash
+      score: Math.max(
+        fuzzyScore(query, m.slice(1)),
+        fuzzyScore(query, macroRegistry[m].label.toLowerCase())
+      )
     }))
     .filter(item => item.score > 0)
     .sort((a, b) => b.score - a.score)
@@ -240,12 +331,37 @@ textarea {
 }
 
 .macro-item {
-  padding: 4px 8px;
-  border-radius: 6px;
-  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.85rem;
-  user-select: none;
+  background: #f4f4f4;
+  min-width: 140px;
+}
+
+.macro-number {
+  background: #e5e7eb;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  padding: 1px 4px;
+}
+
+.macro-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.macro-key {
+  margin-right: 6px;
+  font-size: 0.8rem;
+}
+
+.macro-label {
+  color: #666;
+  font-size: 0.8rem;
 }
 
 .macro-item.active {
