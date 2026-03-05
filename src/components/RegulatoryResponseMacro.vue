@@ -12,7 +12,7 @@
     <div class="position-relative w-100 position-relative">
       <div class="macro-wrapper">
         <textarea
-          ref="textarea"
+          ref="macroTextarea"
           v-model="macro"
           class="form-control"
           rows="5"
@@ -63,10 +63,9 @@
   </div>
   <div class="d-flex flex-col gap-2 mb-2">
 
-    <!-- Input textarea -->
+    <!-- Input macroTextarea -->
     <div class="position-relative w-50">
       <textarea
-        ref="textarea"
         v-model="preformattedText"
         class="form-control"
         rows="5"
@@ -74,7 +73,7 @@
       />
     </div>
 
-    <!-- Result textarea -->
+    <!-- Result macroTextarea -->
     <div class="position-relative w-100">
       <textarea
         :value="formattedText"
@@ -97,7 +96,7 @@ const macro = ref('')
 
 const preformattedText = ref('')
 
-const textarea = ref(null)
+const macroTextarea = ref(null)
 const showList = ref(false)
 const highlightedIndex = ref(0)
 
@@ -227,7 +226,7 @@ watch(macro, (newVal) => {
 })
 
 const filteredMacros = computed(() => {
-  const match = macro.value.slice(0, textarea.value?.selectionStart || 0)
+  const match = macro.value.slice(0, macroTextarea.value?.selectionStart || 0)
     .match(/-([\w-]*)$/)
 
   if (!match) return macros
@@ -275,7 +274,7 @@ function onInput(e) {
 }
 
 function insertMacro(selected) {
-  const el = textarea.value
+  const el = macroTextarea.value
   const start = el.selectionStart
   const before = macro.value.slice(0, start)
   const after = macro.value.slice(start)
