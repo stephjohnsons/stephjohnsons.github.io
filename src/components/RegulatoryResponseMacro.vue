@@ -52,6 +52,40 @@
 
     </div>
   </div>
+
+  <div
+    class="gap-3"
+    :class="{ 'dark-mode': ui.isDark }"
+  >
+    <h5 class="fw-normal">
+      Line Remover
+    </h5>
+  </div>
+  <div class="d-flex flex-col gap-2 mb-2">
+
+    <!-- Input textarea -->
+    <div class="position-relative w-50">
+      <textarea
+        ref="textarea"
+        v-model="preformattedText"
+        class="form-control"
+        rows="5"
+        placeholder="Copy text here"
+      />
+    </div>
+
+    <!-- Result textarea -->
+    <div class="position-relative w-100">
+      <textarea
+        :value="formattedText"
+        class="form-control"
+        rows="5"
+        readonly
+        placeholder="Formatted result"
+      />
+    </div>
+
+  </div>
 </template>
 
 <script setup>
@@ -60,6 +94,8 @@ import { useUIStore } from '@/stores/ui';
 
 const ui = useUIStore();
 const macro = ref('')
+
+const preformattedText = ref('')
 
 const textarea = ref(null)
 const showList = ref(false)
@@ -125,12 +161,12 @@ const macroRegistry = {
   },
 
   /* ========= ACCESSIBILITY POLICY ========= */
-  '-aa-ra-G': {
+  '-aa-G': {
     label: 'AP:: RA (Guest)',
     category: 'AP',
     text: accessibilityGuestRa
   },
-  '-aa-ra-H': {
+  '-aa-H': {
     label: 'AP:: RA (Host)',
     category: 'AP',
     text: accessibilityHostRa
@@ -283,6 +319,47 @@ function selectHighlighted() {
   if (!showList.value) return
   insertMacro(filteredMacros.value[highlightedIndex.value])
 }
+
+
+function formatText(text) {
+  const paragraphs = text.split(/\n{2,}/)
+
+  const processed = paragraphs.map(p => {
+    const lines = p.split("\n").map(l => l.trim())
+    let result = []
+
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i]
+
+      while (true) {
+        const next = lines[i + 1]
+        if (!next) break
+
+        const endsSentence = /[.!?]"?$/.test(line)
+
+        if (!endsSentence) {
+          line += " " + next
+          i++
+        } else {
+          break
+        }
+      }
+
+      result.push(line)
+    }
+
+    return result.join(" ")
+  })
+
+  let output = processed.join("\n\n")
+
+  // 🔧 ensure numbered lists start on new lines
+  output = output.replace(/\s+(\d+\.\s)/g, "\n$1")
+
+  return output.trim()
+}
+
+const formattedText = computed(() => formatText(preformattedText.value))
 
 </script>
 
