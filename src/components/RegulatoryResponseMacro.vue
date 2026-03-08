@@ -325,6 +325,7 @@ function formatText(text) {
 
   const processed = paragraphs.map(p => {
     const lines = p.split("\n").map(l => l.trim())
+    const signatureLines = /^(Best|regards|sincerely|thanks|thank you)[,]?$/i
     let result = []
 
     for (let i = 0; i < lines.length; i++) {
@@ -344,6 +345,11 @@ function formatText(text) {
         }
       }
 
+      if (signatureLines.test(line)) {
+        result.push(line)
+        continue
+      }
+
       result.push(line)
     }
 
@@ -354,6 +360,9 @@ function formatText(text) {
 
   // 🔧 ensure numbered lists start on new lines
   output = output.replace(/\s+(\d+\.\s)/g, "\n$1")
+  output = output.replace(/\s+([・\-*•]\s)/g, "\n$1")
+  output = output.replace(/Best,\s+Liam T\./g, "Best,\nLiam T.")
+
 
   return output.trim()
 }
