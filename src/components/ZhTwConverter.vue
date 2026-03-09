@@ -1,52 +1,103 @@
 <template>
-  <div v-if="loading" class="loading-bar" :style="{ width: progress + '%' }" :class="{ 'dark-mode': ui.isDark }"></div>
-  <div class="d-flex flex-row gap-3" :class="{ 'dark-mode': ui.isDark }">
+  <div
+    v-if="loading"
+    class="loading-bar"
+    :style="{ width: progress + '%' }"
+    :class="{ 'dark-mode': ui.isDark }"
+  ></div>
+  <div
+    class="d-flex flex-row gap-3"
+    :class="{ 'dark-mode': ui.isDark }"
+  >
     <h5 class="fw-normal">
       Converter
     </h5>
     <p class="my-auto d-flex gap-2 justify-content-center">
-      <select class="text-sm mb-2" v-model="name">
-        <option value="st" default>小桀</option>
+      <select
+        class="text-sm mb-2"
+        v-model="name"
+      >
+        <option
+          value="st"
+          default
+        >小桀</option>
         <option value="kx">可欣</option>
         <option value="jf">小苏</option>
         <option value="ly">丽亚</option>
       </select>
-      <select class="text-sm mb-2" v-model="domain">
-        <option value="cn" default>.cn</option>
+      <select
+        class="text-sm mb-2"
+        v-model="domain"
+      >
+        <option
+          value="cn"
+          default
+        >.cn</option>
         <option value="com">.com</option>
       </select>
-      <button class="btn btn-sm btn-outline-secondary mb-2"
-        @click="hideTw = false; simplified = ''; traditional = '';">清<span class="d-none d-sm-inline">空</span></button>
+      <button
+        class="btn btn-sm btn-outline-secondary mb-2"
+        @click="hideTw = false; simplified = ''; traditional = '';"
+      >清<span class="d-none d-sm-inline">空</span></button>
     </p>
-    <button class="btn btn-sm btn-outline-dark ms-auto mb-2" @click="ui.toggleDark()">
+    <button
+      class="btn btn-sm btn-outline-dark ms-auto mb-2"
+      @click="ui.toggleDark()"
+    >
       {{ ui.isDark ? '☼' : '☾' }}
     </button>
   </div>
   <div class="d-flex flex-col gap-2 mb-2">
     <div class="position-relative w-50 position-relative sticky-top">
       <div class="position-relative">
-        <textarea v-model="simplified" rows="5" class="form-control" placeholder="Simplified Chinese"></textarea>
+        <textarea
+          v-model="simplified"
+          rows="5"
+          class="form-control"
+          placeholder="Simplified Chinese"
+        ></textarea>
 
-        <button v-if="!cnCopied"
+        <button
+          v-if="!cnCopied"
           class="position-absolute top-0 end-0 btn btn-secondary px-2 py-1 rounded small me-2 mt-1"
-          @click="copyToCnClipboard" style="z-index: 1000;">
+          @click="copyToCnClipboard"
+          style="z-index: 1000;"
+        >
           Copy
         </button>
-        <button v-if="cnCopied" class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
-          style="z-index: 1000;">
+        <button
+          v-if="cnCopied"
+          class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
+          style="z-index: 1000;"
+        >
           Copied!
         </button>
       </div>
-      <div v-if="!hideTw" class="position-relative mt-1">
-        <textarea :value="traditional" rows="5" class="form-control" placeholder="Traditional Chinese"
-          readonly></textarea>
+      <div
+        v-if="!hideTw"
+        class="position-relative mt-1"
+      >
+        <textarea
+          :value="traditional"
+          rows="5"
+          class="form-control"
+          placeholder="Traditional Chinese"
+          readonly
+        ></textarea>
 
-        <button v-if="!twCopied" class="position-absolute top-0 end-0 btn btn-primary px-2 py-1 rounded small me-2 mt-1"
-          @click="copyToTwClipboard" style="z-index: 1000;">
+        <button
+          v-if="!twCopied"
+          class="position-absolute top-0 end-0 btn btn-primary px-2 py-1 rounded small me-2 mt-1"
+          @click="copyToTwClipboard"
+          style="z-index: 1000;"
+        >
           Copy
         </button>
-        <button v-if="twCopied" class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
-          style="z-index: 1000;">
+        <button
+          v-if="twCopied"
+          class="position-absolute top-0 end-0 btn btn-success px-2 py-1 rounded small me-2 mt-1"
+          style="z-index: 1000;"
+        >
           Copied!
         </button>
       </div>
@@ -54,150 +105,416 @@
     </div>
     <div class="d-flex flex-row w-50 overflow-y-scroll">
       <div class="d-flex flex-column">
-        <div class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto" :class="{ 'dark-mode': ui.isDark }">
+        <div
+          class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto"
+          :class="{ 'dark-mode': ui.isDark }"
+        >
           <div class="d-flex gap-2 flex-wrap">
             <span class="mx-2 my-auto">开头</span>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.opening[name]()">开头</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.quick">额外</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.translate">翻译</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.M">多笔</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.opening[name]()"
+            >开头</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.opening.quick"
+            >额外</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.translate"
+            >翻译</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.reso.M"
+            >多笔</button>
             <span class="mx-2 my-auto">检查</span>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointGuest">检客</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkpointHost">检东</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.reso.checkpointGuest"
+            >检客</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.reso.checkpointHost"
+            >检东</button>
           </div>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
           <div class="d-flex gap-2 flex-wrap">
             <span class="mx-2 my-auto">通话</span>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.pickup">接听</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.opening.noPickup">未接</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.ghost">被鬼</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.opening.pickup"
+            >接听</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.opening.noPickup"
+            >未接</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.ghost"
+            >被鬼</button>
             <span class="mx-2 my-auto">帮助</span>
-            <button class="btn btn-sm btn-warning" @click="templates.educate.help(); hideTw = true">帮助</button>
-            <button class="btn btn-sm btn-warning" @click="templates.educate.lead(); hideTw = true">主管</button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="templates.educate.help(); hideTw = true"
+            >帮助</button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="templates.educate.lead(); hideTw = true"
+            >主管</button>
           </div>
         </div>
-        <div class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto" :class="{ 'dark-mode': ui.isDark }">
+        <div
+          class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto"
+          :class="{ 'dark-mode': ui.isDark }"
+        >
           <span class="mx-2 my-auto">消息</span>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.delay">迟回</button>
-          <button class="btn btn-sm btn-warning" @click="templates.educate.noReply">未回</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.probe">探测</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.followup">跟进</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.waitingResponse">待处</button>
-          <button class="btn btn-sm btn-warning" @click="templates.educate.meantime">期间</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.sorry">抱歉</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.waiting">等待</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.duplicate">重复</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.bug">漏洞</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.feedback">反馈</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.specify">指定</button>
-          <button class="btn btn-sm btn-warning" @click="templates.educate.cotraveller">旅伴</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.delay"
+          >迟回</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.educate.noReply"
+          >未回</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.probe"
+          >探测</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.followup"
+          >跟进</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.waitingResponse"
+          >待处</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.educate.meantime"
+          >期间</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.sorry"
+          >抱歉</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.waiting"
+          >等待</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.duplicate"
+          >重复</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.bug"
+          >漏洞</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.feedback"
+          >反馈</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.specify"
+          >指定</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.educate.cotraveller"
+          >旅伴</button>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
           <span class=" mx-2 my-auto">教育</span>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.photography">摄影</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.report">举报</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.fapiao">发票</button>
-          <button class="btn btn-sm btn-warning" @click="templates.educate.international">国际</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.defender">屏蔽</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.instantBook">闪订</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnhappyReview">评价</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundDisabled">到账</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.search">搜索</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payout">收款</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.repeat">反复</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.robotCBG">协商</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.listingViews">浏览</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.photography"
+          >摄影</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.report"
+          >举报</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.fapiao"
+          >发票</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.educate.international"
+          >国际</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.defender"
+          >屏蔽</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.instantBook"
+          >闪订</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.hostUnhappyReview"
+          >评价</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.refundDisabled"
+          >到账</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.search"
+          >搜索</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.payout"
+          >收款</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.repeat"
+          >反复</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.robotCBG"
+          >协商</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.educate.listingViews"
+          >浏览</button>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
-          <div class=" d-flex gap-2 flex-wrap bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
+          <div
+            class=" d-flex gap-2 flex-wrap bg-row rounded-3 me-auto w-100"
+            :class="{ 'dark-mode': ui.isDark }"
+          >
             <span class="mx-2 my-auto">填充 </span>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.couponFillin">礼金</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.refundFillin">退款</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.payoutFillin">收款</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.rebookingFillin">重订</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.couponFillin"
+            >礼金</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.refundFillin"
+            >退款</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.payoutFillin"
+            >收款</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.rebookingFillin"
+            >重订</button>
           </div>
           <div class="d-flex gap-2 flex-wrap">
             <span class="mx-2 my-auto">十分</span>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.upcomingTrip">即将</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.checkEmail">绑定</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentHost">房东</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.complimentGuest">房客</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircoverHost">保H</button>
-            <button class="btn btn-sm btn-outline-secondary" @click="templates.educate.aircoverGuest">保G</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.reso.upcomingTrip"
+            >即将</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.reso.checkEmail"
+            >绑定</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.reso.complimentHost"
+            >房东</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.reso.complimentGuest"
+            >房客</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.aircoverHost"
+            >保H</button>
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              @click="templates.educate.aircoverGuest"
+            >保G</button>
           </div>
-          <div class="d-flex gap-2 flex-wrap  bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
+          <div
+            class="d-flex gap-2 flex-wrap  bg-row rounded-3 me-auto w-100"
+            :class="{ 'dark-mode': ui.isDark }"
+          >
             <span class="mx-2 my-auto">备注</span>
-            <button class="btn btn-sm btn-warning" @click="templates.reso.loss">损失</button>
-            <button class="btn btn-sm btn-warning" @click="double(); hideTw = true">双票</button>
-            <button class="btn btn-sm btn-warning" @click="templates.educate.rTwo">啊二</button>
-            <button class="btn btn-sm btn-warning" @click="symbol(); hideTw = true">符号</button>
-            <button class="btn btn-sm btn-warning" @click="numbering(); hideTw = true">号码</button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="templates.reso.loss"
+            >损失</button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="double(); hideTw = true"
+            >双票</button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="templates.educate.rTwo"
+            >啊二</button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="symbol(); hideTw = true"
+            >符号</button>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="numbering(); hideTw = true"
+            >号码</button>
           </div>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
-          <button class="btn btn-sm btn-outline-primary" @click="templates.reso.requestDocs">文件</button>
-          <button class="btn btn-sm btn-outline-primary" @click="templates.reso.countryHumid">告知</button>
-          <button class="btn btn-sm btn-outline-primary" @click="templates.reso.hostUnresponsive">没回</button>
+          <button
+            class="btn btn-sm btn-outline-primary"
+            @click="templates.reso.requestDocs"
+          >文件</button>
+          <button
+            class="btn btn-sm btn-outline-primary"
+            @click="templates.reso.countryHumid"
+          >告知</button>
+          <button
+            class="btn btn-sm btn-outline-primary"
+            @click="templates.reso.hostUnresponsive"
+          >没回</button>
           <span class="mx-2 my-auto">房东</span>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hSolution">符合</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.hostUnhappy">不爽</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.reviews">评价</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.hSolution"
+          >符合</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.hostUnhappy"
+          >不爽</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.reviews"
+          >评价</button>
         </div>
         <div class="d-flex flex-wrap gap-2 mb-2">
           <span class="mx-2 my-auto">房客</span>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.gConsole">安抚</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.rba">重新</button>
-          <button class="btn btn-sm btn-outline-success" @click="templates.reso.gSolution">符合</button>
-          <button class="btn btn-sm btn-warning" @click="templates.reso.notQualified">不符</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.informPayout">收款</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.reso.solution">方案</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.gConsole"
+          >安抚</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.rba"
+          >重新</button>
+          <button
+            class="btn btn-sm btn-outline-success"
+            @click="templates.reso.gSolution"
+          >符合</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.reso.notQualified"
+          >不符</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.informPayout"
+          >收款</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.reso.solution"
+          >方案</button>
         </div>
-        <div class="d-flex gap-2 flex-wrap bg-row rounded-3 me-auto w-100" :class="{ 'dark-mode': ui.isDark }">
+        <div
+          class="d-flex gap-2 flex-wrap bg-row rounded-3 me-auto w-100"
+          :class="{ 'dark-mode': ui.isDark }"
+        >
           <span class="mx-2 my-auto">结束</span>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.closing.zh1(); hideTw = true">简一</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.closing.zh2(); hideTw = true">简二</button>
-          <button class="btn btn-sm btn-warning" @click="templates.closing.tw1(); hideTw = true">繁壹</button>
-          <button class="btn btn-sm btn-warning" @click="templates.closing.tw2(); hideTw = true">繁贰</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.closing.p">待处</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.closing.zh1(); hideTw = true"
+          >简一</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.closing.zh2(); hideTw = true"
+          >简二</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.closing.tw1(); hideTw = true"
+          >繁壹</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.closing.tw2(); hideTw = true"
+          >繁贰</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.closing.p"
+          >待处</button>
         </div>
         <h4 class="mt-2">英文</h4>
         <div class="d-flex gap-2 mb-2 flex-wrap">
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english[name]">开头</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.nova(); hideTw = true">翻译</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.reso(); hideTw = true">订单</button>
-          <button class="btn btn-sm btn-outline-secondary" @click="templates.english.hc(); hideTw = true">HC</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.thanks(); hideTw = true">谢谢</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.instantBook(); hideTw = true">闪订</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.report(); hideTw = true">举报</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.international(); hideTw = true">国际</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.rebooking(); hideTw = true">重订</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.defenderBlock(); hideTw = true">屏蔽</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.closing(); hideTw = true">结束</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.pending(); hideTw = true">待处</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english[name]"
+          >开头</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.nova(); hideTw = true"
+          >翻译</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.reso(); hideTw = true"
+          >订单</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.hc(); hideTw = true"
+          >HC</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.thanks(); hideTw = true"
+          >谢谢</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.instantBook(); hideTw = true"
+          >闪订</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.report(); hideTw = true"
+          >举报</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.international(); hideTw = true"
+          >国际</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.rebooking(); hideTw = true"
+          >重订</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.defenderBlock(); hideTw = true"
+          >屏蔽</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.closing(); hideTw = true"
+          >结束</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.pending(); hideTw = true"
+          >待处</button>
         </div>
         <div class="d-flex gap-2 mb-2 flex-wrap">
           <span class="mx-2 my-auto">保障</span>
-          <button class="btn btn-sm btn-warning" @click="templates.english.aircoverG(); hideTw = true">房客</button>
-          <button class="btn btn-sm btn-warning" @click="templates.english.aircoverH(); hideTw = true">房东</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.pickup(); hideTw = true">接听</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.noPickup(); hideTw = true">未接</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.ghosted(); hideTw = true">被鬼</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.coupon(); hideTw = true">礼金</button>
-          <button class="btn btn-sm btn-outline-secondary"
-            @click="templates.english.refund(); hideTw = true">退款</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.english.aircoverG(); hideTw = true"
+          >房客</button>
+          <button
+            class="btn btn-sm btn-warning"
+            @click="templates.english.aircoverH(); hideTw = true"
+          >房东</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.pickup(); hideTw = true"
+          >接听</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.noPickup(); hideTw = true"
+          >未接</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.ghosted(); hideTw = true"
+          >被鬼</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.coupon(); hideTw = true"
+          >礼金</button>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            @click="templates.english.refund(); hideTw = true"
+          >退款</button>
         </div>
       </div>
     </div>
@@ -270,9 +587,9 @@ const fetchSubtemplates = async (type, template) => {
     // opening then different res
     const res = ref('');
     if (type === 'opening') {
-      res.value = await fetch(`${backend}/${type}?type=${template}`);
+      res.value = await fetch(`${backend}/volume/${type}?type=${template}`);
     } else {
-      res.value = await fetch(`${backend}/${type}?type=${template}&domain=${domain.value}`);
+      res.value = await fetch(`${backend}/volume/${type}?type=${template}&domain=${domain.value}`);
     }
     const json = await res.value.json();
     if (type === 'opening') {
