@@ -1,5 +1,25 @@
 <template>
+  <div class="border-bottom d-flex gap-3 mb-3">
+
+    <button
+      class="btn border-0 rounded-0"
+      :class="!showMacroManager && 'border-bottom border-2 border-warning'"
+      @click="showMacroManager = false"
+    >
+      Macros
+    </button>
+
+    <button
+      class="btn border-0 rounded-0"
+      :class="showMacroManager && 'border-bottom border-2 border-warning'"
+      @click="showMacroManager = true"
+    >
+      Manage Macros
+    </button>
+
+  </div>
   <div
+    v-if="!showMacroManager"
     class="gap-3"
     :class="{ 'dark-mode': ui.isDark }"
   >
@@ -8,7 +28,10 @@
     </h5>
     <p class="text-grey opacity-50">-ft, -ndp, -od, -ap, -rrr</p>
   </div>
-  <div class="d-flex flex-col gap-2 mb-2">
+  <div
+    class="d-flex flex-col gap-2 mb-2"
+    v-if="!showMacroManager"
+  >
     <div class="position-relative w-100 position-relative">
       <div class="macro-wrapper">
         <textarea
@@ -53,6 +76,8 @@
     </div>
   </div>
 
+  <MacroManager v-if="showMacroManager" />
+
   <div
     class="gap-3"
     :class="{ 'dark-mode': ui.isDark }"
@@ -84,15 +109,15 @@
       />
     </div>
   </div>
-
-  <UpdateTimeline />
 </template>
 
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue';
 import { useUIStore } from '@/stores/ui';
 import UpdateTimeline from './UpdateTimeline.vue';
+import MacroManager from './MacroManager.vue';
 
+const showMacroManager = ref(false)
 const ui = useUIStore();
 const macro = ref('')
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
