@@ -114,7 +114,6 @@
 <script setup>
 import { ref, watch, computed, onMounted } from 'vue';
 import { useUIStore } from '@/stores/ui';
-import UpdateTimeline from './UpdateTimeline.vue';
 import MacroManager from './MacroManager.vue';
 
 const showMacroManager = ref(false)
