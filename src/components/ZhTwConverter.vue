@@ -636,7 +636,7 @@ Object.entries(allTemplates).forEach(([type, names]) => {
 
 const symbol = () => {
   simplified.value =
-    '■ title\n※ note\n『__xx__』\n▼幫助中心 ▲ ‣ ◆ Between ・point form\n••••\n»»━━━◆ xx ◆━━━««\n« No, I\'m done »'
+    '∎ title ■ subtitle ▲ point title ※ note ▼幫助中心『__xx__』 GT / HT / UI\n◆ Between ・point form ‣ point form ⁃ point form /// PII ••••\n»»━━━◆ xx ◆━━━««\n💬 Interaction\n🌸 Summary\nCOR:  ★ ≈\nPreferred Language:  \n🍁⚫🚨🟢🌼🎀🗒✨🍀❓Issue\n————————————————————\n━━━━━━━━━━━━━━━━━━━━\n•———————————————————•\n'
 }
 
 const numbering = () => {

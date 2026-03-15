@@ -38,7 +38,7 @@
           ref="macroTextarea"
           v-model="macro"
           class="form-control"
-          rows="5"
+          rows="4"
           @input="onInput"
           @keydown="handleNumberSelect"
           @keydown.left.prevent="highlightPrev"
@@ -82,7 +82,7 @@
     class="gap-3"
     :class="{ 'dark-mode': ui.isDark }"
   >
-    <h5 class="fw-normal">
+    <h5 class="fw-normal mt-2">
       Line Remover
     </h5>
   </div>
@@ -93,7 +93,7 @@
       <textarea
         v-model="preformattedText"
         class="form-control"
-        rows="5"
+        rows="3"
         placeholder="Copy text here"
       />
     </div>
@@ -103,7 +103,7 @@
       <textarea
         :value="formattedText"
         class="form-control"
-        rows="5"
+        rows="3"
         readonly
         placeholder="Formatted result"
       />
@@ -271,6 +271,7 @@ function formatText(text) {
   output = output.replace(/https?:\/\/(www\.)?airbnb\.com/g, "airbnb.com")
   output = output.replace(/Best regards,\s+Liam T\./g, "Best regards,\nLiam T.")
   output = output.replace(/Best,\s+Liam T\./g, "Best,\nLiam T.")
+  output = output.replace(/Thanks for understanding,\s+Liam T\./g, "Thanks for understanding,\nLiam T.")
 
   return output.trim()
 }
