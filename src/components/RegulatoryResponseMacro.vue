@@ -26,7 +26,6 @@
     <h5 class="fw-normal">
       Macro
     </h5>
-    <p class="text-grey opacity-50">-ft, -ndp, -od, -ap, -rrr</p>
   </div>
   <div
     class="d-flex flex-col gap-2 mb-2"
