@@ -52,7 +52,7 @@
       <div class="position-relative">
         <textarea
           v-model="simplified"
-          rows="5"
+          rows="4"
           class="form-control"
           placeholder="Simplified Chinese"
         ></textarea>
@@ -75,11 +75,11 @@
       </div>
       <div
         v-if="!hideTw"
-        class="position-relative mt-1"
+        class="position-relative mt-2"
       >
         <textarea
           :value="traditional"
-          rows="5"
+          rows="4"
           class="form-control"
           placeholder="Traditional Chinese"
           readonly
@@ -748,7 +748,7 @@ textarea[readonly] {
 
 .overflow-y-scroll {
   overflow-y: scroll;
-  max-height: 17rem;
+  max-height: 14.5rem;
   padding-right: 0.5rem;
 }
 </style>
