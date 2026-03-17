@@ -57,7 +57,7 @@
       <div
         v-for="m in macros"
         :key="m.id"
-        class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2"
+        class="col-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2"
       >
         <div class="card h-100 shadow-sm">
 
