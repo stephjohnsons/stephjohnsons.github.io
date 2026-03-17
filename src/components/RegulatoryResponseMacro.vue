@@ -197,16 +197,6 @@ function insertMacro(selected) {
   })
 }
 
-// function handleNumberSelect(e) {
-//   if (!showList.value) return
-
-//   const num = parseInt(e.key)
-//   if (!isNaN(num) && num > 0 && num <= filteredMacros.value.length) {
-//     e.preventDefault()
-//     insertMacro(filteredMacros.value[num - 1])
-//   }
-// }
-
 function highlightNext() {
   if (!showList.value) return
   highlightedIndex.value =
