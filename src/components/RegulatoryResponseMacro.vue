@@ -257,10 +257,18 @@ function formatText(text) {
   // 🔧 ensure numbered lists start on new lines
   output = output.replace(/\s+(\d+\.\s)/g, "\n$1")
   output = output.replace(/\s+([・\-*•]\s)/g, "\n$1")
-  output = output.replace(/https?:\/\/(www\.)?airbnb\.com/g, "airbnb.com")
   output = output.replace(/Best regards,\s+Liam T\./g, "Best regards,\nLiam T.")
   output = output.replace(/Best,\s+Liam T\./g, "Best,\nLiam T.")
+  output = output.replace(/Best regards,\s+Liam/g, "Best regards,\nLiam T.")
+  output = output.replace(/Best,\s+Liam/g, "Best,\nLiam T.")
   output = output.replace(/Thanks for understanding,\s+Liam T\./g, "Thanks for understanding,\nLiam T.")
+  output = output.replace(/(?<!^)(（\d+）)/g, "\n$1")
+  output = output.replace(/[:：]\s*(?=(www\.|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}))/g, ": \n")
+  output = output.replace(/\bwww\./g, "")
+  output = output.replace(/72|48/g, (match) => {
+    if (match === "72") return "48"
+    if (match === "48") return "24"
+  })
 
   return output.trim()
 }
