@@ -119,29 +119,36 @@
 
           <div class="modal-body">
 
-            <div class="mb-2">
-              <label class="form-label">Macro</label>
+            <div class="mb-2 d-flex flex-row gap-2">
+              <label class="form-label my-auto">Macro</label>
               <input
                 v-model="form.macro"
                 class="form-control"
               />
             </div>
 
-            <div class="mb-2">
-              <label class="form-label">Label</label>
+            <div class="mb-2 d-flex flex-row gap-2 align-items-center">
+              <label class="form-label my-auto me-1">Label</label>
               <input
                 v-model="form.label"
                 class="form-control"
               />
-            </div>
 
-            <div class="mb-2">
-              <label class="form-label">Category</label>
+              <label class="form-label my-auto">Category</label>
               <input
                 v-model="form.category"
                 class="form-control"
               />
             </div>
+
+            <div class="mb-2">
+              <label class="form-label">Admin Notes</label>
+              <textarea
+                v-model="form.remark"
+                class="form-control"
+              />
+            </div>
+
 
             <div class="mb-2">
               <label class="form-label">Text</label>
@@ -191,6 +198,7 @@ const form = ref({
   macro: '',
   label: '',
   category: '',
+  remark: '',
   text: ''
 })
 
@@ -213,6 +221,7 @@ function openAdd() {
     macro: '',
     label: '',
     category: '',
+    remark: '',
     text: ''
   }
 
