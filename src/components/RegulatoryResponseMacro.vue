@@ -33,18 +33,28 @@
   >
     <div class="position-relative w-100 position-relative">
       <div class="macro-wrapper">
-        <textarea
-          ref="macroTextarea"
-          v-model="macro"
-          class="form-control"
-          rows="4"
-          @input="onInput"
-          @keydown="handleNumberSelect"
-          @keydown.left.prevent="highlightPrev"
-          @keydown.right.prevent="highlightNext"
-          @keydown.enter.prevent="selectHighlighted"
-          placeholder="Type - to see available macros"
-        />
+        <div class="d-flex flex-row gap-2">
+          <textarea
+            ref="macroTextarea"
+            v-model="macro"
+            class="form-control"
+            rows="4"
+            @input="onInput"
+            @keydown="handleNumberSelect"
+            @keydown.left.prevent="highlightPrev"
+            @keydown.right.prevent="highlightNext"
+            @keydown.enter.prevent="selectHighlighted"
+            placeholder="Type - to see available macros"
+            resize="none"
+          />
+
+          <textarea
+            ref="remarkTextarea"
+            v-model="remark"
+            class="form-control form-control-sm resizeable-textarea"
+            rows="4"
+          />
+        </div>
 
         <div
           v-if="showList"
@@ -118,10 +128,12 @@ import MacroManager from './MacroManager.vue';
 const showMacroManager = ref(false)
 const ui = useUIStore();
 const macro = ref('')
+const remark = ref('')
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const preformattedText = ref('')
 
 const macroTextarea = ref(null)
+const remarkTextarea = ref(null)
 const showList = ref(false)
 const highlightedIndex = ref(0)
 
@@ -183,11 +195,14 @@ function insertMacro(selected) {
   const before = macro.value.slice(0, start)
   const after = macro.value.slice(start)
 
-  const text = macroRegistry.value[selected].text
+  const item = macroRegistry.value[selected]
+  const text = item.text || ''
+  const remarkText = item.remark || ''
 
   const newBefore = before.replace(/-[\w-]*$/, text)
 
   macro.value = newBefore + after
+  remark.value = remarkText
   showList.value = false
 
   requestAnimationFrame(() => {
@@ -286,7 +301,8 @@ async function fetchMacros() {
     registry[m.macro] = {
       label: m.label,
       category: m.category,
-      text: m.text
+      text: m.text,
+      remark: m.remark
     }
   })
 
@@ -313,6 +329,10 @@ watch(macro, (val) => {
 <style scoped>
 textarea {
   resize: none;
+}
+
+.resizeable-textarea {
+  resize: both !important;
 }
 
 .macro-wrapper {
