@@ -327,14 +327,6 @@ watch(macro, (val) => {
 </script>
 
 <style scoped>
-textarea {
-  resize: none;
-}
-
-.resizeable-textarea {
-  resize: both !important;
-}
-
 .macro-wrapper {
   position: relative;
 }

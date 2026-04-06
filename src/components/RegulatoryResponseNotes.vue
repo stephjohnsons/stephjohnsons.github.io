@@ -20,7 +20,7 @@
         rows="4"
       />
 
-      <div class="text-end small text-muted">
+      <div class="small text-muted">
         <span v-if="saving">Saving...</span>
         <span v-else>Saved</span>
       </div>
@@ -95,11 +95,6 @@ watch([title, content], () => {
 onMounted(fetchLatestNote)
 </script>
 <style scoped>
-textarea {
-  resize: none;
-}
-
-/* Apply ONLY to container, not everything blindly */
 .dark-mode {
   background: #2b2b2b;
 }
