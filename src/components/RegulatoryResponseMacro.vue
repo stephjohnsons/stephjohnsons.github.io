@@ -1,6 +1,5 @@
 <template>
   <div class="border-bottom d-flex gap-3 mb-3">
-
     <button
       class="btn border-0 rounded-0"
       :class="!showMacroManager && 'border-bottom border-2 border-warning'"
@@ -14,10 +13,10 @@
       :class="showMacroManager && 'border-bottom border-2 border-warning'"
       @click="showMacroManager = true"
     >
-      Manage Macros
+      Manage
     </button>
-
   </div>
+  <Notes />
   <div
     v-if="!showMacroManager"
     class="gap-3"
@@ -124,6 +123,7 @@
 import { ref, watch, computed, onMounted } from 'vue';
 import { useUIStore } from '@/stores/ui';
 import MacroManager from './MacroManager.vue';
+import Notes from './RegulatoryResponseNotes.vue';
 
 const showMacroManager = ref(false)
 const ui = useUIStore();
@@ -292,7 +292,7 @@ function formatText(text) {
 const formattedText = computed(() => formatText(preformattedText.value))
 
 async function fetchMacros() {
-  const res = await fetch(`${backend}/rr/macros`)
+  const res = await fetch(`${backend}/rr?resource=macros`)
   const data = await res.json()
 
   const registry = {}
