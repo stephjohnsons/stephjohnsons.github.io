@@ -5,14 +5,11 @@
     </div>
 
     <div class="d-flex border rounded mb-2 overflow-hidden">
-
-      <!-- Sidebar -->
       <div
         class="border-end p-2 d-flex flex-column gap-2"
         style="width: 160px;"
       >
 
-        <!-- Toolbar -->
         <div class="d-flex align-items-center gap-2">
           <button
             class="btn btn-sm btn-warning d-flex justify-content-center w-50"
@@ -32,7 +29,6 @@
           </button>
         </div>
 
-        <!-- Notes List -->
         <div
           v-for="note in notes"
           :key="note.id"
@@ -47,7 +43,6 @@
             {{ note.title || 'Untitled' }}
           </span>
 
-          <!-- 🔴 Dirty Dot -->
           <span
             v-if="dirtyMap[note.id] && note.id !== noteId"
             class="unsaved-dot"
@@ -55,7 +50,6 @@
         </div>
       </div>
 
-      <!-- Editor -->
       <div class="flex-grow-1 p-2 d-flex flex-column gap-2">
         <input
           v-model="title"
