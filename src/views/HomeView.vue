@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="mt-2 ms-lg-4">
-        <h2 class="mb-1">{{ greeting }}, you silly boy.</h2>
+        <h2 class="mb-1">{{ greeting }}, you.</h2>
         <p class="mb-1">
           Stephen, a cellist based in Kuala Lumpur, Malaysia,
           brings over {{ yearsOfExperience }} years of experience to
