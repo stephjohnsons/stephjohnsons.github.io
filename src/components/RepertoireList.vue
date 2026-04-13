@@ -4,7 +4,6 @@
     id="repertoire"
   >
     <h3 class="text-xl font-bold">Repertoire</h3>
-    <h4>List of repertoire for students</h4>
   </div>
 
   <!-- Repertoire List Table -->
