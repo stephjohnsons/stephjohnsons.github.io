@@ -2,7 +2,11 @@
   <main>
     <div class="d-flex flex-column-reverse flex-lg-row align-items-lg-center my-5 py-2 py-lg-5">
       <div class="image-container d-flex">
-        <img src="/imgs/recital-2016.jpeg" :alt="homeDescription.alt" class="home-image">
+        <img
+          src="/imgs/recital-2016.jpeg"
+          :alt="homeDescription.alt"
+          class="home-image"
+        >
         <div class="caption d-flex flex-column justify-content-center align-items-start position-absolute">
           <p class="mb-0 fw-bold">
             {{ homeDescription.event }}
@@ -15,7 +19,7 @@
         </div>
       </div>
       <div class="mt-2 ms-lg-4">
-        <h2 class="mb-1">{{ greeting }}, you.</h2>
+        <h2 class="mb-1">{{ greeting }}, you silly boy.</h2>
         <p class="mb-1">
           Stephen, a cellist based in Kuala Lumpur, Malaysia,
           brings over {{ yearsOfExperience }} years of experience to
@@ -23,8 +27,14 @@
           He also has a keen interest in software development and enjoys reading.
         </p>
         <p class="d-flex flex-row">
-          <RouterLink :to="{ path: pageLinks[1].link }" class="text-muted">musician bio</RouterLink>
-          <RouterLink :to="{ path: pageLinks[5].link }" class="text-muted ms-3">teaching bio</RouterLink>
+          <RouterLink
+            :to="{ path: pageLinks[1].link }"
+            class="text-muted"
+          >musician bio</RouterLink>
+          <RouterLink
+            :to="{ path: pageLinks[5].link }"
+            class="text-muted ms-3"
+          >teaching bio</RouterLink>
           <!-- <RouterLink :to="{ path: pageLinks[3].link }" class="text-muted ms-3">vita</RouterLink> -->
         </p>
       </div>
