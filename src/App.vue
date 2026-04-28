@@ -1,15 +1,29 @@
 <template>
-  <header v-if="route.path !== '/tools'" class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3"
-    :class="{ 'dark-mode': ui.isDark }">
-    <a href="/" id="no-deco" class="d-flex align-items-center">
-      <h1 class="fw-light py-2 mb-1 fs-2" id="no-deco">
+  <header
+    v-if="route.path !== '/tools'"
+    class="d-flex flex-wrap m-3 px-3 pt-0 sticky-top border-bottom z-3"
+    :class="{ 'dark-mode': ui.isDark }"
+  >
+    <a
+      href="/"
+      id="no-deco"
+      class="d-flex align-items-center"
+    >
+      <h1
+        class="fw-light py-2 mb-1 fs-2"
+        id="no-deco"
+      >
         Stephen
         <span class="fw-medium">Johnson-Tseu</span>
       </h1>
     </a>
 
-    <a class="hamburger ms-auto my-auto" :class="{ 'hamburger--active': showMenu }"
-      @click.prevent="showMenu = !showMenu" @onclick="rememberScrollPosition">
+    <a
+      class="hamburger ms-auto my-auto"
+      :class="{ 'hamburger--active': showMenu }"
+      @click.prevent="showMenu = !showMenu"
+      @onclick="rememberScrollPosition"
+    >
       <span class="hamburger_line"></span>
       <span class="hamburger_line"></span>
       <span class="hamburger_line"></span>
@@ -17,12 +31,27 @@
   </header>
   <div :class="{ 'dark-mode': ui.isDark }">
     <RouterView v-slot="{ Component }">
-      <Transition name="slide-fade" appear>
-        <Component :is="Component" v-if="!showMenu" class="mx-4 mb-2 px-2" id="router" />
+      <Transition
+        name="slide-fade"
+        appear
+      >
+        <Component
+          :is="Component"
+          v-if="!showMenu"
+          class="mx-4 mb-2 px-2"
+          id="router"
+        />
       </Transition>
     </RouterView>
-    <Transition name="slide-fade" appear>
-      <MenuView v-if="showMenu" class="mx-4 mb-2 px-2" id="menu" />
+    <Transition
+      name="slide-fade"
+      appear
+    >
+      <MenuView
+        v-if="showMenu"
+        class="mx-4 mb-2 px-2"
+        id="menu"
+      />
     </Transition>
   </div>
 </template>
