@@ -334,6 +334,7 @@ watch(macro, (val) => {
   if (macroRegistry.value[key]) {
     const text = macroRegistry.value[key].text
     macro.value = val.replace(key, text)
+    remark.value = macroRegistry.value[key].remark
   }
 })
 </script>
@@ -365,17 +366,21 @@ watch(macro, (val) => {
 }
 
 .macro-bar {
-  margin-top: 6px;
-  padding: 4px 6px;
+  display: flex;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background: white;
-  display: flex;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  position: relative;
+  left: 0;
   gap: 6px;
+  margin: 0.5rem 0rem;
+  padding: 0.5rem;
   flex-wrap: wrap;
-  /* wraps if too many */
   align-items: center;
   z-index: 1000;
+  max-height: 9.5rem;
+  overflow-y: auto;
 }
 
 .macro-item {
@@ -414,20 +419,23 @@ watch(macro, (val) => {
 
 .macro-item.active {
   background: #dbeafe;
+  color: black;
 }
 
 .dark-mode .macro-bar {
-  background: #2b2b2b;
+  background: rgba(43, 43, 43, 0.6);
+  backdrop-filter: blur(6px);
   border-color: #444;
 }
 
 .dark-mode .macro-item {
   background: #3a3a3a;
+  color: #f2f2f2;
 }
 
 .dark-mode .macro-item.active {
-  background: #0e6efd;
-  color: white;
+  background: #ffc107;
+  color: black;
 }
 
 .macro-popup li.active,

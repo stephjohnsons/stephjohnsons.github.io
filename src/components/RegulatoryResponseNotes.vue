@@ -14,7 +14,7 @@
           <button
             class="btn btn-sm btn-warning d-flex justify-content-center w-50"
             @click="createNote"
-            :disabled="notes.length >= 4"
+            :disabled="notes.length >= MAX_NOTES"
           >
             <i class="bi bi-plus-lg"></i>
           </button>
@@ -29,24 +29,26 @@
           </button>
         </div>
 
-        <div
-          v-for="note in notes"
-          :key="note.id"
-          class="note-item small p-1 d-flex align-items-center justify-content-between"
-          :class="{ active: note.id === noteId }"
-          @click="selectNote(note)"
-        >
-          <span
-            class="text-truncate"
-            :title="note.title"
+        <div class="note-list">
+          <div
+            v-for="note in notes"
+            :key="note.id"
+            class="note-item small px-3 py-2 d-flex align-items-center justify-content-between"
+            :class="{ active: note.id === noteId }"
+            @click="selectNote(note)"
           >
-            {{ note.title || 'Untitled' }}
-          </span>
+            <span
+              class="text-truncate"
+              :title="note.title"
+            >
+              {{ note.title || 'Untitled' }}
+            </span>
 
-          <span
-            v-if="dirtyMap[note.id] && note.id !== noteId"
-            class="unsaved-dot"
-          ></span>
+            <span
+              v-if="dirtyMap[note.id] && note.id !== noteId"
+              class="unsaved-dot"
+            ></span>
+          </div>
         </div>
       </div>
 
@@ -95,6 +97,7 @@ import { useUIStore } from '@/stores/ui'
 
 const ui = useUIStore()
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL
+const MAX_NOTES = 10
 
 // state
 const notes = ref([])
@@ -117,7 +120,7 @@ async function fetchNotes() {
   const res = await fetch(`${backend}/rr?resource=notes`)
   const data = await res.json()
 
-  notes.value = data.slice(0, 4)
+  notes.value = data.slice(0, MAX_NOTES)
 
   notes.value.forEach(n => {
     dirtyMap.value[n.id] = false
@@ -147,7 +150,7 @@ function selectNote(note) {
 // CREATE
 // =======================
 async function createNote() {
-  if (notes.value.length >= 4) return
+  if (notes.value.length >= MAX_NOTES) return
 
   const res = await fetch(`${backend}/rr?resource=notes`, {
     method: 'POST',
@@ -247,6 +250,12 @@ onMounted(fetchNotes)
 </script>
 
 <style scoped>
+/* sidebar container */
+.note-list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
 .note-item {
   cursor: pointer;
   border-radius: 4px;
@@ -260,11 +269,6 @@ onMounted(fetchNotes)
 .note-item.active {
   background: #e7f1ff;
   font-weight: 500;
-}
-
-/* Dark mode */
-.dark-mode {
-  background: #2b2b2b;
 }
 
 .dark-mode .border {
@@ -286,8 +290,8 @@ onMounted(fetchNotes)
 }
 
 .dark-mode .note-item.active {
-  background: #0d6efd;
-  color: white;
+  background: #ffc107;
+  color: #2b2b2b;
 }
 
 .fade-enter-active,
