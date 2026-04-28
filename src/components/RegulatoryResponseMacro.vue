@@ -76,7 +76,7 @@
             </div>
 
             <div class="macro-text">
-              <div class="macro-label">
+              <div :class="['macro-label', { active: i === highlightedIndex }]">
                 {{ macroRegistry[item].label }}
               </div>
               <div class="macro-key">
@@ -430,12 +430,22 @@ watch(macro, (val) => {
 
 .dark-mode .macro-item {
   background: #3a3a3a;
-  color: #f2f2f2;
+  color: #888;
 }
 
 .dark-mode .macro-item.active {
   background: #ffc107;
+  color: #444;
+}
+
+.dark-mode .macro-label {
+  color: #f2f2f2;
+  font-size: 0.8rem;
+}
+
+.dark-mode .macro-label.active {
   color: black;
+  font-size: 0.8rem;
 }
 
 .macro-popup li.active,
