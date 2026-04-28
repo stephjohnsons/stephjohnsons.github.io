@@ -9,7 +9,7 @@
     >
       <ZhTwConverter />
 
-      <RegulatoryResponseMacro />
+      <RegulatoryResponseMacro :admin="adminAuthenticated" />
 
       <h5 class="fw-normal mt-3">Alarms</h5>
       <div class="mb-2">
@@ -110,13 +110,20 @@ import { useAlarmStore } from "@/stores/alarm";
 import moment from "moment";
 
 const ui = useUIStore();
-const authenticated = ref(localStorage.getItem("tool_authenticated") === "true");
+const authenticated = ref(localStorage.getItem("tool_authenticated") === "true" || localStorage.getItem("studio_admin_authenticated") === "true");
+const adminAuthenticated = ref(
+  localStorage.getItem("studio_admin_authenticated") === "true"
+);
 const inputPassword = ref("");
 
 const checkPassword = () => {
   if (inputPassword.value === import.meta.env.VITE_TOOLS_PASSWORD) {
     authenticated.value = true;
     localStorage.setItem("tool_authenticated", "true");
+  } else if (inputPassword.value === import.meta.env.VITE_STUDIO_PASSWORD) {
+    authenticated.value = true;
+    adminAuthenticated.value = true;
+    localStorage.setItem("studio_admin_authenticated", "true");
   } else {
     alert("Incorrect password. Please try again.");
   }

@@ -1,5 +1,8 @@
 <template>
-  <div class="border-bottom d-flex gap-3 mb-3">
+  <div
+    class="border-bottom d-flex gap-3 mb-3"
+    v-if="admin"
+  >
     <button
       class="btn border-0 rounded-0"
       :class="!showMacroManager && 'border-bottom border-2 border-warning'"
@@ -16,13 +19,16 @@
       Manage
     </button>
   </div>
-  <Notes />
+  <Notes v-if="admin" />
   <div
     v-if="!showMacroManager"
     class="gap-3"
     :class="{ 'dark-mode': ui.isDark }"
   >
-    <h5 class="fw-normal">
+    <h5
+      class="fw-normal"
+      :class="{ 'mt-3': admin }"
+    >
       Macro
     </h5>
   </div>
@@ -84,7 +90,7 @@
     </div>
   </div>
 
-  <MacroManager v-if="showMacroManager" />
+  <MacroManager v-if="showMacroManager && admin" />
 
   <div
     class="gap-3"
@@ -124,6 +130,12 @@ import { ref, watch, computed, onMounted } from 'vue';
 import { useUIStore } from '@/stores/ui';
 import MacroManager from './MacroManager.vue';
 import Notes from './RegulatoryResponseNotes.vue';
+
+defineProps({
+  admin: {
+    type: Boolean,
+  }
+})
 
 const showMacroManager = ref(false)
 const ui = useUIStore();
