@@ -113,13 +113,16 @@ import { useAlarmStore } from "@/stores/alarm";
 import moment from "moment";
 
 const ui = useUIStore();
-const authenticated = ref(localStorage.getItem("tool_authenticated") === "true" || localStorage.getItem("studio_admin_authenticated") === "true");
+const authenticated = ref(
+  localStorage.getItem("tool_authenticated") === "true" ||
+  localStorage.getItem("studio_admin_authenticated") === "true"
+);
 const adminAuthenticated = ref(
   localStorage.getItem("studio_admin_authenticated") === "true"
 );
 const regulatoryResponseAuthenticated = ref(
   localStorage.getItem("rr_authenticated") === "true"
-)
+);
 const inputPassword = ref("");
 
 const checkPassword = () => {
@@ -146,11 +149,7 @@ const repeat = ref(false);
 
 const addNewAlarm = () => {
   if (!newAlarmTime.value) return;
-  alarmStore.addAlarm(
-    newAlarmTime.value,
-    repeat.value,
-    newAlarmLabel.value.trim()
-  );
+  alarmStore.addAlarm(newAlarmTime.value, repeat.value, newAlarmLabel.value.trim());
   newAlarmTime.value = "";
   newAlarmLabel.value = "";
   repeat.value = false;
