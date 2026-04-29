@@ -21,7 +21,7 @@
   </div>
   <Notes v-if="admin" />
   <div
-    v-if="!showMacroManager"
+    v-if="!showMacroManager && !rrAuth"
     class="gap-3"
     :class="{ 'dark-mode': ui.isDark }"
   >
@@ -34,7 +34,7 @@
   </div>
   <div
     class="d-flex flex-col gap-2 mb-2"
-    v-if="!showMacroManager"
+    v-if="!showMacroManager && !rrAuth"
   >
     <div class="position-relative w-100 position-relative">
       <div class="macro-wrapper">
@@ -90,7 +90,7 @@
     </div>
   </div>
 
-  <MacroManager v-if="showMacroManager && admin" />
+  <MacroManager v-if="showMacroManager" />
 
   <div
     class="gap-3"
@@ -134,6 +134,9 @@ import Notes from './RegulatoryResponseNotes.vue';
 defineProps({
   admin: {
     type: Boolean,
+  },
+  rrAuth: {
+    type: Boolean
   }
 })
 

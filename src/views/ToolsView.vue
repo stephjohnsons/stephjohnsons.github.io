@@ -9,7 +9,10 @@
     >
       <ZhTwConverter :rrAuth="regulatoryResponseAuthenticated" />
 
-      <RegulatoryResponseMacro :admin="adminAuthenticated" />
+      <RegulatoryResponseMacro
+        :admin="adminAuthenticated"
+        :rrAuth="regulatoryResponseAuthenticated"
+      />
 
       <h5 class="fw-normal mt-3">Alarms</h5>
       <div class="mb-2">
