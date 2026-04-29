@@ -7,7 +7,7 @@
       v-if="authenticated"
       class="d-flex flex-column"
     >
-      <ZhTwConverter />
+      <ZhTwConverter :rrAuth="regulatoryResponseAuthenticated" />
 
       <RegulatoryResponseMacro :admin="adminAuthenticated" />
 
@@ -114,6 +114,9 @@ const authenticated = ref(localStorage.getItem("tool_authenticated") === "true" 
 const adminAuthenticated = ref(
   localStorage.getItem("studio_admin_authenticated") === "true"
 );
+const regulatoryResponseAuthenticated = ref(
+  localStorage.getItem("rr_authenticated") === "true"
+)
 const inputPassword = ref("");
 
 const checkPassword = () => {
@@ -124,6 +127,10 @@ const checkPassword = () => {
     authenticated.value = true;
     adminAuthenticated.value = true;
     localStorage.setItem("studio_admin_authenticated", "true");
+  } else if (inputPassword.value === import.meta.env.VITE_REGULATORY_RESPONSE_PASSWORD) {
+    authenticated.value = true;
+    regulatoryResponseAuthenticated.value = true;
+    localStorage.setItem("rr_authenticated", "true");
   } else {
     alert("Incorrect password. Please try again.");
   }

@@ -12,7 +12,10 @@
     <h5 class="fw-normal">
       Converter
     </h5>
-    <p class="my-auto d-flex gap-2 justify-content-center">
+    <p
+      class="my-auto d-flex gap-2 justify-content-center"
+      v-if="!rrAuth"
+    >
       <select
         class="text-sm mb-2"
         v-model="name"
@@ -48,7 +51,10 @@
     </button>
   </div>
   <div class="d-flex flex-col gap-2 mb-2">
-    <div class="position-relative w-50 position-relative sticky-top">
+    <div
+      class="position-relative position-relative sticky-top"
+      :class="{ 'w-100': rrAuth }, { 'w-50': !rrAuth }"
+    >
       <div class="position-relative">
         <textarea
           v-model="simplified"
@@ -101,9 +107,12 @@
           Copied!
         </button>
       </div>
-      <TranslationPrompt />
+      <TranslationPrompt v-if="!rrAuth" />
     </div>
-    <div class="d-flex flex-row w-50 overflow-y-scroll">
+    <div
+      class="d-flex flex-row w-50 overflow-y-scroll"
+      v-if="!rrAuth"
+    >
       <div class="d-flex flex-column">
         <div
           class="d-flex gap-2 mb-2 flex-wrap bg-row rounded-3 me-auto"
@@ -528,6 +537,12 @@ import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
 import { useUIStore } from '@/stores/ui';
 import { allTemplates } from './data/templates';
+
+defineProps({
+  rrAuth: {
+    type: Boolean
+  }
+})
 
 const ui = useUIStore();
 const loading = ref(false);
