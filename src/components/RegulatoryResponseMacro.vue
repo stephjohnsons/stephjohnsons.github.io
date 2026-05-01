@@ -148,7 +148,6 @@ const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const preformattedText = ref('')
 
 const macroTextarea = ref(null)
-const remarkTextarea = ref(null)
 const showList = ref(false)
 const highlightedIndex = ref(0)
 

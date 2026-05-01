@@ -1,6 +1,8 @@
 <template>
-  <div class="macro-manager mb-4">
-
+  <div
+    class="macro-manager mb-4"
+    :class="{ 'dark-mode': ui.isDark }"
+  >
     <h5 class="fw-normal">
       Macro Manager
     </h5>
@@ -17,7 +19,8 @@
 
     <table
       v-if="table"
-      class="table mt-1"
+      class="table mt-3"
+      :class="{ 'table-dark': ui.isDark }"
     >
       <thead>
         <tr>
@@ -38,13 +41,13 @@
           <td>{{ m.category }}</td>
           <td>
             <button
-              class="btn btn-sm btn-outline-primary me-2"
+              class="btn btn-sm btn-outline-warning me-2"
               @click="openEdit(m)"
-            >Edit</button>
+            >✍🏻</button>
             <button
               class="btn btn-sm btn-outline-danger"
               @click="deleteMacro(m.id)"
-            >Delete</button>
+            >🗑️</button>
           </td>
         </tr>
       </tbody>
@@ -78,7 +81,7 @@
 
             <div class="mt-auto d-flex gap-2">
               <button
-                class="btn btn-sm w-50 btn-outline-primary"
+                class="btn btn-sm w-50 btn-outline-warning"
                 @click="openEdit(m)"
               >
                 Edit
@@ -185,11 +188,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { Modal } from 'bootstrap';
+import { useUIStore } from '@/stores/ui';
 
 const modalEl = ref(null)
 let modalInstance = null
 const macros = ref([])
-const editing = ref(false)
+const ui = useUIStore()
 const table = ref(true)
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 
@@ -279,5 +283,119 @@ async function deleteMacro(id) {
   -webkit-box-orient: vertical;
 
   overflow: hidden;
+}
+
+/* =========================
+   DARK MODE - Macro Manager
+   ========================= */
+
+.dark-mode {
+  color: #e5e5e5;
+}
+
+/* =========================
+   DARK MODE - TABLE (FIXED)
+   ========================= */
+
+.dark-mode .table {
+  color: #e5e5e5;
+  background-color: #1e1e1e;
+}
+
+.dark-mode .table thead {
+  background-color: #2b2b2b;
+  color: #ffffff;
+}
+
+.dark-mode .table thead th {
+  border-bottom: 1px solid #444;
+}
+
+.dark-mode .table tbody tr {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+.dark-mode .table tbody tr:hover {
+  background-color: #2a2a2a;
+}
+
+.dark-mode .table td,
+.dark-mode .table th {
+  border-color: #333;
+}
+
+/* Cards */
+.dark-mode .card {
+  background: #2b2b2b;
+  border-color: #444;
+  color: #e5e5e5;
+}
+
+.dark-mode .card .text-muted {
+  color: #aaa !important;
+}
+
+/* Buttons */
+.dark-mode .btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #222;
+}
+
+.dark-mode .btn-outline-warning {
+  color: #ffc107;
+  border-color: #ffc107;
+}
+
+.dark-mode .btn-outline-warning:hover {
+  background-color: #ffc107;
+  color: #222;
+}
+
+.dark-mode .btn-outline-danger {
+  color: #ff8a8a;
+  border-color: #ff8a8a;
+}
+
+.dark-mode .btn-outline-danger:hover {
+  background-color: #ff8a8a;
+  color: #222;
+}
+
+.dark-mode .btn-outline-secondary {
+  color: #bbb;
+  border-color: #666;
+}
+
+/* Modal */
+.dark-mode .modal-content {
+  background-color: #2b2b2b;
+  color: #e5e5e5;
+  border-color: #444;
+}
+
+.dark-mode .modal-header,
+.dark-mode .modal-footer {
+  border-color: #444;
+}
+
+/* Inputs */
+.dark-mode .form-control {
+  background-color: #1e1e1e;
+  color: #e5e5e5;
+  border-color: #444;
+}
+
+.dark-mode .form-control:focus {
+  background-color: #1e1e1e;
+  color: #fff;
+  border-color: #ffc107;
+  box-shadow: none;
+}
+
+/* Labels */
+.dark-mode .form-label {
+  color: #ccc;
 }
 </style>
