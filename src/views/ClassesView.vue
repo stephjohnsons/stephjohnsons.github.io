@@ -33,29 +33,12 @@
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
         <div class="d-flex flex-row mb-2">
           <button
-            v-if="adminAuthenticated"
+            v-for="item in navItems"
+            :key="item.id"
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('students')"
+            @click="scrollToSection(item.id)"
           >
-            Students
-          </button>
-          <button
-            class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('lessons')"
-          >
-            Classes
-          </button>
-          <button
-            class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('repertoire')"
-          >
-            Rep
-          </button>
-          <button
-            class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('policy')"
-          >
-            Policy
+            {{ item.label }}
           </button>
         </div>
       </div>
@@ -80,29 +63,12 @@
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
         <div class="d-flex flex-row mb-2">
           <button
-            v-if="adminAuthenticated"
+            v-for="item in navItems"
+            :key="item.id"
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('students')"
+            @click="scrollToSection(item.id)"
           >
-            Students
-          </button>
-          <button
-            class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('lessons')"
-          >
-            Classes
-          </button>
-          <button
-            class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('repertoire')"
-          >
-            Rep
-          </button>
-          <button
-            class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToSection('policy')"
-          >
-            Policy
+            {{ item.label }}
           </button>
         </div>
       </div>
@@ -161,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import ClassPolicy from "../components/ClassPolicy.vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
@@ -171,10 +137,40 @@ import { useStudentStore } from "@/stores/students";
 const adminAuthenticated = ref(
   localStorage.getItem("studio_admin_authenticated") === "true"
 );
+
 const studentAuthenticated = ref(
   localStorage.getItem("studio_student_authenticated") === "true"
 );
+
 const inputPassword = ref("");
+
+const navItems = computed(() => {
+  const items = [];
+
+  if (adminAuthenticated.value) {
+    items.push({
+      label: "Students",
+      id: "students",
+    });
+  }
+
+  items.push(
+    {
+      label: "Classes",
+      id: "lessons",
+    },
+    {
+      label: "Rep",
+      id: "repertoire",
+    },
+    {
+      label: "Policy",
+      id: "policy",
+    }
+  );
+
+  return items;
+});
 
 const scrollToSection = (id) => {
   document.getElementById(id)?.scrollIntoView({
