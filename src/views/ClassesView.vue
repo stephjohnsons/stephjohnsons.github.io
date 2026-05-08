@@ -35,25 +35,25 @@
           <button
             v-if="adminAuthenticated"
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToStudents()"
+            @click="scrollToSection('students')"
           >
             Students
           </button>
           <button
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToClasses()"
+            @click="scrollToSection('lessons')"
           >
             Classes
           </button>
           <button
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToRepertoire()"
+            @click="scrollToSection('repertoire')"
           >
             Rep
           </button>
           <button
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToPolicy()"
+            @click="scrollToSection('policy')"
           >
             Policy
           </button>
@@ -82,25 +82,25 @@
           <button
             v-if="adminAuthenticated"
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToStudents()"
+            @click="scrollToSection('students')"
           >
             Students
           </button>
           <button
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToClasses()"
+            @click="scrollToSection('lessons')"
           >
             Classes
           </button>
           <button
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToRepertoire()"
+            @click="scrollToSection('repertoire')"
           >
             Rep
           </button>
           <button
             class="btn btn-sm btn-outline-dark m-1"
-            @click="scrollToPolicy()"
+            @click="scrollToSection('policy')"
           >
             Policy
           </button>
@@ -113,25 +113,25 @@
         <button
           v-if="!studentAuthenticated"
           class="btn btn-sm btn-warning my-1"
-          @click="scrollToStudents()"
+          @click="scrollToSection('students')"
         >
           Students
         </button>
         <button
           class="btn btn-sm btn-warning my-1"
-          @click="scrollToClasses()"
+          @click="scrollToSection('lessons')"
         >
           Classes
         </button>
         <button
           class="btn btn-sm btn-warning my-1"
-          @click="scrollToRepertoire()"
+          @click="scrollToSection('repertoire')"
         >
           Rep
         </button>
         <button
           class="btn btn-sm btn-warning my-1"
-          @click="scrollToPolicy()"
+          @click="scrollToSection('policy')"
         >
           Policy
         </button>
@@ -176,20 +176,10 @@ const studentAuthenticated = ref(
 );
 const inputPassword = ref("");
 
-const scrollToStudents = () => {
-  document.getElementById("students").scrollIntoView({ behavior: "smooth" });
-};
-
-const scrollToClasses = () => {
-  document.getElementById("lessons").scrollIntoView({ behavior: "smooth" });
-};
-
-const scrollToRepertoire = () => {
-  document.getElementById("repertoire").scrollIntoView({ behavior: "smooth" });
-};
-
-const scrollToPolicy = () => {
-  document.getElementById("policy").scrollIntoView({ behavior: "smooth" });
+const scrollToSection = (id) => {
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+  });
 };
 
 const checkPassword = () => {
