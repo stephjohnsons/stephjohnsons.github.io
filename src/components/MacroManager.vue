@@ -207,7 +207,7 @@ const form = ref({
 })
 
 async function loadMacros() {
-  const res = await fetch(`${backend}/rr?resource=macros`)
+  const res = await fetch(`${backend}/rr/macros`)
   macros.value = await res.json()
 }
 
@@ -241,7 +241,7 @@ async function saveMacro() {
 
   const method = form.value.id ? 'PUT' : 'POST'
 
-  await fetch(`${backend}/rr?resource=macros`, {
+  await fetch(`${backend}/rr/macros`, {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(form.value)
@@ -253,7 +253,7 @@ async function saveMacro() {
 
 async function deleteMacro(id) {
 
-  await fetch(`${backend}/rr?resource=macros`, {
+  await fetch(`${backend}/rr/macros`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id })

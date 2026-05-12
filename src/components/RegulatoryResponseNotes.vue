@@ -117,7 +117,7 @@ let isLoaded = false
 // FETCH
 // =======================
 async function fetchNotes() {
-  const res = await fetch(`${backend}/rr?resource=notes`)
+  const res = await fetch(`${backend}/rr/notes`)
   const data = await res.json()
 
   notes.value = data.slice(0, MAX_NOTES)
@@ -152,7 +152,7 @@ function selectNote(note) {
 async function createNote() {
   if (notes.value.length >= MAX_NOTES) return
 
-  const res = await fetch(`${backend}/rr?resource=notes`, {
+  const res = await fetch(`${backend}/rr/notes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ title: '', content: '' })
@@ -175,7 +175,7 @@ async function saveNote() {
 
   status.value = 'saving'
 
-  await fetch(`${backend}/rr?resource=notes`, {
+  await fetch(`${backend}/rr/notes`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -225,7 +225,7 @@ async function deleteNote() {
   const confirmDelete = confirm('Delete this note?')
   if (!confirmDelete) return
 
-  await fetch(`${backend}/rr?resource=notes`, {
+  await fetch(`${backend}/rr/notes`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id: noteId.value })

@@ -28,9 +28,7 @@
     <h5
       class="fw-normal"
       :class="{ 'mt-3': admin }"
-    >
-      Macro
-    </h5>
+    >Macro</h5>
   </div>
   <div
     class="d-flex flex-col gap-2 mb-2"
@@ -86,7 +84,6 @@
           </span>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -96,12 +93,9 @@
     class="gap-3"
     :class="{ 'dark-mode': ui.isDark }"
   >
-    <h5 class="fw-normal mt-2">
-      Line Remover
-    </h5>
+    <h5 class="fw-normal mt-2">Line Remover</h5>
   </div>
   <div class="d-flex flex-col gap-2 mb-2">
-
     <!-- Input macroTextarea -->
     <div class="position-relative w-50">
       <textarea
@@ -126,219 +120,221 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from 'vue';
-import { useUIStore } from '@/stores/ui';
-import MacroManager from './MacroManager.vue';
-import Notes from './RegulatoryResponseNotes.vue';
+import { ref, watch, computed, onMounted } from "vue";
+import { useUIStore } from "@/stores/ui";
+import MacroManager from "./MacroManager.vue";
+import Notes from "./RegulatoryResponseNotes.vue";
 
 defineProps({
   admin: {
     type: Boolean,
   },
   rrAuth: {
-    type: Boolean
-  }
-})
+    type: Boolean,
+  },
+});
 
-const showMacroManager = ref(false)
+const showMacroManager = ref(false);
 const ui = useUIStore();
-const macro = ref('')
-const remark = ref('')
+const macro = ref("");
+const remark = ref("");
 const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
-const preformattedText = ref('')
+const preformattedText = ref("");
 
-const macroTextarea = ref(null)
-const showList = ref(false)
-const highlightedIndex = ref(0)
+const macroTextarea = ref(null);
+const showList = ref(false);
+const highlightedIndex = ref(0);
 
-const macroRegistry = ref({})
-const macros = computed(() => Object.keys(macroRegistry.value))
+const macroRegistry = ref({});
+const macros = computed(() => Object.keys(macroRegistry.value));
 
 const filteredMacros = computed(() => {
-  const match = macro.value.slice(0, macroTextarea.value?.selectionStart || 0)
-    .match(/-([\w-]*)$/)
+  const match = macro.value
+    .slice(0, macroTextarea.value?.selectionStart || 0)
+    .match(/-([\w-]*)$/);
 
-  if (!match) return macros.value
+  if (!match) return macros.value;
 
-  const query = match[1].toLowerCase()
+  const query = match[1].toLowerCase();
 
   return macros.value
-    .map(m => ({
+    .map((m) => ({
       value: m,
       score: Math.max(
         fuzzyScore(query, m.slice(1)),
         fuzzyScore(query, macroRegistry.value[m].label.toLowerCase())
-      )
+      ),
     }))
-    .filter(item => item.score > 0)
+    .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score)
-    .map(item => item.value)
-})
+    .map((item) => item.value);
+});
 
 function fuzzyScore(query, target) {
-  if (!query) return 1
+  if (!query) return 1;
 
-  let score = 0
-  let tIndex = 0
+  let score = 0;
+  let tIndex = 0;
 
   for (const char of query) {
-    const found = target.indexOf(char, tIndex)
-    if (found === -1) return 0
-    score += 2                  // matched character
-    if (found === tIndex) score += 1  // consecutive bonus
-    tIndex = found + 1
+    const found = target.indexOf(char, tIndex);
+    if (found === -1) return 0;
+    score += 2; // matched character
+    if (found === tIndex) score += 1; // consecutive bonus
+    tIndex = found + 1;
   }
 
   // shorter targets rank higher
-  return score - target.length * 0.01
+  return score - target.length * 0.01;
 }
 
 function onInput(e) {
-  const cursor = e.target.selectionStart
-  const textBefore = macro.value.slice(0, cursor)
+  const cursor = e.target.selectionStart;
+  const textBefore = macro.value.slice(0, cursor);
 
-  showList.value = /-\w*$/.test(textBefore)
+  showList.value = /-\w*$/.test(textBefore);
 
-  highlightedIndex.value = 0
+  highlightedIndex.value = 0;
 }
 
 function insertMacro(selected) {
-  const el = macroTextarea.value
-  const start = el.selectionStart
+  const el = macroTextarea.value;
+  const start = el.selectionStart;
 
-  const before = macro.value.slice(0, start)
-  const after = macro.value.slice(start)
+  const before = macro.value.slice(0, start);
+  const after = macro.value.slice(start);
 
-  const item = macroRegistry.value[selected]
-  const text = item.text || ''
-  const remarkText = item.remark || ''
+  const item = macroRegistry.value[selected];
+  const text = item.text || "";
+  const remarkText = item.remark || "";
 
-  const newBefore = before.replace(/-[\w-]*$/, text)
+  const newBefore = before.replace(/-[\w-]*$/, text);
 
-  macro.value = newBefore + after
-  remark.value = remarkText
-  showList.value = false
+  macro.value = newBefore + after;
+  remark.value = remarkText;
+  showList.value = false;
 
   requestAnimationFrame(() => {
-    const pos = newBefore.length
-    el.setSelectionRange(pos, pos)
-    el.focus()
-  })
+    const pos = newBefore.length;
+    el.setSelectionRange(pos, pos);
+    el.focus();
+  });
 }
 
 function highlightNext() {
-  if (!showList.value) return
-  highlightedIndex.value =
-    (highlightedIndex.value + 1) % filteredMacros.value.length
+  if (!showList.value) return;
+  highlightedIndex.value = (highlightedIndex.value + 1) % filteredMacros.value.length;
 }
 
 function highlightPrev() {
-  if (!showList.value) return
+  if (!showList.value) return;
   highlightedIndex.value =
     (highlightedIndex.value - 1 + filteredMacros.value.length) %
-    filteredMacros.value.length
+    filteredMacros.value.length;
 }
 
 function selectHighlighted() {
-  if (!showList.value) return
-  insertMacro(filteredMacros.value[highlightedIndex.value])
+  if (!showList.value) return;
+  insertMacro(filteredMacros.value[highlightedIndex.value]);
 }
 
-
 function formatText(text) {
-  const paragraphs = text.split(/\n{2,}/)
+  const paragraphs = text.split(/\n{2,}/);
 
-  const processed = paragraphs.map(p => {
-    const lines = p.split("\n").map(l => l.trim())
-    const signatureLines = /^(Best|regards|sincerely|thanks|thank you)[,]?$/i
-    let result = []
+  const processed = paragraphs.map((p) => {
+    const lines = p.split("\n").map((l) => l.trim());
+    const signatureLines = /^(Best|regards|sincerely|thanks|thank you)[,]?$/i;
+    let result = [];
 
     for (let i = 0; i < lines.length; i++) {
-      let line = lines[i]
+      let line = lines[i];
 
       while (true) {
-        const next = lines[i + 1]
-        if (!next) break
+        const next = lines[i + 1];
+        if (!next) break;
 
-        const endsSentence = /[.!?]"?$/.test(line)
+        const endsSentence = /[.!?]"?$/.test(line);
 
         if (!endsSentence) {
-          line += " " + next
-          i++
+          line += " " + next;
+          i++;
         } else {
-          break
+          break;
         }
       }
 
       if (signatureLines.test(line)) {
-        result.push(line)
-        continue
+        result.push(line);
+        continue;
       }
 
-      result.push(line)
+      result.push(line);
     }
 
-    return result.join(" ")
-  })
+    return result.join(" ");
+  });
 
-  let output = processed.join("\n\n")
+  let output = processed.join("\n\n");
 
   // 🔧 ensure numbered lists start on new lines
-  output = output.replace(/\s+(\d+\.\s)/g, "\n$1")
-  output = output.replace(/\s+([・\-*•]\s)/g, "\n$1")
-  output = output.replace(/Best regards,\s+Liam T\./g, "Best regards,\nLiam")
-  output = output.replace(/Best,\s+Liam T\./g, "Best,\nLiam")
-  output = output.replace(/Best regards,\s+Liam/g, "Best regards,\nLiam")
-  output = output.replace(/Best,\s+Liam/g, "Best,\nLiam")
-  output = output.replace(/Thanks,\s+Liam T\./g, "Thanks,\nLiam")
-  output = output.replace(/Thanks for understanding,\s+Liam T\./g, "Thanks for understanding,\nLiam")
-  output = output.replace(/(?<!^)(（\d+）)/g, "\n$1")
-  output = output.replace(/[:：]\s*(?=(www\.|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}))/g, ": \n")
-  output = output.replace(/\bwww\./g, "")
+  output = output.replace(/\s+(\d+\.\s)/g, "\n$1");
+  output = output.replace(/\s+([・\-*•]\s)/g, "\n$1");
+  output = output.replace(/Best regards,\s+Liam T\./g, "Best regards,\nLiam");
+  output = output.replace(/Best,\s+Liam T\./g, "Best,\nLiam");
+  output = output.replace(/Best regards,\s+Liam/g, "Best regards,\nLiam");
+  output = output.replace(/Best,\s+Liam/g, "Best,\nLiam");
+  output = output.replace(/Thanks,\s+Liam T\./g, "Thanks,\nLiam");
+  output = output.replace(
+    /Thanks for understanding,\s+Liam T\./g,
+    "Thanks for understanding,\nLiam"
+  );
+  output = output.replace(/(?<!^)(（\d+）)/g, "\n$1");
+  output = output.replace(/[:：]\s*(?=(www\.|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}))/g, ": \n");
+  output = output.replace(/\bwww\./g, "");
   output = output.replace(/72|48/g, (match) => {
-    if (match === "72") return "48"
-    if (match === "48") return "24"
-  })
+    if (match === "72") return "48";
+    if (match === "48") return "24";
+  });
 
-  return output.trim()
+  return output.trim();
 }
 
-const formattedText = computed(() => formatText(preformattedText.value))
+const formattedText = computed(() => formatText(preformattedText.value));
 
 async function fetchMacros() {
-  const res = await fetch(`${backend}/rr?resource=macros`)
-  const data = await res.json()
+  const res = await fetch(`${backend}/rr/macros`);
+  const data = await res.json();
 
-  const registry = {}
+  const registry = {};
 
-  data.forEach(m => {
+  data.forEach((m) => {
     registry[m.macro] = {
       label: m.label,
       category: m.category,
       text: m.text,
-      remark: m.remark
-    }
-  })
+      remark: m.remark,
+    };
+  });
 
-  return registry
+  return registry;
 }
 
 onMounted(async () => {
-  macroRegistry.value = await fetchMacros()
-})
+  macroRegistry.value = await fetchMacros();
+});
 
 watch(macro, (val) => {
-  const match = val.match(/(-[\w-]+)$/)
-  if (!match) return
+  const match = val.match(/(-[\w-]+)$/);
+  if (!match) return;
 
-  const key = match[1]
+  const key = match[1];
 
   if (macroRegistry.value[key]) {
-    const text = macroRegistry.value[key].text
-    macro.value = val.replace(key, text)
-    remark.value = macroRegistry.value[key].remark
+    const text = macroRegistry.value[key].text;
+    macro.value = val.replace(key, text);
+    remark.value = macroRegistry.value[key].remark;
   }
-})
+});
 </script>
 
 <style scoped>
