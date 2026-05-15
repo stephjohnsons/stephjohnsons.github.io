@@ -58,11 +58,8 @@
       </div>
     </div>
 
-    <!-- Teaching Diary -->
-    <h3 class="mt-5 mb-2">
-      Teaching Diary
-    </h3>
-
+    <!-- Stuffs done -->
+    <h3 class="mt-4 mb-2">Teaching Diary</h3>
     <div
       v-for="item in teachingDiary"
       :key="item.project"
