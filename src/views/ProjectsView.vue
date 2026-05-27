@@ -307,6 +307,7 @@ import Filter from '@/assets/filter.svg';
 import Ongoing from '@/assets/active.svg';
 import { useProjectStore } from '@/stores/projects'
 import { useProjectTypesStore } from '@/stores/projectTypes'
+import backend from '@/composables/backend'
 
 const editMode = ref(false)
 const showAuth = ref(false)
@@ -322,7 +323,6 @@ const showModal = ref(false)
 const isEditing = ref(false)
 const editingId = ref(null)
 
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL
 
 const form = ref({
   title: '',

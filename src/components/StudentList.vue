@@ -220,6 +220,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, computed } from "vue";
 import { useStudentStore } from "@/stores/students";
+import backend from '@/composables/backend';
 
 const showAddStudent = ref(false);
 const newStudent = ref({
@@ -228,7 +229,6 @@ const newStudent = ref({
   total_minutes: 0
 })
 
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const loading = ref(false);
 const editingId = ref(null);
 const editMinutes = ref(0);

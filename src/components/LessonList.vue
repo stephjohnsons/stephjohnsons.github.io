@@ -307,8 +307,8 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
 import { useClassStore } from '@/stores/classes';
+import backend from '@/composables/backend';
 
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const loading = ref(false);
 const showForm = ref(false);

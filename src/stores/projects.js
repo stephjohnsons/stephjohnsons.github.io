@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import backend from '@/composables/backend'
 
 export const useProjectStore = defineStore('projects', () => {
   const projects = ref([])
   const loaded = ref(false)
-  const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL
 
   const fetchProjects = async () => {
     const res = await fetch(`${backend}/projects`)

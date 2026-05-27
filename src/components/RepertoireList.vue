@@ -110,8 +110,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
+import backend from '@/composables/backend';
 
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 const repertoireList = ref([]);

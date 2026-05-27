@@ -124,6 +124,7 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useUIStore } from "@/stores/ui";
 import MacroManager from "./MacroManager.vue";
 import Notes from "./RegulatoryResponseNotes.vue";
+import backend from '@/composables/backend';
 
 defineProps({
   admin: {
@@ -138,7 +139,6 @@ const showMacroManager = ref(false);
 const ui = useUIStore();
 const macro = ref("");
 const remark = ref("");
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const preformattedText = ref("");
 
 const macroTextarea = ref(null);

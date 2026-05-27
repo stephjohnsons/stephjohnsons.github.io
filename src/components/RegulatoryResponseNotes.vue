@@ -7,9 +7,8 @@
     <div class="d-flex border rounded mb-2 overflow-hidden">
       <div
         class="border-end p-2 d-flex flex-column gap-2"
-        style="width: 160px;"
+        style="width: 160px"
       >
-
         <div class="d-flex align-items-center gap-2">
           <button
             class="btn btn-sm btn-warning d-flex justify-content-center w-50"
@@ -41,7 +40,7 @@
               class="text-truncate"
               :title="note.title"
             >
-              {{ note.title || 'Untitled' }}
+              {{ note.title || "Untitled" }}
             </span>
 
             <span
@@ -72,7 +71,6 @@
             v-if="status !== 'idle'"
             class="small d-flex align-items-center gap-2"
           >
-
             <template v-if="status === 'saving'">
               <span class="spinner-border spinner-border-sm text-warning"></span>
               <span class="text-warning">Saving...</span>
@@ -82,67 +80,69 @@
               <i class="bi bi-check-circle text-success"></i>
               <span class="text-success">Saved</span>
             </template>
-
           </div>
         </transition>
       </div>
-
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
-import { useUIStore } from '@/stores/ui'
+import { ref, watch, onMounted } from "vue";
+import { useUIStore } from "@/stores/ui";
+import backend from "@/composables/backend";
 
-const ui = useUIStore()
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL
-const MAX_NOTES = 10
+const ui = useUIStore();
+const MAX_NOTES = 10;
 
 // state
-const notes = ref([])
-const noteId = ref(null)
+const notes = ref([]);
+const noteId = ref(null);
 
-const title = ref('')
-const content = ref('')
+const title = ref("");
+const content = ref("");
 
-const status = ref('idle') // idle | saving | saved
-const dirtyMap = ref({})
+const status = ref("idle"); // idle | saving | saved
+const dirtyMap = ref({});
 
-let timeout = null
-let statusTimeout = null
-let isLoaded = false
+let timeout = null;
+let statusTimeout = null;
+let isLoaded = false;
 
 // =======================
 // FETCH
 // =======================
 async function fetchNotes() {
   const res = await fetch(`${backend}/rr/notes`)
-  const data = await res.json()
 
-  notes.value = data.slice(0, MAX_NOTES)
-
-  notes.value.forEach(n => {
-    dirtyMap.value[n.id] = false
-  })
-
-  if (notes.value.length > 0) {
-    selectNote(notes.value[0])
+  if (!res.ok) {
+    throw new Error('Failed to fetch notes')
   }
 
-  isLoaded = true
+  const data = await res.json()
+  notes.value = data.slice(0, MAX_NOTES);
+
+  notes.value.forEach((n) => {
+    dirtyMap.value[n.id] = false;
+  });
+
+  if (notes.value.length > 0) {
+    selectNote(notes.value[0]);
+  }
+
+  isLoaded = true;
 }
 
 // =======================
 // SELECT
 // =======================
 function selectNote(note) {
-  noteId.value = note.id
-  title.value = note.title || ''
-  content.value = note.content || ''
+  noteId.value = note.id;
+  title.value = note.title || "";
+  content.value = note.content || "";
 
   if (!(note.id in dirtyMap.value)) {
-    dirtyMap.value[note.id] = false
+    dirtyMap.value[note.id] = false;
   }
 }
 
@@ -150,43 +150,59 @@ function selectNote(note) {
 // CREATE
 // =======================
 async function createNote() {
-  if (notes.value.length >= MAX_NOTES) return
+  if (notes.value.length >= MAX_NOTES) return;
 
   const res = await fetch(`${backend}/rr/notes`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title: '', content: '' })
-  })
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title: "", content: "" }),
+  });
 
-  const data = await res.json()
-  const newNote = data[0]
+  const data = await res.json();
+  const newNote = data[0];
 
-  notes.value.unshift(newNote)
-  dirtyMap.value[newNote.id] = false
+  notes.value.unshift(newNote);
+  dirtyMap.value[newNote.id] = false;
 
-  selectNote(newNote)
+  selectNote(newNote);
 }
 
 // =======================
 // SAVE
 // =======================
 async function saveNote() {
-  if (!noteId.value) return
-
+  if (!noteId.value) {
+    return
+  }
   status.value = 'saving'
+  const res = await fetch(
+    `${backend}/rr/notes/${noteId.value}`,
+    {
+      method: 'PUT',
 
-  await fetch(`${backend}/rr/notes`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      id: noteId.value,
-      title: title.value,
-      content: content.value
-    })
-  })
+      headers: {
+        'Content-Type': 'application/json'
+      },
 
-  // sync local
-  const note = notes.value.find(n => n.id === noteId.value)
+      body: JSON.stringify({
+        title: title.value,
+        content: content.value
+      })
+    }
+  )
+
+  if (!res.ok) {
+    console.error('Failed to save note')
+
+    status.value = 'idle'
+
+    return
+  }
+
+  const note = notes.value.find(
+    n => n.id === noteId.value
+  )
+
   if (note) {
     note.title = title.value
     note.content = content.value
@@ -197,56 +213,74 @@ async function saveNote() {
   status.value = 'saved'
 
   clearTimeout(statusTimeout)
+
   statusTimeout = setTimeout(() => {
     status.value = 'idle'
   }, 1200)
 }
 
+// sync local
+const note = notes.value.find((n) => n.id === noteId.value);
+if (note) {
+  note.title = title.value;
+  note.content = content.value;
+}
+
+dirtyMap.value[noteId.value] = false;
+
+status.value = "saved";
+
+clearTimeout(statusTimeout);
+statusTimeout = setTimeout(() => {
+  status.value = "idle";
+}, 1200);
+
 // =======================
 // AUTOSAVE
 // =======================
 watch([title, content], () => {
-  if (!isLoaded || !noteId.value) return
+  if (!isLoaded || !noteId.value) return;
 
-  dirtyMap.value[noteId.value] = true
+  dirtyMap.value[noteId.value] = true;
 
-  clearTimeout(timeout)
-  timeout = setTimeout(saveNote, 600)
-})
+  clearTimeout(timeout);
+  timeout = setTimeout(saveNote, 600);
+});
 
 // =======================
 // DELETE
 // =======================
 async function deleteNote() {
-  clearTimeout(timeout)
+  clearTimeout(timeout);
 
-  if (!noteId.value) return
+  if (!noteId.value) return;
 
-  const confirmDelete = confirm('Delete this note?')
-  if (!confirmDelete) return
+  const confirmDelete = confirm("Delete this note?");
+  if (!confirmDelete) return;
 
-  await fetch(`${backend}/rr/notes`, {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: noteId.value })
-  })
+  await fetch(
+    `${backend}/rr/notes/${noteId.value}`,
+    {
+      method: 'DELETE'
+    }
+  )
 
-  const index = notes.value.findIndex(n => n.id === noteId.value)
+  const index = notes.value.findIndex((n) => n.id === noteId.value);
 
-  delete dirtyMap.value[noteId.value]
-  notes.value.splice(index, 1)
+  delete dirtyMap.value[noteId.value];
+  notes.value.splice(index, 1);
 
   if (notes.value.length > 0) {
-    const next = notes.value[index] || notes.value[index - 1]
-    selectNote(next)
+    const next = notes.value[index] || notes.value[index - 1];
+    selectNote(next);
   } else {
-    noteId.value = null
-    title.value = ''
-    content.value = ''
+    noteId.value = null;
+    title.value = "";
+    content.value = "";
   }
 }
 
-onMounted(fetchNotes)
+onMounted(fetchNotes);
 </script>
 
 <style scoped>

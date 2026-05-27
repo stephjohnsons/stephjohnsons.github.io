@@ -1,16 +1,35 @@
 <template>
   <div class="mt-2 d-flex gap-3 align-items-center">
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="togglePhones" v-model="showPhones" />
-      <label class="form-check-label" for="togglePhones" :class="{ 'opacity-25': showPhones }">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="togglePhones"
+        v-model="showPhones"
+      />
+      <label
+        class="form-check-label"
+        for="togglePhones"
+        :class="{ 'opacity-25': showPhones }"
+      >
         Phone Numbers
       </label>
     </div>
 
-    <div v-if="showPhones" class="d-flex mb-0">
+    <div
+      v-if="showPhones"
+      class="d-flex mb-0"
+    >
       <div class="me-3 my-auto">
-        <label for="countrySelect" class="form-label me-2 mb-0">Country</label>
-        <select id="countrySelect" class="form-select-sm" v-model="selectedCountry">
+        <label
+          for="countrySelect"
+          class="form-label me-2 mb-0"
+        >Country</label>
+        <select
+          id="countrySelect"
+          class="form-select-sm"
+          v-model="selectedCountry"
+        >
           <option value="">-- Choose --</option>
           <option value="int">International</option>
           <option value="ar">Argentina</option>
@@ -58,8 +77,17 @@
       </div>
 
       <div class="w-50 ms-0 d-flex gap-2 align-items-center my-auto">
-        <input type="text" :value="numbers" class="form-control-sm py-0 border-1" readonly ref="numberBox" />
-        <button class="btn btn-outline-secondary btn-sm" @click="copyToClipboard">
+        <input
+          type="text"
+          :value="numbers"
+          class="form-control-sm py-0 border-1"
+          readonly
+          ref="numberBox"
+        />
+        <button
+          class="btn btn-outline-secondary btn-sm"
+          @click="copyToClipboard"
+        >
           Copy
         </button>
       </div>
@@ -69,12 +97,12 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import backend from '@/composables/backend';
 
 const numbers = ref('');
 const showPhones = ref(false);
 const selectedCountry = ref('');
 const numberBox = ref(null);
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 
 const fetchNumbers = async (endpoint) => {
   try {

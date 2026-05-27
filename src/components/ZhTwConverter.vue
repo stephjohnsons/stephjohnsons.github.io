@@ -537,6 +537,7 @@ import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
 import { useUIStore } from '@/stores/ui';
 import { allTemplates } from './data/templates';
+import backend from '@/composables/backend';
 
 defineProps({
   rrAuth: {
@@ -548,7 +549,6 @@ const ui = useUIStore();
 const loading = ref(false);
 const simplified = ref('')
 const traditional = ref('')
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 const hideTw = ref(false);
 const name = ref('st')
 const domain = ref('cn')

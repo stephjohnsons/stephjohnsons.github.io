@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import backend from '@/composables/backend'
 
 export const useStudentStore = defineStore('students', () => {
   const students = ref([])
   const loaded = ref(false)
-  const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL
 
   const setStudents = (data) => {
     students.value = data
