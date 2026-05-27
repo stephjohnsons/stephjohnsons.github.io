@@ -189,13 +189,13 @@
 import { ref, onMounted } from 'vue'
 import { Modal } from 'bootstrap';
 import { useUIStore } from '@/stores/ui';
+import backend from '@/composables/backend'
 
 const modalEl = ref(null)
 let modalInstance = null
 const macros = ref([])
 const ui = useUIStore()
 const table = ref(true)
-const backend = import.meta.env.VITE_TEMPLATE_BACKEND_API_URL;
 
 const form = ref({
   id: null,
@@ -239,26 +239,32 @@ function openEdit(m) {
 
 async function saveMacro() {
 
-  const method = form.value.id ? 'PUT' : 'POST'
+  const isEditing = !!form.value.id
 
-  await fetch(`${backend}/rr/macros`, {
+  const method = isEditing
+    ? 'PUT'
+    : 'POST'
+
+  const url = isEditing
+    ? `${backend}/rr/macros/${form.value.id}`
+    : `${backend}/rr/macros`
+
+  await fetch(url, {
     method,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
     body: JSON.stringify(form.value)
   })
-
   modalInstance.hide()
   loadMacros()
 }
 
 async function deleteMacro(id) {
-
-  await fetch(`${backend}/rr/macros`, {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id })
+  await fetch(`${backend}/rr/macros/${id}`, {
+    method: 'DELETE'
   })
-
   loadMacros()
 }
 </script>
