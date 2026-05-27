@@ -1,4 +1,5 @@
 <template>
+  <Notes v-if="admin" />
   <div
     class="border-bottom d-flex gap-3 mb-3"
     v-if="admin"
@@ -19,7 +20,6 @@
       Manage
     </button>
   </div>
-  <Notes v-if="admin" />
   <div
     v-if="!showMacroManager && !rrAuth"
     class="gap-3"
