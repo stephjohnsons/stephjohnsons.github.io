@@ -3,9 +3,7 @@
     class="macro-manager mb-4"
     :class="{ 'dark-mode': ui.isDark }"
   >
-    <h5 class="fw-normal">
-      Macro Manager
-    </h5>
+    <h5 class="fw-normal">Macro Manager</h5>
 
     <button
       class="btn btn-sm btn-warning"
@@ -15,7 +13,9 @@
     <button
       class="btn btn-sm btn-outline-secondary ms-2"
       @click="table = !table"
-    >View: {{ table ? 'Table' : 'Card' }}</button>
+    >
+      View: {{ table ? "Table" : "Card" }}
+    </button>
 
     <table
       v-if="table"
@@ -43,11 +43,15 @@
             <button
               class="btn btn-sm btn-outline-warning me-2"
               @click="openEdit(m)"
-            >✍🏻</button>
+            >
+              ✍🏻
+            </button>
             <button
               class="btn btn-sm btn-outline-danger"
               @click="deleteMacro(m.id)"
-            >🗑️</button>
+            >
+              🗑️
+            </button>
           </td>
         </tr>
       </tbody>
@@ -63,9 +67,7 @@
         class="col-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2"
       >
         <div class="card h-100 shadow-sm">
-
           <div class="card-body d-flex flex-column">
-
             <div class="d-flex justify-content-between mb-1">
               <strong>{{ m.macro }}</strong>
               <small class="text-muted">{{ m.category }}</small>
@@ -94,9 +96,7 @@
                 Delete
               </button>
             </div>
-
           </div>
-
         </div>
       </div>
     </div>
@@ -108,10 +108,9 @@
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
           <div class="modal-header">
             <h5 class="modal-title">
-              {{ form.id ? 'Edit Macro' : 'Add Macro' }}
+              {{ form.id ? "Edit Macro" : "Add Macro" }}
             </h5>
             <button
               type="button"
@@ -121,7 +120,6 @@
           </div>
 
           <div class="modal-body">
-
             <div class="mb-2 d-flex flex-row gap-2">
               <label class="form-label my-auto">Macro</label>
               <input
@@ -152,7 +150,6 @@
               />
             </div>
 
-
             <div class="mb-2">
               <label class="form-label">Text</label>
               <textarea
@@ -161,23 +158,18 @@
                 class="form-control"
               ></textarea>
             </div>
-
           </div>
 
           <div class="modal-footer">
             <button
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-            >
-              Cancel
-            </button>
+            >Cancel</button>
 
             <button
               class="btn btn-primary"
               @click="saveMacro"
-            >
-              Save
-            </button>
+            >Save</button>
           </div>
         </div>
       </div>
@@ -186,86 +178,82 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { Modal } from 'bootstrap';
-import { useUIStore } from '@/stores/ui';
-import backend from '@/composables/backend'
+import { ref, onMounted } from "vue";
+import { Modal } from "bootstrap";
+import { useUIStore } from "@/stores/ui";
+import backend from "@/composables/backend";
 
-const modalEl = ref(null)
-let modalInstance = null
-const macros = ref([])
-const ui = useUIStore()
-const table = ref(true)
+const modalEl = ref(null);
+let modalInstance = null;
+const macros = ref([]);
+const ui = useUIStore();
+const table = ref(true);
 
 const form = ref({
   id: null,
-  macro: '',
-  label: '',
-  category: '',
-  remark: '',
-  text: ''
-})
+  macro: "",
+  label: "",
+  category: "",
+  remark: "",
+  text: "",
+});
 
 async function loadMacros() {
-  const res = await fetch(`${backend}/rr/macros`)
-  macros.value = await res.json()
+  const res = await fetch(`${backend}/rr/macros`);
+  macros.value = await res.json();
 }
 
-const showModal = ref(false)
+const showModal = ref(false);
 
 onMounted(() => {
-  loadMacros()
-  modalInstance = new Modal(modalEl.value)
-})
+  loadMacros();
+  modalInstance = new Modal(modalEl.value);
+});
 
 function openAdd() {
-
   form.value = {
     id: null,
-    macro: '',
-    label: '',
-    category: '',
-    remark: '',
-    text: ''
-  }
+    macro: "",
+    label: "",
+    category: "",
+    remark: "",
+    text: "",
+  };
 
-  modalInstance.show()
+  modalInstance.show();
 }
 
 function openEdit(m) {
-  form.value = { ...m }
-  modalInstance.show()
+  form.value = { ...m };
+  modalInstance.show();
 }
 
 async function saveMacro() {
+  const isEditing = !!form.value.id;
 
-  const isEditing = !!form.value.id
-
-  const method = isEditing
-    ? 'PUT'
-    : 'POST'
+  const method = isEditing ? "PUT" : "POST";
 
   const url = isEditing
     ? `${backend}/rr/macros/${form.value.id}`
-    : `${backend}/rr/macros`
+    : `${backend}/rr/macros`;
 
   await fetch(url, {
     method,
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
 
-    body: JSON.stringify(form.value)
-  })
-  modalInstance.hide()
-  loadMacros()
+    body: JSON.stringify(form.value),
+  });
+  modalInstance.hide();
+  loadMacros();
 }
 
 async function deleteMacro(id) {
   await fetch(`${backend}/rr/macros/${id}`, {
-    method: 'DELETE'
-  })
-  loadMacros()
+    method: "DELETE",
+  });
+  loadMacros();
 }
 </script>
 
