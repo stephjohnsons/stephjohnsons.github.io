@@ -30,7 +30,7 @@
       </select>
       <select
         class="text-sm mb-2"
-        v-model="domain"
+        v-model="macroState.domain"
       >
         <option
           value="cn"
@@ -536,6 +536,7 @@ import * as OpenCC from 'opencc-js/core';
 import * as Locale from 'opencc-js/preset';
 import TranslationPrompt from './TranslationPrompt.vue';
 import { useUIStore } from '@/stores/ui';
+import { useMacroStateStore } from '@/stores/macroState';
 import { allTemplates } from './data/templates';
 import backend from '@/composables/backend';
 
@@ -551,7 +552,7 @@ const simplified = ref('')
 const traditional = ref('')
 const hideTw = ref(false);
 const name = ref('st')
-const domain = ref('cn')
+const macroState = useMacroStateStore();
 const progress = ref(0);
 const cnCopied = ref(false);
 const twCopied = ref(false);

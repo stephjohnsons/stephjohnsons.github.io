@@ -52,19 +52,19 @@
         </div>
         <div
           v-if="showList"
-          class="macro-bar"
+          class="macro-bar d-flex rounded flex-wrap align-items-center gap-2"
         >
           <span
             v-for="(item, i) in filteredMacros"
             :key="item"
-            :class="['macro-item', { active: i === highlightedIndex }]"
+            :class="['macro-item d-flex align-items-center gap-2 px-2 py-1 rounded', { active: i === highlightedIndex }]"
             @mousedown.prevent="insertMacro(item)"
           >
             <div class="macro-number">
               {{ i + 1 }}
             </div>
 
-            <div class="macro-text">
+            <div class="macro-text d-flex flex-column">
               <div :class="[
                 'macro-label',
                 { active: i === highlightedIndex }
@@ -72,7 +72,7 @@
                 {{ macroRegistry[item].label }}
               </div>
 
-              <div class="macro-key">
+              <div class="macro-key me-1 small">
                 {{ item }}
               </div>
             </div>
@@ -82,7 +82,7 @@
         <div class="row g-2">
 
           <div class="col-12 col-lg-4">
-            <label class="form-label">
+            <label class="form-label small">
               Remarks
             </label>
 
@@ -95,7 +95,7 @@
           </div>
 
           <div class="col-12 col-lg-4">
-            <label class="form-label">
+            <label class="form-label small">
               English
             </label>
 
@@ -108,7 +108,7 @@
           </div>
 
           <div class="col-12 col-lg-4">
-            <label class="form-label">
+            <label class="form-label small">
               Chinese
             </label>
 
@@ -160,6 +160,7 @@
 <script setup>
 import { ref, watch, computed, onMounted } from "vue";
 import { useUIStore } from "@/stores/ui";
+import { useMacroStateStore } from "@/stores/macroState";
 import MacroManager from "./MacroManager.vue";
 import Notes from "./RegulatoryResponseNotes.vue";
 import backend from '@/composables/backend';
@@ -184,6 +185,7 @@ const preformattedText = ref("");
 const macroTextarea = ref(null);
 const showList = ref(false);
 const highlightedIndex = ref(0);
+const macroState = useMacroStateStore()
 
 const macroRegistry = ref({});
 const macros = computed(() => Object.keys(macroRegistry.value));
@@ -334,7 +336,7 @@ function formatText(text) {
 const formattedText = computed(() => formatText(preformattedText.value));
 
 async function fetchMacros() {
-  const res = await fetch(`${backend}/rr/macros`);
+  const res = await fetch(`${backend}/rr/macros?domain=${macroState.domain}`);
   const data = await res.json();
 
   const registry = {};
@@ -356,18 +358,12 @@ onMounted(async () => {
   macroRegistry.value = await fetchMacros();
 });
 
-watch(macro, (val) => {
-  const match = val.match(/(-[\w-]+)$/);
-  if (!match) return;
-
-  const key = match[1];
-
-  if (macroRegistry.value[key]) {
-    const text = macroRegistry.value[key].text;
-    macro.value = val.replace(key, text);
-    remark.value = macroRegistry.value[key].remark;
+watch(
+  () => macroState.domain,
+  async () => {
+    macroRegistry.value = await fetchMacros()
   }
-});
+)
 </script>
 
 <style scoped>
@@ -375,54 +371,21 @@ watch(macro, (val) => {
   position: relative;
 }
 
-.macro-popup {
-  position: absolute;
-  left: 0;
-  bottom: 100%;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  list-style: none;
-  padding: 4px;
-  margin: 6px 0;
-  width: 180px;
-  max-height: 160px;
-  overflow-y: auto;
-  z-index: 1000;
-}
-
-.macro-popup li {
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
 .macro-bar {
-  display: flex;
   border: 1px solid #ddd;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(6px);
-  position: relative;
-  left: 0;
-  gap: 6px;
   margin: 0.5rem 0rem;
   padding: 0.5rem;
-  flex-wrap: wrap;
-  align-items: center;
-  z-index: 1000;
   max-height: 9.5rem;
   overflow-y: auto;
 }
 
 .macro-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #f4f4f4;
+  background: var(--bs-tertiary-bg);
   min-width: 140px;
+  cursor: pointer;
 }
 
 .macro-number {
@@ -433,14 +396,7 @@ watch(macro, (val) => {
 }
 
 .macro-text {
-  display: flex;
-  flex-direction: column;
   line-height: 1.1;
-}
-
-.macro-key {
-  margin-right: 6px;
-  font-size: 0.8rem;
 }
 
 .macro-label {
@@ -449,7 +405,7 @@ watch(macro, (val) => {
 }
 
 .macro-item.active {
-  background: #dbeafe;
+  background: var(--bs-secondary-bg);
   color: black;
 }
 
@@ -476,15 +432,6 @@ watch(macro, (val) => {
 
 .dark-mode .macro-label.active {
   color: black;
-  font-size: 0.8rem;
-}
-
-.macro-popup li.active,
-.macro-popup li:hover {
-  background: #f2f2f2;
-}
-
-label {
   font-size: 0.8rem;
 }
 </style>
