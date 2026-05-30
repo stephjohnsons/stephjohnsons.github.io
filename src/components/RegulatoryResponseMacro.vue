@@ -36,29 +36,20 @@
   >
     <div class="position-relative w-100 position-relative">
       <div class="macro-wrapper">
-        <div class="d-flex flex-row gap-2">
+        <div class="mb-2">
           <textarea
             ref="macroTextarea"
             v-model="macro"
             class="form-control"
-            rows="4"
+            rows="1"
             @input="onInput"
             @keydown="handleNumberSelect"
             @keydown.left.prevent="highlightPrev"
             @keydown.right.prevent="highlightNext"
             @keydown.enter.prevent="selectHighlighted"
             placeholder="Type - to see available macros"
-            resize="none"
-          />
-
-          <textarea
-            ref="remarkTextarea"
-            v-model="remark"
-            class="form-control form-control-sm resizeable-textarea"
-            rows="4"
           />
         </div>
-
         <div
           v-if="showList"
           class="macro-bar"
@@ -74,14 +65,61 @@
             </div>
 
             <div class="macro-text">
-              <div :class="['macro-label', { active: i === highlightedIndex }]">
+              <div :class="[
+                'macro-label',
+                { active: i === highlightedIndex }
+              ]">
                 {{ macroRegistry[item].label }}
               </div>
+
               <div class="macro-key">
                 {{ item }}
               </div>
             </div>
           </span>
+        </div>
+
+        <div class="row g-2">
+
+          <div class="col-12 col-lg-4">
+            <label class="form-label">
+              Remarks
+            </label>
+
+            <textarea
+              v-model="remark"
+              class="form-control form-control-sm"
+              rows="6"
+              readonly
+            />
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <label class="form-label">
+              English
+            </label>
+
+            <textarea
+              v-model="englishText"
+              class="form-control form-control-sm"
+              rows="6"
+              readonly
+            />
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <label class="form-label">
+              Chinese
+            </label>
+
+            <textarea
+              v-model="chineseText"
+              class="form-control form-control-sm"
+              rows="6"
+              readonly
+            />
+          </div>
+
         </div>
       </div>
     </div>
@@ -138,6 +176,8 @@ defineProps({
 const showMacroManager = ref(false);
 const ui = useUIStore();
 const macro = ref("");
+const englishText = ref('')
+const chineseText = ref('')
 const remark = ref("");
 const preformattedText = ref("");
 
@@ -198,27 +238,16 @@ function onInput(e) {
 }
 
 function insertMacro(selected) {
-  const el = macroTextarea.value;
-  const start = el.selectionStart;
+  const item = macroRegistry.value[selected]
 
-  const before = macro.value.slice(0, start);
-  const after = macro.value.slice(start);
+  remark.value = item.remark || ''
+  englishText.value = item.text_en || ''
+  chineseText.value = item.text_cn || ''
 
-  const item = macroRegistry.value[selected];
-  const text = item.text || "";
-  const remarkText = item.remark || "";
+  macro.value = ''
+  showList.value = false
 
-  const newBefore = before.replace(/-[\w-]*$/, text);
-
-  macro.value = newBefore + after;
-  remark.value = remarkText;
-  showList.value = false;
-
-  requestAnimationFrame(() => {
-    const pos = newBefore.length;
-    el.setSelectionRange(pos, pos);
-    el.focus();
-  });
+  macroTextarea.value?.focus()
 }
 
 function highlightNext() {
@@ -234,8 +263,11 @@ function highlightPrev() {
 }
 
 function selectHighlighted() {
-  if (!showList.value) return;
-  insertMacro(filteredMacros.value[highlightedIndex.value]);
+  if (!showList.value) return
+  const selected = filteredMacros.value[highlightedIndex.value]
+  insertMacro(selected)
+  macro.value = ''
+  showList.value = false
 }
 
 function formatText(text) {
@@ -311,9 +343,10 @@ async function fetchMacros() {
     registry[m.macro] = {
       label: m.label,
       category: m.category,
-      text: m.text,
       remark: m.remark,
-    };
+      text_en: m.text_en,
+      text_cn: m.text_cn
+    }
   });
 
   return registry;
@@ -449,5 +482,9 @@ watch(macro, (val) => {
 .macro-popup li.active,
 .macro-popup li:hover {
   background: #f2f2f2;
+}
+
+label {
+  font-size: 0.8rem;
 }
 </style>

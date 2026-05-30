@@ -78,7 +78,7 @@
             </div>
 
             <div class="macro-text mb-2">
-              {{ m.text }}
+              {{ m.text_en }}
             </div>
 
             <div class="mt-auto d-flex gap-2">
@@ -151,12 +151,37 @@
             </div>
 
             <div class="mb-2">
-              <label class="form-label">Text</label>
-              <textarea
-                v-model="form.text"
-                rows="10"
-                class="form-control"
-              ></textarea>
+              <label class="form-label">
+                Templates
+              </label>
+
+              <div class="row g-2">
+
+                <div class="col-md-6">
+                  <label class="form-label small">
+                    English
+                  </label>
+
+                  <textarea
+                    v-model="form.text_en"
+                    rows="10"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label small">
+                    Chinese
+                  </label>
+
+                  <textarea
+                    v-model="form.text_cn"
+                    rows="10"
+                    class="form-control"
+                  />
+                </div>
+
+              </div>
             </div>
           </div>
 
@@ -195,7 +220,8 @@ const form = ref({
   label: "",
   category: "",
   remark: "",
-  text: "",
+  text_en: "",
+  text_cn: "",
 });
 
 async function loadMacros() {
@@ -217,7 +243,8 @@ function openAdd() {
     label: "",
     category: "",
     remark: "",
-    text: "",
+    text_en: "",
+    text_cn: "",
   };
 
   modalInstance.show();
