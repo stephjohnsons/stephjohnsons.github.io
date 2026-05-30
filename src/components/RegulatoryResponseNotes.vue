@@ -1,89 +1,106 @@
 <template>
   <div :class="{ 'dark-mode': ui.isDark }">
-    <div class="mb-1">
-      <h5 class="fw-normal mb-0">Notes</h5>
+    <div
+      class="mb-1 d-flex align-items-center cursor-pointer"
+      @click="notesExpanded = !notesExpanded"
+    >
+      <h5 class="fw-normal mb-0">
+        Notes
+      </h5>
+
+      <i
+        class="bi ms-2"
+        :class="notesExpanded
+          ? 'bi-chevron-down'
+          : 'bi-chevron-right'"
+      />
     </div>
 
-    <div class="d-flex border rounded mb-2 overflow-hidden">
+    <transition name="collapse-fade">
       <div
-        class="border-end p-2 d-flex flex-column gap-2"
-        style="width: 160px"
+        v-if="notesExpanded"
+        class="d-flex border rounded mb-2 overflow-hidden"
       >
-        <div class="d-flex align-items-center gap-2">
-          <button
-            class="btn btn-sm btn-warning d-flex justify-content-center w-50"
-            @click="createNote"
-            :disabled="notes.length >= MAX_NOTES"
-          >
-            <i class="bi bi-plus-lg"></i>
-          </button>
-
-          <button
-            class="btn btn-sm btn-outline-danger d-flex justify-content-center w-50"
-            @click="deleteNote"
-            :disabled="notes.length <= 1"
-            title="Delete note"
-          >
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
-
-        <div class="note-list">
-          <div
-            v-for="note in notes"
-            :key="note.id"
-            class="note-item small px-3 py-2 d-flex align-items-center justify-content-between"
-            :class="{ active: note.id === noteId }"
-            @click="selectNote(note)"
-          >
-            <span
-              class="text-truncate"
-              :title="note.title"
+        <div
+          class="border-end p-2 d-flex flex-column gap-2"
+          style="width: 160px"
+        >
+          <div class="d-flex align-items-center gap-2">
+            <button
+              class="btn btn-sm btn-warning d-flex justify-content-center w-50"
+              @click="createNote"
+              :disabled="notes.length >= MAX_NOTES"
             >
-              {{ note.title || "Untitled" }}
-            </span>
+              <i class="bi bi-plus-lg"></i>
+            </button>
 
-            <span
-              v-if="dirtyMap[note.id] && note.id !== noteId"
-              class="unsaved-dot"
-            ></span>
+            <button
+              class="btn btn-sm btn-outline-danger d-flex justify-content-center w-50"
+              @click="deleteNote"
+              :disabled="notes.length <= 1"
+              title="Delete note"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+
+          <div class="note-list">
+            <div
+              v-for="note in notes"
+              :key="note.id"
+              class="note-item small px-3 py-2 d-flex align-items-center justify-content-between"
+              :class="{ active: note.id === noteId }"
+              @click="selectNote(note)"
+            >
+              <span
+                class="text-truncate"
+                :title="note.title"
+              >
+                {{ note.title || "Untitled" }}
+              </span>
+
+              <span
+                v-if="dirtyMap[note.id] && note.id !== noteId"
+                class="unsaved-dot"
+              ></span>
+            </div>
           </div>
         </div>
+
+        <div class="flex-grow-1 p-2 d-flex flex-column gap-2">
+          <input
+            v-model="title"
+            class="form-control fw-medium"
+            placeholder="Title..."
+          />
+
+          <textarea
+            v-model="content"
+            class="form-control flex-grow-1"
+            rows="4"
+            placeholder="Start typing..."
+          />
+
+          <!-- Status -->
+          <transition name="fade">
+            <div
+              v-if="status !== 'idle'"
+              class="small d-flex align-items-center gap-2"
+            >
+              <template v-if="status === 'saving'">
+                <span class="spinner-border spinner-border-sm text-warning"></span>
+                <span class="text-warning">Saving...</span>
+              </template>
+
+              <template v-else-if="status === 'saved'">
+                <i class="bi bi-check-circle text-success"></i>
+                <span class="text-success">Saved</span>
+              </template>
+            </div>
+          </transition>
+        </div>
       </div>
-
-      <div class="flex-grow-1 p-2 d-flex flex-column gap-2">
-        <input
-          v-model="title"
-          class="form-control fw-medium"
-          placeholder="Title..."
-        />
-
-        <textarea
-          v-model="content"
-          class="form-control flex-grow-1"
-          rows="4"
-          placeholder="Start typing..."
-        />
-
-        <!-- Status -->
-        <transition name="fade">
-          <div
-            v-if="status !== 'idle'"
-            class="small d-flex align-items-center gap-2"
-          >
-            <template v-if="status === 'saving'">
-              <span class="spinner-border spinner-border-sm text-warning"></span>
-              <span class="text-warning">Saving...</span>
-            </template>
-
-            <template v-else-if="status === 'saved'">
-              <i class="bi bi-check-circle text-success"></i>
-              <span class="text-success">Saved</span>
-            </template>
-          </div>
-        </transition>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -98,6 +115,7 @@ const MAX_NOTES = 10;
 // state
 const notes = ref([]);
 const noteId = ref(null);
+const notesExpanded = ref(true)
 
 const title = ref("");
 const content = ref("");
@@ -285,6 +303,14 @@ onMounted(fetchNotes);
 
 <style scoped>
 /* sidebar container */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-pointer:hover h5 {
+  opacity: 0.75;
+}
+
 .note-list {
   max-height: 150px;
   overflow-y: auto;
