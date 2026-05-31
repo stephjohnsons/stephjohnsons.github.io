@@ -1,5 +1,4 @@
 <template>
-  <Notes v-if="admin" />
   <div
     class="border-bottom d-flex gap-3 mb-3"
     v-if="admin"
@@ -25,10 +24,7 @@
     class="gap-3"
     :class="{ 'dark-mode': ui.isDark }"
   >
-    <h5
-      class="fw-normal"
-      :class="{ 'mt-3': admin }"
-    >Macro</h5>
+    <h5 class="fw-normal">Macro</h5>
   </div>
   <div
     class="d-flex flex-col gap-2 mb-2"
@@ -40,7 +36,7 @@
           <textarea
             ref="macroTextarea"
             v-model="macro"
-            class="form-control"
+            class="form-control no-resize"
             rows="1"
             @input="onInput"
             @keydown="handleNumberSelect"
@@ -80,8 +76,7 @@
         </div>
 
         <div class="row g-2">
-
-          <div class="col-12 col-lg-4">
+          <div class="col-4">
             <label class="form-label small">
               Remarks
             </label>
@@ -93,12 +88,10 @@
               readonly
             />
           </div>
-
-          <div class="col-12 col-lg-4">
+          <div class="col-4">
             <label class="form-label small">
               English
             </label>
-
             <textarea
               v-model="englishText"
               class="form-control form-control-sm"
@@ -106,12 +99,10 @@
               readonly
             />
           </div>
-
-          <div class="col-12 col-lg-4">
+          <div class="col-4">
             <label class="form-label small">
               Chinese
             </label>
-
             <textarea
               v-model="chineseText"
               class="form-control form-control-sm"
@@ -126,35 +117,8 @@
   </div>
 
   <MacroManager v-if="showMacroManager" />
-
-  <div
-    class="gap-3"
-    :class="{ 'dark-mode': ui.isDark }"
-  >
-    <h5 class="fw-normal mt-2">Line Remover</h5>
-  </div>
-  <div class="d-flex flex-col gap-2 mb-2">
-    <!-- Input macroTextarea -->
-    <div class="position-relative w-50">
-      <textarea
-        v-model="preformattedText"
-        class="form-control"
-        rows="3"
-        placeholder="Copy text here"
-      />
-    </div>
-
-    <!-- Result macroTextarea -->
-    <div class="position-relative w-100">
-      <textarea
-        :value="formattedText"
-        class="form-control"
-        rows="3"
-        readonly
-        placeholder="Formatted result"
-      />
-    </div>
-  </div>
+  <MacroLineRemover v-if="!showMacroManager" />
+  <Notes v-if="admin" />
 </template>
 
 <script setup>
@@ -162,6 +126,7 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useUIStore } from "@/stores/ui";
 import { useMacroStateStore } from "@/stores/macroState";
 import MacroManager from "./MacroManager.vue";
+import MacroLineRemover from "./MacroLineRemover.vue";
 import Notes from "./RegulatoryResponseNotes.vue";
 import backend from '@/composables/backend';
 
@@ -180,7 +145,6 @@ const macro = ref("");
 const englishText = ref('')
 const chineseText = ref('')
 const remark = ref("");
-const preformattedText = ref("");
 
 const macroTextarea = ref(null);
 const showList = ref(false);
@@ -270,67 +234,6 @@ function selectHighlighted() {
   insertMacro(selected)
   macro.value = ''
   showList.value = false
-}
-
-function formatText(text) {
-  const paragraphs = text.split(/\n{2,}/);
-
-  const processed = paragraphs.map((p) => {
-    const lines = p.split("\n").map((l) => l.trim());
-    const signatureLines = /^(Best|regards|sincerely|thanks|thank you)[,]?$/i;
-    let result = [];
-
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i];
-
-      while (true) {
-        const next = lines[i + 1];
-        if (!next) break;
-
-        const endsSentence = /[.!?]"?$/.test(line);
-
-        if (!endsSentence) {
-          line += " " + next;
-          i++;
-        } else {
-          break;
-        }
-      }
-
-      if (signatureLines.test(line)) {
-        result.push(line);
-        continue;
-      }
-
-      result.push(line);
-    }
-
-    return result.join(" ");
-  });
-
-  let output = processed.join("\n\n");
-
-  // 🔧 ensure numbered lists start on new lines
-  output = output.replace(/\s+(\d+\.\s)/g, "\n$1");
-  output = output.replace(/\s+([・\-*•]\s)/g, "\n$1");
-  output = output.replace(/Best regards,\s+Liam T\./g, "Best regards,\nLiam");
-  output = output.replace(/Best,\s+Liam T\./g, "Best,\nLiam");
-  output = output.replace(/Best regards,\s+Liam/g, "Best regards,\nLiam");
-  output = output.replace(/Best,\s+Liam/g, "Best,\nLiam");
-  output = output.replace(/Thanks,\s+Liam T\./g, "Thanks,\nLiam");
-  output = output.replace(
-    /Thanks for understanding,\s+Liam T\./g,
-    "Thanks for understanding,\nLiam"
-  );
-  output = output.replace(/(?<!^)(（\d+）)/g, "\n$1");
-  output = output.replace(/[:：]\s*(?=(www\.|[a-zA-Z0-9-]+\.[a-zA-Z]{2,}))/g, ": \n");
-  output = output.replace(/\bwww\./g, "");
-  output = output.replace(/72|48/g, (match) => {
-    if (match === "72") return "48";
-    if (match === "48") return "24";
-  });
-
-  return output.trim();
 }
 
 const formattedText = computed(() => formatText(preformattedText.value));
@@ -433,5 +336,9 @@ watch(
 .dark-mode .macro-label.active {
   color: black;
   font-size: 0.8rem;
+}
+
+.no-resize {
+  resize: none;
 }
 </style>

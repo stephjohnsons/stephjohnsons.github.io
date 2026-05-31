@@ -1,5 +1,8 @@
 <template>
-  <div :class="{ 'dark-mode': ui.isDark }">
+  <div
+    :class="{ 'dark-mode': ui.isDark }"
+    class="mt-2"
+  >
     <div
       class="mb-1 d-flex align-items-center cursor-pointer"
       @click="notesExpanded = !notesExpanded"
