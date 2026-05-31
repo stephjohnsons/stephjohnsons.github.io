@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "@supabase/supabase-js": "^2.50.2",
+    "@supabase/supabase-js": "^2.106.2",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.13.1",
     "googleapis": "^166.0.0",
