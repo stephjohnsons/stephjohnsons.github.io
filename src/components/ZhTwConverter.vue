@@ -605,7 +605,7 @@ const fetchSubtemplates = async (type, template) => {
     if (type === 'opening') {
       res.value = await fetch(`${backend}/volume/${type}?type=${template}`);
     } else {
-      res.value = await fetch(`${backend}/volume/${type}?type=${template}&domain=${domain.value}`);
+      res.value = await fetch(`${backend}/volume/${type}?type=${template}&domain=${macroState.domain}`);
     }
     const json = await res.value.json();
     if (type === 'opening') {
