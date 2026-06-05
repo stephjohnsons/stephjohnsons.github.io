@@ -68,6 +68,10 @@
         :class="{ 'bg-body': !ui.isDark }"
       >
         <CurrentTime />
+        <select class="text-sm ms-2" v-model="macroState.domain" >
+          <option value="cn">.cn</option>
+          <option value="com">.com</option>
+        </select>
         <p class="ms-auto my-auto me-2">
           <a href="https://www.timeanddate.com/date/workdays.html">
             Business Day Calculator
@@ -110,9 +114,11 @@ import CurrentTime from "@/components/CurrentTime.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useUIStore } from "@/stores/ui";
 import { useAlarmStore } from "@/stores/alarm";
+import { useMacroStateStore } from "@/stores/macroState";
 import moment from "moment";
 
 const ui = useUIStore();
+const macroState = useMacroStateStore()
 const authenticated = ref(
   localStorage.getItem("tool_authenticated") === "true" ||
   localStorage.getItem("studio_admin_authenticated") === "true"
