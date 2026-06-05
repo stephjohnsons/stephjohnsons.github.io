@@ -43,7 +43,6 @@
             @keydown.left.prevent="highlightPrev"
             @keydown.right.prevent="highlightNext"
             @keydown.enter.prevent="selectHighlighted"
-            placeholder="Type - to see available macros"
           />
         </div>
         <div
