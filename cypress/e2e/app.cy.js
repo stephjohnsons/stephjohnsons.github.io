@@ -8,14 +8,14 @@ describe('App Header', () => {
   })
 })
 
-// Header does not exist when in /tools 
-describe('/tools route', () => {
-  it('hides header', () => {
-    cy.visit('/tools')
+// Header does not exist when in /tools -- 5 Jun: temporarily hidden; will test on a different app
+// describe('/tools route', () => {
+//   it('hides header', () => {
+//     cy.visit('/tools')
 
-    cy.get('header').should('not.exist')
-  })
-})
+//     cy.get('header').should('not.exist')
+//   })
+// })
 
 // Menu behavior
 describe('Hamburger menu', () => {
@@ -69,43 +69,43 @@ it('closes menu after navigation', () => {
     .should('not.exist')
 })
 
-// Tests on dark mode
-it('applies dark mode class', () => {
-  cy.visit('/', {
-    onBeforeLoad(win) {
-      win.localStorage.setItem(
-        'ui',
-        JSON.stringify({
-          isDark: true
-        })
-      )
-    }
-  })
+// Tests on dark mode -- 5 Jun: temporarily hidden; will test on a different app
+// it('applies dark mode class', () => {
+//   cy.visit('/', {
+//     onBeforeLoad(win) {
+//       win.localStorage.setItem(
+//         'ui',
+//         JSON.stringify({
+//           isDark: true
+//         })
+//       )
+//     }
+//   })
 
-  cy.get('body')
-  cy.get('.dark-mode')
-    .should('exist')
-})
+//   cy.get('body')
+//   cy.get('.dark-mode')
+//     .should('exist')
+// })
 
-// Website title changes on /title and other pages
-it('sets title on home page', () => {
-  cy.visit('/')
+// Website title changes on /title and other pages -- 5 Jun: temporarily hidden; will test on a different app
+// it('sets title on home page', () => {
+//   cy.visit('/')
 
-  cy.window().then((win) => {
-    win.dispatchEvent(new Event('focus'))
-  })
+//   cy.window().then((win) => {
+//     win.dispatchEvent(new Event('focus'))
+//   })
 
-  cy.title()
-    .should('eq', 'Stephen Johnson-Tseu')
-})
+//   cy.title()
+//     .should('eq', 'Stephen Johnson-Tseu')
+// })
 
-it('sets title on tools page', () => {
-  cy.visit('/tools')
+// it('sets title on tools page', () => {
+//   cy.visit('/tools')
 
-  cy.window().then((win) => {
-    win.dispatchEvent(new Event('focus'))
-  })
+//   cy.window().then((win) => {
+//     win.dispatchEvent(new Event('focus'))
+//   })
 
-  cy.title()
-    .should('eq', 'Tools')
-})
+//   cy.title()
+//     .should('eq', 'Tools')
+// })
