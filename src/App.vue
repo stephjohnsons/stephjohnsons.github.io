@@ -81,6 +81,14 @@ const removeMenu = () => {
 watch(() => route.path, () => {
   removeMenu();
 });
+
+watch(
+  () => ui.isDark,
+  (isDark) => {
+    document.body.classList.toggle('dark-mode', isDark)
+  },
+  { immediate: true }
+)
 </script>
 
 <style>
@@ -90,14 +98,30 @@ html,
 body,
 #app {
   font-family: 'Sora', sans-serif;
+  min-height: 100%;
+}
+
+body {
   background-color: #f4f4f4;
   color: #262526;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+body.dark-mode {
+  background-color: #191818;
+  color: #e7dfdf;
 }
 
 header {
   position: sticky;
   background-color: rgb(244, 244, 244, 0.4);
   backdrop-filter: blur(4px);
+}
+
+.dark-mode header {
+  color: #e7dfdf;
 }
 
 #no-deco {
@@ -132,6 +156,13 @@ p>a {
   text-decoration: underline;
 }
 
+li>a.dark-mode,
+p>a.dark-mode {
+  color: #e7dfdf !important;
+  transition: 200ms cubic-bezier(.29, .57, .94, .61);
+  text-decoration: underline;
+}
+
 li>a:hover,
 p>a:hover {
   background-position: 0 100%;
@@ -140,7 +171,7 @@ p>a:hover {
 }
 
 li>a:hover {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 10 18'%3E%3Cstyle type='text/css'%3E.squiggle%7Banimation:shift .5s linear infinite;%7D@keyframes shift %7Bfrom %7Btransform:translateX(-10px);%7Dto %7Btransform:translateX(0);%7D%7D%3C/style%3E%3Cpath fill='none' stroke='black' stroke-width='0.8' class='squiggle' d='M0,17.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5' /%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 10 18'%3E%3Cstyle type='text/css'%3E.squiggle%7Banimation:shift .5s linear infinite;%7D@keyframes shift %7Bfrom %7Btransform:translateX(-10px);%7Dto %7Btransform:translateX(0);%7D%7D%3C/style%3E%3Cpath fill='none' stroke='inherit' stroke-width='0.8' class='squiggle' d='M0,17.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5' /%3E%3C/svg%3E");
 }
 
 p>a:hover {
@@ -148,6 +179,10 @@ p>a:hover {
   text-decoration: none;
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg id='squiggle-link' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:ev='http://www.w3.org/2001/xml-events' viewBox='0 0 10 18'%3E%3Cstyle type='text/css'%3E.squiggle%7Banimation:shift .5s linear infinite;%7D@keyframes shift %7Bfrom %7Btransform:translateX(-10px);%7Dto %7Btransform:translateX(0);%7D%7D%3C/style%3E%3Cpath fill='none' stroke='black' stroke-width='1.4' class='squiggle' d='M0,17.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5 c 2.5,0,2.5,-1.5,5,-1.5 s 2.5,1.5,5,1.5' /%3E%3C/svg%3E");
   padding-bottom: 3px;
+}
+
+.text-muted .dark-mode {
+  color: #e7dfdf;
 }
 
 .fs-7 {
@@ -195,6 +230,10 @@ p>a:hover {
   transition: all 0.4s ease-in-out;
 }
 
+.dark-mode .hamburger_line {
+  background: #e7dfdf;
+}
+
 .slide-fade-enter-active,
 .slide-fade-leave-active {
   transition: all 0.2s ease-out;
@@ -228,7 +267,7 @@ p>a:hover {
 }
 
 .dark-mode a {
-  color: #89c4ff;
+  color: #e7dfdf;
 }
 
 .dark-mode .form-control,
@@ -255,5 +294,29 @@ p>a:hover {
 ::-moz-selection {
   color: #fff;
   background: yellow;
+}
+
+.dark-mode .table {
+  color: #e7dfdf;
+}
+
+.dark-mode .card,
+.dark-mode .modal-content,
+.dark-mode .dropdown-menu {
+  background-color: #191818;
+  color: #e7dfdf;
+  border-color: #444;
+}
+
+.dark-mode .list-group-item {
+  background-color: #191818;
+  color: #e7dfdf;
+  border-color: #444;
+}
+
+.dark-mode .form-select {
+  background-color: #191818;
+  color: #e7dfdf;
+  border-color: #444;
 }
 </style>
