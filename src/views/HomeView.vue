@@ -26,7 +26,10 @@
           his performances and music teaching.
           He also has a keen interest in software development and enjoys reading.
         </p>
-        <p class="d-flex flex-row">
+        <p
+          class="d-flex flex-row"
+          :class="{ 'dark-mode': ui.isDark }"
+        >
           <RouterLink
             :to="{ path: pageLinks[1].link }"
             class="text-muted"
@@ -58,6 +61,9 @@ import { ref, computed, onMounted } from 'vue';
 import { homeDescription } from '@/images/description.js';
 import { pageLinks } from '@/components/data/pages.js'
 import { RouterLink } from 'vue-router'
+import { useUIStore } from '@/stores/ui'
+
+const ui = useUIStore();
 
 // import InstagramEmbed from '@/components/InstagramEmbed.vue';
 

@@ -12,6 +12,7 @@
       <h1
         class="fw-light py-2 mb-1 fs-2"
         id="no-deco"
+        :class="{ 'dark-mode': ui.isDark }"
       >
         Stephen
         <span class="fw-medium">Johnson-Tseu</span>
@@ -51,6 +52,7 @@
         v-if="showMenu"
         class="mx-4 mb-2 px-2"
         id="menu"
+        :class="{ 'dark-mode': ui.isDark }"
       />
     </Transition>
   </div>
@@ -129,6 +131,11 @@ header {
   text-decoration: none;
 }
 
+#no-deco .dark-mode {
+  color: #e7dfdf;
+  text-decoration: none;
+}
+
 h2 {
   font-size: 2.986rem !important;
 }
@@ -156,8 +163,8 @@ p>a {
   text-decoration: underline;
 }
 
-li>a.dark-mode,
-p>a.dark-mode {
+li>a .dark-mode,
+p>a .dark-mode {
   color: #e7dfdf !important;
   transition: 200ms cubic-bezier(.29, .57, .94, .61);
   text-decoration: underline;
