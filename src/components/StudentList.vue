@@ -97,8 +97,9 @@
       </div>
     </div>
   </transition>
-  <p class="mb-1">Updated on 23 Feb 2026</p>
-
+  <p class="mb-1">
+    Updated on {{ studentStore.latestUpdatedAtFormatted }}
+  </p>
   <!-- List of Students -->
   <div v-if="students">
     <table class="table table-hover w-full rounded-4">

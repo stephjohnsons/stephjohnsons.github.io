@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import backend from '@/composables/backend'
 
 export const useStudentStore = defineStore('students', () => {
@@ -21,6 +21,24 @@ export const useStudentStore = defineStore('students', () => {
     }
   }
 
+  const latestUpdatedAt = computed(() => {
+    if (!students.value.length) return null
+
+    return students.value.reduce((latest, student) =>
+      new Date(student.updated_at) > new Date(latest.updated_at) ? student : latest
+    ).updated_at
+  })
+
+  const latestUpdatedAtFormatted = computed(() => {
+    if (!latestUpdatedAt.value) return ''
+
+    return new Date(latestUpdatedAt.value).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    })
+  })
+
   const getStudentName = (id) => {
     const found = students.value.find((s) => s.id === id)
     return found ? found.student : 'Unknown'
@@ -29,6 +47,8 @@ export const useStudentStore = defineStore('students', () => {
   return {
     students,
     loaded,
+    latestUpdatedAt,
+    latestUpdatedAtFormatted,
     setStudents,
     fetchStudents,
     getStudentName
