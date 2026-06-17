@@ -23,6 +23,7 @@
 
 
     <h3 class="mb-2">Teaching Appointments</h3>
+    <p>Click on each card to see the subjects taught.</p>
     <!-- Loading -->
     <div v-if="loading">
       Loading...
@@ -43,7 +44,7 @@
         </small>
 
         <h5
-          class="fw-bold mb-2 institution-title"
+          class="fw-bold mb-2 custom-overflow-hidden"
           :class="{
             expanded: expandedCard === appointment.id
           }"
@@ -52,9 +53,20 @@
           {{ appointment.institutions?.name }}
         </h5>
 
-        <p class="mb-0">
+        <p>
           {{ appointment.role }}
         </p>
+        <Transition name="fade">
+          <div v-if="expandedCard === appointment.id">
+            <p
+              v-for="subject in appointment.subjects"
+              :key="subject"
+              class="mb-0 text-muted"
+            >
+              • {{ subject }}
+            </p>
+          </div>
+        </Transition>
       </div>
     </div>
 
@@ -166,7 +178,8 @@ onMounted(() => {
 
   transition:
     transform 160ms ease,
-    box-shadow 160ms ease;
+    box-shadow 160ms ease,
+    height 160ms ease;
 }
 
 .teaching-card:hover {
@@ -174,20 +187,20 @@ onMounted(() => {
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
 }
 
-.institution-title {
+.custom-overflow-hidden {
   cursor: pointer;
   overflow: hidden;
   transition: all 160ms ease;
 }
 
-.institution-title:not(.expanded) {
+.custom-overflow-hidden:not(.expanded) {
   display: -webkit-box;
 
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
-.institution-title:not(.expanded):hover {
+.custom-overflow-hidden:not(.expanded):hover {
   opacity: 0.8;
 }
 
