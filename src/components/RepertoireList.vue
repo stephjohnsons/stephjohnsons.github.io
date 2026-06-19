@@ -7,92 +7,104 @@
   </div>
 
   <!-- Repertoire List Table -->
-  <div v-if="repertoireList.length">
-    <table class="table table-hover w-full rounded-4">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="p-1">Student</th>
-          <th class="p-1">Pieces</th>
-          <th
-            class="p-1 d-none d-sm-table-cell"
-            v-if="adminAuthenticated"
-          ></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="rep in repertoireList"
-          :key="rep.id"
-        >
-          <td>
-            {{ getStudentName(rep.student_id) }}
-            <span class="font-bold opacity-50 form-control-sm">
-              <br />
-              Updated: <br />
-              {{ formatDate(rep.updated_at) }}
-            </span>
-          </td>
-          <!-- Conditional edit/display -->
-          <td v-if="editingId === rep.id">
-            <textarea
-              v-model="editForm.pieces"
-              class="form-control form-control-sm mb-0"
-              rows="4"
-            ></textarea>
-          </td>
-          <td
-            style="white-space: pre-line;"
-            v-else
-          >
-            {{ rep.pieces }}
-          </td>
-          <td
-            class="d-none d-sm-table-cell"
-            v-if="adminAuthenticated"
-          >
-            <div
-              v-if="editingId !== rep.id"
-              class="d-flex gap-1"
-            >
-              <button
-                class="btn btn-sm btn-warning"
-                @click="startEdit(rep)"
-              >
-                <i class="bi bi-pencil"></i>
-              </button>
-              <button
-                class="btn btn-sm btn-outline-danger"
-                @click="deleteRep(rep.id)"
-              >
-                <i class="bi bi-trash"></i>
-              </button>
-            </div>
-            <div
-              v-else
-              class="d-flex gap-1"
-            >
-              <button
-                class="btn btn-sm btn-success"
-                @click="saveEdit"
-              >
-                <i class="bi bi-check"></i>
-              </button>
-              <button
-                class="btn btn-sm btn-outline-danger"
-                @click="cancelEdit"
-              >
-                <i class="bi bi-x"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
   <div
-    v-else
-    class="text-gray-500"
-  >No repertoire found.</div>
+    v-for="rep in repertoireList"
+    :key="rep.id"
+    class="accordion mb-3"
+  >
+    <details>
+      <summary class="fw-bold fs-5">
+        {{ getStudentName(rep.student_id) }}
+      </summary>
+
+      <div class="row mt-3">
+
+        <!-- LEFT -->
+        <div class="col-md-6">
+          <h5>Repertoire</h5>
+          <div style="white-space: pre-line;">
+            {{ rep.pieces }}
+          </div>
+
+          <div
+            class="d-flex gap-1 mt-2"
+            v-if="adminAuthenticated"
+          >
+            <button
+              class="btn btn-sm btn-warning"
+              @click="startEdit(rep)"
+            >
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button
+              class="btn btn-sm btn-outline-danger"
+              @click="deleteRep(rep.id)"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="col-md-6">
+
+          <div class="d-flex justify-content-between align-items-center mb-2">
+
+            <h5>
+              Student Remarks
+            </h5>
+
+            <button
+              class="btn btn-sm btn-primary"
+              @click="showNoteBox = rep.student_id"
+            >
+              +
+            </button>
+
+          </div>
+
+
+          <div v-if="showNoteBox === rep.student_id">
+
+            <textarea
+              v-model="newNote"
+              rows="4"
+              class="form-control mb-2"
+            />
+
+            <button
+              class="btn btn-success btn-sm"
+              @click="saveNote(rep.student_id)"
+            >
+              Save
+            </button>
+
+          </div>
+
+
+          <div class="remarks-panel">
+
+            <div
+              v-for="note in notesByStudent[rep.student_id]"
+              :key="note.id"
+              class="remark-card"
+            >
+
+              <div class="opacity-50 small">
+
+                {{ formatDate(note.created_at) }}
+
+              </div>
+
+              <div>
+                {{ note.note }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
   <div
     v-if="loading"
     class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
@@ -108,12 +120,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
 import backend from '@/composables/backend';
 
 const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
+
+const notes = ref([])
 const repertoireList = ref([]);
 const showForm = ref(false);
 const loading = ref(false);
@@ -121,6 +135,9 @@ const loading = ref(false);
 const studentStore = useStudentStore();
 const getStudentName = studentStore.getStudentName;
 const students = studentStore.students;
+
+const showNoteBox = ref(null);
+const newNote = ref('')
 
 const editingId = ref(null);
 const editForm = ref({
@@ -142,30 +159,58 @@ const fetchRepertoire = async () => {
   }
 };
 
-const addRepertoire = async () => {
-  loading.value = true;
+const fetchNotes = async () => {
   try {
-    const res = await fetch(`${backend}/rep`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form.value)
-    });
+    notes.value = await fetch(`${backend}/student-notes`)
+      .then(res => res.json())
+  } catch (err) {
+    console.error(err)
+  }
+}
 
-    if (!res.ok) {
-      const err = await res.json();
-      alert('Error: ' + err.error);
-      return;
+const notesByStudent = computed(() => {
+  const grouped = {}
+
+  notes.value.forEach(note => {
+
+    if (!grouped[note.student_id]) {
+      grouped[note.student_id] = []
+
     }
 
-    resetForm();
-    showForm.value = false;
-    await fetchRepertoire();
+    grouped[note.student_id].push(note)
+
+  })
+
+  return grouped
+})
+
+const saveNote = async (studentId) => {
+  if (!newNote.value.trim()) return
+
+  try {
+    await fetch(`${backend}/student-notes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        student_id: studentId,
+        note: newNote.value
+      })
+
+    })
+
+    newNote.value = ''
+    showNoteBox.value = null
+
+    await fetchNotes()
+
   } catch (err) {
-    console.error('Add error:', err);
-  } finally {
-    loading.value = false;
+    console.error(err)
   }
-};
+
+}
 
 const resetForm = () => {
   form.value = {
@@ -264,5 +309,27 @@ onMounted(async () => {
 
 label {
   margin-right: 1rem;
+}
+
+.remarks-panel {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  background: white;
+}
+
+.remark-card {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+details summary {
+  cursor: pointer;
+  padding: 12px;
+  background: #f7f7f7;
+  border-radius: 10px;
 }
 </style>
