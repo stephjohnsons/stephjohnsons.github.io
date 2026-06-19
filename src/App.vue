@@ -59,17 +59,17 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { RouterView, useRoute } from 'vue-router'
-import MenuView from '@/views/MenuView.vue'
-import { useUIStore } from '@/stores/ui';
+import { ref, watch } from "vue";
+import { RouterView, useRoute } from "vue-router";
+import MenuView from "@/views/MenuView.vue";
+import { useUIStore } from "@/stores/ui";
 
 const showMenu = ref(false);
 const route = useRoute();
 const ui = useUIStore();
 
 window.addEventListener("focus", () => {
-  if (route.path === '/tools') {
+  if (route.path === "/tools") {
     document.title = "Tools";
   } else {
     document.title = "Stephen Johnson-Tseu";
@@ -78,41 +78,41 @@ window.addEventListener("focus", () => {
 
 const removeMenu = () => {
   showMenu.value = false;
-}
+};
 
-watch(() => route.path, () => {
-  removeMenu();
-});
+watch(
+  () => route.path,
+  () => {
+    removeMenu();
+  }
+);
 
 watch(
   () => ui.isDark,
   (isDark) => {
-    document.body.classList.toggle('dark-mode', isDark)
+    document.body.classList.toggle("dark-mode", isDark);
   },
   { immediate: true }
-)
+);
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 
 html,
 body,
 #app {
-  font-family: 'Sora', sans-serif;
+  font-family: "Sora", sans-serif;
   min-height: 100%;
 }
 
 body {
-  background-color: #f4f4f4;
+  background-color: #f4f3f3 !important;
   color: #262526;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
 }
 
 body.dark-mode {
-  background-color: #191818;
+  background-color: #191818 !important;
   color: #e7dfdf;
 }
 
@@ -159,14 +159,14 @@ h6 {
 li>a,
 p>a {
   color: #262526 !important;
-  transition: 200ms cubic-bezier(.29, .57, .94, .61);
+  transition: 200ms cubic-bezier(0.29, 0.57, 0.94, 0.61);
   text-decoration: underline;
 }
 
 li>a .dark-mode,
 p>a .dark-mode {
   color: #e7dfdf !important;
-  transition: 200ms cubic-bezier(.29, .57, .94, .61);
+  transition: 200ms cubic-bezier(0.29, 0.57, 0.94, 0.61);
   text-decoration: underline;
 }
 
@@ -174,7 +174,7 @@ li>a:hover,
 p>a:hover {
   background-position: 0 100%;
   background-repeat: repeat;
-  transition: 200ms cubic-bezier(.29, .57, .94, .61);
+  transition: 200ms cubic-bezier(0.29, 0.57, 0.94, 0.61);
 }
 
 li>a:hover {
