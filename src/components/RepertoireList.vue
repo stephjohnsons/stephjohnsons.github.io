@@ -16,9 +16,7 @@
       <summary class="fw-bold fs-5">
         {{ getStudentName(rep.student_id) }}
       </summary>
-
-      <div class="row mt-3">
-
+      <div class="row mt-0 bg-white rounded-bottom px-3 py-3 m-1">
         <!-- LEFT -->
         <div class="col-md-6">
           <h5>Repertoire</h5>
@@ -47,13 +45,10 @@
 
         <!-- RIGHT -->
         <div class="col-md-6">
-
           <div class="d-flex justify-content-between align-items-center mb-2">
-
-            <h5>
+            <h5 class="mt-2">
               Student Remarks
             </h5>
-
             <button
               class="btn btn-sm btn-primary"
               @click="showNoteBox = rep.student_id"
@@ -65,7 +60,6 @@
 
 
           <div v-if="showNoteBox === rep.student_id">
-
             <textarea
               v-model="newNote"
               rows="4"
@@ -78,24 +72,21 @@
             >
               Save
             </button>
-
           </div>
 
 
-          <div class="remarks-panel">
-
+          <div
+            class="remarks-panel"
+            v-if="notesByStudent[rep.student_id]"
+          >
             <div
               v-for="note in notesByStudent[rep.student_id]"
               :key="note.id"
               class="remark-card"
             >
-
               <div class="opacity-50 small">
-
                 {{ formatDate(note.created_at) }}
-
               </div>
-
               <div>
                 {{ note.note }}
               </div>
@@ -290,6 +281,7 @@ const deleteRep = async (id) => {
 
 onMounted(async () => {
   await fetchRepertoire();
+  await fetchNotes();
 });
 </script>
 
@@ -324,6 +316,7 @@ label {
   padding: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid #eee;
+  white-space: pre-wrap !important;
 }
 
 details summary {
