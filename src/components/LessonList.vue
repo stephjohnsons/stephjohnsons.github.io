@@ -316,7 +316,7 @@ const showQuickAddForm = ref(false);
 const expandedStudents = ref(new Set());
 
 const classStore = useClassStore();
-const selectedSemester = ref('2026-01');
+const selectedSemester = ref('2026-05');
 
 import { storeToRefs } from "pinia";
 const { semesterList } = storeToRefs(classStore);
