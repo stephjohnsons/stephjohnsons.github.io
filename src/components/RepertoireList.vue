@@ -12,7 +12,7 @@
     :key="rep.id"
     class="accordion mb-3"
   >
-    <details>
+    <details @toggle="e => handleToggle(e, rep.student_id)">
       <summary class="fw-bold fs-5">
         {{ getStudentName(rep.student_id) }}
       </summary>
@@ -20,13 +20,39 @@
         <!-- LEFT -->
         <div class="col-md-6">
           <h5>Repertoire</h5>
-          <div style="white-space: pre-line;">
+          <div
+            v-if="editingId !== rep.id"
+            style="white-space: pre-line;"
+          >
             {{ rep.pieces }}
           </div>
 
+          <div v-else>
+            <textarea
+              v-model="editForm.pieces"
+              rows="5"
+              class="form-control mb-2"
+            />
+
+            <div class="d-flex gap-2">
+              <button
+                class="btn btn-success btn-sm"
+                @click="saveEdit"
+              >
+                Save
+              </button>
+
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                @click="cancelEdit"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
           <div
             class="d-flex gap-1 mt-2"
-            v-if="adminAuthenticated"
+            v-if="adminAuthenticated && editingId !== rep.id"
           >
             <button
               class="btn btn-sm btn-warning"
@@ -50,12 +76,11 @@
               Student Remarks
             </h5>
             <button
-              class="btn btn-sm btn-primary"
+              class="btn btn-sm btn-warning"
               @click="showNoteBox = rep.student_id"
             >
-              +
+              <i class="bi bi-plus"></i>
             </button>
-
           </div>
 
 
@@ -65,32 +90,47 @@
               rows="4"
               class="form-control mb-2"
             />
-
             <button
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm mb-2"
               @click="saveNote(rep.student_id)"
             >
               Save
+            </button>
+            <button
+              class="btn btn-outline-secondary btn-sm ms-2 mb-2"
+              @click="showNoteBox = null"
+            >
+              Cancel
             </button>
           </div>
 
 
           <div
-            class="remarks-panel"
+            class="remarks-panel position-relative"
             v-if="notesByStudent[rep.student_id]"
+            :ref="el => remarksRefs[rep.student_id] = el"
           >
             <div
               v-for="note in notesByStudent[rep.student_id]"
               :key="note.id"
               class="remark-card"
             >
-              <div class="opacity-50 small">
-                {{ formatDate(note.created_at) }}
-              </div>
               <div>
                 {{ note.note }}
               </div>
+              <div
+                class="opacity-50 mt-1"
+                style="font-size: 0.8rem"
+              >
+                Added {{ formatDate(note.created_at) }}
+              </div>
             </div>
+            <button
+              class="btn btn-warning btn-sm scroll-down-btn"
+              @click="scrollToBottom(rep.student_id)"
+            >
+              <i class="bi bi-arrow-down"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -111,7 +151,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, nextTick } from 'vue';
 import { useStudentStore } from '@/stores/students';
 import backend from '@/composables/backend';
 
@@ -122,6 +162,8 @@ const notes = ref([])
 const repertoireList = ref([]);
 const showForm = ref(false);
 const loading = ref(false);
+
+const remarksRefs = ref({})
 
 const studentStore = useStudentStore();
 const getStudentName = studentStore.getStudentName;
@@ -203,6 +245,24 @@ const saveNote = async (studentId) => {
 
 }
 
+const scrollToBottom = (studentId) => {
+  const panel = remarksRefs.value[studentId]
+
+  if (panel) {
+    panel.scrollTo({
+      top: panel.scrollHeight,
+      behavior: 'smooth'
+    })
+  }
+}
+
+const handleToggle = async (event, studentId) => {
+  if (!event.target.open) return
+
+  await nextTick()
+  scrollToBottom(studentId)
+}
+
 const resetForm = () => {
   form.value = {
     student_id: '',
@@ -212,13 +272,17 @@ const resetForm = () => {
 };
 
 const formatDate = (date) => {
-  const d = new Date(date);
+  const d = new Date(date)
+
   return d.toLocaleString('en-GB', {
-    year: 'numeric',
+    day: '2-digit',
     month: 'short',
-    day: '2-digit'
-  });
-};
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  })
+}
 
 const startEdit = (rep) => {
   editingId.value = rep.id;
@@ -319,10 +383,24 @@ label {
   white-space: pre-wrap !important;
 }
 
+.remark-card:nth-last-child(2) {
+  border-bottom: none;
+  margin-bottom: -2rem;
+}
+
 details summary {
   cursor: pointer;
   padding: 12px;
   background: #f7f7f7;
   border-radius: 10px;
+}
+
+.scroll-down-btn {
+  position: sticky;
+  float: right;
+  bottom: 10px;
+  padding: 5px 9px;
+  z-index: 10;
+  border-radius: 999px;
 }
 </style>
