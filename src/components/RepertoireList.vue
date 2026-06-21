@@ -16,9 +16,72 @@
       <summary class="fw-bold fs-5">
         {{ getStudentName(rep.student_id) }}
       </summary>
-      <div class="row mt-0 bg-white rounded-bottom px-3 py-3 m-1">
-        <!-- LEFT -->
-        <div class="col-md-6">
+      <div class="row mt-0 bg-white rounded-bottom px-3 py-2 m-1">
+        <!-- RIGHT -->
+        <div class="col-md-7">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <h5>
+              Student Remarks
+            </h5>
+            <button
+              class="btn btn-sm btn-warning"
+              @click="showNoteBox = rep.student_id"
+            >
+              <i class="bi bi-plus"></i>
+            </button>
+          </div>
+
+
+          <div v-if="showNoteBox === rep.student_id">
+            <textarea
+              v-model="newNote"
+              rows="4"
+              class="form-control mb-2"
+            />
+            <button
+              class="btn btn-success btn-sm mb-2"
+              @click="saveNote(rep.student_id)"
+            >
+              Save
+            </button>
+            <button
+              class="btn btn-outline-secondary btn-sm ms-2 mb-2"
+              @click="showNoteBox = null"
+            >
+              Cancel
+            </button>
+          </div>
+
+
+          <div
+            class="remarks-panel position-relative rounded-3 p-2 py-0"
+            v-if="notesByStudent[rep.student_id]"
+            :ref="el => remarksRefs[rep.student_id] = el"
+          >
+            <div
+              v-for="note in notesByStudent[rep.student_id]"
+              :key="note.id"
+              class="remark-card"
+            >
+              <div>
+                {{ note.note }}
+              </div>
+              <div
+                class="opacity-50 mt-1"
+                style="font-size: 0.8rem"
+              >
+                Added {{ formatDate(note.created_at) }}
+              </div>
+            </div>
+            <button
+              class="btn btn-outline-secondary btn-sm scroll-down-btn"
+              @click="scrollToBottom(rep.student_id)"
+            >
+              <i class="bi bi-arrow-down"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-5">
           <h5>Repertoire</h5>
           <div
             v-if="editingId !== rep.id"
@@ -68,74 +131,10 @@
             </button>
           </div>
         </div>
-
-        <!-- RIGHT -->
-        <div class="col-md-6">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h5 class="mt-2">
-              Student Remarks
-            </h5>
-            <button
-              class="btn btn-sm btn-warning"
-              @click="showNoteBox = rep.student_id"
-            >
-              <i class="bi bi-plus"></i>
-            </button>
-          </div>
-
-
-          <div v-if="showNoteBox === rep.student_id">
-            <textarea
-              v-model="newNote"
-              rows="4"
-              class="form-control mb-2"
-            />
-            <button
-              class="btn btn-success btn-sm mb-2"
-              @click="saveNote(rep.student_id)"
-            >
-              Save
-            </button>
-            <button
-              class="btn btn-outline-secondary btn-sm ms-2 mb-2"
-              @click="showNoteBox = null"
-            >
-              Cancel
-            </button>
-          </div>
-
-
-          <div
-            class="remarks-panel position-relative"
-            v-if="notesByStudent[rep.student_id]"
-            :ref="el => remarksRefs[rep.student_id] = el"
-          >
-            <div
-              v-for="note in notesByStudent[rep.student_id]"
-              :key="note.id"
-              class="remark-card"
-            >
-              <div>
-                {{ note.note }}
-              </div>
-              <div
-                class="opacity-50 mt-1"
-                style="font-size: 0.8rem"
-              >
-                Added {{ formatDate(note.created_at) }}
-              </div>
-            </div>
-            <button
-              class="btn btn-warning btn-sm scroll-down-btn"
-              @click="scrollToBottom(rep.student_id)"
-            >
-              <i class="bi bi-arrow-down"></i>
-            </button>
-          </div>
-        </div>
       </div>
     </details>
   </div>
+
   <div
     v-if="loading"
     class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
@@ -371,14 +370,11 @@ label {
   max-height: 400px;
   overflow-y: auto;
   border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 10px;
   background: white;
 }
 
 .remark-card {
   padding: 10px;
-  margin-bottom: 10px;
   border-bottom: 1px solid #eee;
   white-space: pre-wrap !important;
 }
