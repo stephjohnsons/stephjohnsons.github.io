@@ -29,7 +29,7 @@
           <LessonList />
         </div>
       </div>
-      <RepertoireList id="repertoire" />
+      <RepertoireListAdmin id="repertoire" />
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
         <div class="d-flex flex-row mb-2">
           <button
@@ -53,7 +53,7 @@
         v-if="!studentAuthenticated"
       />
       <LessonList id="lessons" />
-      <RepertoireList id="repertoire" />
+      <RepertoireListAdmin id="repertoire" />
       <div
         class="border-top pt-4"
         id="policy"
@@ -69,6 +69,12 @@
             @click="scrollToSection(item.id)"
           >
             {{ item.label }}
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger m-1"
+            @click="switchStudent"
+          >
+            Switch Student
           </button>
         </div>
       </div>
@@ -101,12 +107,46 @@
         >
           Policy
         </button>
+        <button
+          class="btn btn-sm btn-outline-secondary my-1"
+          @click="switchStudent"
+        >
+          Switch Student
+        </button>
       </div>
     </div>
   </div>
 
   <div
-    v-else
+    v-if="!selectedStudentId && !adminAuthenticated && !studentAuthenticated"
+    class="p-6 d-flex flex-column align-items-center justify-content-center vh-75"
+  >
+    <h4>Who are you?</h4>
+    <select
+      v-model="selectedStudentId"
+      class="form-select w-50"
+      @change="selectStudent(selectedStudentId)"
+    >
+      <option
+        disabled
+        value=""
+      >
+        Select your name
+      </option>
+
+      <option
+        v-for="student in studentStore.students"
+        :key="student"
+        :value="student"
+      >
+        {{ student.student }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Password page -->
+  <div
+    v-if="!adminAuthenticated && !studentAuthenticated"
     class="d-flex flex-column align-items-center justify-content-center vh-100"
   >
     <div class="d-flex flex-column gap-2">
@@ -131,7 +171,7 @@ import { ref, computed, onMounted } from "vue";
 import ClassPolicy from "../components/ClassPolicy.vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
-import RepertoireList from "../components/RepertoireList.vue";
+import RepertoireListAdmin from "../components/RepertoireListAdmin.vue";
 import { useStudentStore } from "@/stores/students";
 
 const adminAuthenticated = ref(
@@ -141,6 +181,10 @@ const adminAuthenticated = ref(
 const studentAuthenticated = ref(
   localStorage.getItem("studio_student_authenticated") === "true"
 );
+
+const selectedStudentId = ref(
+  localStorage.getItem("studio_student_id")
+)
 
 const inputPassword = ref("");
 
@@ -191,8 +235,25 @@ const checkPassword = () => {
 };
 
 const studentStore = useStudentStore();
-
+// console.log(studentStore.students)
 onMounted(async () => {
   await studentStore.fetchStudents();
 });
+
+const selectStudent = (id) => {
+  selectedStudentId.value = id
+
+  localStorage.setItem(
+    'studio_student_id',
+    id
+  )
+}
+
+const switchStudent = () => {
+  selectedStudentId.value = null
+
+  localStorage.removeItem(
+    'studio_student_id'
+  )
+}
 </script>
