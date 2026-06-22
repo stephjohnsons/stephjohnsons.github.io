@@ -64,14 +64,17 @@
       </ul>
 
       <div
-        class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex"
+        class="footer sticky-bottom rounded-3 px-2 d-flex"
         :class="{ 'bg-body': !ui.isDark }"
       >
-        <CurrentTime />
-        <select class="text-sm ms-2" v-model="macroState.domain" >
+        <select
+          class="text-sm m-3"
+          v-model="macroState.domain"
+        >
           <option value="cn">.cn</option>
           <option value="com">.com</option>
         </select>
+        <CurrentTime />
         <p class="ms-auto my-auto me-2">
           <a href="https://www.timeanddate.com/date/workdays.html">
             Business Day Calculator

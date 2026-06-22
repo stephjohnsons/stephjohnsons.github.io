@@ -1,5 +1,5 @@
 <template>
-  <div class="fs-4">
+  <div class="fs-4 pt-2">
     <h2
       class="fw-light"
       id="clock"
