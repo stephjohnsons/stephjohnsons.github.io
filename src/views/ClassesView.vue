@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="adminAuthenticated || studentAuthenticated"
-    class="d-flex"
+    class="d-flex m-4"
   >
     <div class="col-12 col-lg-10 d-none d-lg-block">
       <div
