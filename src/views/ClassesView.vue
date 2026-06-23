@@ -70,12 +70,7 @@
           >
             {{ item.label }}
           </button>
-          <button
-            class="btn btn-sm btn-outline-danger m-1"
-            @click="switchStudent"
-          >
-            Switch Student
-          </button>
+
         </div>
       </div>
     </div>
@@ -106,12 +101,6 @@
           @click="scrollToSection('policy')"
         >
           Policy
-        </button>
-        <button
-          class="btn btn-sm btn-outline-secondary my-1"
-          @click="switchStudent"
-        >
-          Switch Student
         </button>
       </div>
     </div>
