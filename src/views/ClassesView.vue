@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="adminAuthenticated || studentAuthenticated"
-    class="d-flex"
+    class="m-4"
   >
     <div class="col-12 col-lg-10 d-none d-lg-block">
       <div
@@ -31,7 +31,7 @@
       </div>
       <RepertoireListAdmin id="repertoire" />
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
-        <div class="d-flex flex-row mb-2">
+        <div class="flex-row mb-2">
           <button
             v-for="item in navItems"
             :key="item.id"
