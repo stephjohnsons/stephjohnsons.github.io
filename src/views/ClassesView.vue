@@ -107,6 +107,12 @@
   </div>
 
   <div
+    v-if="coTeacherAuthenticated"
+    class="d-flex m-4"
+  >
+    <CoTeacherPermission />
+  </div>
+  <!-- <div
     v-if="!selectedStudentId && !adminAuthenticated && !studentAuthenticated"
     class="p-6 d-flex flex-column align-items-center justify-content-center vh-75"
   >
@@ -131,11 +137,11 @@
         {{ student.student }}
       </option>
     </select>
-  </div>
+  </div> -->
 
   <!-- Password page -->
   <div
-    v-if="!adminAuthenticated && !studentAuthenticated"
+    v-if="!adminAuthenticated && !studentAuthenticated && !coTeacherAuthenticated"
     class="d-flex flex-column align-items-center justify-content-center vh-100"
   >
     <div class="d-flex flex-column gap-2">
@@ -161,6 +167,7 @@ import ClassPolicy from "../components/ClassPolicy.vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
 import RepertoireListAdmin from "../components/RepertoireListAdmin.vue";
+import CoTeacherPermission from "../components/classes/CoTeacherPermission.vue";
 import { useStudentStore } from "@/stores/students";
 
 const adminAuthenticated = ref(
@@ -170,6 +177,10 @@ const adminAuthenticated = ref(
 const studentAuthenticated = ref(
   localStorage.getItem("studio_student_authenticated") === "true"
 );
+
+const coTeacherAuthenticated = ref(
+  localStorage.getItem("studio_co_teacher_authenticated") === "true"
+)
 
 const selectedStudentId = ref(
   localStorage.getItem("studio_student_id")
@@ -218,6 +229,9 @@ const checkPassword = () => {
   } else if (inputPassword.value === import.meta.env.VITE_STUDENT_PASSWORD) {
     studentAuthenticated.value = true;
     localStorage.setItem("studio_student_authenticated", "true");
+  } else if (inputPassword.value === import.meta.env.VITE_STUDIO_COTEACHER_PASSWORD) {
+    coTeacherAuthenticated.value = true;
+    localStorage.setItem("studio_co_teacher_authenticated", "true");
   } else {
     alert("Incorrect password. Please try again.");
   }
