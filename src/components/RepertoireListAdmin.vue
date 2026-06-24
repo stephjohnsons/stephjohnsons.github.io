@@ -162,6 +162,9 @@ const repertoireList = ref([]);
 const showForm = ref(false);
 const loading = ref(false);
 
+const COTEACHER_STUDENT_ID =
+  '3d6e040d-f939-4f71-bfe8-2b51eeaea976'
+
 const remarksRefs = ref({})
 
 const studentStore = useStudentStore();
@@ -185,19 +188,36 @@ const form = ref({
 
 const fetchRepertoire = async () => {
   try {
-    repertoireList.value = await fetch(`${backend}/rep`).then(res => res.json());
+    let url = `${backend}/rep`
+
+    if (props.mode === 'coteacher') {
+      url += `?student_id=${COTEACHER_STUDENT_ID}`
+    }
+
+    repertoireList.value = await fetch(url)
+      .then(res => res.json())
+
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
+
 };
 
 const fetchNotes = async () => {
   try {
-    notes.value = await fetch(`${backend}/student-notes`)
+    let url = `${backend}/student-notes`
+
+    if (props.mode === 'coteacher') {
+      url += `/${COTEACHER_STUDENT_ID}`
+    }
+
+    notes.value = await fetch(url)
       .then(res => res.json())
+
   } catch (err) {
     console.error(err)
   }
+
 }
 
 const notesByStudent = computed(() => {
@@ -346,6 +366,13 @@ onMounted(async () => {
   await fetchRepertoire();
   await fetchNotes();
 });
+
+const props = defineProps({
+  mode: {
+    type: String,
+    default: null
+  }
+})
 </script>
 
 <style scoped>

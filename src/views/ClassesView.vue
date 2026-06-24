@@ -1,13 +1,10 @@
 <template>
   <div
-    v-if="adminAuthenticated || studentAuthenticated"
+    v-if="adminAuthenticated"
     class="d-flex m-4"
   >
     <div class="col-12 col-lg-10 d-none d-lg-block">
-      <div
-        class="d-flex g-2"
-        v-if="!studentAuthenticated"
-      >
+      <div class="d-flex g-2">
         <div
           class="col-6 me-2"
           id="students"
@@ -18,14 +15,6 @@
           class="col-6"
           id="lessons"
         >
-          <LessonList />
-        </div>
-      </div>
-      <div
-        class="d-flex"
-        v-else
-      >
-        <div class="col-12">
           <LessonList />
         </div>
       </div>
@@ -107,6 +96,12 @@
   </div>
 
   <div
+    v-if="studentAuthenticated"
+    class="d-flex m-4"
+  >
+    <StudentPermission />
+  </div>
+  <div
     v-if="coTeacherAuthenticated"
     class="d-flex m-4"
   >
@@ -167,6 +162,7 @@ import ClassPolicy from "../components/ClassPolicy.vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
 import RepertoireListAdmin from "../components/RepertoireListAdmin.vue";
+import StudentPermission from "../components/classes/StudentPermission.vue";
 import CoTeacherPermission from "../components/classes/CoTeacherPermission.vue";
 import { useStudentStore } from "@/stores/students";
 
