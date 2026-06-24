@@ -24,6 +24,7 @@
               Student Remarks
             </h5>
             <button
+              v-if="adminAuthenticated"
               class="btn btn-sm btn-warning"
               @click="showNoteBox = rep.student_id"
             >
@@ -154,12 +155,10 @@ import { computed, ref, onMounted, nextTick } from 'vue';
 import { useStudentStore } from '@/stores/students';
 import backend from '@/composables/backend';
 
-const studentAuthenticated = ref(localStorage.getItem('studio_student_authenticated') === 'true');
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
 
 const notes = ref([])
 const repertoireList = ref([]);
-const showForm = ref(false);
 const loading = ref(false);
 
 const COTEACHER_STUDENT_ID =
@@ -200,7 +199,6 @@ const fetchRepertoire = async () => {
   } catch (err) {
     console.error(err)
   }
-
 };
 
 const fetchNotes = async () => {

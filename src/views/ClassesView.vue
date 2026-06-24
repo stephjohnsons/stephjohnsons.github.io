@@ -18,7 +18,7 @@
           <LessonList />
         </div>
       </div>
-      <RepertoireListAdmin id="repertoire" />
+      <RepertoireList id="repertoire" />
       <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
         <div class="d-flex flex-row mb-2">
           <button
@@ -42,7 +42,7 @@
         v-if="!studentAuthenticated"
       />
       <LessonList id="lessons" />
-      <RepertoireListAdmin id="repertoire" />
+      <RepertoireList id="repertoire" />
       <div
         class="border-top pt-4"
         id="policy"
@@ -161,7 +161,7 @@ import { ref, computed, onMounted } from "vue";
 import ClassPolicy from "../components/ClassPolicy.vue";
 import StudentList from "../components/StudentList.vue";
 import LessonList from "../components/LessonList.vue";
-import RepertoireListAdmin from "../components/RepertoireListAdmin.vue";
+import RepertoireList from "../components/RepertoireList.vue";
 import StudentPermission from "../components/classes/StudentPermission.vue";
 import CoTeacherPermission from "../components/classes/CoTeacherPermission.vue";
 import { useStudentStore } from "@/stores/students";
