@@ -25,7 +25,10 @@
       + Add Student
     </button>
   </div>
-  <div class="d-flex d-md-none d-lg-flex mb-2">
+  <div
+    class="d-flex d-md-none d-lg-flex mb-2"
+    v-if="adminAuthenticated"
+  >
     <button
       v-if="activeStudents"
       class="d d-flex btn btn-success mt-1 me-1 w-50"
@@ -128,9 +131,15 @@
           </td>
           <td class="p-2">
             {{ student.student }}
-            <span class="d-none d-md-inline">• {{ student.institution }}</span>
+            <span
+              class="d-none d-md-inline"
+              v-if="adminAuthenticated"
+            >• {{ student.institution }}</span>
           </td>
-          <td class="p-2">
+          <td
+            class="p-2"
+            v-if="adminAuthenticated"
+          >
             <template v-if="editingId === student.id">
               <input
                 v-model.number="editMinutes"
@@ -162,6 +171,12 @@
               </button>
             </template>
           </td>
+          <td
+            class="p-2"
+            v-if="!adminAuthenticated"
+          >
+            {{ student.minutes_attended }}<i class="d-none d-xl-inline"> mins</i>
+          </td>
 
           <td class="p-2">
             {{ student.minutes_left }}
@@ -185,6 +200,7 @@
             </span>
 
             <button
+              v-if="adminAuthenticated"
               @click="startEditTotal(student)"
               class="btn btn-sm"
             >✎</button>
