@@ -124,6 +124,7 @@
           <td>
             <btn
               class="btn btn-sm hover:btn-danger"
+              v-if="adminAuthenticated"
               @click="confirmDelete(student)"
             >
               x
