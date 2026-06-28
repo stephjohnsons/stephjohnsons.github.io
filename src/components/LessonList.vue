@@ -48,7 +48,7 @@
   </div>
   <!-- Add Class Form -->
   <form
-    v-if="showForm"
+    v-if="showForm && adminAuthenticated"
     @submit.prevent="addLesson"
     class="mb-6 bg-gray-50 p-4 rounded shadow mb-2"
   >
@@ -119,7 +119,7 @@
     >Add Lesson</button>
   </form>
   <form
-    v-if="showQuickAddForm"
+    v-if="showQuickAddForm && adminAuthenticated"
     @submit.prevent="quickAdd"
     class="mb-6 bg-gray-50 p-4 rounded shadow mb-2"
   >

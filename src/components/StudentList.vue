@@ -19,7 +19,7 @@
       All students
     </button>
     <button
-      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
+      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50 text-start"
       @click="showAddStudent = !showAddStudent"
     >
       + Add Student
@@ -31,20 +31,20 @@
   >
     <button
       v-if="activeStudents"
-      class="d d-flex btn btn-success mt-1 me-1 w-50"
+      class="d-flex btn btn-success my-1 me-1 w-50"
       @click="activeStudents = !activeStudents"
     >
       Active only
     </button>
     <button
       v-else
-      class="d d-flex btn btn-outline-success mt-1 w-50"
+      class="d-flex btn btn-outline-success my-1 w-50"
       @click="activeStudents = !activeStudents"
     >
       All students
     </button>
     <button
-      class="btn btn-warning ms-1 mt-1 w-50"
+      class="d-flex btn btn-warning ms-1 my-1 w-50"
       @click="showAddStudent = !showAddStudent"
     >
       + Add Student
@@ -100,7 +100,7 @@
       </div>
     </div>
   </transition>
-  <p class="mb-1">
+  <p :class="adminAuthenticated ? 'mb-1' : 'mt-2 mb-custom-view'">
     Updated on {{ studentStore.latestUpdatedAtFormatted }}
   </p>
   <!-- List of Students -->
@@ -108,10 +108,10 @@
     <table class="table table-hover w-full rounded-4">
       <thead>
         <tr class="bg-gray-200">
-          <th></th>
-          <th class="p-2">Student</th>
-          <th class="p-2">Attended</th>
-          <th class="p-2">Left</th>
+          <th v-if="adminAuthenticated"></th>
+          <th class="py-custom">Student</th>
+          <th class="py-custom">Attended</th>
+          <th class="py-custom">Left</th>
         </tr>
       </thead>
       <tbody>
@@ -121,16 +121,18 @@
           v-for="student in students"
           :key="student.id"
         >
-          <td>
+          <td
+            class="p-1"
+            v-if="adminAuthenticated"
+          >
             <btn
-              class="btn btn-sm hover:btn-danger"
-              v-if="adminAuthenticated"
+              class="btn btn-sm hover:btn-danger py-0"
               @click="confirmDelete(student)"
             >
               x
             </btn>
           </td>
-          <td class="p-2">
+          <td :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'">
             {{ student.student }}
             <span
               class="d-none d-md-inline"
@@ -138,7 +140,7 @@
             >• {{ student.institution }}</span>
           </td>
           <td
-            class="p-2"
+            :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'"
             v-if="adminAuthenticated"
           >
             <template v-if="editingId === student.id">
@@ -173,13 +175,13 @@
             </template>
           </td>
           <td
-            class="p-2"
+            :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'"
             v-if="!adminAuthenticated"
           >
             {{ student.minutes_attended }}<i class="d-none d-xl-inline"> mins</i>
           </td>
 
-          <td class="p-2">
+          <td :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'">
             {{ student.minutes_left }}
             <span class="text-secondary fs-7">/</span>
 
@@ -239,6 +241,16 @@
 import { onMounted, onUnmounted, ref, computed } from "vue";
 import { useStudentStore } from "@/stores/students";
 import backend from '@/composables/backend';
+
+const props = defineProps({
+  mode: {
+    type: String,
+    default: 'student'
+  }
+})
+
+const adminAuthenticated = ref(props.mode === 'admin');
+const studentAuthenticated = ref(true);
 
 const showAddStudent = ref(false);
 const newStudent = ref({
@@ -432,5 +444,17 @@ label {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.py-custom {
+  padding: 0.65rem 0.5rem;
+}
+
+.py-student-custom {
+  padding: 0.71rem !important;
+}
+
+.mb-custom-view {
+  margin-bottom: 0.66rem;
 }
 </style>

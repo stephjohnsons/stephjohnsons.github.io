@@ -24,7 +24,7 @@
               Student Remarks
             </h5>
             <button
-              v-if="adminAuthenticated"
+              v-if="adminAuthenticated || coTeacherAuthenticated"
               class="btn btn-sm btn-warning"
               @click="showNoteBox = rep.student_id"
             >
@@ -116,7 +116,7 @@
           </div>
           <div
             class="d-flex gap-1 mt-2"
-            v-if="adminAuthenticated && editingId !== rep.id"
+            v-if="(adminAuthenticated || coTeacherAuthenticated) && editingId !== rep.id"
           >
             <button
               class="btn btn-sm btn-warning"
@@ -156,6 +156,7 @@ import { useStudentStore } from '@/stores/students';
 import backend from '@/composables/backend';
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
+const coTeacherAuthenticated = ref(localStorage.getItem('studio_co_teacher_authenticated') === 'true');
 
 const notes = ref([])
 const repertoireList = ref([]);
