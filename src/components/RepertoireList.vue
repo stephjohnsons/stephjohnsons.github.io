@@ -6,134 +6,141 @@
     <h3 class="text-xl font-bold">Repertoire</h3>
   </div>
 
-  <!-- Repertoire List Table -->
+  <div class="mb-0">
+    <select
+      v-model="selectedStudentId"
+      class="form-select"
+    >
+      <option
+        v-for="student in availableStudents"
+        :key="student.id"
+        :value="student.id"
+      >
+        {{ student.student }}
+      </option>
+    </select>
+  </div>
   <div
-    v-for="rep in repertoireList"
-    :key="rep.id"
-    class="accordion mb-3"
+    v-if="currentRep"
+    class="mx-2 rounded-bottom-5 pb-2 mt-0"
   >
-    <details @toggle="e => handleToggle(e, rep.student_id)">
-      <summary class="fw-bold fs-5">
-        {{ getStudentName(rep.student_id) }}
-      </summary>
-      <div class="row mt-0 bg-white rounded-bottom px-3 py-2 m-1">
-        <!-- RIGHT -->
-        <div class="col-md-7">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <h5>
-              Student Remarks
-            </h5>
-            <button
-              v-if="adminAuthenticated || coTeacherAuthenticated"
-              class="btn btn-sm btn-warning"
-              @click="showNoteBox = rep.student_id"
+    <div class="row mt-0 bg-white rounded-bottom px-3 py-2 m-1">
+      <!-- RIGHT -->
+      <div class="col-md-7 pb-2">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <h5>
+            Student Remarks
+          </h5>
+          <button
+            v-if="adminAuthenticated || coTeacherAuthenticated"
+            class="btn btn-sm btn-warning"
+            @click="showNoteBox = selectedStudentId"
+          >
+            <i class="bi bi-plus"></i>
+          </button>
+        </div>
+
+
+        <div v-if="showNoteBox === selectedStudentId">
+          <textarea
+            v-model="newNote"
+            rows="4"
+            class="form-control mb-2"
+          />
+          <button
+            class="btn btn-success btn-sm mb-2"
+            @click="saveNote(selectedStudentId)"
+          >
+            Save
+          </button>
+          <button
+            class="btn btn-outline-secondary btn-sm ms-2 mb-2"
+            @click="showNoteBox = null"
+          >
+            Cancel
+          </button>
+        </div>
+
+
+        <div
+          class="remarks-panel position-relative rounded-3 p-2 py-0"
+          v-if="notesByStudent[selectedStudentId]"
+          :ref="el => remarksRefs[selectedStudentId] = el"
+        >
+          <div
+            v-for="note in notesByStudent[selectedStudentId]"
+            :key="note.id"
+            class="remark-card"
+          >
+            <div>
+              {{ note.note }}
+            </div>
+            <div
+              class="opacity-50 mt-1"
+              style="font-size: 0.8rem"
             >
-              <i class="bi bi-plus"></i>
-            </button>
+              Added {{ formatDate(note.created_at) }}
+            </div>
           </div>
+          <button
+            class="btn btn-outline-secondary btn-sm scroll-down-btn"
+            @click="scrollToBottom(selectedStudentId)"
+          >
+            <i class="bi bi-arrow-down"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <h5>Repertoire</h5>
+        <div
+          v-if="editingId !== currentRep.id"
+          style="white-space: pre-line;"
+        >
+          {{ currentRep.pieces }}
+        </div>
 
+        <div v-else>
+          <textarea
+            v-model="editForm.pieces"
+            rows="5"
+            class="form-control mb-2"
+          />
 
-          <div v-if="showNoteBox === rep.student_id">
-            <textarea
-              v-model="newNote"
-              rows="4"
-              class="form-control mb-2"
-            />
+          <div class="d-flex gap-2">
             <button
-              class="btn btn-success btn-sm mb-2"
-              @click="saveNote(rep.student_id)"
+              class="btn btn-success btn-sm"
+              @click="saveEdit"
             >
               Save
             </button>
+
             <button
-              class="btn btn-outline-secondary btn-sm ms-2 mb-2"
-              @click="showNoteBox = null"
+              class="btn btn-outline-secondary btn-sm"
+              @click="cancelEdit"
             >
               Cancel
             </button>
           </div>
-
-
-          <div
-            class="remarks-panel position-relative rounded-3 p-2 py-0"
-            v-if="notesByStudent[rep.student_id]"
-            :ref="el => remarksRefs[rep.student_id] = el"
-          >
-            <div
-              v-for="note in notesByStudent[rep.student_id]"
-              :key="note.id"
-              class="remark-card"
-            >
-              <div>
-                {{ note.note }}
-              </div>
-              <div
-                class="opacity-50 mt-1"
-                style="font-size: 0.8rem"
-              >
-                Added {{ formatDate(note.created_at) }}
-              </div>
-            </div>
-            <button
-              class="btn btn-outline-secondary btn-sm scroll-down-btn"
-              @click="scrollToBottom(rep.student_id)"
-            >
-              <i class="bi bi-arrow-down"></i>
-            </button>
-          </div>
         </div>
-        <div class="col-md-5">
-          <h5>Repertoire</h5>
-          <div
-            v-if="editingId !== rep.id"
-            style="white-space: pre-line;"
+        <div
+          class="d-flex gap-1 mt-2"
+          v-if="(adminAuthenticated || coTeacherAuthenticated) && editingId !== currentRep.id"
+        >
+          <button
+            class="btn btn-sm btn-warning"
+            @click="startEdit(rep)"
           >
-            {{ rep.pieces }}
-          </div>
-
-          <div v-else>
-            <textarea
-              v-model="editForm.pieces"
-              rows="5"
-              class="form-control mb-2"
-            />
-
-            <div class="d-flex gap-2">
-              <button
-                class="btn btn-success btn-sm"
-                @click="saveEdit"
-              >
-                Save
-              </button>
-
-              <button
-                class="btn btn-outline-secondary btn-sm"
-                @click="cancelEdit"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-          <div
-            class="d-flex gap-1 mt-2"
-            v-if="(adminAuthenticated || coTeacherAuthenticated) && editingId !== rep.id"
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            @click="deleteRep(currentRep.id)"
           >
-            <button
-              class="btn btn-sm btn-warning"
-              @click="startEdit(rep)"
-            >
-              <i class="bi bi-pencil"></i>
-            </button>
-            <button
-              class="btn btn-sm btn-outline-danger"
-              @click="deleteRep(rep.id)"
-            >
-              <i class="bi bi-trash"></i>
-            </button>
-          </div>
+            <i class="bi bi-trash"></i>
+          </button>
         </div>
       </div>
-    </details>
+    </div>
   </div>
 
   <div
@@ -170,6 +177,18 @@ const remarksRefs = ref({})
 const studentStore = useStudentStore();
 const getStudentName = studentStore.getStudentName;
 const students = studentStore.students;
+
+const selectedStudentId = ref(null);
+
+const availableStudents = computed(() => {
+  if (props.mode === 'coteacher') {
+    return students.filter(
+      s => s.id === COTEACHER_STUDENT_ID
+    )
+  }
+
+  return students
+})
 
 const showNoteBox = ref(null);
 const newNote = ref('')
@@ -303,10 +322,10 @@ const formatDate = (date) => {
 }
 
 const startEdit = (rep) => {
-  editingId.value = rep.id;
+  editingId.value = currentRep.id;
   editForm.value = {
-    id: rep.id,
-    pieces: rep.pieces
+    id: currentRep.id,
+    pieces: currentRep.pieces
   };
 };
 
@@ -364,6 +383,12 @@ const deleteRep = async (id) => {
 onMounted(async () => {
   await fetchRepertoire();
   await fetchNotes();
+
+  if (availableStudents.value.length) {
+    selectedStudentId.value =
+      availableStudents.value[0].id
+  }
+
 });
 
 const props = defineProps({
@@ -371,6 +396,12 @@ const props = defineProps({
     type: String,
     default: null
   }
+})
+
+const currentRep = computed(() => {
+  return repertoireList.value.find(
+    rep => rep.student_id === selectedStudentId.value
+  )
 })
 </script>
 
