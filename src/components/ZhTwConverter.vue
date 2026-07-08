@@ -590,7 +590,16 @@ watch(simplified, (newVal) => {
     traditional.value = converter(newVal);
   }
 
-  simplified.value = newVal.replace(/"([^"]*)"/g, '「$1」');
+  simplified.value = newVal.replace(/"([^"]*)"/g, (_, text) => {
+    return text === ''
+      ? '「___text___」'
+      : `「${text}」`;
+  });
+  simplified.value = newVal.replace(/'([^"]*)'/g, (_, text) => {
+    return text === ''
+      ? '« ___text___ »'
+      : `« ${text} »`;
+  });
   simplified.value = simplified.value.replace(/-yes/g, '✓');
   simplified.value = simplified.value.replace(/-no/g, '⛌');
   simplified.value = simplified.value.replace(/-hc/g, '▼');
