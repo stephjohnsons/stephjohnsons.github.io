@@ -590,12 +590,12 @@ watch(simplified, (newVal) => {
     traditional.value = converter(newVal);
   }
 
-  simplified.value = newVal.replace(/"([^"]*)"/g, (_, text) => {
+  simplified.value = simplified.value.replace(/"([^"]*)"/g, (_, text) => {
     return text === ''
       ? '「___text___」'
       : `「${text}」`;
   });
-  simplified.value = newVal.replace(/'([^"]*)'/g, (_, text) => {
+  simplified.value = simplified.value.replace(/'([^"]*)'/g, (_, text) => {
     return text === ''
       ? '« ___text___ »'
       : `« ${text} »`;
