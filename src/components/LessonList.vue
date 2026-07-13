@@ -1,50 +1,147 @@
-<!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <div
-    class="d-flex align-items-center"
+    v-if="!loading"
+    class="d-flex flex-column align-items-center"
     id="lessons"
   >
-    <h3 class="text-xl font-bold mb-1">Lessons</h3>
-    <button
-      v-if="adminAuthenticated"
-      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
-      @click="showForm = !showForm"
-    >+ Add Lesson</button>
-    <button
-      v-if="adminAuthenticated"
-      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
-      @click="showQuickAddForm = !showQuickAddForm"
-    >+ Quick Add</button>
-  </div>
-  <div class="d-flex d-md-none d-lg-flex">
-    <button
-      v-if="adminAuthenticated"
-      class="d d-flex btn btn-warning w-50 me-1"
-      @click="showForm = !showForm"
-    >+ Add
-      Lesson</button>
-    <button
-      v-if="adminAuthenticated"
-      class="d d-flex btn btn-warning w-50"
-      @click="showQuickAddForm = !showQuickAddForm"
-    >+ Quick Add</button>
-  </div>
-  <div class="d-flex my-1">
-    <p class="my-auto me-1 ">
-      Semester:
-    </p>
-    <select
-      class="form-select form-select-sm py-1"
-      v-model="selectedSemester"
-    >
-      <option
-        v-for="sem in semesterList"
-        :key="sem"
-        :value="sem"
+    <div class="d-flex flex-row w-100">
+      <h3 class="text-xl font-bold mb-1 me-auto">Lessons</h3>
+      <button
+        v-if="adminAuthenticated"
+        class="d-flex btn btn-sm btn-warning ms-auto me-0 mt-2 h-50"
+        @click="showForm = !showForm"
+      >+ Add Lesson</button>
+      <button
+        v-if="adminAuthenticated"
+        class="d-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50"
+        @click="showQuickAddForm = !showQuickAddForm"
+      >+ Quick Add</button>
+    </div>
+
+    <div class="w-100 d-flex align-items-center">
+      <label for="semester">Semester:</label>
+      <select
+        v-model="selectedSemester"
+        class="form-select"
       >
-        {{ sem }}
-      </option>
-    </select>
+        <option
+          v-for="s in semesterList"
+          :key="s"
+          :value="s"
+        >
+          {{ s }}
+        </option>
+      </select>
+    </div>
+
+    <div
+      v-if="lessons.length > 0"
+      class="w-100 mt-2"
+    >
+      <table class="table table-hover w-full rounded-4">
+        <tbody>
+          <template
+            v-for="(studentLessons, studentId) in groupedLessons"
+            :key="studentId"
+          >
+            <!-- Student Header Row -->
+            <tr :class="isExpanded(studentId) ? 'table-dark' : ''">
+              <td
+                colspan="4"
+                class="fw-bold"
+              >
+                <button
+                  class="btn btn-sm btn-outline-secondary me-2"
+                  @click="toggleExpand(studentId)"
+                >
+                  {{ isExpanded(studentId) ? '−' : '+' }}
+                </button>
+                <span>
+                  {{ getStudentName(studentId) }}
+                  <span class="fw-normal font-monospace ms-1">({{ studentTotalDuration(studentLessons) }} mins)</span>
+                </span>
+              </td>
+            </tr>
+
+            <!-- Lessons Rows -->
+            <template v-if="isExpanded(studentId)">
+              <tr
+                v-for="cls in studentLessons"
+                :key="cls.id"
+              >
+                <td v-if="editingId !== cls.id">
+                  <strong>Date:</strong> {{ formatDate(cls.class_date) }}
+                </td>
+                <td v-else>
+                  <input
+                    type="date"
+                    name="class_date"
+                    v-model="editForm.class_date"
+                    class="form-control form-control-sm"
+                    required
+                  >
+                </td>
+
+                <td v-if="editingId !== cls.id">({{ cls.duration }} minutes) {{ cls.absent ? '[Absent]' : '' }}</td>
+                <td v-else>
+                  <input
+                    type="number"
+                    name="duration"
+                    v-model="editForm.duration"
+                    class="form-control form-control-sm"
+                    required
+                  >
+                </td>
+
+                <td
+                  class="d-none d-sm-table-cell"
+                  v-if="adminAuthenticated"
+                >
+                  <div
+                    v-if="editingId !== cls.id"
+                    class="d-flex gap-1"
+                  >
+                    <button
+                      class="btn btn-sm btn-warning"
+                      @click="startEdit(cls)"
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      @click="deleteLesson(cls.id)"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                  <div
+                    v-else
+                    class="d-flex gap-1"
+                  >
+                    <button
+                      class="btn btn-sm btn-success"
+                      @click="saveEdit"
+                    >
+                      <i class="bi bi-check"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      @click="cancelEdit"
+                    >
+                      <i class="bi bi-x"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </template>
+        </tbody>
+      </table>
+    </div>
+    <div
+      v-else
+      class="text-gray-500"
+    >No lessons found.</div>
   </div>
   <!-- Add Class Form -->
   <form
@@ -127,7 +224,7 @@
       <h4 class="2">Quick Add</h4>
       <button
         class="btn btn-sm btn-danger ms-auto me-0 h-50"
-        @click="showForm = !showForm; resetForm()"
+        @click="showQuickAddForm = false; resetForm()"
       >X</button>
     </div>
     <div class="d-flex flex-row mb-2 mx-2">
@@ -183,114 +280,8 @@
       :disabled="!adminAuthenticated"
     >Add Lesson</button>
   </form>
-
-  <!-- List of Students -->
-  <div v-if="lessons.length > 0">
-    <table class="table table-hover w-full rounded-4">
-      <tbody>
-        <template
-          v-for="(studentLessons, studentId) in groupedLessons"
-          :key="studentId"
-        >
-          <!-- Student Header Row -->
-          <tr :class="isExpanded(studentId) ? 'table-dark' : ''">
-            <td
-              colspan="4"
-              class="fw-bold"
-            >
-              <button
-                class="btn btn-sm btn-outline-secondary me-2"
-                @click="toggleExpand(studentId)"
-              >
-                {{ isExpanded(studentId) ? '−' : '+' }}
-              </button>
-              <span>
-                {{ getStudentName(studentId) }}
-                <span class="fw-normal font-monospace ms-1">({{ studentTotalDuration(studentLessons) }} mins)</span>
-              </span>
-            </td>
-          </tr>
-
-          <!-- Lessons Rows -->
-          <tr
-            v-if="isExpanded(studentId)"
-            v-for="cls in studentLessons"
-            :key="cls.id"
-          >
-            <td v-if="editingId !== cls.id">
-              <strong>Date:</strong> {{ formatDate(cls.class_date) }}
-            </td>
-            <td v-else>
-              <input
-                type="date"
-                name="class_date"
-                v-model="editForm.class_date"
-                class="form-control form-control-sm"
-                required
-              >
-            </td>
-
-            <td v-if="editingId !== cls.id">({{ cls.duration }} minutes) {{ cls.absent ? '[Absent]' : '' }}</td>
-            <td v-else>
-              <input
-                type="number"
-                name="duration"
-                v-model="editForm.duration"
-                class="form-control form-control-sm"
-                required
-              >
-            </td>
-
-            <td
-              class="d-none d-sm-table-cell"
-              v-if="adminAuthenticated"
-            >
-              <div
-                v-if="editingId !== cls.id"
-                class="d-flex gap-1"
-              >
-                <button
-                  class="btn btn-sm btn-warning"
-                  @click="startEdit(cls)"
-                >
-                  <i class="bi bi-pencil"></i>
-                </button>
-                <button
-                  class="btn btn-sm btn-outline-danger"
-                  @click="deleteLesson(cls.id)"
-                >
-                  <i class="bi bi-trash"></i>
-                </button>
-              </div>
-              <div
-                v-else
-                class="d-flex gap-1"
-              >
-                <button
-                  class="btn btn-sm btn-success"
-                  @click="saveEdit"
-                >
-                  <i class="bi bi-check"></i>
-                </button>
-                <button
-                  class="btn btn-sm btn-outline-danger"
-                  @click="cancelEdit"
-                >
-                  <i class="bi bi-x"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </template>
-      </tbody>
-    </table>
-  </div>
-  <div
+  <!-- <div
     v-else
-    class="text-gray-500"
-  >No lessons found.</div>
-  <div
-    v-if="loading"
     class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
     style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;"
   >
@@ -300,7 +291,7 @@
     >
       <span class="visually-hidden">Loading...</span>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
@@ -319,9 +310,14 @@ const expandedStudents = ref(new Set());
 const classStore = useClassStore();
 const selectedSemester = ref('2026-05');
 
-const { semesterList } = storeToRefs(classStore);
-
 const lessons = computed(() => classStore.getLessonsBySemester(selectedSemester.value));
+
+const props = defineProps({
+  mode: {
+    type: String,
+    default: null
+  }
+})
 
 const form = ref({
   student_id: '',
@@ -338,7 +334,8 @@ const editForm = ref({
 
 const studentStore = useStudentStore();
 const getStudentName = studentStore.getStudentName;
-const students = computed(() => studentStore.students);
+const { students } = storeToRefs(studentStore)
+const { semesterList } = storeToRefs(classStore);
 
 const formatDate = (date) => {
   const d = new Date(date);
@@ -418,19 +415,27 @@ const quickAdd = async () => {
   }
 };
 
+const studentMap = computed(() =>
+  Object.fromEntries(
+    students.value.map(s => [s.id, s.student])
+  )
+)
+
 const selectedStudentNames = computed(() => {
   if (!Array.isArray(form.value.student_ids)) return [];
   return form.value.student_ids
-    .map(id => studentStore.getStudentName(id))
-    .filter(name => name !== 'Unknown');
+    .map(id => studentMap.value[id])
+    .filter(Boolean)
 });
 
 const resetForm = () => {
   form.value = {
     student_id: '',
+    student_ids: [],
     class_date: '',
-    duration: 0,
-  };
+    duration: 60,
+    absent: false
+  }
 };
 
 const startEdit = (cls) => {
@@ -497,7 +502,7 @@ const deleteLesson = async (id) => {
 };
 
 const groupedLessons = computed(() => {
-  const grouped = {};
+  const grouped = Object.create(null)
   for (const cls of lessons.value) {
     const sid = cls.student_id;
     if (!grouped[sid]) grouped[sid] = [];
@@ -512,26 +517,24 @@ const groupedLessons = computed(() => {
 });
 
 const toggleExpand = (sid) => {
-  if (expandedStudents.value.has(sid)) {
-    expandedStudents.value.delete(sid);
-  } else {
-    expandedStudents.value.add(sid);
-  }
-};
+  expandedStudents.value.has(sid)
+    ? expandedStudents.value.delete(sid)
+    : expandedStudents.value.add(sid)
+}
 
 const isExpanded = (sid) => expandedStudents.value.has(sid);
 
-onMounted(fetchLessons);
-
 watch(
   () => studentStore.loaded,
-  (loaded) => {
+  async (loaded) => {
     if (loaded) {
       fetchLessons();
     }
   },
-  { immediate: true }
-);
+  {
+    immediate: true
+  }
+)
 
 const studentTotalDuration = (lessons) => {
   return (lessons || [])

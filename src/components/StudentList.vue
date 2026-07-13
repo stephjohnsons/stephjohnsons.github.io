@@ -161,7 +161,7 @@ import backend from '@/composables/backend';
 const props = defineProps({
   mode: {
     type: String,
-    default: 'student'
+    default: null
   }
 })
 

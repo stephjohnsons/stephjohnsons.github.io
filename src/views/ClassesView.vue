@@ -1,5 +1,4 @@
 <template>
-
   <div
     v-if="
       adminAuthenticated"
@@ -8,21 +7,20 @@
     <AdminPermission />
   </div>
   <div
-    v-if="studentAuthenticated"
+    v-else-if="studentAuthenticated"
     class="d-flex m-4"
   >
     <StudentPermission />
   </div>
   <div
-    v-if="coTeacherAuthenticated"
+    v-else-if="coTeacherAuthenticated"
     class="d-flex m-4"
   >
     <CoTeacherPermission />
   </div>
 
-  <!-- Password page -->
   <div
-    v-if="!adminAuthenticated && !studentAuthenticated && !coTeacherAuthenticated"
+    v-else
     class="d-flex flex-column align-items-center justify-content-center vh-100"
   >
     <div class="d-flex flex-column gap-2">
