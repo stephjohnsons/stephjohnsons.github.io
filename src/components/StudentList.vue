@@ -6,20 +6,20 @@
     <h3 class="text-xl font-bold mb-0">Students</h3>
     <button
       v-if="activeStudents"
-      class="d-none d-md-flex d-lg-none btn btn-sm btn-success ms-auto me-0 mt-2 h-50"
+      class="d-flex btn btn-sm btn-success ms-auto me-0 mt-2 h-50"
       @click="activeStudents = !activeStudents"
     >
       Active only
     </button>
     <button
       v-else
-      class="d-none d-md-flex d-lg-none btn btn-sm btn-outline-success ms-auto me-0 mt-2 h-50"
+      class="d-flex btn btn-sm btn-outline-success ms-auto me-0 mt-2 h-50"
       @click="activeStudents = !activeStudents"
     >
       All students
     </button>
     <button
-      class="d-none d-md-flex d-lg-none btn btn-sm btn-warning ms-2 me-0 mt-2 h-50 text-start"
+      class="d-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50 text-start"
       @click="showAddStudent = !showAddStudent"
     >
       + Add Student
@@ -85,7 +85,8 @@
         <tr class="bg-gray-200">
           <th class="py-custom">Student</th>
           <th class="py-custom">Attended</th>
-          <th class="py-custom">Left</th>
+          <th class="py-custom">Left / Total</th>
+          <th width="90"></th>
         </tr>
       </thead>
       <tbody>
@@ -98,30 +99,97 @@
           <td class="p-2 py-student-custom">
             {{ student.student }}
           </td>
-          <td class="p-2 py-student-custom">
-            {{ student.minutes_attended }}<i class="d-none d-xl-inline"> mins</i>
-          </td>
 
+          <!-- attended -->
           <td class="p-2 py-student-custom">
-            {{ student.minutes_left }}
-            <span class="text-secondary fs-7">/</span>
+
+            <template v-if="editingId !== student.id">
+              {{ student.minutes_attended }}
+            </template>
 
             <input
-              v-if="editingTotal === student.id"
-              v-model.number="editTotalValue"
-              @keydown.enter="saveTotal(student)"
-              @keyup.esc="editingTotal = null"
-              @blur="saveTotal(student)"
-              type="number"
-              class="w-20 border rounded px-1 py-0.5"
-            />
-
-            <span
               v-else
-              class="text-gray-50 italic text-secondary fs-7"
+              type="number"
+              class="form-control form-control-sm"
+              v-model.number="editForm.minutes_attended"
             >
-              {{ student.total_minutes }}
-            </span>
+
+          </td>
+
+          <!-- left / total -->
+
+          <td class="p-2 py-student-custom">
+
+            <template v-if="editingId !== student.id">
+
+              {{ student.minutes_left }}
+
+              <span class="text-secondary fs-7">
+                /
+              </span>
+
+              <span class="text-secondary fs-7">
+                {{ student.total_minutes }}
+              </span>
+
+            </template>
+
+            <template v-else>
+
+              {{
+                editForm.total_minutes -
+                editForm.minutes_attended
+              }}
+
+              <span class="text-secondary fs-7">
+                /
+              </span>
+
+              <input
+                type="number"
+                class="form-control form-control-sm d-inline w-50"
+                v-model.number="editForm.total_minutes"
+              >
+
+            </template>
+          </td>
+
+          <!-- buttons -->
+          <td>
+            <div
+              v-if="editingId !== student.id"
+              class="d-flex gap-1"
+            >
+              <button
+                class="btn btn-sm btn-warning"
+                @click="startEdit(student)"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-danger"
+                @click="confirmDelete(student)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+            <div
+              v-else
+              class="d-flex gap-1"
+            >
+              <button
+                class="btn btn-sm btn-success"
+                @click="saveEdit(student)"
+              >
+                <i class="bi bi-check"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-secondary"
+                @click="cancelEdit"
+              >
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -174,93 +242,68 @@ const newStudent = ref({
 
 const loading = ref(false);
 const editingId = ref(null);
-const editMinutes = ref(0);
+
+const editForm = ref({
+  total_minutes: 0,
+  minutes_attended: 0,
+})
 
 const activeStudents = ref(true);
 
-const form = ref({
-  student: "",
-  institution: "",
-  total_minutes: 0,
-  minutes_attended: 0,
-});
-
-const endpoint = `${backend}/students`;
 const studentStore = useStudentStore();
 const { students } = storeToRefs(studentStore);
 
 const startEdit = (student) => {
-  editingId.value = student.id;
-  editMinutes.value = student.minutes_attended;
-};
+  editingId.value = student.id
 
-const cancelEdit = () => {
-  editingId.value = null;
-  editMinutes.value = 0;
-};
-
-const saveMinutes = async (id) => {
-  loading.value = true;
-  const res = await fetch(`${backend}/students`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      id,
-      minutes_attended: editMinutes.value,
-    }),
-  });
-
-  try {
-    if (res.ok) {
-      cancelEdit();
-      loading.value = true;
-    } else {
-      const error = await res.json();
-      alert("Error updating minutes: " + error.message);
-    }
-  } finally {
-    loading.value = false;
-    fetchStudents();
+  editForm.value = {
+    minutes_attended: student.minutes_attended,
+    total_minutes: student.total_minutes
   }
-};
-
-onMounted(async () => {
-  (studentStore.students = await fetch(endpoint).then((res) => res.json())),
-    (students.value = studentStore.students);
-});
-
-// Editing total duration
-const editingTotal = ref(null)
-const editTotalValue = ref(0)
-
-function startEditTotal(student) {
-  editingTotal.value = student.id
-  editTotalValue.value = student.total_minutes
 }
 
-async function saveTotal(student) {
-  if (editingTotal.value !== student.id) return
+const cancelEdit = () => {
+  editingId.value = null
 
-  if (editTotalValue.value < student.minutes_attended) {
-    alert("Total cannot be less than attended minutes")
+  editForm.value = {
+    minutes_attended: 0,
+    total_minutes: 0
+  }
+}
+
+const saveEdit = async (student) => {
+
+  if (
+    editForm.value.total_minutes <
+    editForm.value.minutes_attended
+  ) {
+    alert("Total cannot be less than attended.")
     return
   }
 
   await fetch(`${backend}/students`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       id: student.id,
-      total_minutes: editTotalValue.value
+      minutes_attended:
+        editForm.value.minutes_attended,
+      total_minutes:
+        editForm.value.total_minutes
     })
   })
 
-  student.total_minutes = editTotalValue.value
-  student.minutes_left =
-    student.total_minutes - student.minutes_attended
+  await studentStore.fetchStudents()
 
-  editingTotal.value = null
+  cancelEdit()
 }
+
+onMounted(async () => {
+  await studentStore.fetchStudents()
+})
+
 
 // Create new students
 async function createStudent() {
@@ -280,7 +323,7 @@ async function createStudent() {
       institution: '',
       total_minutes: 0
     }
-    await fetchStudents()
+    await studentStore.fetchStudents()
   } catch (err) {
     console.error(err)
     alert("Failed to add student")
@@ -297,9 +340,6 @@ function handleEsc(e) {
 
 onMounted(() => window.addEventListener('keydown', handleEsc))
 onUnmounted(() => window.removeEventListener('keydown', handleEsc))
-
-// delete students
-const studentToDelete = ref(null)
 
 function confirmDelete(student) {
   if (confirm(`Delete ${student.student}? If the student has lesson records, this will be deleted permanently.`)) {
@@ -323,7 +363,7 @@ async function deleteStudent(id) {
     alert("Failed to delete student")
   }
 
-  await fetchStudents()
+  await studentStore.fetchStudents()
 }
 </script>
 

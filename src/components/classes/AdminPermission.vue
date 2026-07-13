@@ -1,17 +1,17 @@
 <template>
   <div class="col-12 col-lg-10 d-none d-lg-block">
     <div class="d-flex g-2">
-      <div
-        class="col-6 me-2"
-        id="students"
-      >
-        <StudentList mode="admin" />
+      <div class="col-6 me-2">
+        <StudentList
+          mode="admin"
+          id="students"
+        />
       </div>
-      <div
-        class="col-6"
-        id="lessons"
-      >
-        <LessonList mode="admin" />
+      <div class="col-6">
+        <LessonList
+          mode="admin"
+          id="lessons"
+        />
       </div>
     </div>
     <RepertoireList
