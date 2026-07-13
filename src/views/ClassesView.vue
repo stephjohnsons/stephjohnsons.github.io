@@ -1,6 +1,8 @@
 <template>
+
   <div
-    v-if="adminAuthenticated"
+    v-if="
+      adminAuthenticated"
     class="d-flex m-4"
   >
     <AdminPermission />
@@ -38,6 +40,7 @@
       >Submit</button>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -57,10 +60,6 @@ const studentAuthenticated = ref(
 
 const coTeacherAuthenticated = ref(
   localStorage.getItem("studio_co_teacher_authenticated") === "true"
-)
-
-const selectedStudentId = ref(
-  localStorage.getItem("studio_student_id")
 )
 
 const inputPassword = ref("");

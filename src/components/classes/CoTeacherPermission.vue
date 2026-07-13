@@ -9,4 +9,11 @@
 
 <script setup>
 import RepertoireList from "../RepertoireList.vue";
+
+const props = defineProps({
+  mode: {
+    type: String,
+    default: null
+  }
+})
 </script>

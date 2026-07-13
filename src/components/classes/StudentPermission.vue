@@ -109,6 +109,13 @@ import LessonList from "../LessonList.vue";
 import RepertoireList from "../RepertoireList.vue";
 import { useStudentStore } from "@/stores/students";
 
+const props = defineProps({
+  mode: {
+    type: String,
+    default: null
+  }
+})
+
 const navItems = computed(() => {
   const items = [];
 

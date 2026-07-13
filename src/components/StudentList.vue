@@ -25,31 +25,6 @@
       + Add Student
     </button>
   </div>
-  <div
-    class="d-flex d-md-none d-lg-flex mb-2"
-    v-if="adminAuthenticated"
-  >
-    <button
-      v-if="activeStudents"
-      class="d-flex btn btn-success my-1 me-1 w-50"
-      @click="activeStudents = !activeStudents"
-    >
-      Active only
-    </button>
-    <button
-      v-else
-      class="d-flex btn btn-outline-success my-1 w-50"
-      @click="activeStudents = !activeStudents"
-    >
-      All students
-    </button>
-    <button
-      class="d-flex btn btn-warning ms-1 my-1 w-50"
-      @click="showAddStudent = !showAddStudent"
-    >
-      + Add Student
-    </button>
-  </div>
   <transition name="fade">
     <div
       v-if="showAddStudent"
@@ -100,7 +75,7 @@
       </div>
     </div>
   </transition>
-  <p :class="adminAuthenticated ? 'mb-1' : 'mt-2 mb-custom-view'">
+  <p class="mt-2 mb-custom-view">
     Updated on {{ studentStore.latestUpdatedAtFormatted }}
   </p>
   <!-- List of Students -->
@@ -108,7 +83,6 @@
     <table class="table table-hover w-full rounded-4">
       <thead>
         <tr class="bg-gray-200">
-          <th v-if="adminAuthenticated"></th>
           <th class="py-custom">Student</th>
           <th class="py-custom">Attended</th>
           <th class="py-custom">Left</th>
@@ -121,67 +95,14 @@
           v-for="student in students"
           :key="student.id"
         >
-          <td
-            class="p-1"
-            v-if="adminAuthenticated"
-          >
-            <btn
-              class="btn btn-sm hover:btn-danger py-0"
-              @click="confirmDelete(student)"
-            >
-              x
-            </btn>
-          </td>
-          <td :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'">
+          <td class="p-2 py-student-custom">
             {{ student.student }}
-            <span
-              class="d-none d-md-inline"
-              v-if="adminAuthenticated"
-            >• {{ student.institution }}</span>
           </td>
-          <td
-            :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'"
-            v-if="adminAuthenticated"
-          >
-            <template v-if="editingId === student.id">
-              <input
-                v-model.number="editMinutes"
-                type="number"
-                min="0"
-                class="form-control form-control-sm w-50 d-inline"
-              />
-              <button
-                class="btn btn-sm btn-success ms-1"
-                :disabled="editMinutes === student.minutes_attended"
-                @click="saveMinutes(student.id)"
-              >
-                <i class="bi bi-check"></i>
-              </button>
-              <button
-                class="btn btn-sm btn-outline-danger ms-1"
-                @click="cancelEdit"
-              >
-                <i class="bi bi-x"></i>
-              </button>
-            </template>
-            <template v-else>
-              <button
-                class="btn btn-sm btn-outline-secondary"
-                @click="startEdit(student)"
-              >
-                {{ student.minutes_attended }}
-                <i class="bi bi-pencil ms-1"></i>
-              </button>
-            </template>
-          </td>
-          <td
-            :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'"
-            v-if="!adminAuthenticated"
-          >
+          <td class="p-2 py-student-custom">
             {{ student.minutes_attended }}<i class="d-none d-xl-inline"> mins</i>
           </td>
 
-          <td :class="adminAuthenticated ? 'p-2' : 'p-2 py-student-custom'">
+          <td class="p-2 py-student-custom">
             {{ student.minutes_left }}
             <span class="text-secondary fs-7">/</span>
 
@@ -201,12 +122,6 @@
             >
               {{ student.total_minutes }}
             </span>
-
-            <button
-              v-if="adminAuthenticated"
-              @click="startEditTotal(student)"
-              class="btn btn-sm"
-            >✎</button>
           </td>
         </tr>
       </tbody>
@@ -238,8 +153,9 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, computed } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { useStudentStore } from "@/stores/students";
+import { storeToRefs } from "pinia";
 import backend from '@/composables/backend';
 
 const props = defineProps({
@@ -248,9 +164,6 @@ const props = defineProps({
     default: 'student'
   }
 })
-
-const adminAuthenticated = ref(props.mode === 'admin');
-const studentAuthenticated = ref(true);
 
 const showAddStudent = ref(false);
 const newStudent = ref({
@@ -274,7 +187,7 @@ const form = ref({
 
 const endpoint = `${backend}/students`;
 const studentStore = useStudentStore();
-const students = computed(() => studentStore.students);
+const { students } = storeToRefs(studentStore);
 
 const startEdit = (student) => {
   editingId.value = student.id;

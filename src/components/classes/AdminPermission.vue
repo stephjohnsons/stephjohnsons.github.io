@@ -36,10 +36,7 @@
     </div>
   </div>
   <div class="d-block d-lg-none">
-    <StudentList
-      id="students"
-      v-if="!studentAuthenticated"
-    />
+    <StudentList id="students" />
     <LessonList id="lessons" />
     <RepertoireList id="repertoire" />
     <div class="footer sticky-bottom rounded-3 px-2 pt-2 d-flex d-lg-none bg-warning">
@@ -60,7 +57,6 @@
     <h5>Sitemap</h5>
     <div class="d-flex flex-column">
       <button
-        v-if="!studentAuthenticated"
         class="btn btn-sm btn-warning my-1"
         @click="scrollToSection('students')"
       >
@@ -84,7 +80,29 @@
 
 
 <script setup>
+import { computed } from "vue";
 import StudentList from "../StudentList.vue";
 import LessonList from "../LessonList.vue";
 import RepertoireList from "../RepertoireList.vue";
+
+const navItems = computed(() => {
+  const items = [];
+
+  items.push(
+    {
+      label: "Classes",
+      id: "lessons",
+    },
+    {
+      label: "Rep",
+      id: "repertoire",
+    },
+    {
+      label: "Policy",
+      id: "policy",
+    }
+  );
+
+  return items;
+});
 </script>
