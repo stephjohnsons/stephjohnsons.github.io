@@ -65,40 +65,6 @@ const selectedStudentId = ref(
 
 const inputPassword = ref("");
 
-const navItems = computed(() => {
-  const items = [];
-
-  if (adminAuthenticated.value) {
-    items.push({
-      label: "Students",
-      id: "students",
-    });
-  }
-
-  items.push(
-    {
-      label: "Classes",
-      id: "lessons",
-    },
-    {
-      label: "Rep",
-      id: "repertoire",
-    },
-    {
-      label: "Policy",
-      id: "policy",
-    }
-  );
-
-  return items;
-});
-
-const scrollToSection = (id) => {
-  document.getElementById(id)?.scrollIntoView({
-    behavior: "smooth",
-  });
-};
-
 const checkPassword = () => {
   if (inputPassword.value === import.meta.env.VITE_STUDIO_PASSWORD) {
     adminAuthenticated.value = true;
@@ -115,25 +81,10 @@ const checkPassword = () => {
 };
 
 const studentStore = useStudentStore();
-// console.log(studentStore.students)
+
 onMounted(async () => {
-  await studentStore.fetchStudents();
-});
-
-const selectStudent = (id) => {
-  selectedStudentId.value = id
-
-  localStorage.setItem(
-    'studio_student_id',
-    id
-  )
-}
-
-const switchStudent = () => {
-  selectedStudentId.value = null
-
-  localStorage.removeItem(
-    'studio_student_id'
-  )
-}
+  if (!studentStore.loaded) {
+    await studentStore.fetchStudents()
+  }
+})
 </script>

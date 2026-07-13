@@ -5,7 +5,6 @@
   >
     <h3 class="text-xl font-bold">Repertoire</h3>
   </div>
-
   <div class="mb-0">
     <select
       v-model="selectedStudentId"
@@ -128,7 +127,7 @@
         >
           <button
             class="btn btn-sm btn-warning"
-            @click="startEdit(rep)"
+            @click="startEdit(currentRep.id)"
           >
             <i class="bi bi-pencil"></i>
           </button>
@@ -158,8 +157,9 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, nextTick } from 'vue';
+import { computed, ref, nextTick, watchEffect, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
+import { storeToRefs } from 'pinia';
 import backend from '@/composables/backend';
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
@@ -175,19 +175,18 @@ const COTEACHER_STUDENT_ID =
 const remarksRefs = ref({})
 
 const studentStore = useStudentStore();
-const getStudentName = studentStore.getStudentName;
-const students = studentStore.students;
+const { students } = storeToRefs(studentStore);
 
-const selectedStudentId = ref(null);
+const selectedStudentId = ref(null)
 
 const availableStudents = computed(() => {
   if (props.mode === 'coteacher') {
-    return students.filter(
+    return students.value.filter(
       s => s.id === COTEACHER_STUDENT_ID
     )
   }
 
-  return students
+  return students.value
 })
 
 const showNoteBox = ref(null);
@@ -322,10 +321,10 @@ const formatDate = (date) => {
 }
 
 const startEdit = (rep) => {
-  editingId.value = currentRep.id;
+  editingId.value = currentRep.value.id;
   editForm.value = {
-    id: currentRep.id,
-    pieces: currentRep.pieces
+    id: currentRep.value.id,
+    pieces: currentRep.value.pieces
   };
 };
 
@@ -380,17 +379,6 @@ const deleteRep = async (id) => {
   }
 };
 
-onMounted(async () => {
-  await fetchRepertoire();
-  await fetchNotes();
-
-  if (availableStudents.value.length) {
-    selectedStudentId.value =
-      availableStudents.value[0].id
-  }
-
-});
-
 const props = defineProps({
   mode: {
     type: String,
@@ -402,6 +390,21 @@ const currentRep = computed(() => {
   return repertoireList.value.find(
     rep => rep.student_id === selectedStudentId.value
   )
+})
+
+watchEffect(() => {
+  if (
+    !selectedStudentId.value &&
+    availableStudents.value.length
+  ) {
+    selectedStudentId.value =
+      availableStudents.value[0].id
+  }
+})
+
+onMounted(async () => {
+  await fetchRepertoire()
+  await fetchNotes()
 })
 </script>
 

@@ -307,6 +307,7 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
 import { useClassStore } from '@/stores/classes';
+import { storeToRefs } from "pinia";
 import backend from '@/composables/backend';
 
 const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
@@ -318,7 +319,6 @@ const expandedStudents = ref(new Set());
 const classStore = useClassStore();
 const selectedSemester = ref('2026-05');
 
-import { storeToRefs } from "pinia";
 const { semesterList } = storeToRefs(classStore);
 
 const lessons = computed(() => classStore.getLessonsBySemester(selectedSemester.value));
