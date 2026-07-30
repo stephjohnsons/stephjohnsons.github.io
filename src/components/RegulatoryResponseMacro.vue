@@ -117,7 +117,7 @@
 
   <MacroManager v-if="showMacroManager" />
   <MacroLineRemover v-if="!showMacroManager" />
-  <Notes v-if="admin" />
+  <!-- <Notes v-if="admin" /> -->
 </template>
 
 <script setup>
@@ -126,7 +126,7 @@ import { useUIStore } from "@/stores/ui";
 import { useMacroStateStore } from "@/stores/macroState";
 import MacroManager from "./MacroManager.vue";
 import MacroLineRemover from "./MacroLineRemover.vue";
-import Notes from "./RegulatoryResponseNotes.vue";
+// import Notes from "./RegulatoryResponseNotes.vue";
 import backend from '@/composables/backend';
 
 defineProps({
