@@ -162,6 +162,11 @@ const loadingMacro = ref(false);
 const macroProgress = ref(0);
 let macroProgressInterval = null;
 
+// Full macro data is preloaded by domain in the background so selections
+// can be displayed immediately without another request.
+const macroCache = ref({});
+const preloadPromises = {};
+
 const macros = computed(() => Object.keys(macroRegistry.value));
 
 const filteredMacros = computed(() => {
@@ -235,10 +240,18 @@ function stopMacroLoading() {
   }, 300);
 }
 
-async function fetchMacro(id) {
-  if (!id) return;
+function displayMacro(macroData) {
+  remark.value = macroData.remark || '';
+  englishText.value = macroData.text_en || '';
+  chineseText.value = macroData.text_cn || '';
+}
 
-  await startMacroLoading();
+async function fetchMacro(id, showProgress = true) {
+  if (!id) return null;
+
+  if (showProgress) {
+    await startMacroLoading();
+  }
 
   try {
     const res = await fetch(
@@ -249,16 +262,49 @@ async function fetchMacro(id) {
       throw new Error(`Failed to fetch macro (${res.status})`);
     }
 
-    const macroData = await res.json();
-
-    remark.value = macroData.remark || '';
-    englishText.value = macroData.text_en || '';
-    chineseText.value = macroData.text_cn || '';
+    return await res.json();
   } catch (error) {
     console.error('Failed to load macro:', error);
+    return null;
   } finally {
-    stopMacroLoading();
+    if (showProgress) {
+      stopMacroLoading();
+    }
   }
+}
+
+async function preloadMacros(domain) {
+  if (preloadPromises[domain]) {
+    return preloadPromises[domain];
+  }
+
+  preloadPromises[domain] = (async () => {
+    try {
+      const res = await fetch(`${backend}/rr/macros?domain=${domain}`);
+
+      if (!res.ok) {
+        throw new Error(`Failed to preload macros (${res.status})`);
+      }
+
+      const data = await res.json();
+      const cache = {};
+
+      data.forEach((item) => {
+        cache[item.id] = item;
+      });
+
+      macroCache.value = {
+        ...macroCache.value,
+        [domain]: cache
+      };
+    } catch (error) {
+      console.error(`Failed to preload ${domain} macros:`, error);
+    } finally {
+      delete preloadPromises[domain];
+    }
+  })();
+
+  return preloadPromises[domain];
 }
 
 async function insertMacro(selected) {
@@ -269,7 +315,17 @@ async function insertMacro(selected) {
   selectedMacroId.value = item.id;
   showList.value = false;
 
-  await fetchMacro(item.id);
+  const cached = macroCache.value[macroState.domain]?.[item.id];
+
+  if (cached) {
+    displayMacro(cached);
+  } else {
+    const macroData = await fetchMacro(item.id);
+
+    if (macroData) {
+      displayMacro(macroData);
+    }
+  }
 
   macro.value = '';
   macroTextarea.value?.focus();
@@ -312,14 +368,32 @@ async function fetchMacros() {
 
 onMounted(async () => {
   macroRegistry.value = await fetchMacros();
+
+  // Let the summary render first, then preload the current domain in the
+  // background. The autocomplete remains responsive while this happens.
+  await nextTick();
+  preloadMacros(macroState.domain);
 });
 
 watch(
   () => macroState.domain,
-  async () => {
+  async (domain) => {
     if (selectedMacroId.value) {
-      await fetchMacro(selectedMacroId.value);
+      const cached = macroCache.value[domain]?.[selectedMacroId.value];
+
+      if (cached) {
+        displayMacro(cached);
+      } else {
+        const macroData = await fetchMacro(selectedMacroId.value);
+
+        if (macroData) {
+          displayMacro(macroData);
+        }
+      }
     }
+
+    // Start loading the new domain in the background for subsequent selections.
+    preloadMacros(domain);
   }
 );
 </script>
