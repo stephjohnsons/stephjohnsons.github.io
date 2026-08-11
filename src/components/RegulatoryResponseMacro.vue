@@ -45,7 +45,6 @@
             class="form-control no-resize"
             rows="1"
             @input="onInput"
-            @keydown="handleNumberSelect"
             @keydown.left.prevent="highlightPrev"
             @keydown.right.prevent="highlightNext"
             @keydown.enter.prevent="selectHighlighted"
@@ -208,12 +207,6 @@ function onInput(e) {
   const cursor = e.target.selectionStart;
   const textBefore = macro.value.slice(0, cursor);
 
-  if (macro.value.trim() === '--reset') {
-    showList.value = false;
-    highlightedIndex.value = 0;
-    return;
-  }
-
   showList.value = /-\w*$/.test(textBefore);
   highlightedIndex.value = 0;
 }
@@ -278,26 +271,6 @@ async function insertMacro(selected) {
 
   macro.value = '';
   macroTextarea.value?.focus();
-}
-
-async function resetMacro() {
-  if (!selectedMacroId.value) {
-    macro.value = '';
-    showList.value = false;
-    return;
-  }
-
-  showList.value = false;
-  macro.value = '';
-  await fetchMacro(selectedMacroId.value);
-  macroTextarea.value?.focus();
-}
-
-function handleNumberSelect(e) {
-  if (e.key === 'Enter' && macro.value.trim() === '--reset') {
-    e.preventDefault();
-    resetMacro();
-  }
 }
 
 function highlightNext() {
