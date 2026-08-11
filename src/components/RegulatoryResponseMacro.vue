@@ -202,17 +202,33 @@ function onInput(e) {
   highlightedIndex.value = 0;
 }
 
-function insertMacro(selected) {
+async function insertMacro(selected) {
   const item = macroRegistry.value[selected]
 
-  remark.value = item.remark || ''
-  englishText.value = item.text_en || ''
-  chineseText.value = item.text_cn || ''
+  if (!item?.id) return
 
-  macro.value = ''
   showList.value = false
 
-  macroTextarea.value?.focus()
+  try {
+    const res = await fetch(
+      `${backend}/rr/macros/lookup/${item.id}?domain=${macroState.domain}`
+    )
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch macro (${res.status})`)
+    }
+
+    const macroData = await res.json()
+
+    remark.value = macroData.remark || ''
+    englishText.value = macroData.text_en || ''
+    chineseText.value = macroData.text_cn || ''
+
+    macro.value = ''
+    macroTextarea.value?.focus()
+  } catch (error) {
+    console.error('Failed to load macro:', error)
+  }
 }
 
 function highlightNext() {
@@ -231,25 +247,21 @@ function selectHighlighted() {
   if (!showList.value) return
   const selected = filteredMacros.value[highlightedIndex.value]
   insertMacro(selected)
-  macro.value = ''
-  showList.value = false
 }
 
 const formattedText = computed(() => formatText(preformattedText.value));
 
 async function fetchMacros() {
-  const res = await fetch(`${backend}/rr/macros?domain=${macroState.domain}`);
+  const res = await fetch(`${backend}/rr/macros/summary`);
   const data = await res.json();
 
   const registry = {};
 
   data.forEach((m) => {
     registry[m.macro] = {
+      id: m.id,
       label: m.label,
-      category: m.category,
-      remark: m.remark,
-      text_en: m.text_en,
-      text_cn: m.text_cn
+      category: m.category
     }
   });
 
@@ -259,13 +271,6 @@ async function fetchMacros() {
 onMounted(async () => {
   macroRegistry.value = await fetchMacros();
 });
-
-watch(
-  () => macroState.domain,
-  async () => {
-    macroRegistry.value = await fetchMacros()
-  }
-)
 </script>
 
 <style scoped>
