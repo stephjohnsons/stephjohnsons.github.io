@@ -126,7 +126,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, watch, computed, onMounted, nextTick } from "vue";
 import { useUIStore } from "@/stores/ui";
 import { useMacroStateStore } from "@/stores/macroState";
 import MacroManager from "./MacroManager.vue";
@@ -211,10 +211,12 @@ function onInput(e) {
   highlightedIndex.value = 0;
 }
 
-function startMacroLoading() {
+async function startMacroLoading() {
   loadingMacro.value = true;
-  macroProgress.value = 0;
+  macroProgress.value = 10;
   clearInterval(macroProgressInterval);
+
+  await nextTick();
 
   macroProgressInterval = setInterval(() => {
     if (macroProgress.value < 90) {
@@ -236,7 +238,7 @@ function stopMacroLoading() {
 async function fetchMacro(id) {
   if (!id) return;
 
-  startMacroLoading();
+  await startMacroLoading();
 
   try {
     const res = await fetch(
