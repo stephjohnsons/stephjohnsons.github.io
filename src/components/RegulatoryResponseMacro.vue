@@ -1,4 +1,10 @@
 <template>
+  <LoadingProgressBar
+    :loading="loadingMacro"
+    :progress="macroProgress"
+    :is-dark="ui.isDark"
+  />
+
   <div
     class="border-bottom d-flex gap-3 mb-3"
     v-if="admin"
@@ -126,6 +132,7 @@ import { useUIStore } from "@/stores/ui";
 import { useMacroStateStore } from "@/stores/macroState";
 import MacroManager from "./MacroManager.vue";
 import MacroLineRemover from "./MacroLineRemover.vue";
+import LoadingProgressBar from "./LoadingProgressBar.vue";
 // import Notes from "./RegulatoryResponseNotes.vue";
 import backend from '@/composables/backend';
 
@@ -151,6 +158,11 @@ const highlightedIndex = ref(0);
 const macroState = useMacroStateStore()
 
 const macroRegistry = ref({});
+const selectedMacroId = ref(null);
+const loadingMacro = ref(false);
+const macroProgress = ref(0);
+let macroProgressInterval = null;
+
 const macros = computed(() => Object.keys(macroRegistry.value));
 
 const filteredMacros = computed(() => {
@@ -184,12 +196,11 @@ function fuzzyScore(query, target) {
   for (const char of query) {
     const found = target.indexOf(char, tIndex);
     if (found === -1) return 0;
-    score += 2; // matched character
-    if (found === tIndex) score += 1; // consecutive bonus
+    score += 2;
+    if (found === tIndex) score += 1;
     tIndex = found + 1;
   }
 
-  // shorter targets rank higher
   return score - target.length * 0.01;
 }
 
@@ -197,59 +208,115 @@ function onInput(e) {
   const cursor = e.target.selectionStart;
   const textBefore = macro.value.slice(0, cursor);
 
-  showList.value = /-\w*$/.test(textBefore);
+  if (macro.value.trim() === '--reset') {
+    showList.value = false;
+    highlightedIndex.value = 0;
+    return;
+  }
 
+  showList.value = /-\w*$/.test(textBefore);
   highlightedIndex.value = 0;
 }
 
-async function insertMacro(selected) {
-  const item = macroRegistry.value[selected]
+function startMacroLoading() {
+  loadingMacro.value = true;
+  macroProgress.value = 0;
+  clearInterval(macroProgressInterval);
 
-  if (!item?.id) return
+  macroProgressInterval = setInterval(() => {
+    if (macroProgress.value < 90) {
+      macroProgress.value += 2;
+    }
+  }, 50);
+}
 
-  showList.value = false
+function stopMacroLoading() {
+  clearInterval(macroProgressInterval);
+  macroProgress.value = 100;
+
+  setTimeout(() => {
+    loadingMacro.value = false;
+    macroProgress.value = 0;
+  }, 300);
+}
+
+async function fetchMacro(id) {
+  if (!id) return;
+
+  startMacroLoading();
 
   try {
     const res = await fetch(
-      `${backend}/rr/macros/lookup/${item.id}?domain=${macroState.domain}`
-    )
+      `${backend}/rr/macros/lookup/${id}?domain=${macroState.domain}`
+    );
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch macro (${res.status})`)
+      throw new Error(`Failed to fetch macro (${res.status})`);
     }
 
-    const macroData = await res.json()
+    const macroData = await res.json();
 
-    remark.value = macroData.remark || ''
-    englishText.value = macroData.text_en || ''
-    chineseText.value = macroData.text_cn || ''
-
-    macro.value = ''
-    macroTextarea.value?.focus()
+    remark.value = macroData.remark || '';
+    englishText.value = macroData.text_en || '';
+    chineseText.value = macroData.text_cn || '';
   } catch (error) {
-    console.error('Failed to load macro:', error)
+    console.error('Failed to load macro:', error);
+  } finally {
+    stopMacroLoading();
+  }
+}
+
+async function insertMacro(selected) {
+  const item = macroRegistry.value[selected];
+
+  if (!item?.id) return;
+
+  selectedMacroId.value = item.id;
+  showList.value = false;
+
+  await fetchMacro(item.id);
+
+  macro.value = '';
+  macroTextarea.value?.focus();
+}
+
+async function resetMacro() {
+  if (!selectedMacroId.value) {
+    macro.value = '';
+    showList.value = false;
+    return;
+  }
+
+  showList.value = false;
+  macro.value = '';
+  await fetchMacro(selectedMacroId.value);
+  macroTextarea.value?.focus();
+}
+
+function handleNumberSelect(e) {
+  if (e.key === 'Enter' && macro.value.trim() === '--reset') {
+    e.preventDefault();
+    resetMacro();
   }
 }
 
 function highlightNext() {
-  if (!showList.value) return;
+  if (!showList.value || !filteredMacros.value.length) return;
   highlightedIndex.value = (highlightedIndex.value + 1) % filteredMacros.value.length;
 }
 
 function highlightPrev() {
-  if (!showList.value) return;
+  if (!showList.value || !filteredMacros.value.length) return;
   highlightedIndex.value =
     (highlightedIndex.value - 1 + filteredMacros.value.length) %
     filteredMacros.value.length;
 }
 
 function selectHighlighted() {
-  if (!showList.value) return
-  const selected = filteredMacros.value[highlightedIndex.value]
-  insertMacro(selected)
+  if (!showList.value) return;
+  const selected = filteredMacros.value[highlightedIndex.value];
+  insertMacro(selected);
 }
-
-const formattedText = computed(() => formatText(preformattedText.value));
 
 async function fetchMacros() {
   const res = await fetch(`${backend}/rr/macros/summary`);
@@ -262,7 +329,7 @@ async function fetchMacros() {
       id: m.id,
       label: m.label,
       category: m.category
-    }
+    };
   });
 
   return registry;
@@ -271,6 +338,15 @@ async function fetchMacros() {
 onMounted(async () => {
   macroRegistry.value = await fetchMacros();
 });
+
+watch(
+  () => macroState.domain,
+  async () => {
+    if (selectedMacroId.value) {
+      await fetchMacro(selectedMacroId.value);
+    }
+  }
+);
 </script>
 
 <style scoped>
