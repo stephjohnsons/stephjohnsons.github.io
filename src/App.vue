@@ -15,7 +15,7 @@
         :class="{ 'dark-mode': ui.isDark }"
       >
         Stephen
-        <span class="fw-medium">Johnson-Tseu</span>
+        <span class="fw-medium">Johnson Tseu</span>
       </h1>
     </a>
 
