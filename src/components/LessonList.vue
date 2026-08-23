@@ -1,6 +1,33 @@
 <template>
   <div
-    v-if="!loading"
+    v-if="loading"
+    class="w-100 placeholder-glow"
+  >
+    <div class="d-flex flex-row w-100 mb-2">
+      <h3 class="text-xl font-bold mb-1 me-auto">Lessons</h3>
+      <span class="placeholder col-2 ms-2 rounded-3"></span>
+      <span class="placeholder col-2 ms-2 rounded-3"></span>
+    </div>
+
+    <!-- Semester -->
+    <div class="d-flex align-items-center mb-2">
+      <span class="placeholder col-1 me-2 py-3 w-100 rounded"></span>
+    </div>
+
+    <div
+      v-for="n in 5"
+      :key="n"
+      class="border rounded mb-1 p-2"
+    >
+      <div class="d-flex align-items-center">
+        <span class="placeholder py-3 h-25 px-3 rounded"></span>
+        <span class="placeholder col-3 ms-2 py-2 rounded"></span>
+        <span class="placeholder col-2 ms-auto rounded"></span>
+      </div>
+    </div>
+  </div>
+  <div
+    v-else
     class="d-flex flex-column align-items-center"
     id="lessons"
   >
@@ -280,18 +307,7 @@
       :disabled="!adminAuthenticated"
     >Add Lesson</button>
   </form>
-  <!-- <div
-    v-else
-    class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999;"
-  >
-    <div
-      class="spinner-border text-warning"
-      role="status"
-    >
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div> -->
+
 </template>
 
 <script setup>

@@ -1,5 +1,78 @@
 <template>
   <div
+    v-if="loading"
+    class="placeholder-glow"
+  >
+    <!-- Heading -->
+    <div class="d-flex align-items-center mb-2">
+      <h3 class="text-xl font-bold mb-0">Students</h3>
+      <span
+        class="placeholder ms-auto rounded"
+        style="width: 110px; height: 32px;"
+      ></span>
+      <span
+        class="placeholder ms-2 rounded"
+        style="width: 140px; height: 32px;"
+      ></span>
+    </div>
+
+    <!-- Updated -->
+    <div class="mb-3">
+      <p class="mt-2 mb-custom-view">
+        Updated on <span
+          class="placeholder ms-1 col-1 p-2 rounded"
+          style="height: 20px;"
+        ></span>
+      </p>
+    </div>
+
+    <!-- Table -->
+    <table class="table w-100">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="py-custom">Student</th>
+          <th class="py-custom">Attended</th>
+          <th class="py-custom">Left / Total</th>
+          <th width="90"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          v-for="n in 5"
+          :key="n"
+        >
+          <td class="p-2">
+            <span class="placeholder col-6 rounded"></span>
+          </td>
+
+          <td class="p-2">
+            <span class="placeholder col-2 rounded"></span>
+          </td>
+
+          <td class="p-2">
+            <span class="placeholder col-3 rounded"></span>
+          </td>
+
+          <td class="p-2">
+            <div class="d-flex justify-content-end gap-1">
+              <span
+                class="placeholder py-3 m-auto rounded"
+                style="width: 40px"
+              ></span>
+
+              <span
+                class="placeholder py-3 m-auto rounded"
+                style="width: 40px"
+              ></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    v-else
     class="d-flex"
     id="students"
   >
@@ -27,7 +100,7 @@
   </div>
   <transition name="fade">
     <div
-      v-if="showAddStudent"
+      v-if="showAddStudent && !loading"
       class="fixed inset-0 z-50 flex items-center justify-center p-3 bg-warning-subtle rounded-3 mb-2"
     >
       <div
@@ -102,7 +175,6 @@
 
           <!-- attended -->
           <td class="p-2 py-student-custom">
-
             <template v-if="editingId !== student.id">
               {{ student.minutes_attended }}
             </template>
@@ -113,21 +185,16 @@
               class="form-control form-control-sm"
               v-model.number="editForm.minutes_attended"
             >
-
           </td>
 
           <!-- left / total -->
 
           <td class="p-2 py-student-custom">
-
             <template v-if="editingId !== student.id">
-
               {{ student.minutes_left }}
-
               <span class="text-secondary fs-7">
                 /
               </span>
-
               <span class="text-secondary fs-7">
                 {{ student.total_minutes }}
               </span>
@@ -135,22 +202,18 @@
             </template>
 
             <template v-else>
-
               {{
                 editForm.total_minutes -
                 editForm.minutes_attended
               }}
-
               <span class="text-secondary fs-7">
                 /
               </span>
-
               <input
                 type="number"
                 class="form-control form-control-sm d-inline w-50"
                 v-model.number="editForm.total_minutes"
               >
-
             </template>
           </td>
 
@@ -199,18 +262,6 @@
     v-else
     class="text-gray-500"
   >No students found.</div>
-  <div
-    v-if="loading"
-    class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-    style="background-color: rgba(255, 255, 255, 0.7); z-index: 9999"
-  >
-    <div
-      class="spinner-border text-warning"
-      role="status"
-    >
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
 
   <!-- Overlay -->
   <div
@@ -272,7 +323,7 @@ const cancelEdit = () => {
 }
 
 const saveEdit = async (student) => {
-
+  loading.value = true
   if (
     editForm.value.total_minutes <
     editForm.value.minutes_attended
@@ -297,6 +348,7 @@ const saveEdit = async (student) => {
 
   await studentStore.fetchStudents()
 
+  loading.value = false
   cancelEdit()
 }
 
@@ -348,6 +400,7 @@ function confirmDelete(student) {
 }
 
 async function deleteStudent(id) {
+  loading.value = true
   try {
     await fetch(`${backend}/students`, {
       method: 'DELETE',
@@ -364,6 +417,7 @@ async function deleteStudent(id) {
   }
 
   await studentStore.fetchStudents()
+  loading.value = false
 }
 </script>
 
