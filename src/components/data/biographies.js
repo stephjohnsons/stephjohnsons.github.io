@@ -247,7 +247,7 @@ export const works = [
     link: 'https://stephjohnsons.com/flyeasy/'
   },
   {
-    name: 'Stephen Johnson-Tseu',
+    name: 'Stephen Johnson Tseu',
     desc: 'Responsive personal website originally built as a portfolio, now expanded to support multiple work-related tools. Developed with Vue.js (with Pinia for state management), Bootstrap, Node.js backend. Hosted on GitHub Pages, and primary database on Supabase. Integrated Bandsintown API for displaying upcoming concert dates. Private tools (password available upon request) include: a class tracker for monitoring student lessons, and a chat template generator to assist with customer communications.',
     link: 'https://stephjohnsons.com/#/'
   },

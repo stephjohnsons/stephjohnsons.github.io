@@ -22,11 +22,11 @@ export const contactInfo = {
     link: 'https://www.linkedin.com/in/stephentseu/'
   },
   CloudJoi: {
-    label: 'Stephen Johnson-Tseu',
+    label: 'Stephen Johnson Tseu',
     link: 'https://www.cloudjoi.com/profiles/118179'
   },
   IMDB: {
-    label: 'Stephen Johnson-Tseu',
+    label: 'Stephen Johnson Tseu',
     link: 'https://www.imdb.com/name/nm10611030/'
   }
 }

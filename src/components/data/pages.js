@@ -19,10 +19,10 @@ export const pageLinks = [
     name: 'Upcoming Dates',
     link: '/dates'
   },
-  {
-    name: 'Teaching',
-    link: '/teaching'
-  },
+  // {
+  //   name: 'Teaching',
+  //   link: '/teaching'
+  // },
   // {
   //   name: '🧑🏻‍💻 Vita',
   //   link: '/vita'

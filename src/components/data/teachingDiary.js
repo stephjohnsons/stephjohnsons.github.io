@@ -3,7 +3,7 @@ export const teachingDiary = [
     project: 'Cello Yoga',
     link: 'https://www.youtube.com/watch?v=hSYOXMHuUsA',
     description:
-      'Live stream on Zoom + Instagram. Jacob Shaw explaining the "cello yoga" daily routine and Q&A on 24th March 2020 from Scandinavian Cello School in Stevns, Denmark to the class of Stephen Johnson-Tseu.'
+      'Live stream on Zoom + Instagram. Jacob Shaw explaining the "cello yoga" daily routine and Q&A on 24th March 2020 from Scandinavian Cello School in Stevns, Denmark to the class of Stephen Johnson Tseu.'
   },
   {
     project: 'Jesselton Philharmonic Orchestra Broadcast',

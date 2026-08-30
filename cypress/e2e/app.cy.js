@@ -22,14 +22,11 @@ describe('Hamburger menu', () => {
   it('opens menu when clicked', () => {
     cy.visit('/')
 
-    cy.get('.hamburger')
-      .click()
+    cy.get('.hamburger').click()
 
-    cy.get('#menu')
-      .should('exist')
+    cy.get('#menu').should('exist')
 
-    cy.get('#router')
-      .should('not.exist')
+    cy.get('#router').should('not.exist')
   })
 })
 
@@ -38,21 +35,17 @@ it('closes menu when clicked twice', () => {
 
   cy.get('.hamburger').click()
 
-  cy.get('#menu')
-    .should('exist')
+  cy.get('#menu').should('exist')
 
   cy.get('.hamburger').click()
 
-  cy.get('#router')
-    .should('exist')
+  cy.get('#router').should('exist')
 })
 
 it('adds active class when menu is open', () => {
   cy.visit('/')
 
-  cy.get('.hamburger')
-    .click()
-    .should('have.class', 'hamburger--active')
+  cy.get('.hamburger').click().should('have.class', 'hamburger--active')
 })
 
 it('closes menu after navigation', () => {
@@ -60,13 +53,11 @@ it('closes menu after navigation', () => {
 
   cy.get('.hamburger').click()
 
-  cy.get('#menu')
-    .should('exist')
+  cy.get('#menu').should('exist')
 
   cy.visit('/tools')
 
-  cy.get('#menu')
-    .should('not.exist')
+  cy.get('#menu').should('not.exist')
 })
 
 // Tests on dark mode -- 5 Jun: temporarily hidden; will test on a different app
@@ -96,7 +87,7 @@ it('closes menu after navigation', () => {
 //   })
 
 //   cy.title()
-//     .should('eq', 'Stephen Johnson-Tseu')
+//     .should('eq', 'Stephen Johnson Tseu')
 // })
 
 // it('sets title on tools page', () => {

@@ -72,7 +72,7 @@ window.addEventListener("focus", () => {
   if (route.path === "/tools") {
     document.title = "Tools";
   } else {
-    document.title = "Stephen Johnson-Tseu";
+    document.title = "Stephen Johnson Tseu";
   }
 });
 
