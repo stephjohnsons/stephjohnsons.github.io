@@ -2,25 +2,38 @@
   <div class="about">
     <h2 class="d-none d-md-block">Contact</h2>
     <h3 class="d-block d-md-none">Contact</h3>
-
+    <!-- 
     <div class="contact-items">
       <p class="fw-bold mb-0">
         Meeting
       </p>
       <Calendly text="Schedule a meeting to meet with me (30 min)" />
-    </div>
+    </div> -->
 
-    <div v-for="(item, key) in contactInfo" :key="key" class="contact-items">
+    <div
+      v-for="(item, key) in contactInfo"
+      :key="key"
+      class="contact-items"
+    >
       <p class="fw-bold mb-0">
         {{ key }}
       </p>
 
-      <p v-if="item.remarks" class="mb-0 fw-medium">
+      <p
+        v-if="item.remarks"
+        class="mb-0 fw-medium"
+      >
         {{ item.remarks }}
-        <span v-if="item.remarks2" class="fw-normal fs-7 text-muted fst-normal">
+        <span
+          v-if="item.remarks2"
+          class="fw-normal fs-7 text-muted fst-normal"
+        >
           {{ item.remarks2 }} <br />
         </span>
-        <span v-if="item.description" class="fw-normal mt-1 fst-italic text-muted">
+        <span
+          v-if="item.description"
+          class="fw-normal mt-1 fst-italic text-muted"
+        >
           {{ item.description }}
         </span>
       </p>

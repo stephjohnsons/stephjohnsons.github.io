@@ -1,5 +1,8 @@
 export const contactInfo = {
-  'Email & Teaching Studio Enquiries': {
+  'Email Enquiries': {
+    remarks: 'Hsia Goh Music Studio',
+    remarks2: 'Inquiries about private or studio teaching',
+    description: 'General inquiries only:',
     label: 'info@stephjohnsons.com',
     link: 'mailto:info@stephjohnsons.com'
   },
