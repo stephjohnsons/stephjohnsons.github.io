@@ -38,6 +38,39 @@
   >
     <div class="position-relative w-100 position-relative">
       <div class="macro-wrapper">
+        <div
+          v-if="recentMacros.length"
+          class="mb-2"
+        >
+          <label class="form-label small mb-1">
+            Recently used
+          </label>
+
+          <div class="recent-macro-bar d-flex flex-wrap align-items-center gap-2">
+            <span
+              v-for="(item, i) in recentMacros"
+              :key="`${item.domain}-${item.id}`"
+              class="recent-macro-item d-flex align-items-center gap-2 px-2 py-1 rounded"
+              :title="`${item.label} (${item.macro})`"
+              @mousedown.prevent="insertMacro(item.macro)"
+            >
+              <div class="recent-macro-number">
+                {{ i + 1 }}
+              </div>
+
+              <div class="recent-macro-text d-flex flex-column">
+                <div class="recent-macro-label">
+                  {{ item.label }}
+                </div>
+
+                <div class="recent-macro-key small">
+                  {{ item.macro }}
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+
         <div class="mb-2">
           <textarea
             ref="macroTextarea"
@@ -162,6 +195,12 @@ const loadingMacro = ref(false);
 const macroProgress = ref(0);
 let macroProgressInterval = null;
 
+// Keep the last 10 unique macros in browser-local storage.
+// History is scoped by domain so each macro set gets its own recent list.
+const RECENT_MACROS_LIMIT = 10;
+const RECENT_MACROS_STORAGE_PREFIX = 'regulatoryResponseMacro.recent';
+const recentMacros = ref([]);
+
 // Full macro data is preloaded by domain in the background so selections
 // can be displayed immediately without another request.
 const macroCache = ref({});
@@ -214,6 +253,64 @@ function onInput(e) {
 
   showList.value = /-\w*$/.test(textBefore);
   highlightedIndex.value = 0;
+}
+
+function recentMacrosStorageKey(domain) {
+  return `${RECENT_MACROS_STORAGE_PREFIX}.${domain}`;
+}
+
+function loadRecentMacros(domain) {
+  if (!domain) {
+    recentMacros.value = [];
+    return;
+  }
+
+  try {
+    const stored = localStorage.getItem(recentMacrosStorageKey(domain));
+    const parsed = stored ? JSON.parse(stored) : [];
+
+    recentMacros.value = Array.isArray(parsed)
+      ? parsed
+          .filter((item) => item?.id && item?.macro && item?.label)
+          .slice(0, RECENT_MACROS_LIMIT)
+      : [];
+  } catch (error) {
+    console.error('Failed to load recent macros:', error);
+    recentMacros.value = [];
+  }
+}
+
+function saveRecentMacros() {
+  if (!macroState.domain) return;
+
+  try {
+    localStorage.setItem(
+      recentMacrosStorageKey(macroState.domain),
+      JSON.stringify(recentMacros.value.slice(0, RECENT_MACROS_LIMIT))
+    );
+  } catch (error) {
+    console.error('Failed to save recent macros:', error);
+  }
+}
+
+function addRecentMacro(macroKey) {
+  const item = macroRegistry.value[macroKey];
+  if (!item?.id) return;
+
+  const recentItem = {
+    id: item.id,
+    macro: macroKey,
+    label: item.label,
+    category: item.category,
+    domain: macroState.domain
+  };
+
+  recentMacros.value = [
+    recentItem,
+    ...recentMacros.value.filter((entry) => entry.id !== recentItem.id)
+  ].slice(0, RECENT_MACROS_LIMIT);
+
+  saveRecentMacros();
 }
 
 async function startMacroLoading() {
@@ -314,6 +411,7 @@ async function insertMacro(selected) {
 
   selectedMacroId.value = item.id;
   showList.value = false;
+  addRecentMacro(selected);
 
   const cached = macroCache.value[macroState.domain]?.[item.id];
 
@@ -368,6 +466,7 @@ async function fetchMacros() {
 
 onMounted(async () => {
   macroRegistry.value = await fetchMacros();
+  loadRecentMacros(macroState.domain);
 
   // Let the summary render first, then preload the current domain in the
   // background. The autocomplete remains responsive while this happens.
@@ -378,6 +477,8 @@ onMounted(async () => {
 watch(
   () => macroState.domain,
   async (domain) => {
+    loadRecentMacros(domain);
+
     if (selectedMacroId.value) {
       const cached = macroCache.value[domain]?.[selectedMacroId.value];
 
@@ -401,6 +502,51 @@ watch(
 <style scoped>
 .macro-wrapper {
   position: relative;
+}
+
+.recent-macro-bar {
+  max-width: 100%;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+}
+
+.recent-macro-item {
+  background: var(--bs-tertiary-bg);
+  min-width: 140px;
+  max-width: 240px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.recent-macro-item:hover {
+  border-color: var(--bs-border-color);
+}
+
+.recent-macro-number {
+  background: #e5e7eb;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  padding: 1px 4px;
+  flex: 0 0 auto;
+}
+
+.recent-macro-text {
+  line-height: 1.1;
+  min-width: 0;
+}
+
+.recent-macro-label {
+  color: #666;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-macro-key {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .macro-bar {
@@ -439,6 +585,23 @@ watch(
 .macro-item.active {
   background: var(--bs-secondary-bg);
   color: black;
+}
+
+.dark-mode .recent-macro-item {
+  background: #3a3a3a;
+  color: #f2f2f2;
+}
+
+.dark-mode .recent-macro-item:hover {
+  border-color: #666;
+}
+
+.dark-mode .recent-macro-number {
+  background: #4a4a4a;
+}
+
+.dark-mode .recent-macro-label {
+  color: #f2f2f2;
 }
 
 .dark-mode .macro-bar {
