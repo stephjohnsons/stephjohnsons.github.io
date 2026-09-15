@@ -54,17 +54,13 @@
               :title="`${item.label} (${item.macro})`"
               @mousedown.prevent="insertMacro(item.macro)"
             >
-              <div class="recent-macro-number">
+              <div class="text-secondary">
                 {{ i + 1 }}
               </div>
 
-              <div class="recent-macro-text d-flex flex-column">
+              <div class="recent-macro-text d-flex flex-column my-1">
                 <div class="recent-macro-label">
                   {{ item.label }}
-                </div>
-
-                <div class="recent-macro-key small">
-                  {{ item.macro }}
                 </div>
               </div>
             </span>
@@ -271,8 +267,8 @@ function loadRecentMacros(domain) {
 
     recentMacros.value = Array.isArray(parsed)
       ? parsed
-          .filter((item) => item?.id && item?.macro && item?.label)
-          .slice(0, RECENT_MACROS_LIMIT)
+        .filter((item) => item?.id && item?.macro && item?.label)
+        .slice(0, RECENT_MACROS_LIMIT)
       : [];
   } catch (error) {
     console.error('Failed to load recent macros:', error);
