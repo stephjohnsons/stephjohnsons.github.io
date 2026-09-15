@@ -14,7 +14,7 @@
         :rrAuth="regulatoryResponseAuthenticated"
       />
 
-      <h5 class="fw-normal mt-3">Alarms</h5>
+      <!-- <h5 class="fw-normal mt-3">Alarms</h5>
       <div class="mb-2">
         <div class="d-flex gap-2 align-items-center">
           <input
@@ -41,7 +41,7 @@
             /> Repeat
           </label>
         </div>
-      </div>
+      </div> -->
 
       <ul class="list-group">
         <li
