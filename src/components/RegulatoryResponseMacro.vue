@@ -58,8 +58,11 @@
                 {{ i + 1 }}
               </div>
 
-              <div class="recent-macro-text d-flex flex-column my-1">
+              <div class="recent-macro-text ms-1 d-flex flex-column my-1">
                 <div class="recent-macro-label">
+                  {{ item.macro }}
+                </div>
+                <div class="recent-macro-label text-black">
                   {{ item.label }}
                 </div>
               </div>
