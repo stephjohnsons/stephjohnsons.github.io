@@ -324,7 +324,7 @@ const showQuickAddForm = ref(false);
 const expandedStudents = ref(new Set());
 
 const classStore = useClassStore();
-const selectedSemester = ref('2026-05');
+const selectedSemester = ref('2026-09');
 
 const lessons = computed(() => classStore.getLessonsBySemester(selectedSemester.value));
 
