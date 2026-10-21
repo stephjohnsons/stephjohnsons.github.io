@@ -152,7 +152,7 @@
     Updated on {{ studentStore.latestUpdatedAtFormatted }}
   </p>
   <!-- List of Students -->
-  <div v-if="students">
+  <div v-if="students && !loading">
     <table class="table table-hover w-full rounded-4">
       <thead>
         <tr class="bg-gray-200">
@@ -348,8 +348,8 @@ const saveEdit = async (student) => {
 
   await studentStore.fetchStudents()
 
-  loading.value = false
   cancelEdit()
+  loading.value = false
 }
 
 onMounted(async () => {
