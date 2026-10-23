@@ -47,31 +47,22 @@ import AdminPermission from "@/components/classes/AdminPermission.vue";
 import StudentPermission from "../components/classes/StudentPermission.vue";
 import CoTeacherPermission from "../components/classes/CoTeacherPermission.vue";
 import { useStudentStore } from "@/stores/students";
+import { getRole, login } from "@/composables/auth";
 
-const adminAuthenticated = ref(
-  localStorage.getItem("studio_admin_authenticated") === "true"
-);
+const role = ref(getRole());
 
-const studentAuthenticated = ref(
-  localStorage.getItem("studio_student_authenticated") === "true"
-);
-
-const coTeacherAuthenticated = ref(
-  localStorage.getItem("studio_co_teacher_authenticated") === "true"
-)
+const adminAuthenticated = computed(() => role.value === "admin");
+const studentAuthenticated = computed(() => role.value === "student");
+const coTeacherAuthenticated = computed(() => role.value === "coteacher");
 
 const inputPassword = ref("");
 
-const checkPassword = () => {
-  if (inputPassword.value === import.meta.env.VITE_STUDIO_PASSWORD) {
-    adminAuthenticated.value = true;
-    localStorage.setItem("studio_admin_authenticated", "true");
-  } else if (inputPassword.value === import.meta.env.VITE_STUDENT_PASSWORD) {
-    studentAuthenticated.value = true;
-    localStorage.setItem("studio_student_authenticated", "true");
-  } else if (inputPassword.value === import.meta.env.VITE_STUDIO_COTEACHER_PASSWORD) {
-    coTeacherAuthenticated.value = true;
-    localStorage.setItem("studio_co_teacher_authenticated", "true");
+const checkPassword = async () => {
+  const newRole = await login(inputPassword.value);
+
+  if (["admin", "student", "coteacher"].includes(newRole)) {
+    role.value = newRole;
+    inputPassword.value = "";
   } else {
     alert("Incorrect password. Please try again.");
   }
@@ -80,7 +71,7 @@ const checkPassword = () => {
 const studentStore = useStudentStore();
 
 onMounted(async () => {
-  if (!studentStore.loaded) {
+  if (role.value && !studentStore.loaded) {
     await studentStore.fetchStudents()
   }
 })

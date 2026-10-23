@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { authFetch } from '@/composables/auth'
 
 export const useClassStore = defineStore('classStore', {
   state: () => ({
@@ -19,7 +20,7 @@ export const useClassStore = defineStore('classStore', {
     async fetchLessons(backend) {
       this.loading = true
       try {
-        const res = await fetch(`${backend}/classes`)
+        const res = await authFetch(`${backend}/classes`)
         if (!res.ok) throw new Error('Failed to fetch lessons')
         const data = await res.json()
 

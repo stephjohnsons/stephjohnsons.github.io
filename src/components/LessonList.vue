@@ -316,8 +316,9 @@ import { useStudentStore } from '@/stores/students';
 import { useClassStore } from '@/stores/classes';
 import { storeToRefs } from "pinia";
 import backend from '@/composables/backend';
+import { authFetch, getRole } from '@/composables/auth';
 
-const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
+const adminAuthenticated = ref(getRole() === 'admin');
 const loading = ref(false);
 const showForm = ref(false);
 const showQuickAddForm = ref(false);
@@ -368,7 +369,7 @@ const fetchLessons = async () => {
 const addLesson = async () => {
   loading.value = true;
   try {
-    const res = await fetch(`${backend}/classes`, {
+    const res = await authFetch(`${backend}/classes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -409,7 +410,7 @@ const quickAdd = async () => {
 
   loading.value = true;
   try {
-    const res = await fetch(`${backend}/classes`, {
+    const res = await authFetch(`${backend}/classes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -477,7 +478,7 @@ const cancelEdit = () => {
 const saveEdit = async () => {
   loading.value = true;
   try {
-    const res = await fetch(`${backend}/classes`, {
+    const res = await authFetch(`${backend}/classes`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editForm.value)
@@ -501,7 +502,7 @@ const deleteLesson = async (id) => {
 
   loading.value = true;
   try {
-    const res = await fetch(`${backend}/classes?id=${id}`, {
+    const res = await authFetch(`${backend}/classes?id=${id}`, {
       method: 'DELETE'
     });
 

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import backend from '@/composables/backend'
+import { authFetch } from '@/composables/auth'
 
 export const useStudentStore = defineStore('students', () => {
   const students = ref([])
@@ -12,7 +13,7 @@ export const useStudentStore = defineStore('students', () => {
   }
 
   const fetchStudents = async () => {
-    const res = await fetch(`${backend}/students`)
+    const res = await authFetch(`${backend}/students`)
     if (res.ok) {
       students.value = await res.json()
       loaded.value = true

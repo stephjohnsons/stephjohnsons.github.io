@@ -92,6 +92,7 @@
       All students
     </button>
     <button
+      v-if="adminAuthenticated"
       class="d-flex btn btn-sm btn-warning ms-2 me-0 mt-2 h-50 text-start"
       @click="showAddStudent = !showAddStudent"
     >
@@ -220,7 +221,7 @@
           <!-- buttons -->
           <td>
             <div
-              v-if="editingId !== student.id"
+              v-if="adminAuthenticated && editingId !== student.id"
               class="d-flex gap-1"
             >
               <button
@@ -237,7 +238,7 @@
               </button>
             </div>
             <div
-              v-else
+              v-else-if="adminAuthenticated"
               class="d-flex gap-1"
             >
               <button
@@ -276,6 +277,9 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { useStudentStore } from "@/stores/students";
 import { storeToRefs } from "pinia";
 import backend from '@/composables/backend';
+import { authFetch, getRole } from '@/composables/auth';
+
+const adminAuthenticated = getRole() === 'admin';
 
 const props = defineProps({
   mode: {
@@ -332,7 +336,7 @@ const saveEdit = async (student) => {
     return
   }
 
-  await fetch(`${backend}/students`, {
+  await authFetch(`${backend}/students`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -360,7 +364,7 @@ onMounted(async () => {
 // Create new students
 async function createStudent() {
   try {
-    const res = await fetch(`${backend}/students`, {
+    const res = await authFetch(`${backend}/students`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newStudent.value)
@@ -402,7 +406,7 @@ function confirmDelete(student) {
 async function deleteStudent(id) {
   loading.value = true
   try {
-    await fetch(`${backend}/students`, {
+    await authFetch(`${backend}/students`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id })

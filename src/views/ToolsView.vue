@@ -118,34 +118,28 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { useUIStore } from "@/stores/ui";
 import { useAlarmStore } from "@/stores/alarm";
 import { useMacroStateStore } from "@/stores/macroState";
+import { getRole, login } from "@/composables/auth";
 import moment from "moment";
 
 const ui = useUIStore();
 const macroState = useMacroStateStore()
-const authenticated = ref(
-  localStorage.getItem("tool_authenticated") === "true" ||
-  localStorage.getItem("studio_admin_authenticated") === "true"
-);
-const adminAuthenticated = ref(
-  localStorage.getItem("studio_admin_authenticated") === "true"
-);
-const regulatoryResponseAuthenticated = ref(
-  localStorage.getItem("rr_authenticated") === "true"
-);
+const role = getRole();
+const authenticated = ref(["tools", "admin", "rr"].includes(role));
+const adminAuthenticated = ref(role === "admin");
+const regulatoryResponseAuthenticated = ref(role === "rr");
 const inputPassword = ref("");
 
-const checkPassword = () => {
-  if (inputPassword.value === import.meta.env.VITE_TOOLS_PASSWORD) {
+const checkPassword = async () => {
+  const newRole = await login(inputPassword.value);
+
+  if (newRole === "tools") {
     authenticated.value = true;
-    localStorage.setItem("tool_authenticated", "true");
-  } else if (inputPassword.value === import.meta.env.VITE_STUDIO_PASSWORD) {
+  } else if (newRole === "admin") {
     authenticated.value = true;
     adminAuthenticated.value = true;
-    localStorage.setItem("studio_admin_authenticated", "true");
-  } else if (inputPassword.value === import.meta.env.VITE_REGULATORY_RESPONSE_PASSWORD) {
+  } else if (newRole === "rr") {
     authenticated.value = true;
     regulatoryResponseAuthenticated.value = true;
-    localStorage.setItem("rr_authenticated", "true");
   } else {
     alert("Incorrect password. Please try again.");
   }

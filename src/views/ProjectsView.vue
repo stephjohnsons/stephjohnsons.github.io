@@ -308,6 +308,7 @@ import Ongoing from '@/assets/active.svg';
 import { useProjectStore } from '@/stores/projects'
 import { useProjectTypesStore } from '@/stores/projectTypes'
 import backend from '@/composables/backend'
+import { authFetch, login } from '@/composables/auth'
 
 const editMode = ref(false)
 const showAuth = ref(false)
@@ -367,8 +368,8 @@ const filteredProjects = computed(() => {
   return filtered;
 });
 
-const unlock = () => {
-  if (password.value === import.meta.env.VITE_STUDIO_PASSWORD) {
+const unlock = async () => {
+  if (await login(password.value) === 'admin') {
     editMode.value = true
     showAuth.value = false
     password.value = ''
@@ -432,7 +433,7 @@ const saveProject = async () => {
 
   const method = editingId.value ? 'PATCH' : 'POST'
 
-  const res = await fetch(url, {
+  const res = await authFetch(url, {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(form.value)

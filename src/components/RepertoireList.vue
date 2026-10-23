@@ -163,9 +163,10 @@ import { computed, ref, nextTick, watchEffect, onMounted } from 'vue';
 import { useStudentStore } from '@/stores/students';
 import { storeToRefs } from 'pinia';
 import backend from '@/composables/backend';
+import { authFetch, getRole } from '@/composables/auth';
 
-const adminAuthenticated = ref(localStorage.getItem('studio_admin_authenticated') === 'true');
-const coTeacherAuthenticated = ref(localStorage.getItem('studio_co_teacher_authenticated') === 'true');
+const adminAuthenticated = ref(getRole() === 'admin');
+const coTeacherAuthenticated = ref(getRole() === 'coteacher');
 
 const notes = ref([])
 const repertoireList = ref([]);
@@ -214,7 +215,7 @@ const fetchRepertoire = async () => {
       url += `?student_id=${COTEACHER_STUDENT_ID}`
     }
 
-    repertoireList.value = await fetch(url)
+    repertoireList.value = await authFetch(url)
       .then(res => res.json())
 
   } catch (err) {
@@ -230,7 +231,7 @@ const fetchNotes = async () => {
       url += `/${COTEACHER_STUDENT_ID}`
     }
 
-    notes.value = await fetch(url)
+    notes.value = await authFetch(url)
       .then(res => res.json())
 
   } catch (err) {
@@ -260,7 +261,7 @@ const saveNote = async (studentId) => {
   if (!newNote.value.trim()) return
 
   try {
-    await fetch(`${backend}/student-notes`, {
+    await authFetch(`${backend}/student-notes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -338,7 +339,7 @@ const cancelEdit = () => {
 const saveEdit = async () => {
   loading.value = true;
   try {
-    const res = await fetch(`${backend}/rep`, {
+    const res = await authFetch(`${backend}/rep`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(editForm.value)
@@ -363,7 +364,7 @@ const deleteRep = async (id) => {
   if (!confirm('Are you sure you want to delete this repertoire entry?')) return;
   loading.value = true;
   try {
-    const res = await fetch(`${backend}/rep?id=${id}`, {
+    const res = await authFetch(`${backend}/rep?id=${id}`, {
       method: 'DELETE'
     });
 
