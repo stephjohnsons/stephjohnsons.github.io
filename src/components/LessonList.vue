@@ -502,7 +502,7 @@ const deleteLesson = async (id) => {
 
   loading.value = true;
   try {
-    const res = await authFetch(`${backend}/classes?id=${id}`, {
+    const res = await authFetch(`${backend}/classes/${id}`, {
       method: 'DELETE'
     });
 
