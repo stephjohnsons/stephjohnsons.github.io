@@ -152,6 +152,15 @@
   <p class="mt-2 mb-custom-view">
     Updated on {{ studentStore.latestUpdatedAtFormatted }}
   </p>
+  <StudentLoginPanel
+    v-if="loginStudent"
+    :key="loginStudent.id"
+    :student="loginStudent"
+    :login="loginStatus[loginStudent.id]?.login"
+    :suggested-username="loginStatus[loginStudent.id]?.suggested_username"
+    @close="loginStudent = null"
+    @changed="fetchLoginStatus"
+  />
   <!-- List of Students -->
   <div v-if="students && !loading">
     <table class="table table-hover w-full rounded-4">
@@ -172,6 +181,12 @@
         >
           <td class="p-2 py-student-custom">
             {{ student.student }}
+            <i
+              v-if="adminAuthenticated && loginStatus[student.id]?.login"
+              class="bi ms-1 text-secondary small"
+              :class="loginStatus[student.id].login.must_change_password ? 'bi-hourglass-split' : 'bi-person-check'"
+              :title="loginStatus[student.id].login.must_change_password ? 'Login created, waiting for first login' : 'Has logged in'"
+            ></i>
           </td>
 
           <!-- attended -->
@@ -231,6 +246,13 @@
                 <i class="bi bi-pencil"></i>
               </button>
               <button
+                class="btn btn-sm btn-outline-dark"
+                title="Student login"
+                @click="loginStudent = student"
+              >
+                <i class="bi bi-key"></i>
+              </button>
+              <button
                 class="btn btn-sm btn-outline-danger"
                 @click="confirmDelete(student)"
               >
@@ -278,8 +300,26 @@ import { useStudentStore } from "@/stores/students";
 import { storeToRefs } from "pinia";
 import backend from '@/composables/backend';
 import { authFetch, getRole } from '@/composables/auth';
+import StudentLoginPanel from './classes/StudentLoginPanel.vue';
 
 const adminAuthenticated = getRole() === 'admin';
+
+// Admin only: who has an individual login, keyed by student id
+const loginStatus = ref({});
+const loginStudent = ref(null);
+
+const fetchLoginStatus = async () => {
+  if (!adminAuthenticated) return;
+
+  const res = await authFetch(`${backend}/student-logins`);
+  if (!res.ok) return;
+
+  loginStatus.value = Object.fromEntries(
+    (await res.json()).map((row) => [row.student_id, row])
+  );
+};
+
+onMounted(fetchLoginStatus);
 
 const props = defineProps({
   mode: {

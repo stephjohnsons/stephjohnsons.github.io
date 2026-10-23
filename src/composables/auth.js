@@ -45,6 +45,12 @@ export const clearSession = () => {
   storage.remove(ROLE_KEY)
 }
 
+const saveSession = ({ token, role }) => {
+  storage.set(TOKEN_KEY, token)
+  storage.set(ROLE_KEY, role)
+  return role
+}
+
 // Returns the role for the password, or null if it was wrong
 export const login = async (password) => {
   const res = await fetch(`${backend}/auth/login`, {
@@ -55,10 +61,41 @@ export const login = async (password) => {
 
   if (!res.ok) return null
 
-  const { token, role } = await res.json()
-  storage.set(TOKEN_KEY, token)
-  storage.set(ROLE_KEY, role)
-  return role
+  return saveSession(await res.json())
+}
+
+// Individual student login. Resolves to { role } or { error }.
+// role is "student_setup" until the temporary password has been changed.
+export const studentLogin = async (username, password) => {
+  const res = await fetch(`${backend}/auth/student-login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  })
+  const body = await res.json().catch(() => ({}))
+
+  if (!res.ok) return { error: body.error || 'Login failed. Please try again.' }
+
+  return { role: saveSession(body) }
+}
+
+// Resolves to { role } or { error }
+export const changePassword = async (currentPassword, newPassword) => {
+  const res = await authFetch(`${backend}/auth/change-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ currentPassword, newPassword })
+  })
+  const body = await res.json().catch(() => ({}))
+
+  if (!res.ok) return { error: body.error || 'Could not change password.' }
+
+  return { role: saveSession(body) }
+}
+
+export const logout = () => {
+  clearSession()
+  window.location.reload()
 }
 
 // fetch() with the login token attached. If the token has expired, log out
