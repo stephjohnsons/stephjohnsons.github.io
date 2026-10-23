@@ -428,7 +428,7 @@ const closeModal = () => {
 
 const saveProject = async () => {
   const url = editingId.value
-    ? `${backend}/projects?id=${editingId.value}`
+    ? `${backend}/projects/${editingId.value}`
     : `${backend}/projects`
 
   const method = editingId.value ? 'PATCH' : 'POST'
