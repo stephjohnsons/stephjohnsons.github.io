@@ -14,13 +14,16 @@
     <p v-else-if="error">{{ error }}</p>
 
     <template v-else-if="me">
-      <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-        <h3 class="mb-0">Hi, {{ firstName }}.</h3>
-        <span
-          v-if="me.semester"
-          class="badge text-bg-warning"
-        >Semester {{ me.semester }}</span>
-        <div class="ms-auto d-flex gap-2">
+      <div class="page-header mb-4">
+        <div class="header-title d-flex flex-wrap align-items-center gap-2">
+          <h3 class="mb-0">Hi, {{ firstName }}.</h3>
+          <span
+            v-if="me.semester"
+            class="badge text-bg-warning"
+          >Semester {{ me.semester }}</span>
+        </div>
+        <p class="header-updated text-secondary mb-0">Updated on {{ longDate(me.updated_at) }}</p>
+        <div class="header-actions d-flex gap-2">
           <button
             class="btn btn-sm btn-outline-dark"
             @click="showChangePassword = !showChangePassword"
@@ -31,7 +34,6 @@
           >Log out</button>
         </div>
       </div>
-      <p class="text-secondary mb-4">Updated on {{ longDate(me.updated_at) }}</p>
 
       <div
         v-if="showChangePassword"
@@ -296,6 +298,46 @@ const hm = (m) => {
 <style scoped>
 .stat-card {
   background: rgb(248, 248, 248);
+}
+
+/* Phone: title, updated date, then the account buttons on their own row.
+   Wider screens: buttons sit top-right beside the title. */
+.page-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'title'
+    'updated'
+    'actions';
+  row-gap: 0.25rem;
+}
+
+.header-title {
+  grid-area: title;
+}
+
+.header-updated {
+  grid-area: updated;
+}
+
+.header-actions {
+  grid-area: actions;
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .page-header {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'title actions'
+      'updated actions';
+    column-gap: 1rem;
+  }
+
+  .header-actions {
+    align-self: start;
+    margin-top: 0;
+  }
 }
 
 .stat-button {
