@@ -9,6 +9,8 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+    # Fail fast if a step hangs (e.g. a stuck npm ci) instead of waiting for the 6-hour default
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
