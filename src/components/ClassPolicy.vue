@@ -10,17 +10,30 @@
       Consultation Hours: By appointment only
     </p>
 
-    <h4>
-      Policy Requirements
-    </h4>
-    <p>Students enrolled under this studio must complete the minimum lesson hours required by the Institute:<br />
-    <ul>
-      <li>Major: 13 hours per semester / 6 hours (short semester)</li>
-      <li> Minor: 6 hours 30 minutes / 3 hours 15 minutes (short semester)</li>
-    </ul>
-    At the end of each long semester, major students must sit for a jury examination. Students are expected to prepare
-    repertoire of sufficient length and standard to meet jury requirements. The jury syllabus is available from the
-    music office (Mr. Michael Ng).</p>
+    <!-- Lesson-hour requirements depend on the student's institution; private students don't see this section -->
+    <template v-if="policyGroup === 'UCSI'">
+      <h4>
+        Policy Requirements
+      </h4>
+      <p class="mb-1">Students enrolled under this studio must complete the minimum lesson hours required by the Institute:</p>
+      <ul>
+        <li>Major: 13 hours per semester / 6 hours (short semester)</li>
+        <li>Minor: 6 hours 30 minutes / 3 hours 15 minutes (short semester)</li>
+      </ul>
+      <p>At the end of each long semester, major students must sit for a jury examination. Students are expected to
+        prepare repertoire of sufficient length and standard to meet jury requirements. The jury syllabus should be
+        obtained from your respective music office.</p>
+    </template>
+    <template v-else-if="policyGroup === 'UM'">
+      <h4>
+        Policy Requirements
+      </h4>
+      <p>Students enrolled under this studio must complete 7 hours of lessons per semester (30 minutes per week or 1 hour
+        fortnightly), regardless of major or minor.</p>
+      <p>Major students will have to sit for a jury examination. Students are expected to prepare repertoire of
+        sufficient length and standard to meet jury requirements. The jury syllabus should be obtained from your
+        respective music office.</p>
+    </template>
   </div>
 
   <h4>
@@ -104,10 +117,25 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   showTitle: {
     type: Boolean,
     default: true
+  },
+  // The student's institution as stored (e.g. "UCSI", " UM", "Private").
+  // Defaults to UCSI so views without a specific student keep the original policy.
+  institution: {
+    type: String,
+    default: 'UCSI'
   }
+})
+
+// Only current UCSI and UM students get lesson-hour requirements; private students
+// (and anything else, e.g. alumni) don't see that section
+const policyGroup = computed(() => {
+  const value = (props.institution || '').trim().toUpperCase()
+  return ['UCSI', 'UM'].includes(value) ? value : null
 })
 </script>

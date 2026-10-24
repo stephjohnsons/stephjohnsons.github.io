@@ -206,7 +206,10 @@
             class="t-acc-panel-inner"
             :inert="!showPolicy"
           >
-            <ClassPolicy :show-title="false" />
+            <ClassPolicy
+              :show-title="false"
+              :institution="me.institution || ''"
+            />
           </div>
         </div>
       </div>
