@@ -14,13 +14,16 @@
     <p v-else-if="error">{{ error }}</p>
 
     <template v-else-if="me">
-      <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-        <h3 class="mb-0">Hi, {{ firstName }}.</h3>
-        <span
-          v-if="me.semester"
-          class="badge text-bg-warning"
-        >Semester {{ me.semester }}</span>
-        <div class="ms-auto d-flex gap-2">
+      <div class="page-header mb-4">
+        <div class="header-title d-flex flex-wrap align-items-center gap-2">
+          <h3 class="mb-0">Hi, {{ firstName }}.</h3>
+          <span
+            v-if="me.semester"
+            class="badge text-bg-warning"
+          >Semester {{ me.semester }}</span>
+        </div>
+        <p class="header-updated text-secondary mb-0">Updated on {{ longDate(me.updated_at) }}</p>
+        <div class="header-actions d-flex gap-2">
           <button
             class="btn btn-sm btn-outline-dark"
             @click="showChangePassword = !showChangePassword"
@@ -31,7 +34,6 @@
           >Log out</button>
         </div>
       </div>
-      <p class="text-secondary mb-4">Updated on {{ longDate(me.updated_at) }}</p>
 
       <div
         v-if="showChangePassword"
@@ -40,7 +42,11 @@
         <SetPassword :require-current="true" />
       </div>
 
-      <div class="row g-3 mb-2 align-items-start">
+      <!-- Students without a minutes requirement go straight to repertoire + journal -->
+      <div
+        v-if="hasHours"
+        class="row g-3 mb-2 align-items-start"
+      >
         <div class="col-12 col-md-6">
           <div class="stat-card border rounded-4 p-3">
             <small class="text-secondary d-block">Remaining</small>
@@ -122,7 +128,10 @@
         </div>
       </div>
 
-      <h4 class="mt-4 mb-2">Repertoire</h4>
+      <h4
+        class="mb-2"
+        :class="{ 'mt-4': hasHours }"
+      >Repertoire</h4>
       <div class="stat-card border rounded-4 p-3 mb-4">
         <p
           v-if="!repertoireGroups.length"
@@ -173,8 +182,33 @@
         </div>
       </div>
 
-      <div class="border-top pt-4 mt-4">
-        <ClassPolicy />
+      <div
+        class="t-acc border-top mt-4"
+        :data-open="String(showPolicy)"
+      >
+        <button
+          type="button"
+          class="t-acc-head d-flex align-items-center w-100 text-start py-3"
+          :aria-expanded="String(showPolicy)"
+          aria-controls="policy-panel"
+          @click="showPolicy = !showPolicy"
+        >
+          <h4 class="mb-0">Cello Studio Policy</h4>
+          <span class="t-acc-chevron ms-auto">
+            <svg viewBox="0 0 16 16"><path d="M4 6.5L8 10.5L12 6.5" /></svg>
+          </span>
+        </button>
+        <div
+          id="policy-panel"
+          class="t-acc-panel"
+        >
+          <div
+            class="t-acc-panel-inner"
+            :inert="!showPolicy"
+          >
+            <ClassPolicy :show-title="false" />
+          </div>
+        </div>
       </div>
     </template>
   </div>
@@ -192,6 +226,9 @@ const loading = ref(true)
 const error = ref('')
 const showLessons = ref(false)
 const showChangePassword = ref(false)
+const showPolicy = ref(false)
+
+const hasHours = computed(() => (me.value?.total_minutes || 0) > 0)
 
 onMounted(async () => {
   try {
@@ -263,6 +300,46 @@ const hm = (m) => {
   background: rgb(248, 248, 248);
 }
 
+/* Phone: title, updated date, then the account buttons on their own row.
+   Wider screens: buttons sit top-right beside the title. */
+.page-header {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'title'
+    'updated'
+    'actions';
+  row-gap: 0.25rem;
+}
+
+.header-title {
+  grid-area: title;
+}
+
+.header-updated {
+  grid-area: updated;
+}
+
+.header-actions {
+  grid-area: actions;
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .page-header {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'title actions'
+      'updated actions';
+    column-gap: 1rem;
+  }
+
+  .header-actions {
+    align-self: start;
+    margin-top: 0;
+  }
+}
+
 .stat-button {
   color: inherit;
   transition:
@@ -319,6 +396,78 @@ const hm = (m) => {
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 160ms ease;
+}
+
+/* Accordion expand (transitions.dev 21) */
+.t-acc-head {
+  background: none;
+  border: 0;
+  padding-left: 0;
+  padding-right: 0;
+  color: inherit;
+}
+
+.t-acc-chevron svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.t-acc-chevron path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* grid-template-rows 0fr → 1fr gives a clean height animation
+   with no JS measurement; the inner element clips overflow. */
+.t-acc-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--acc-collapse) var(--acc-ease);
+}
+.t-acc[data-open="true"] .t-acc-panel {
+  grid-template-rows: 1fr;
+  transition: grid-template-rows var(--acc-expand) var(--acc-ease);
+}
+.t-acc-panel-inner {
+  overflow: hidden;
+  opacity: 0;
+  filter: blur(2px);
+  transition:
+    opacity var(--acc-collapse) var(--acc-ease),
+    filter var(--acc-collapse) var(--acc-ease);
+}
+.t-acc[data-open="true"] .t-acc-panel-inner {
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    opacity var(--acc-expand) var(--acc-ease),
+    filter var(--acc-expand) var(--acc-ease);
+}
+/* Flip the chevron vertically to turn the "v" into a "^".
+   scaleY(-1) about the centre passes through a flat line at
+   the midpoint (same look as a `d:` path morph) but animates
+   in every browser, unlike CSS `d:` morphing (Chromium only).
+   The chevron path is symmetric about the 16x16 viewBox
+   centre, so the flip lands exactly on the "^"; non-scaling
+   -stroke keeps the stroke width constant through the flip. */
+.t-acc-chevron {
+  display: inline-flex;
+  transform: scaleY(1);
+  transform-origin: center;
+  transition: transform var(--acc-chevron) var(--acc-ease);
+}
+.t-acc-chevron path { vector-effect: non-scaling-stroke; }
+.t-acc[data-open="true"] .t-acc-chevron {
+  transform: scaleY(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-acc-panel, .t-acc-panel-inner, .t-acc-chevron {
+    transition: none !important;
+  }
 }
 
 .fade-enter-from,

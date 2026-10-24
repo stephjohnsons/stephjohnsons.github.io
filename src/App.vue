@@ -99,6 +99,12 @@ watch(
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 
+:root {
+  --acc-expand: 250ms;
+  --acc-collapse: 250ms;
+  --acc-chevron: 250ms;
+  --acc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
 html,
 body,
 #app {
