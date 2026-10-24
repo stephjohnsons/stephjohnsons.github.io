@@ -1,6 +1,9 @@
 <template>
   <div id="policy">
-    <h3 class="text-xl mb-0">Cello Studio Policy</h3>
+    <h3
+      v-if="showTitle"
+      class="text-xl mb-0"
+    >Cello Studio Policy</h3>
     <p>Instructor: Mr Stephen Tseu <br />
       Phone: <a href="https://wa.me/60165871255">016-587 1255</a> <br />
       Email: <a href="mailto:21423@ucsiuniversity.edu.my">21423@ucsiuniversity.edu.my</a> <br />
@@ -99,3 +102,12 @@
     <li>Sight-reading ability</li>
   </ul>
 </template>
+
+<script setup>
+defineProps({
+  showTitle: {
+    type: Boolean,
+    default: true
+  }
+})
+</script>
