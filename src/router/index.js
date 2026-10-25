@@ -13,6 +13,11 @@ const routes = [
     component: () => import('../views/ProjectsView.vue')
   },
   {
+    path: '/constellation',
+    name: 'constellation',
+    component: () => import('../views/ConstellationView.vue')
+  },
+  {
     path: '/bio',
     name: 'bio',
     component: () => import('../views/AboutView.vue')
