@@ -12,6 +12,10 @@ export const pageLinks = [
     link: '/projects'
   },
   {
+    name: 'Musical Atlas',
+    link: '/constellation'
+  },
+  {
     name: 'Media Gallery',
     link: '/gallery'
   },
