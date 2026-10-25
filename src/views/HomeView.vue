@@ -62,7 +62,7 @@
           </RouterLink>
 
           <RouterLink
-            :to="{ path: pageLinks[5].link }"
+            to="/teaching"
             class="text-muted ms-3 fs-xl"
           >
             teaching bio
@@ -70,6 +70,8 @@
         </p>
       </div>
     </div>
+
+    <HomeUpcoming />
   </main>
 </template>
 
@@ -79,6 +81,7 @@ import { homeDescription } from '@/images/description.js';
 import { pageLinks } from '@/components/data/pages.js'
 import { RouterLink } from 'vue-router'
 import { useUIStore } from '@/stores/ui'
+import HomeUpcoming from '@/components/HomeUpcoming.vue'
 
 const ui = useUIStore();
 
