@@ -2,52 +2,28 @@
   <div class="about">
     <h2 class="mb-0 d-none d-md-block">Past Musical Projects and Concerts</h2>
     <h3 class="mb-0 d-block d-md-none">Past Musical Projects and Concerts</h3>
-    <p class="text-muted small">Sorted by starting year in descending order.</p>
+    <p
+      v-if="projects.loaded"
+      class="text-muted small"
+    >
+      {{ projects.projects.length }} projects since {{ firstYear }} · most recent first
+    </p>
 
     <div
       v-if="projects.loaded"
-      class="d-flex align-items-center gap-1 my-2"
+      class="d-flex flex-wrap align-items-center gap-1 row-gap-2 my-2"
     >
-      <span class="d-flex align-items-center fw-medium text-nowrap me-2">
-        <Filter class="me-1" />
-        Filter:
-      </span>
-      <div class="d-flex flex-wrap rounded-2 gap-1">
-        <select
-          class="form-select form-select-sm"
-          @change="selectCategory($event.target.value)"
-        >
-          <option value="">All Categories</option>
-          <option
-            v-for="category in typeStore.types"
-            :key="category.id"
-            :value="category.name"
-          >
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-      <span class="d-flex align-items-center fw-medium text-nowrap ms-3 me-2">
-        <Ongoing class="me-1" />
-        Ongoing:
-      </span>
       <button
-        class="btn btn-outline-success btn-sm"
+        class="btn btn-outline-success btn-sm d-flex align-items-center"
         :class="{ 'active': ongoingFilter }"
+        :aria-pressed="ongoingFilter"
         @click="ongoingFilter = !ongoingFilter"
       >
-        Ongoing
+        <Ongoing class="me-1" />
+        Ongoing only
       </button>
-      <div class="d-none d-sm-flex flex-nowrap ms-auto">
-        <button
-          class="btn btn-outline-danger btn-sm"
-          @click="clearFilter()"
-        >
-          Clear all filters
-        </button>
-      </div>
       <button
-        class="btn btn-sm btn-outline-dark ms-2"
+        class="btn btn-sm btn-outline-dark ms-auto"
         v-if="!editMode"
         @click="showAuth = true"
       >
@@ -55,7 +31,7 @@
       </button>
       <button
         v-if="editMode"
-        class="btn btn-success btn-sm"
+        class="btn btn-success btn-sm ms-auto"
         @click="createProject"
       >
         + Add Event
@@ -91,56 +67,109 @@
     <hr>
 
     <div v-if="!projects.loaded">Loading projects...</div>
-    <div
-      v-else
-      v-for="project in filteredProjects"
-      :key="project.id"
-      class="mb-3"
-    >
-      <p class="mb-0">{{ formatDate(project.year) }}</p>
-
-      <div class="d-flex flex-row gap-1 align-items-center">
-        <h5 class="mb-0">{{ project.organisation }}</h5>
-        <Link
-          class="ms-1"
-          v-if="project.link"
-          :link="project.link"
-          :text="project.linkText"
-        />
-        <span
-          v-if="project.ongoing"
-          class="badge text-bg-success fw-light ms-1"
-        >
-          Ongoing
-        </span>
+    <template v-else>
+      <div class="d-flex align-items-center mb-1">
+        <p
+          v-if="!groups.length"
+          class="text-muted mb-0"
+        >No projects match these filters.</p>
         <button
-          v-if="editMode"
-          class="btn btn-sm btn-outline-secondary ms-auto"
-          @click="editProject(project)"
+          v-if="groups.length > 1 && !filtersActive"
+          class="btn btn-sm btn-link text-dark ms-auto px-0"
+          @click="toggleAll"
         >
-          Edit
+          {{ allOpen ? 'Collapse all' : 'Expand all' }}
         </button>
       </div>
-      <p class="mb-1 text-muted">
-        {{ project.location }}
-        <span>{{ getFlagEmoji(project.cc) }}</span>
-      </p>
 
-      <p class="mb-2"> {{ project.description }} </p>
-
-      <div class="d-flex flex-row gap-1 ms-n1">
-        <btn
-          v-for="(type, index) in project.type"
-          :key="index"
-          :class="getClass(type)"
-          class="btn btn-sm fw-normal ms-n1 disable-pointer fs-smaller"
+      <!-- Ongoing first, then one foldable group per year (most recent open) -->
+      <section
+        v-for="group in groups"
+        :key="group.key"
+        class="t-acc year-group border-bottom"
+        :data-open="String(isOpen(group.key))"
+      >
+        <button
+          type="button"
+          class="t-acc-head d-flex align-items-baseline w-100 text-start py-3"
+          :aria-expanded="String(isOpen(group.key))"
+          :aria-controls="`projects-${group.key}`"
+          @click="toggleGroup(group.key)"
         >
-          {{ type }}
-        </btn>
-      </div>
+          <h4 class="mb-0">{{ group.label }}</h4>
+          <span class="text-muted small ms-2">
+            {{ group.projects.length }} {{ group.projects.length === 1 ? 'project' : 'projects' }}
+          </span>
+          <span class="t-acc-chevron ms-auto align-self-center">
+            <svg viewBox="0 0 16 16"><path d="M4 6.5L8 10.5L12 6.5" /></svg>
+          </span>
+        </button>
 
-      <hr>
-    </div>
+        <div
+          :id="`projects-${group.key}`"
+          class="t-acc-panel"
+        >
+          <div
+            class="t-acc-panel-inner"
+            :inert="!isOpen(group.key)"
+          >
+            <article
+              v-for="project in group.projects"
+              :key="project.id"
+              class="project-row pb-3"
+            >
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <h5 class="mb-0">{{ project.organisation }}</h5>
+                <Link
+                  v-if="project.link"
+                  :link="project.link"
+                  :text="project.linkText"
+                />
+                <button
+                  v-if="editMode"
+                  class="btn btn-sm btn-outline-secondary ms-auto"
+                  @click="editProject(project)"
+                >
+                  Edit
+                </button>
+              </div>
+              <p class="mb-1 text-muted small">
+                {{ formatDate(project.year) }} · {{ project.location }}
+                <span>{{ getFlagEmoji(project.cc) }}</span>
+              </p>
+
+              <p
+                v-if="project.description"
+                class="mb-1 description"
+                :class="{ clamped: !expanded.has(project.id) }"
+                :data-id="project.id"
+              >{{ project.description }}</p>
+              <button
+                v-if="overflowing.has(project.id)"
+                class="btn btn-link btn-sm p-0 read-more"
+                @click="toggleExpanded(project.id)"
+              >
+                {{ expanded.has(project.id) ? 'Show less' : 'Read more' }}
+              </button>
+
+              <div
+                v-if="project.type?.length"
+                class="d-flex flex-row gap-1 ms-n1 mt-2"
+              >
+                <span
+                  v-for="(type, index) in project.type"
+                  :key="index"
+                  :class="getClass(type)"
+                  class="btn btn-sm fw-normal ms-n1 disable-pointer fs-smaller"
+                >
+                  {{ type }}
+                </span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </template>
 
     <div
       v-if="showModal"
@@ -300,10 +329,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue';
 import Link from '@/components/PromptButton.vue';
 import { getFlagEmoji } from "@/components/data/flag.js";
-import Filter from '@/assets/filter.svg';
 import Ongoing from '@/assets/active.svg';
 import { useProjectStore } from '@/stores/projects'
 import { useProjectTypesStore } from '@/stores/projectTypes'
@@ -314,7 +342,6 @@ const editMode = ref(false)
 const showAuth = ref(false)
 const password = ref('')
 
-const selectedCategory = ref('');
 const ongoingFilter = ref(false);
 
 const projects = useProjectStore();
@@ -344,22 +371,12 @@ onMounted(() => {
   if (!typeStore.loaded) typeStore.fetchTypes()
 })
 
-const selectCategory = (category) => {
-  if (selectedCategory.value === category) {
-    selectedCategory.value = '';
-  } else {
-    selectedCategory.value = category;
-  }
-}
+const firstYear = computed(() =>
+  Math.min(...projects.projects.map(project => parseProjectDate(project.year).year))
+);
 
 const filteredProjects = computed(() => {
   let filtered = sortProjects(projects.projects);
-
-  if (selectedCategory.value) {
-    filtered = filtered.filter(project =>
-      project.type.includes(selectedCategory.value)
-    );
-  }
 
   if (ongoingFilter.value) {
     filtered = filtered.filter(project => project.ongoing);
@@ -367,6 +384,76 @@ const filteredProjects = computed(() => {
 
   return filtered;
 });
+
+const filtersActive = computed(() => ongoingFilter.value);
+
+// Ongoing projects first, then finished ones grouped by the year they ended
+const groups = computed(() => {
+  const ongoing = filteredProjects.value.filter(project => project.ongoing);
+  const byYear = new Map();
+
+  for (const project of filteredProjects.value) {
+    if (project.ongoing) continue;
+    const { year, endYear } = parseProjectDate(project.year);
+    const groupYear = endYear || year;
+    if (!byYear.has(groupYear)) byYear.set(groupYear, []);
+    byYear.get(groupYear).push(project);
+  }
+
+  return [
+    ...(ongoing.length ? [{ key: 'ongoing', label: 'Ongoing', projects: ongoing }] : []),
+    ...[...byYear].map(([year, list]) => ({ key: String(year), label: String(year), projects: list }))
+  ];
+});
+
+// Ongoing and the two most recent years start open; filtering opens everything
+const openGroups = ref(null);
+
+const defaultOpen = () => {
+  const keys = groups.value.map(group => group.key);
+  const yearKeys = keys.filter(key => key !== 'ongoing').slice(0, 2);
+  return new Set(['ongoing', ...yearKeys]);
+};
+
+const isOpen = (key) => {
+  if (filtersActive.value) return true;
+  return (openGroups.value || defaultOpen()).has(key);
+};
+
+const toggleGroup = (key) => {
+  const next = new Set(openGroups.value || defaultOpen());
+  next.has(key) ? next.delete(key) : next.add(key);
+  openGroups.value = next;
+};
+
+const allOpen = computed(() => groups.value.every(group => isOpen(group.key)));
+
+const toggleAll = () => {
+  openGroups.value = allOpen.value ? new Set() : new Set(groups.value.map(group => group.key));
+};
+
+// Long descriptions show two lines until "Read more". Whether a description
+// is actually cut off depends on the screen width, so measure it.
+const expanded = ref(new Set());
+const overflowing = ref(new Set());
+
+const measureDescriptions = () => {
+  const next = new Set(expanded.value);
+  document.querySelectorAll('.description.clamped[data-id]').forEach(el => {
+    if (el.scrollHeight > el.clientHeight + 1) next.add(el.dataset.id);
+  });
+  overflowing.value = next;
+};
+
+watch(groups, () => nextTick(measureDescriptions), { immediate: true });
+onMounted(() => window.addEventListener('resize', measureDescriptions));
+onUnmounted(() => window.removeEventListener('resize', measureDescriptions));
+
+const toggleExpanded = (id) => {
+  const next = new Set(expanded.value);
+  next.has(id) ? next.delete(id) : next.add(id);
+  expanded.value = next;
+};
 
 const unlock = async () => {
   if (await login(password.value) === 'admin') {
@@ -445,11 +532,6 @@ const saveProject = async () => {
   } else {
     alert('Save failed')
   }
-}
-
-const clearFilter = () => {
-  selectedCategory.value = '';
-  ongoingFilter.value = false;
 }
 
 const getClass = (type) => {
@@ -542,6 +624,23 @@ body {
 
 .ms-n1 {
   margin-left: -0.1rem;
+}
+
+.project-row + .project-row {
+  border-top: 1px solid rgba(38, 37, 38, 0.08);
+  padding-top: 1rem;
+}
+
+.description.clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.read-more {
+  color: #262526;
+  text-decoration: underline;
 }
 
 .disable-pointer {
