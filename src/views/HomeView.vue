@@ -72,6 +72,7 @@
     </div>
 
     <HomeUpcoming />
+    <HomeContactCta />
   </main>
 </template>
 
@@ -82,6 +83,7 @@ import { pageLinks } from '@/components/data/pages.js'
 import { RouterLink } from 'vue-router'
 import { useUIStore } from '@/stores/ui'
 import HomeUpcoming from '@/components/HomeUpcoming.vue'
+import HomeContactCta from '@/components/HomeContactCta.vue'
 
 const ui = useUIStore();
 

@@ -11,7 +11,7 @@
       >All dates →</RouterLink>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4 cards-row">
       <div
         v-for="run in runs.slice(0, 3)"
         :key="run.key"
@@ -26,14 +26,14 @@
           <div
             v-for="(night, i) in run.nights.slice(1, 4)"
             :key="night.id"
-            class="stack-layer border rounded-4"
+            class="stack-layer gcard rounded-4"
             :class="[`layer-${i + 1}`, i % 2 === 0 ? 'fan-left' : 'fan-right']"
             aria-hidden="true"
           >
             <span class="layer-label">{{ night.shortLabel }}</span>
           </div>
 
-          <div class="card-front border rounded-4 p-3 h-100 d-flex flex-column">
+          <div class="card-front gcard rounded-4 p-3 h-100 d-flex flex-column">
             <div class="date-label mb-2">
               <span>{{ run.dateLabel }}</span>
               <span
@@ -99,21 +99,36 @@ const runs = computed(() => groupRuns(events.value))
   outline: none;
 }
 
-.card-front,
-.stack-layer {
-  background: rgb(248, 248, 248);
+/* Gradient outline: a gradient painted on the border box, card colour on the padding box */
+.gcard {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgb(248, 248, 248), rgb(248, 248, 248)) padding-box,
+    linear-gradient(135deg, rgba(251, 188, 0, 0.6), #dedcdc 45%, #c4c2c2) border-box;
 }
 
 .card-front {
   position: relative;
   z-index: 1;
-  transition: transform var(--duration-fast) var(--ease-smooth-out);
+  box-shadow:
+    0 1px 2px rgba(38, 37, 38, 0.06),
+    0 6px 16px rgba(38, 37, 38, 0.08);
+  transition:
+    transform var(--duration-fast) var(--ease-smooth-out),
+    box-shadow var(--duration-fast) var(--ease-smooth-out);
+}
+
+.stack {
+  transition:
+    filter var(--duration-fast) var(--ease-smooth-out),
+    opacity var(--duration-fast) var(--ease-smooth-out);
 }
 
 /* Resting: the extra nights sit just behind, like a small pile of cards */
 .stack-layer {
   position: absolute;
   inset: 0;
+  box-shadow: 0 2px 6px rgba(38, 37, 38, 0.06);
   transform-origin: 50% 100%;
   transition: transform var(--duration-fast) var(--ease-smooth-out);
 }
@@ -152,14 +167,23 @@ const runs = computed(() => groupRuns(events.value))
 
 /* Hover / keyboard focus: fan the extra nights out ~1cm+ (40px) to each side */
 @media (hover: hover) {
-  .stack.is-stacked:hover,
-  .stack.is-stacked:focus-within {
+  /* Any hovered card lifts, and the other cards fade to grey */
+  .stack:hover,
+  .stack:focus-within {
     z-index: 2;
   }
 
-  .stack.is-stacked:hover .card-front,
-  .stack.is-stacked:focus-within .card-front {
+  .stack:hover .card-front,
+  .stack:focus-within .card-front {
     transform: translateY(-4px);
+    box-shadow:
+      0 2px 4px rgba(38, 37, 38, 0.08),
+      0 12px 28px rgba(38, 37, 38, 0.14);
+  }
+
+  .cards-row:has(.stack:hover, .stack:focus-within) .stack:not(:hover):not(:focus-within) {
+    filter: grayscale(1);
+    opacity: 0.5;
   }
 
   .stack.is-stacked:hover .layer-1,
@@ -201,6 +225,7 @@ const runs = computed(() => groupRuns(events.value))
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .stack,
   .card-front,
   .stack-layer,
   .layer-label {
