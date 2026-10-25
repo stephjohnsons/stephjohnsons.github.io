@@ -100,6 +100,12 @@ watch(
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 
 :root {
+  /* Motion tokens (transitions skill) */
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: ease-out;
+
   --acc-expand: 250ms;
   --acc-collapse: 250ms;
   --acc-chevron: 250ms;
@@ -110,6 +116,10 @@ body,
 #app {
   font-family: "Sora", sans-serif;
   min-height: 100%;
+}
+/* Decorative overhang (e.g. the fanned date cards on the home page) must never add a sideways scrollbar */
+#app {
+  overflow-x: clip;
 }
 
 body {
