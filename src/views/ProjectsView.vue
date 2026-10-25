@@ -13,46 +13,17 @@
       v-if="projects.loaded"
       class="d-flex flex-wrap align-items-center gap-1 row-gap-2 my-2"
     >
-      <span class="d-flex align-items-center fw-medium text-nowrap me-2">
-        <Filter class="me-1" />
-        Filter:
-      </span>
-      <div class="d-flex flex-wrap rounded-2 gap-1">
-        <select
-          v-model="selectedCategory"
-          class="form-select form-select-sm"
-        >
-          <option value="">All Categories</option>
-          <option
-            v-for="category in usedCategories"
-            :key="category.id"
-            :value="category.name"
-          >
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-      <span class="d-flex align-items-center fw-medium text-nowrap ms-3 me-2">
-        <Ongoing class="me-1" />
-        Ongoing:
-      </span>
       <button
-        class="btn btn-outline-success btn-sm"
+        class="btn btn-outline-success btn-sm d-flex align-items-center"
         :class="{ 'active': ongoingFilter }"
+        :aria-pressed="ongoingFilter"
         @click="ongoingFilter = !ongoingFilter"
       >
-        Ongoing
+        <Ongoing class="me-1" />
+        Ongoing only
       </button>
-      <div class="d-none d-sm-flex flex-nowrap ms-auto">
-        <button
-          class="btn btn-outline-danger btn-sm"
-          @click="clearFilter()"
-        >
-          Clear all filters
-        </button>
-      </div>
       <button
-        class="btn btn-sm btn-outline-dark ms-2"
+        class="btn btn-sm btn-outline-dark ms-auto"
         v-if="!editMode"
         @click="showAuth = true"
       >
@@ -60,7 +31,7 @@
       </button>
       <button
         v-if="editMode"
-        class="btn btn-success btn-sm"
+        class="btn btn-success btn-sm ms-auto"
         @click="createProject"
       >
         + Add Event
@@ -361,7 +332,6 @@
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue';
 import Link from '@/components/PromptButton.vue';
 import { getFlagEmoji } from "@/components/data/flag.js";
-import Filter from '@/assets/filter.svg';
 import Ongoing from '@/assets/active.svg';
 import { useProjectStore } from '@/stores/projects'
 import { useProjectTypesStore } from '@/stores/projectTypes'
@@ -372,7 +342,6 @@ const editMode = ref(false)
 const showAuth = ref(false)
 const password = ref('')
 
-const selectedCategory = ref('');
 const ongoingFilter = ref(false);
 
 const projects = useProjectStore();
@@ -402,25 +371,12 @@ onMounted(() => {
   if (!typeStore.loaded) typeStore.fetchTypes()
 })
 
-// Only offer categories that at least one project uses
-const usedCategories = computed(() =>
-  typeStore.types.filter(type =>
-    projects.projects.some(project => project.type?.includes(type.name))
-  )
-);
-
 const firstYear = computed(() =>
   Math.min(...projects.projects.map(project => parseProjectDate(project.year).year))
 );
 
 const filteredProjects = computed(() => {
   let filtered = sortProjects(projects.projects);
-
-  if (selectedCategory.value) {
-    filtered = filtered.filter(project =>
-      project.type.includes(selectedCategory.value)
-    );
-  }
 
   if (ongoingFilter.value) {
     filtered = filtered.filter(project => project.ongoing);
@@ -429,7 +385,7 @@ const filteredProjects = computed(() => {
   return filtered;
 });
 
-const filtersActive = computed(() => !!selectedCategory.value || ongoingFilter.value);
+const filtersActive = computed(() => ongoingFilter.value);
 
 // Ongoing projects first, then finished ones grouped by the year they ended
 const groups = computed(() => {
@@ -576,11 +532,6 @@ const saveProject = async () => {
   } else {
     alert('Save failed')
   }
-}
-
-const clearFilter = () => {
-  selectedCategory.value = '';
-  ongoingFilter.value = false;
 }
 
 const getClass = (type) => {
