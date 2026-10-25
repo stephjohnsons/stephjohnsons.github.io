@@ -137,7 +137,7 @@ const loadError = ref(false)
 // Coordinates are used only when a project location matches a known city.
 // Add more aliases as the archive grows; unmatched locations remain in the project archive.
 const cityIndex = [
-  { names: ['kuala lumpur', 'kl', 'petaling jaya', 'shah alam', 'malaysia'], name: 'Kuala Lumpur', country: 'Malaysia', coords: [101.6869, 3.139], countryCode: 'MY' },
+  { names: ['kuala lumpur', 'petaling jaya', 'shah alam'], name: 'Kuala Lumpur', country: 'Malaysia', coords: [101.6869, 3.139], countryCode: 'MY' },
   { names: ['london'], name: 'London', country: 'United Kingdom', coords: [-0.1276, 51.5072], countryCode: 'GB' },
   { names: ['berlin'], name: 'Berlin', country: 'Germany', coords: [13.405, 52.52], countryCode: 'DE' },
   { names: ['frankfurt'], name: 'Frankfurt', country: 'Germany', coords: [8.6821, 50.1109], countryCode: 'DE' },
