@@ -5,14 +5,14 @@
         <h3 class="mb-2">Got a project or concert in mind?</h3>
         <p class="mb-0 cta-text">
           From solo and chamber performances to orchestral, studio and crossover work, let's make it happen.
-          Booking enquiries go to {{ booking.remarks }}, my booking manager.
+          Drop me a line at <a :href="enquiries.link">{{ enquiries.label }}</a>.
         </p>
       </div>
       <div class="col-12 col-lg-4 d-flex flex-wrap gap-2 justify-content-lg-end">
         <a
-          :href="booking.link"
+          :href="enquiries.link"
           class="btn btn-warning"
-        >Email a booking enquiry</a>
+        >Email me</a>
         <RouterLink
           to="/contact"
           class="btn btn-outline-light"
@@ -26,7 +26,8 @@
 import { RouterLink } from 'vue-router'
 import { contactInfo } from '@/components/data/contact.js'
 
-const booking = contactInfo['Booking Enquiries']
+// info@stephjohnsons.com
+const enquiries = contactInfo['Email Enquiries']
 </script>
 
 <style scoped>
@@ -44,6 +45,10 @@ const booking = contactInfo['Booking Enquiries']
 .cta-text {
   color: rgba(244, 243, 243, 0.75);
   max-width: 46rem;
+}
+
+.cta-text a {
+  color: #f4f3f3 !important;
 }
 
 .btn-outline-light:hover {
