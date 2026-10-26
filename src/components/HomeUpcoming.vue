@@ -22,12 +22,15 @@
           class="stack h-100"
           :class="{ 'is-stacked': run.nights.length > 1 }"
           tabindex="-1"
+          @mouseenter="shuffleFan(run)"
+          @focusin="onFocusIn($event, run)"
         >
           <div
             v-for="(night, i) in run.nights.slice(1, 4)"
             :key="night.id"
             class="stack-layer gcard rounded-4"
-            :class="[`layer-${i + 1}`, i % 2 === 0 ? 'fan-left' : 'fan-right']"
+            :class="[`layer-${i + 1}`, fanSide(run, i)]"
+            :style="fanStyle(run, i)"
             aria-hidden="true"
           >
             <span class="layer-label">{{ night.shortLabel }}</span>
@@ -71,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { fetchEvents, groupRuns } from '@/composables/bandsintown'
 
@@ -82,6 +85,50 @@ onMounted(async () => {
 })
 
 const runs = computed(() => groupRuns(events.value))
+
+// Each hover fans the extra nights out differently: every card goes to a
+// random side, 0.1–0.4cm out, with a matching small random tilt.
+const fans = ref({})
+
+const random = (min, max) => min + Math.random() * (max - min)
+
+const shuffleFan = (run) => {
+  if (run.nights.length < 2) return
+
+  fans.value = {
+    ...fans.value,
+    [run.key]: run.nights.slice(1, 4).map(() => {
+      const side = Math.random() < 0.5 ? -1 : 1
+      return {
+        side,
+        cm: Math.round(random(0.1, 0.4) * 100) / 100,
+        deg: Math.round(random(2, 7) * 10) / 10
+      }
+    })
+  }
+}
+
+// Keyboard focus moving between buttons inside the same card shouldn't re-shuffle
+const onFocusIn = (event, run) => {
+  if (!event.currentTarget.contains(event.relatedTarget)) shuffleFan(run)
+}
+
+watch(runs, (list) => list.forEach(shuffleFan))
+
+const fanStyle = (run, i) => {
+  const fan = fans.value[run.key]?.[i]
+  if (!fan) return {}
+  return {
+    '--fan-x': `${fan.side * fan.cm}cm`,
+    '--fan-rot': `${fan.side * fan.deg}deg`
+  }
+}
+
+// The date label sits on whichever side the card fans to, so it peeks out
+const fanSide = (run, i) => {
+  const side = fans.value[run.key]?.[i]?.side ?? (i % 2 === 0 ? -1 : 1)
+  return side < 0 ? 'fan-left' : 'fan-right'
+}
 </script>
 
 <style scoped>
@@ -165,7 +212,7 @@ const runs = computed(() => groupRuns(events.value))
   right: 0.75rem;
 }
 
-/* Hover / keyboard focus: fan the extra nights out ~1cm+ (40px) to each side */
+/* Hover / keyboard focus: fan the extra nights out up to 0.4cm, randomly */
 @media (hover: hover) {
   /* Any hovered card lifts, and the other cards fade to grey */
   .stack:hover,
@@ -186,19 +233,10 @@ const runs = computed(() => groupRuns(events.value))
     opacity: 0.5;
   }
 
-  .stack.is-stacked:hover .layer-1,
-  .stack.is-stacked:focus-within .layer-1 {
-    transform: translateX(-40px) rotate(-5deg);
-  }
-
-  .stack.is-stacked:hover .layer-2,
-  .stack.is-stacked:focus-within .layer-2 {
-    transform: translateX(40px) rotate(5deg);
-  }
-
-  .stack.is-stacked:hover .layer-3,
-  .stack.is-stacked:focus-within .layer-3 {
-    transform: translateX(-72px) rotate(-9deg);
+  /* Distance, side and tilt are randomised per hover in the script */
+  .stack.is-stacked:hover .stack-layer,
+  .stack.is-stacked:focus-within .stack-layer {
+    transform: translateX(var(--fan-x, 0)) rotate(var(--fan-rot, 0deg));
   }
 
   .stack.is-stacked:hover .layer-label,
