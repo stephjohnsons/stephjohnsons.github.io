@@ -1,4 +1,6 @@
 <template>
+  <!-- 23 Nov: macro tabs, macro section and loading bar temporarily hidden; the line remover below stays.
+       To bring them back, remove this comment wrapper, uncomment MacroManager below and the two imports.
   <LoadingProgressBar
     :loading="loadingMacro"
     :progress="macroProgress"
@@ -137,8 +139,9 @@
       </div>
     </div>
   </div>
+  -->
 
-  <MacroManager v-if="showMacroManager" />
+  <!-- <MacroManager v-if="showMacroManager" /> -->
   <MacroLineRemover v-if="!showMacroManager" />
   <!-- <Notes v-if="admin" /> -->
 </template>
@@ -147,9 +150,9 @@
 import { ref, watch, computed, onMounted, nextTick } from "vue";
 import { useUIStore } from "@/stores/ui";
 import { useMacroStateStore } from "@/stores/macroState";
-import MacroManager from "./MacroManager.vue";
+// import MacroManager from "./MacroManager.vue";
 import MacroLineRemover from "./MacroLineRemover.vue";
-import LoadingProgressBar from "./LoadingProgressBar.vue";
+// import LoadingProgressBar from "./LoadingProgressBar.vue";
 // import Notes from "./RegulatoryResponseNotes.vue";
 import backend from '@/composables/backend';
 
