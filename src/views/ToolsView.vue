@@ -9,10 +9,11 @@
     >
       <ZhTwConverter :rrAuth="regulatoryResponseAuthenticated" />
 
+      <!-- Regulatory Response macros (23 Nov: temporarily hidden; uncomment this and its import to bring back)
       <RegulatoryResponseMacro
         :admin="adminAuthenticated"
         :rrAuth="regulatoryResponseAuthenticated"
-      />
+      /> -->
 
       <!-- <h5 class="fw-normal mt-3">Alarms</h5>
       <div class="mb-2">
@@ -112,7 +113,7 @@
 
 <script setup>
 import ZhTwConverter from "@/components/ZhTwConverter.vue";
-import RegulatoryResponseMacro from "@/components/RegulatoryResponseMacro.vue";
+// import RegulatoryResponseMacro from "@/components/RegulatoryResponseMacro.vue";
 import CurrentTime from "@/components/CurrentTime.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useUIStore } from "@/stores/ui";
